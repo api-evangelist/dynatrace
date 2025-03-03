@@ -3,9 +3,12 @@ url: >-
   https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/apis.yml
 apis:
   - aid: dynatrace:dynatrace
-    name: Dynatrace
+    name: Dynatrace API
     tags:
-      - API
+      - Observability
+      - Automation
+      - Analytics
+      - Intelligence
     humanURL: >-
       https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api/environment-management-api
     properties:

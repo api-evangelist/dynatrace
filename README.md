@@ -1,5 +1,5 @@
 # Dynatrace (dynatrace)
-Dynatrace is a software intelligence company that specializes in providing observability, automation, and AI-powered analytics solutions for cloud-native applications. By continuously monitoring and analyzing the performance of applications and infrastructure, Dynatrace helps organizations optimize their digital experiences, detect and resolve issues faster, and align IT performance with business objectives. With its advanced monitoring capabilities and real-time insights, Dynatrace empowers teams to deliver high-performing and reliable applications that drive business success.
+Dynatrace is a software intelligence platform that provides application performance monitoring, artificial intelligence for operations, cloud infrastructure monitoring, and digital experience management.
 
 **URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/apis.yml)
 
@@ -11,7 +11,7 @@ Dynatrace is a software intelligence company that specializes in providing obser
 
 ## Tags:
 
- - Observability, Automation, Analytics, Intelligence
+ - AI Operations, APM, Analytics, Application Performance Monitoring, Automation, Cloud Monitoring, Digital Experience Management, Intelligence, Observability
 
 ## Timestamps
 
@@ -34,9 +34,21 @@ The Dynatrace API allows users to easily integrate Dynatrace's monitoring and an
 
 - [Documentation](https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api/environment-management-api)
 
+## Common Properties
+
+- [Portal](https://www.dynatrace.com/support/help/dynatrace-api)
+- [Authentication](https://www.dynatrace.com/support/help/dynatrace-api/basics/dynatrace-api-authentication)
+- [Getting Started](https://www.dynatrace.com/support/help/dynatrace-api/basics)
+- [Status](https://www.dynatrace.com/support/help/dynatrace-api/basics/dynatrace-api-response-codes)
+- [Terms of Service](https://www.dynatrace.com/company/trust-center/terms/)
+- [Privacy Policy](https://www.dynatrace.com/company/trust-center/privacy/)
+- [Support](https://www.dynatrace.com/support/)
+
 ## Maintainers
 
 **FN:** Kin Lane
 
 **Email:** info@apievangelist.com
+**FN:** Dynatrace
 
+**Email:** support@dynatrace.com

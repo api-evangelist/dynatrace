@@ -1,0 +1,728 @@
+openapi: 3.1.0
+info:
+  title: Dynatrace Account Management API
+  version: 1.0.0
+  description: >-
+    The Dynatrace Account Management API allows you to manage your Dynatrace
+    account including users, groups, permissions, and environments. It uses
+    OAuth 2.0 authentication with account-level scopes. The API enables
+    programmatic management of identity and access controls, including
+    creating users, assigning users to groups, defining group permissions,
+    and listing environments associated with the account. This is the primary
+    API for automating IAM workflows in Dynatrace.
+  contact:
+    name: Dynatrace Support
+    url: https://www.dynatrace.com/support/
+  license:
+    name: Dynatrace Terms of Service
+    url: https://www.dynatrace.com/company/trust-center/terms/
+externalDocs:
+  description: Dynatrace Account Management API Documentation
+  url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api
+
+servers:
+  - url: https://api.dynatrace.com
+    description: Dynatrace Account Management API (global endpoint)
+
+tags:
+  - name: Users
+    description: Operations for managing account users
+  - name: Groups
+    description: Operations for managing user groups and group membership
+  - name: Permissions
+    description: Operations for querying account-level permissions
+  - name: Environments
+    description: Operations for listing environments in the account
+
+security:
+  - oauth2: []
+
+paths:
+  /iam/v1/accounts/{accountUuid}/users:
+    get:
+      operationId: listUsers
+      summary: List users
+      description: >-
+        Returns a list of all users in the specified Dynatrace account. User
+        records include basic profile information and group memberships.
+        Results are paginated.
+      tags:
+        - Users
+      parameters:
+        - $ref: '#/components/parameters/accountUuid'
+        - name: nextPageKey
+          in: query
+          description: Cursor for the next page of results.
+          required: false
+          schema:
+            type: string
+        - name: pageSize
+          in: query
+          description: The number of users to return per page.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 1000
+            default: 100
+      responses:
+        '200':
+          description: A paginated list of users in the account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCollection'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+    post:
+      operationId: createUser
+      summary: Create user
+      description: >-
+        Creates a new user in the Dynatrace account and sends an invitation
+        email. The user's email address serves as their login identifier.
+        Groups can be assigned at creation time to grant appropriate
+        environment access and permissions.
+      tags:
+        - Users
+      parameters:
+        - $ref: '#/components/parameters/accountUuid'
+      requestBody:
+        description: The user to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateRequest'
+            example:
+              email: jane.doe@example.com
+              firstName: Jane
+              lastName: Doe
+              groups:
+                - groupId-1234-abcd
+      responses:
+        '200':
+          description: The user was successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /iam/v1/accounts/{accountUuid}/users/{userId}:
+    get:
+      operationId: getUser
+      summary: Get user
+      description: >-
+        Returns the details of a specific user in the account, identified by
+        their user ID (typically the email address or a UUID).
+      tags:
+        - Users
+      parameters:
+        - $ref: '#/components/parameters/accountUuid'
+        - $ref: '#/components/parameters/userId'
+      responses:
+        '200':
+          description: The user details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      operationId: updateUser
+      summary: Update user
+      description: >-
+        Updates the profile information and group memberships for an existing
+        user. The entire user record is replaced with the provided data. To
+        add a user to new groups without removing existing memberships, first
+        retrieve the current group list and include it in the update.
+      tags:
+        - Users
+      parameters:
+        - $ref: '#/components/parameters/accountUuid'
+        - $ref: '#/components/parameters/userId'
+      requestBody:
+        description: The updated user data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateRequest'
+      responses:
+        '200':
+          description: The user was successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      operationId: deleteUser
+      summary: Delete user
+      description: >-
+        Permanently removes the specified user from the Dynatrace account.
+        This action cannot be undone. The user immediately loses access to
+        all Dynatrace environments and resources.
+      tags:
+        - Users
+      parameters:
+        - $ref: '#/components/parameters/accountUuid'
+        - $ref: '#/components/parameters/userId'
+      responses:
+        '204':
+          description: The user was successfully deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /iam/v1/accounts/{accountUuid}/groups:
+    get:
+      operationId: listGroups
+      summary: List groups
+      description: >-
+        Returns a list of all user groups defined in the account. Groups are
+        the primary mechanism for assigning permissions and environment access
+        to sets of users. Results are paginated.
+      tags:
+        - Groups
+      parameters:
+        - $ref: '#/components/parameters/accountUuid'
+        - name: nextPageKey
+          in: query
+          description: Cursor for the next page of results.
+          required: false
+          schema:
+            type: string
+        - name: pageSize
+          in: query
+          description: The number of groups to return per page.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 1000
+            default: 100
+      responses:
+        '200':
+          description: A paginated list of user groups in the account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupCollection'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+    post:
+      operationId: createGroup
+      summary: Create group
+      description: >-
+        Creates a new user group in the account. After creating the group,
+        users can be assigned to it and permissions can be granted to the
+        group for specific environments or account-level functions.
+      tags:
+        - Groups
+      parameters:
+        - $ref: '#/components/parameters/accountUuid'
+      requestBody:
+        description: The group to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupCreateRequest'
+            example:
+              name: Platform Engineering
+              description: Group for the platform engineering team
+      responses:
+        '200':
+          description: The group was successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /iam/v1/accounts/{accountUuid}/groups/{groupId}:
+    get:
+      operationId: getGroup
+      summary: Get group
+      description: >-
+        Returns the details of a specific group, including its name,
+        description, and assigned permissions.
+      tags:
+        - Groups
+      parameters:
+        - $ref: '#/components/parameters/accountUuid'
+        - $ref: '#/components/parameters/groupId'
+      responses:
+        '200':
+          description: The group details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      operationId: updateGroup
+      summary: Update group
+      description: >-
+        Updates the name and description of an existing group. Group
+        permissions are managed separately via the permissions endpoints.
+      tags:
+        - Groups
+      parameters:
+        - $ref: '#/components/parameters/accountUuid'
+        - $ref: '#/components/parameters/groupId'
+      requestBody:
+        description: The updated group data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupCreateRequest'
+      responses:
+        '200':
+          description: The group was successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      operationId: deleteGroup
+      summary: Delete group
+      description: >-
+        Permanently deletes the specified group from the account. All users
+        who were members of this group lose any permissions that were granted
+        exclusively through this group.
+      tags:
+        - Groups
+      parameters:
+        - $ref: '#/components/parameters/accountUuid'
+        - $ref: '#/components/parameters/groupId'
+      responses:
+        '204':
+          description: The group was successfully deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /iam/v1/accounts/{accountUuid}/permissions:
+    get:
+      operationId: listPermissions
+      summary: List permissions for account
+      description: >-
+        Returns a list of all permissions defined for the account. Permissions
+        control what actions groups and users can perform within Dynatrace
+        environments and at the account level. Results include both
+        environment-scoped and account-scoped permissions.
+      tags:
+        - Permissions
+      parameters:
+        - $ref: '#/components/parameters/accountUuid'
+      responses:
+        '200':
+          description: A list of permissions for the account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /env/v1/accounts/{accountUuid}/environments:
+    get:
+      operationId: listEnvironments
+      summary: List environments
+      description: >-
+        Returns a list of all Dynatrace environments associated with the
+        specified account. Each environment record includes the environment ID,
+        name, and URL. This information is useful for enumerating environments
+        before making environment-level API calls.
+      tags:
+        - Environments
+      parameters:
+        - $ref: '#/components/parameters/accountUuid'
+        - name: nextPageKey
+          in: query
+          description: Cursor for the next page of results.
+          required: false
+          schema:
+            type: string
+        - name: pageSize
+          in: query
+          description: The number of environments to return per page.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 1000
+            default: 100
+      responses:
+        '200':
+          description: A list of environments in the account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: >-
+        OAuth 2.0 authentication for the Account Management API. Use the
+        client credentials flow to obtain a bearer token. Required scopes
+        vary by endpoint: account-idm-read for GET operations,
+        account-idm-write for POST/PUT/DELETE operations.
+      flows:
+        clientCredentials:
+          tokenUrl: https://sso.dynatrace.com/sso/oauth2/token
+          scopes:
+            account-idm-read: Read access to account identity and management data
+            account-idm-write: Write access to manage users, groups, and permissions
+            account-env-read: Read access to environment information
+
+  parameters:
+    accountUuid:
+      name: accountUuid
+      in: path
+      description: >-
+        The UUID of the Dynatrace account. Found in the Dynatrace account
+        settings or obtained from the account API.
+      required: true
+      schema:
+        type: string
+        format: uuid
+    userId:
+      name: userId
+      in: path
+      description: >-
+        The unique identifier of the user. Typically the user's email address
+        or a UUID assigned by the system.
+      required: true
+      schema:
+        type: string
+    groupId:
+      name: groupId
+      in: path
+      description: The unique identifier of the group.
+      required: true
+      schema:
+        type: string
+
+  responses:
+    BadRequest:
+      description: Bad request — invalid request body or parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized — missing or invalid OAuth token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Forbidden:
+      description: Forbidden — the token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    NotFound:
+      description: Not found — the specified user, group, or resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+
+  schemas:
+    User:
+      type: object
+      description: Represents a user in the Dynatrace account.
+      properties:
+        uid:
+          type: string
+          description: The unique identifier of the user.
+        email:
+          type: string
+          format: email
+          description: The email address of the user, used as their login identifier.
+        firstName:
+          type: string
+          description: The first name of the user.
+        lastName:
+          type: string
+          description: The last name of the user.
+        groups:
+          type: array
+          description: The list of group IDs that the user belongs to.
+          items:
+            type: string
+        userStatus:
+          type: string
+          description: The current status of the user account.
+          enum:
+            - ACTIVE
+            - INACTIVE
+            - PENDING_INVITE
+
+    UserCreateRequest:
+      type: object
+      description: Request body for creating or updating a user.
+      required:
+        - email
+        - firstName
+        - lastName
+      properties:
+        email:
+          type: string
+          format: email
+          description: The email address of the user. Used as the login identifier.
+        firstName:
+          type: string
+          description: The first name of the user.
+        lastName:
+          type: string
+          description: The last name of the user.
+        groups:
+          type: array
+          description: >-
+            The list of group IDs to assign the user to. The user gains
+            all permissions associated with these groups.
+          items:
+            type: string
+
+    UserCollection:
+      type: object
+      description: A paginated collection of users.
+      properties:
+        nextPageKey:
+          type: string
+          description: Cursor for the next page of results.
+          nullable: true
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of users in the account.
+        items:
+          type: array
+          description: The list of users on this page.
+          items:
+            $ref: '#/components/schemas/User'
+
+    Group:
+      type: object
+      description: Represents a user group in the Dynatrace account.
+      properties:
+        groupId:
+          type: string
+          description: The unique identifier of the group.
+        name:
+          type: string
+          description: The display name of the group.
+        description:
+          type: string
+          description: An optional description of the group's purpose or scope.
+        owner:
+          type: string
+          description: >-
+            The identifier of the group owner. LOCAL indicates the group is
+            managed within Dynatrace; SSO indicates it is synced from an
+            identity provider.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time when the group was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time when the group was last updated.
+
+    GroupCreateRequest:
+      type: object
+      description: Request body for creating or updating a group.
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: The display name of the group.
+        description:
+          type: string
+          description: An optional description of the group's purpose or access scope.
+
+    GroupCollection:
+      type: object
+      description: A paginated collection of groups.
+      properties:
+        nextPageKey:
+          type: string
+          description: Cursor for the next page of results.
+          nullable: true
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of groups in the account.
+        items:
+          type: array
+          description: The list of groups on this page.
+          items:
+            $ref: '#/components/schemas/Group'
+
+    Permission:
+      type: object
+      description: >-
+        Represents a permission assignment granting a group access to
+        a Dynatrace environment or account-level capability.
+      properties:
+        permissionName:
+          type: string
+          description: >-
+            The name of the permission, e.g., tenant-viewer, tenant-operator,
+            tenant-admin, account-company-info.
+        scope:
+          type: string
+          description: >-
+            The scope identifier the permission applies to. For environment
+            permissions, this is the environment ID. For account permissions,
+            this is the account UUID.
+        scopeType:
+          type: string
+          description: >-
+            The type of scope. ACCOUNT for account-level permissions, TENANT
+            for environment-level permissions.
+          enum:
+            - ACCOUNT
+            - TENANT
+        groupId:
+          type: string
+          description: The ID of the group this permission is assigned to.
+
+    PermissionCollection:
+      type: object
+      description: A collection of permission assignments for the account.
+      properties:
+        permissions:
+          type: array
+          description: The list of all permissions in the account.
+          items:
+            $ref: '#/components/schemas/Permission'
+
+    Environment:
+      type: object
+      description: >-
+        Represents a Dynatrace environment (tenant) associated with the account.
+      properties:
+        id:
+          type: string
+          description: The unique environment identifier (tenant ID).
+        name:
+          type: string
+          description: The display name of the environment.
+        status:
+          type: string
+          description: The current status of the environment.
+          enum:
+            - ACTIVE
+            - SUSPENDED
+            - TRIAL
+        trial:
+          type: boolean
+          description: Whether the environment is a trial environment.
+
+    EnvironmentCollection:
+      type: object
+      description: A paginated collection of environments.
+      properties:
+        nextPageKey:
+          type: string
+          description: Cursor for the next page of results.
+          nullable: true
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of environments in the account.
+        environments:
+          type: array
+          description: The list of environments on this page.
+          items:
+            $ref: '#/components/schemas/Environment'
+
+    ErrorEnvelope:
+      type: object
+      description: Error response envelope returned when a request fails.
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+
+    Error:
+      type: object
+      description: Details of an API error.
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+        message:
+          type: string
+          description: A human-readable description of the error.

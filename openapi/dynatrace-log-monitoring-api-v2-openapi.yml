@@ -1,0 +1,514 @@
+openapi: 3.1.0
+info:
+  title: Dynatrace Log Monitoring API v2
+  version: 2.0.0
+  description: >-
+    The Dynatrace Log Monitoring API v2 enables ingestion, search, aggregation,
+    and export of log records within a Dynatrace environment. Log data is stored
+    in the Grail data lakehouse and can be searched using DQL-based log queries.
+    The API supports streaming log records from external sources, querying logs
+    with filtering and pagination, aggregating log data by fields, and bulk
+    exporting logs for external processing.
+  contact:
+    name: Dynatrace Support
+    url: https://www.dynatrace.com/support/
+  license:
+    name: Dynatrace Terms of Service
+    url: https://www.dynatrace.com/company/trust-center/terms/
+externalDocs:
+  description: Dynatrace Log Monitoring API v2 Documentation
+  url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/log-monitoring-v2
+
+servers:
+  - url: https://{environmentId}.live.dynatrace.com/api/v2
+    description: Dynatrace SaaS environment
+    variables:
+      environmentId:
+        description: The unique identifier of your Dynatrace environment
+        default: mySampleEnv
+
+tags:
+  - name: Logs
+    description: Operations for ingesting, searching, aggregating, and exporting log records
+
+security:
+  - api-token: []
+
+paths:
+  /logs/search:
+    get:
+      operationId: searchLogs
+      summary: Search log records
+      description: >-
+        Searches log records stored in Grail using a query expression. Results
+        are returned in a paginated manner using a slice-based cursor. The query
+        parameter accepts a DQL-based log search expression for filtering and
+        transforming log data. Use nextSliceKey from the response to retrieve
+        subsequent pages of results.
+      tags:
+        - Logs
+      parameters:
+        - name: nextSliceKey
+          in: query
+          description: >-
+            The cursor for the next page (slice) of results, obtained from the
+            nextSliceKey field of a previous response. When this parameter is
+            set, all other query parameters are ignored.
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: >-
+            The maximum number of log records to return. Default is 1000,
+            maximum is 5000.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 5000
+            default: 1000
+        - name: query
+          in: query
+          description: >-
+            The log search query in DQL syntax. For example,
+            fetch logs | filter severity == "ERROR" | limit 100.
+            If not specified, all logs within the time range are returned.
+          required: false
+          schema:
+            type: string
+        - name: from
+          in: query
+          description: >-
+            The start of the queried time range. Use a relative expression
+            (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds.
+            Default is now-2h.
+          required: false
+          schema:
+            type: string
+        - name: to
+          in: query
+          description: >-
+            The end of the queried time range. Default is now.
+          required: false
+          schema:
+            type: string
+        - name: sort
+          in: query
+          description: >-
+            Defines the sort order for results. Use timestamp in descending
+            order (-timestamp) for newest first, or ascending (+timestamp)
+            for oldest first. Default is -timestamp.
+          required: false
+          schema:
+            type: string
+        - name: fields
+          in: query
+          description: >-
+            Comma-separated list of fields to include in the log records.
+            If not specified, all available fields are returned.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A page of log records matching the search query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogRecordSearchResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /logs/ingest:
+    post:
+      operationId: ingestLogs
+      summary: Ingest log records
+      description: >-
+        Ingests log records into the Dynatrace Grail data lakehouse. Accepts an
+        array of log record objects. Each record must include at least a content
+        field (the log message). Additional fields such as severity, timestamp,
+        and entity associations can be included. Log records are processed
+        asynchronously. Requires the logs.ingest API token scope.
+      tags:
+        - Logs
+      requestBody:
+        description: An array of log records to ingest
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              description: An array of log records to ingest into Grail.
+              items:
+                $ref: '#/components/schemas/LogIngestRecord'
+            example:
+              - content: "Application started successfully"
+                severity: INFO
+                timestamp: "2024-01-15T10:30:00.000Z"
+                log.source: my-application
+                dt.entity.host: HOST-1234567890ABCDEF
+              - content: "Database connection timeout after 30s"
+                severity: ERROR
+                timestamp: "2024-01-15T10:30:05.123Z"
+                log.source: my-application
+      responses:
+        '204':
+          description: The log records were successfully accepted for ingestion
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /logs/aggregate:
+    get:
+      operationId: aggregateLogs
+      summary: Aggregate log records
+      description: >-
+        Returns aggregated log data grouped by specified fields. Useful for
+        building dashboards and summaries such as error counts by service or
+        log volume by severity. The query parameter specifies filtering
+        conditions and the groupBy parameter specifies the dimensions to
+        aggregate by.
+      tags:
+        - Logs
+      parameters:
+        - name: query
+          in: query
+          description: >-
+            The log query expression for filtering records before aggregation.
+            Uses DQL-based syntax. For example, fetch logs | filter severity=="ERROR".
+          required: false
+          schema:
+            type: string
+        - name: from
+          in: query
+          description: >-
+            The start of the queried time range. Use a relative expression,
+            ISO 8601, or Unix timestamp in milliseconds. Default is now-2h.
+          required: false
+          schema:
+            type: string
+        - name: to
+          in: query
+          description: The end of the queried time range. Default is now.
+          required: false
+          schema:
+            type: string
+        - name: groupBy
+          in: query
+          description: >-
+            Comma-separated list of fields to group the aggregated results by.
+            For example, severity,log.source to count log records by severity
+            and source combination.
+          required: false
+          schema:
+            type: string
+        - name: fields
+          in: query
+          description: >-
+            Additional fields to include in the aggregation response.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The aggregated log data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogAggregateResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /logs/export:
+    get:
+      operationId: exportLogs
+      summary: Export log records
+      description: >-
+        Exports log records for bulk retrieval, suitable for integration with
+        external SIEM, log management, or archiving systems. Results are
+        paginated using a slice-based cursor. The export uses the same query
+        syntax as the search endpoint but is optimized for large volume
+        data retrieval.
+      tags:
+        - Logs
+      parameters:
+        - name: nextSliceKey
+          in: query
+          description: >-
+            The cursor for the next page of export results. When this parameter
+            is set, all other query parameters are ignored.
+          required: false
+          schema:
+            type: string
+        - name: pageSize
+          in: query
+          description: >-
+            The number of log records to return per page. Default is 1000,
+            maximum is 10000.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+            default: 1000
+        - name: query
+          in: query
+          description: >-
+            The log export query expression for filtering records.
+          required: false
+          schema:
+            type: string
+        - name: from
+          in: query
+          description: The start of the queried time range.
+          required: false
+          schema:
+            type: string
+        - name: to
+          in: query
+          description: The end of the queried time range.
+          required: false
+          schema:
+            type: string
+        - name: sort
+          in: query
+          description: The sort order for export results. Default is -timestamp.
+          required: false
+          schema:
+            type: string
+        - name: fields
+          in: query
+          description: Fields to include in the exported log records.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A page of exported log records
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogExportResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+components:
+  securitySchemes:
+    api-token:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: >-
+        Dynatrace API token. Use the format: Api-Token {your-token}
+        Required scopes: logs.read (for GET operations), logs.ingest (for POST /logs/ingest)
+
+  responses:
+    BadRequest:
+      description: Bad request — invalid query parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized — missing or invalid API token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Forbidden:
+      description: Forbidden — the API token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+
+  schemas:
+    LogIngestRecord:
+      type: object
+      description: >-
+        A single log record to ingest into the Dynatrace Grail data lakehouse.
+        The content field is required. Additional fields provide context for
+        routing, filtering, and entity association.
+      required:
+        - content
+      properties:
+        content:
+          type: string
+          description: >-
+            The main log message or text. Required. This is the primary
+            searchable content of the log record.
+        severity:
+          type: string
+          description: >-
+            The severity level of the log record. Standard syslog severity
+            levels are supported.
+          enum:
+            - EMERGENCY
+            - ALERT
+            - CRITICAL
+            - ERROR
+            - WARNING
+            - NOTICE
+            - INFO
+            - DEBUG
+            - TRACE
+        timestamp:
+          type: string
+          description: >-
+            The timestamp of the log record. Accepts ISO 8601 format
+            (e.g., 2024-01-15T10:30:00.000Z) or Unix timestamp in
+            milliseconds. If not specified, the ingestion time is used.
+        log.source:
+          type: string
+          description: >-
+            A string identifier for the source of the log record, such as
+            an application name, component, or log file path.
+        dt.entity.host:
+          type: string
+          description: >-
+            The Dynatrace host entity ID to associate this log record with,
+            e.g., HOST-1234567890ABCDEF. This enables correlation between
+            logs and monitored infrastructure.
+
+    LogRecord:
+      type: object
+      description: >-
+        A log record retrieved from the Dynatrace Grail data lakehouse.
+        Contains the original log content plus enriched metadata added
+        by Dynatrace during ingestion and processing.
+      properties:
+        timestamp:
+          type: string
+          description: The timestamp of the log record in ISO 8601 format.
+        content:
+          type: string
+          description: The log message content.
+        severity:
+          type: string
+          description: The severity level of the log record.
+        log.source:
+          type: string
+          description: The source identifier of the log record.
+        dt.entity.host:
+          type: string
+          description: The associated host entity ID.
+        additionalFields:
+          type: object
+          description: >-
+            Additional fields present in the log record beyond the standard
+            set. Content varies based on what was ingested and how OpenPipeline
+            processed the record.
+          additionalProperties: true
+
+    LogRecordSearchResult:
+      type: object
+      description: The result of a log search query.
+      properties:
+        nextSliceKey:
+          type: string
+          description: >-
+            The cursor for the next page of results. Null if all results
+            have been returned.
+          nullable: true
+        results:
+          type: array
+          description: The list of log records matching the search query on this page.
+          items:
+            $ref: '#/components/schemas/LogRecord'
+
+    LogAggregateResult:
+      type: object
+      description: The result of a log aggregation query.
+      properties:
+        results:
+          type: array
+          description: >-
+            The aggregated log data grouped by the specified dimensions.
+          items:
+            $ref: '#/components/schemas/LogAggregateGroup'
+
+    LogAggregateGroup:
+      type: object
+      description: A single aggregation group result.
+      properties:
+        groupByFields:
+          type: object
+          description: >-
+            The field values that define this aggregation group. Keys are the
+            groupBy field names, values are the field values for this group.
+          additionalProperties:
+            type: string
+        count:
+          type: integer
+          format: int64
+          description: The number of log records in this aggregation group.
+
+    LogExportResult:
+      type: object
+      description: The result of a log export operation, containing a page of records.
+      properties:
+        nextSliceKey:
+          type: string
+          description: Cursor for the next page of export results.
+          nullable: true
+        results:
+          type: array
+          description: The list of exported log records on this page.
+          items:
+            $ref: '#/components/schemas/LogRecord'
+
+    ErrorEnvelope:
+      type: object
+      description: Error response envelope returned when a request fails.
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+
+    Error:
+      type: object
+      description: Details of an API error.
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+        message:
+          type: string
+          description: A human-readable description of the error.
+        constraintViolations:
+          type: array
+          description: A list of constraint violations for validation errors (HTTP 400).
+          items:
+            $ref: '#/components/schemas/ConstraintViolation'
+
+    ConstraintViolation:
+      type: object
+      description: Details of a single constraint violation in a request.
+      properties:
+        path:
+          type: string
+          description: The JSON path to the field that caused the violation.
+        message:
+          type: string
+          description: A description of the constraint violation.
+        parameterLocation:
+          type: string
+          description: The location of the violating parameter (QUERY, PATH, BODY).
+        location:
+          type: string
+          description: The location detail for the violation.

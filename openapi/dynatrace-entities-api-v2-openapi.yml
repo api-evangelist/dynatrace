@@ -1,0 +1,594 @@
+openapi: 3.1.0
+info:
+  title: Dynatrace Entities API v2
+  version: 2.0.0
+  description: >-
+    The Dynatrace Entities API v2 enables querying of monitored entities such
+    as services, hosts, processes, process groups, and applications within a
+    Dynatrace environment. It supports filtering entities by type, tags,
+    management zones, and time range. Entity responses include topology
+    relationships, properties, tags, and management zone assignments for
+    dependency mapping and infrastructure analysis.
+  contact:
+    name: Dynatrace Support
+    url: https://www.dynatrace.com/support/
+  license:
+    name: Dynatrace Terms of Service
+    url: https://www.dynatrace.com/company/trust-center/terms/
+externalDocs:
+  description: Dynatrace Entities API v2 Documentation
+  url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/entity-v2
+
+servers:
+  - url: https://{environmentId}.live.dynatrace.com/api/v2
+    description: Dynatrace SaaS environment
+    variables:
+      environmentId:
+        description: The unique identifier of your Dynatrace environment
+        default: mySampleEnv
+
+tags:
+  - name: Entities
+    description: Operations for querying monitored entities and entity types
+
+security:
+  - api-token: []
+
+paths:
+  /entities:
+    get:
+      operationId: listEntities
+      summary: List entities
+      description: >-
+        Returns a list of monitored entities matching the specified entity
+        selector. The entity selector is required and must specify at least
+        one condition, such as entity type. Results can be enriched with
+        additional fields including properties, tags, management zones, and
+        relationships. Results are paginated.
+      tags:
+        - Entities
+      parameters:
+        - name: nextPageKey
+          in: query
+          description: >-
+            The cursor for the next page of results, obtained from the
+            nextPageKey field of a previous response. When this parameter is
+            set, all other query parameters except pageSize are ignored.
+          required: false
+          schema:
+            type: string
+        - name: pageSize
+          in: query
+          description: >-
+            The number of entities to return per page. Default is 50, maximum
+            is 500.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 500
+            default: 50
+        - name: entitySelector
+          in: query
+          description: >-
+            Defines the scope of the query by specifying entity filter
+            conditions. Required. Use the entity selector syntax, for example:
+            type(SERVICE) to select all services, or type(HOST),tag(production)
+            to select production hosts. Multiple conditions are ANDed together.
+          required: true
+          schema:
+            type: string
+        - name: fields
+          in: query
+          description: >-
+            Defines additional fields to include in the entity response beyond
+            the default set. Use a comma-separated list. For example,
+            +properties,+tags,+toRelationships.runsOn to include entity
+            properties, tags, and specific relationship types.
+          required: false
+          schema:
+            type: string
+        - name: from
+          in: query
+          description: >-
+            The start of the time range for entity discovery. Entities seen
+            within this range are returned. Use a relative expression (now-7d),
+            ISO 8601, or Unix timestamp in milliseconds.
+          required: false
+          schema:
+            type: string
+        - name: to
+          in: query
+          description: >-
+            The end of the time range for entity discovery. Default is now.
+          required: false
+          schema:
+            type: string
+        - name: sort
+          in: query
+          description: >-
+            Defines the sort order of results. Use the field name prefixed with
+            + (ascending) or - (descending). For example, +displayName or
+            -lastSeenTms.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A paginated list of monitored entities
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityCollection'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /entities/{entityId}:
+    get:
+      operationId: getEntity
+      summary: Get entity
+      description: >-
+        Returns the details of a specific monitored entity by its entity ID.
+        The entity ID format is TYPE-HEXADECIMALID, e.g.,
+        SERVICE-1234567890ABCDEF. You can request additional fields including
+        properties, tags, relationships, and management zone assignments.
+      tags:
+        - Entities
+      parameters:
+        - name: entityId
+          in: path
+          description: >-
+            The unique identifier of the entity to retrieve, in the format
+            TYPE-HEXADECIMALID, e.g., SERVICE-1234567890ABCDEF.
+          required: true
+          schema:
+            type: string
+        - name: fields
+          in: query
+          description: >-
+            Defines additional fields to include in the response. Use a
+            comma-separated list prefixed with +, e.g., +properties,+tags.
+          required: false
+          schema:
+            type: string
+        - name: from
+          in: query
+          description: >-
+            The start of the time range for properties and relationships.
+            Defaults to now-3d.
+          required: false
+          schema:
+            type: string
+        - name: to
+          in: query
+          description: The end of the time range. Defaults to now.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The entity details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /entityTypes:
+    get:
+      operationId: listEntityTypes
+      summary: List entity types
+      description: >-
+        Returns a list of all entity types available in the Dynatrace
+        environment. Entity types describe the categories of monitored
+        entities, such as SERVICE, HOST, PROCESS_GROUP, APPLICATION, etc.
+        Results are paginated.
+      tags:
+        - Entities
+      parameters:
+        - name: nextPageKey
+          in: query
+          description: Cursor for the next page of results.
+          required: false
+          schema:
+            type: string
+        - name: pageSize
+          in: query
+          description: The number of entity types to return per page.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 500
+            default: 50
+      responses:
+        '200':
+          description: A paginated list of entity types
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityTypeCollection'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /entityTypes/{type}:
+    get:
+      operationId: getEntityType
+      summary: Get entity type definition
+      description: >-
+        Returns the definition of a specific entity type, including its
+        display name, description, available properties, and supported
+        relationship types. This is useful for understanding what fields
+        are available when querying entities of a given type.
+      tags:
+        - Entities
+      parameters:
+        - name: type
+          in: path
+          description: >-
+            The entity type identifier, e.g., SERVICE, HOST, PROCESS_GROUP,
+            APPLICATION.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The entity type definition
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityType'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /entities/lookup:
+    post:
+      operationId: lookupEntity
+      summary: Look up entity by name
+      description: >-
+        Looks up a specific entity by its display name and type. This is
+        useful when you know the human-readable name of an entity but need
+        its Dynatrace entity ID for use in other API calls or selectors.
+        Returns the matching entity or a 404 if not found.
+      tags:
+        - Entities
+      requestBody:
+        description: The entity name and type to look up
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EntityLookupRequest'
+            example:
+              name: my-production-service
+              type: SERVICE
+      responses:
+        '200':
+          description: The matching entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  securitySchemes:
+    api-token:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: >-
+        Dynatrace API token. Use the format: Api-Token {your-token}
+        Required scopes: entities.read
+
+  responses:
+    BadRequest:
+      description: Bad request — invalid query parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized — missing or invalid API token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Forbidden:
+      description: Forbidden — the API token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    NotFound:
+      description: Not found — the specified entity or entity type does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+
+  schemas:
+    Entity:
+      type: object
+      description: >-
+        Represents a monitored entity in Dynatrace. Entities are the
+        components of your monitored environment such as services, hosts,
+        processes, and applications. Each entity has a unique ID, a type,
+        properties, tags, and relationships to other entities.
+      properties:
+        entityId:
+          type: string
+          description: >-
+            The unique identifier of the entity in the format
+            TYPE-HEXADECIMALID, e.g., SERVICE-1234567890ABCDEF.
+        displayName:
+          type: string
+          description: The human-readable display name of the entity.
+        type:
+          type: string
+          description: >-
+            The type of the entity, e.g., SERVICE, HOST, PROCESS_GROUP,
+            APPLICATION, SYNTHETIC_TEST.
+        firstSeenTms:
+          type: integer
+          format: int64
+          description: The Unix timestamp in milliseconds when the entity was first seen.
+        lastSeenTms:
+          type: integer
+          format: int64
+          description: The Unix timestamp in milliseconds when the entity was last seen.
+        properties:
+          type: object
+          description: >-
+            A map of entity-type-specific properties. Available properties
+            vary by entity type. For example, a HOST entity may include
+            osType, cpuCores, and memoryTotalBytes.
+          additionalProperties: true
+        tags:
+          type: array
+          description: >-
+            The list of tags applied to the entity, including auto-detected
+            and manually defined tags.
+          items:
+            $ref: '#/components/schemas/EntityTag'
+        managementZones:
+          type: array
+          description: >-
+            The management zones that the entity belongs to, used for access
+            control and organizational scoping.
+          items:
+            $ref: '#/components/schemas/ManagementZone'
+        toRelationships:
+          type: object
+          description: >-
+            Relationships where this entity is the target. Keys are
+            relationship types (e.g., isProcessOf), values are arrays of
+            entity IDs. For example, {"isProcessOf": ["PROCESS_GROUP-123"]}.
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        fromRelationships:
+          type: object
+          description: >-
+            Relationships where this entity is the source. Keys are
+            relationship types (e.g., runsOn), values are arrays of entity IDs.
+            For example, {"runsOn": ["HOST-456"]}.
+          additionalProperties:
+            type: array
+            items:
+              type: string
+
+    EntityCollection:
+      type: object
+      description: A paginated collection of monitored entities.
+      properties:
+        nextPageKey:
+          type: string
+          description: Cursor for the next page of results. Null if no more pages.
+          nullable: true
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of entities matching the query.
+        pageSize:
+          type: integer
+          description: The number of results returned on this page.
+        entities:
+          type: array
+          description: The list of entities on this page.
+          items:
+            $ref: '#/components/schemas/Entity'
+
+    EntityType:
+      type: object
+      description: >-
+        Defines an entity type including its display name, available
+        properties, and supported relationship types.
+      properties:
+        type:
+          type: string
+          description: The entity type identifier, e.g., SERVICE.
+        displayName:
+          type: string
+          description: The human-readable display name of the entity type.
+        description:
+          type: string
+          description: A description of what this entity type represents.
+        properties:
+          type: array
+          description: The list of properties available for this entity type.
+          items:
+            $ref: '#/components/schemas/EntityTypeProperty'
+        fromRelationships:
+          type: array
+          description: >-
+            The relationship types where entities of this type are the source.
+          items:
+            $ref: '#/components/schemas/EntityTypeRelationship'
+        toRelationships:
+          type: array
+          description: >-
+            The relationship types where entities of this type are the target.
+          items:
+            $ref: '#/components/schemas/EntityTypeRelationship'
+
+    EntityTypeProperty:
+      type: object
+      description: Describes a single property of an entity type.
+      properties:
+        id:
+          type: string
+          description: The property key identifier.
+        displayName:
+          type: string
+          description: The human-readable display name of the property.
+        type:
+          type: string
+          description: The data type of the property value.
+
+    EntityTypeRelationship:
+      type: object
+      description: Describes a relationship type for an entity type.
+      properties:
+        id:
+          type: string
+          description: The relationship type identifier, e.g., runsOn.
+        toTypes:
+          type: array
+          description: The entity types that can participate in this relationship.
+          items:
+            type: string
+
+    EntityTypeCollection:
+      type: object
+      description: A paginated collection of entity type definitions.
+      properties:
+        nextPageKey:
+          type: string
+          description: Cursor for the next page of results.
+          nullable: true
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of entity types.
+        types:
+          type: array
+          description: The list of entity types on this page.
+          items:
+            $ref: '#/components/schemas/EntityType'
+
+    EntityLookupRequest:
+      type: object
+      description: Request body for looking up an entity by name and type.
+      required:
+        - name
+        - type
+      properties:
+        name:
+          type: string
+          description: The display name of the entity to look up.
+        type:
+          type: string
+          description: The entity type to search within, e.g., SERVICE, HOST.
+
+    EntityTag:
+      type: object
+      description: A tag applied to a monitored entity.
+      properties:
+        context:
+          type: string
+          description: >-
+            The origin context of the tag. For example, CONTEXTLESS,
+            ENVIRONMENT, AWS, KUBERNETES, etc.
+        key:
+          type: string
+          description: The key of the tag.
+        value:
+          type: string
+          description: The value of the tag, if applicable.
+          nullable: true
+        stringRepresentation:
+          type: string
+          description: >-
+            The full string representation of the tag as displayed in the
+            Dynatrace UI, e.g., [KUBERNETES]app:my-service.
+
+    ManagementZone:
+      type: object
+      description: A management zone reference.
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the management zone.
+        name:
+          type: string
+          description: The display name of the management zone.
+
+    ErrorEnvelope:
+      type: object
+      description: Error response envelope returned when a request fails.
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+
+    Error:
+      type: object
+      description: Details of an API error.
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+        message:
+          type: string
+          description: A human-readable description of the error.
+        constraintViolations:
+          type: array
+          description: A list of constraint violations for validation errors (HTTP 400).
+          items:
+            $ref: '#/components/schemas/ConstraintViolation'
+
+    ConstraintViolation:
+      type: object
+      description: Details of a single constraint violation in a request.
+      properties:
+        path:
+          type: string
+          description: The JSON path to the field that caused the violation.
+        message:
+          type: string
+          description: A description of the constraint violation.
+        parameterLocation:
+          type: string
+          description: The location of the violating parameter (QUERY, PATH, BODY).
+        location:
+          type: string
+          description: The location detail for the violation.

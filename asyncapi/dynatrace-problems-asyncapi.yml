@@ -1,0 +1,471 @@
+asyncapi: 2.6.0
+info:
+  title: Dynatrace Problem Notifications API
+  version: 1.0.0
+  description: >-
+    Dynatrace delivers problem lifecycle notifications to client-provided
+    webhook endpoints via HTTP POST. When a problem is opened, updated,
+    merged, or resolved, Dynatrace sends a notification payload to the
+    registered webhook URL. Clients register their webhook endpoints using
+    the Dynatrace Configuration API (POST /api/config/v1/notifications),
+    specifying the URL, optional authentication headers, and payload
+    template. This AsyncAPI document describes the webhook notification
+    channel that clients implement to receive Dynatrace problem events.
+  contact:
+    name: Dynatrace Support
+    url: https://www.dynatrace.com/support/
+  license:
+    name: Dynatrace Terms of Service
+    url: https://www.dynatrace.com/company/trust-center/terms/
+  externalDocs:
+    description: Dynatrace Problem Notification Configuration Documentation
+    url: https://docs.dynatrace.com/docs/deliver-dynatrace-managed/problem-notifications
+
+defaultContentType: application/json
+
+servers:
+  webhook-endpoint:
+    url: https://{your-webhook-host}/{your-webhook-path}
+    protocol: https
+    description: >-
+      The client-provided HTTPS webhook endpoint that receives Dynatrace
+      problem notification POST requests. The URL is configured in
+      Dynatrace under Settings > Integration > Problem notifications.
+    variables:
+      your-webhook-host:
+        description: The hostname of the client's webhook receiver
+        default: webhook.example.com
+      your-webhook-path:
+        description: The path at which the webhook receiver accepts requests
+        default: webhook/dynatrace/problems
+
+  dynatrace-config-api:
+    url: https://{environmentId}.live.dynatrace.com/api/config/v1
+    protocol: https
+    description: >-
+      The Dynatrace Configuration API endpoint used to register webhook
+      notification integrations. Clients POST to this server to configure
+      which webhook URL receives problem notifications and what event
+      types trigger notifications.
+    variables:
+      environmentId:
+        description: The Dynatrace environment ID
+        default: mySampleEnv
+
+channels:
+  /webhook/problems:
+    description: >-
+      Represents the client's webhook endpoint that receives Dynatrace
+      problem notifications. Dynatrace sends an HTTP POST to this channel
+      when a problem is opened, updated, merged, or resolved. The channel
+      operates in a push model: Dynatrace (publisher) pushes events to the
+      client's webhook (subscriber).
+    subscribe:
+      operationId: receiveProblemNotification
+      summary: Receive problem notification
+      description: >-
+        Receives a problem lifecycle notification from Dynatrace. This
+        operation is implemented by the client's webhook handler. Dynatrace
+        triggers this notification when a problem is opened, when a problem
+        is resolved, or when problems are merged into a single problem.
+        The payload contains full problem details at the time of the event.
+      tags:
+        - name: Problems
+        - name: Notifications
+        - name: Webhooks
+      message:
+        oneOf:
+          - $ref: '#/components/messages/ProblemOpened'
+          - $ref: '#/components/messages/ProblemResolved'
+          - $ref: '#/components/messages/ProblemMerged'
+
+  /api/config/v1/notifications:
+    description: >-
+      The Dynatrace Configuration API endpoint for managing webhook
+      notification integrations. Clients POST to this channel to register
+      their webhook URL with Dynatrace, specifying which events should
+      trigger notifications and what payload format to use.
+    publish:
+      operationId: registerWebhookNotification
+      summary: Register webhook notification configuration
+      description: >-
+        Creates or updates a webhook notification integration in Dynatrace.
+        After registering, Dynatrace will deliver problem lifecycle events
+        to the specified webhook URL. The client specifies the target URL,
+        optional authentication headers or tokens, and which alerting
+        profiles (problem filters) should trigger the notification.
+      tags:
+        - name: Configuration
+        - name: Notifications
+      message:
+        $ref: '#/components/messages/NotificationRegistration'
+
+components:
+  messages:
+    ProblemOpened:
+      name: ProblemOpened
+      title: Problem Opened
+      summary: Notification sent when a new problem is detected by Dynatrace Davis AI
+      description: >-
+        Dynatrace sends this notification when the Davis AI engine opens a
+        new problem. The problem may affect one or more monitored entities
+        and includes initial root cause analysis, severity assessment, and
+        the list of affected services or infrastructure.
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          content-type:
+            type: string
+            description: Always application/json
+            enum:
+              - application/json
+          x-dynatrace-event:
+            type: string
+            description: The event type header set by Dynatrace
+            enum:
+              - PROBLEM_OPENED
+      payload:
+        $ref: '#/components/schemas/ProblemNotificationPayload'
+      examples:
+        - name: ServiceAvailabilityProblem
+          summary: Example notification for a service availability problem
+          payload:
+            ProblemID: P-123456
+            ProblemTitle: High failure rate on checkout-service
+            ProblemURL: https://mySampleEnv.live.dynatrace.com/#problems/problemdetail;pid=-1234567890123456789_V2
+            ProblemSeverity: AVAILABILITY
+            ProblemStatus: OPEN
+            ImpactedEntities:
+              - Entity: SERVICE-ABCDEF1234567890
+                Name: checkout-service
+            ImpactedEntityNames: checkout-service
+            Tags: env:production, team:payments
+            State: OPEN
+            ProblemDetailsJSON:
+              id: -1234567890123456789_V2
+              title: High failure rate on checkout-service
+              severityLevel: AVAILABILITY
+              status: OPEN
+              startTime: 1609459200000
+              endTime: -1
+              affectedEntities:
+                - entityId: SERVICE-ABCDEF1234567890
+                  name: checkout-service
+                  type: SERVICE
+
+    ProblemResolved:
+      name: ProblemResolved
+      title: Problem Resolved
+      summary: Notification sent when a problem is resolved by Dynatrace Davis AI
+      description: >-
+        Dynatrace sends this notification when the Davis AI engine detects
+        that a previously opened problem has been resolved. The payload
+        includes the resolution timestamp (endTime) and the full problem
+        details at the time of resolution.
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          content-type:
+            type: string
+            enum:
+              - application/json
+          x-dynatrace-event:
+            type: string
+            enum:
+              - PROBLEM_RESOLVED
+      payload:
+        $ref: '#/components/schemas/ProblemNotificationPayload'
+      examples:
+        - name: ServiceAvailabilityProblemResolved
+          summary: Example notification for a resolved service availability problem
+          payload:
+            ProblemID: P-123456
+            ProblemTitle: High failure rate on checkout-service
+            ProblemURL: https://mySampleEnv.live.dynatrace.com/#problems/problemdetail;pid=-1234567890123456789_V2
+            ProblemSeverity: AVAILABILITY
+            ProblemStatus: RESOLVED
+            ImpactedEntities:
+              - Entity: SERVICE-ABCDEF1234567890
+                Name: checkout-service
+            ImpactedEntityNames: checkout-service
+            Tags: env:production, team:payments
+            State: RESOLVED
+            ProblemDetailsJSON:
+              id: -1234567890123456789_V2
+              title: High failure rate on checkout-service
+              severityLevel: AVAILABILITY
+              status: RESOLVED
+              startTime: 1609459200000
+              endTime: 1609462800000
+              affectedEntities:
+                - entityId: SERVICE-ABCDEF1234567890
+                  name: checkout-service
+                  type: SERVICE
+
+    ProblemMerged:
+      name: ProblemMerged
+      title: Problem Merged
+      summary: Notification sent when two problems are merged into a single problem by Davis AI
+      description: >-
+        Dynatrace sends this notification when the Davis AI engine determines
+        that two separate problems share the same root cause and merges them
+        into a single problem. The payload reflects the merged problem state.
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          content-type:
+            type: string
+            enum:
+              - application/json
+          x-dynatrace-event:
+            type: string
+            enum:
+              - PROBLEM_MERGED
+      payload:
+        $ref: '#/components/schemas/ProblemNotificationPayload'
+
+    NotificationRegistration:
+      name: NotificationRegistration
+      title: Webhook Notification Registration
+      summary: Configuration payload for registering a webhook notification integration
+      description: >-
+        The configuration object sent to the Dynatrace Configuration API to
+        register a new webhook notification integration. This defines the
+        target URL, authentication, and which alerting profiles trigger
+        the webhook delivery.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/WebhookNotificationConfig'
+
+  schemas:
+    ProblemNotificationPayload:
+      type: object
+      description: >-
+        The webhook notification payload delivered by Dynatrace when a
+        problem lifecycle event occurs. Contains both summary fields for
+        quick processing and the full ProblemDetailsJSON for detailed analysis.
+      properties:
+        ProblemID:
+          type: string
+          description: >-
+            The human-readable problem identifier displayed in the Dynatrace
+            UI, e.g., P-123456.
+          example: P-123456
+        ProblemTitle:
+          type: string
+          description: >-
+            The title of the problem generated by the Davis AI engine,
+            describing the nature of the detected anomaly.
+          example: High failure rate on payment-service
+        ProblemURL:
+          type: string
+          format: uri
+          description: >-
+            The full URL to the problem detail page in the Dynatrace UI,
+            allowing recipients to navigate directly to the problem.
+          example: https://mySampleEnv.live.dynatrace.com/#problems/problemdetail;pid=-1234567890123456789_V2
+        ProblemSeverity:
+          type: string
+          description: The severity level classification of the problem.
+          enum:
+            - AVAILABILITY
+            - ERROR
+            - PERFORMANCE
+            - RESOURCE_CONTENTION
+            - CUSTOM_ALERT
+          example: PERFORMANCE
+        ProblemStatus:
+          type: string
+          description: The current lifecycle status of the problem at the time of notification.
+          enum:
+            - OPEN
+            - RESOLVED
+          example: OPEN
+        ImpactedEntities:
+          type: array
+          description: >-
+            The list of monitored entities that are experiencing service
+            degradation as a result of the problem.
+          items:
+            $ref: '#/components/schemas/ImpactedEntity'
+        ImpactedEntityNames:
+          type: string
+          description: >-
+            A comma-separated string of display names for all impacted
+            entities, for use in simple notification templates.
+          example: payment-service, checkout-service
+        Tags:
+          type: string
+          description: >-
+            A comma-separated string of tags applied to the impacted entities,
+            for use in routing or filtering notification handlers.
+          example: env:production, team:backend
+        State:
+          type: string
+          description: >-
+            The state of the problem notification. OPEN for new or ongoing
+            problems, RESOLVED for resolved problems, MERGED for merged problems.
+          enum:
+            - OPEN
+            - RESOLVED
+            - MERGED
+          example: OPEN
+        ProblemDetailsJSON:
+          $ref: '#/components/schemas/ProblemDetails'
+
+    ImpactedEntity:
+      type: object
+      description: A monitored entity that is impacted by the problem.
+      properties:
+        Entity:
+          type: string
+          description: >-
+            The Dynatrace entity ID of the impacted entity, in the format
+            TYPE-HEXADECIMALID, e.g., SERVICE-1234567890ABCDEF.
+          example: SERVICE-ABCDEF1234567890
+        Name:
+          type: string
+          description: The display name of the impacted entity.
+          example: payment-service
+
+    ProblemDetails:
+      type: object
+      description: >-
+        Full problem details included in the notification payload. Contains
+        the same data as the Problems API v2 GET response for this problem.
+      properties:
+        id:
+          type: string
+          description: The internal unique identifier of the problem.
+          example: -1234567890123456789_V2
+        title:
+          type: string
+          description: The problem title generated by Davis AI.
+          example: High failure rate on payment-service
+        severityLevel:
+          type: string
+          description: The severity level of the problem.
+          enum:
+            - AVAILABILITY
+            - ERROR
+            - PERFORMANCE
+            - RESOURCE_CONTENTION
+            - CUSTOM_ALERT
+        status:
+          type: string
+          description: The current status of the problem.
+          enum:
+            - OPEN
+            - RESOLVED
+        startTime:
+          type: integer
+          format: int64
+          description: The Unix timestamp in milliseconds when the problem started.
+          example: 1609459200000
+        endTime:
+          type: integer
+          format: int64
+          description: >-
+            The Unix timestamp in milliseconds when the problem ended.
+            Returns -1 if the problem is still open.
+          example: -1
+        affectedEntities:
+          type: array
+          description: The list of entities directly affected by the problem.
+          items:
+            $ref: '#/components/schemas/EntityRef'
+
+    EntityRef:
+      type: object
+      description: A reference to a monitored entity in problem details.
+      properties:
+        entityId:
+          type: string
+          description: The unique Dynatrace entity ID.
+          example: SERVICE-ABCDEF1234567890
+        name:
+          type: string
+          description: The display name of the entity.
+          example: payment-service
+        type:
+          type: string
+          description: The entity type, e.g., SERVICE, HOST, PROCESS_GROUP.
+          example: SERVICE
+
+    WebhookNotificationConfig:
+      type: object
+      description: >-
+        Configuration for a webhook notification integration in Dynatrace.
+        Posted to POST /api/config/v1/notifications to register the webhook.
+      required:
+        - type
+        - name
+        - active
+        - url
+        - alertingProfile
+      properties:
+        type:
+          type: string
+          description: The notification type. Must be WEBHOOK for webhook integrations.
+          enum:
+            - WEBHOOK
+          example: WEBHOOK
+        name:
+          type: string
+          description: A display name for this notification configuration.
+          example: My Problem Webhook
+        active:
+          type: boolean
+          description: Whether this notification integration is active.
+          example: true
+        url:
+          type: string
+          format: uri
+          description: >-
+            The HTTPS URL of the webhook endpoint that will receive
+            problem notifications.
+          example: https://webhook.example.com/webhook/dynatrace/problems
+        alertingProfile:
+          type: string
+          description: >-
+            The ID of the alerting profile (problem filter) that controls
+            which problems trigger this notification.
+          example: alerting-profile-uuid
+        headers:
+          type: array
+          description: >-
+            Optional HTTP headers to include in the webhook request, such
+            as authorization headers or content-type overrides.
+          items:
+            $ref: '#/components/schemas/WebhookHeader'
+        acceptAnyCertificate:
+          type: boolean
+          description: >-
+            Whether to accept any TLS certificate from the webhook endpoint.
+            Should be false in production environments.
+          example: false
+        payload:
+          type: string
+          description: >-
+            The custom payload template using Dynatrace placeholder variables
+            such as {ProblemID}, {ProblemTitle}, {State}. If not specified,
+            Dynatrace uses the default JSON payload format.
+
+    WebhookHeader:
+      type: object
+      description: An HTTP header to include in webhook notification requests.
+      required:
+        - name
+        - value
+      properties:
+        name:
+          type: string
+          description: The HTTP header name.
+          example: Authorization
+        value:
+          type: string
+          description: The HTTP header value.
+          example: Bearer my-secret-token

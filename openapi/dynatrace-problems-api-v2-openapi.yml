@@ -1,0 +1,688 @@
+openapi: 3.1.0
+info:
+  title: Dynatrace Problems API v2
+  version: 2.0.0
+  description: >-
+    The Dynatrace Problems API v2 allows you to query and manage detected
+    problems within a Dynatrace environment. Problems represent degradations in
+    service quality detected by the Dynatrace AI (Davis). The API provides
+    endpoints for listing open and closed problems, retrieving detailed problem
+    information including root cause analysis, closing problems programmatically,
+    and managing problem comments for collaboration.
+  contact:
+    name: Dynatrace Support
+    url: https://www.dynatrace.com/support/
+  license:
+    name: Dynatrace Terms of Service
+    url: https://www.dynatrace.com/company/trust-center/terms/
+externalDocs:
+  description: Dynatrace Problems API v2 Documentation
+  url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
+
+servers:
+  - url: https://{environmentId}.live.dynatrace.com/api/v2
+    description: Dynatrace SaaS environment
+    variables:
+      environmentId:
+        description: The unique identifier of your Dynatrace environment
+        default: mySampleEnv
+
+tags:
+  - name: Problems
+    description: Operations for querying and managing detected problems
+
+security:
+  - api-token: []
+
+paths:
+  /problems:
+    get:
+      operationId: listProblems
+      summary: List problems
+      description: >-
+        Returns a list of problems from the Dynatrace environment. You can
+        filter problems by problem selector, entity selector, time range, and
+        other criteria. Results are paginated. By default, returns problems from
+        the last two hours.
+      tags:
+        - Problems
+      parameters:
+        - name: nextPageKey
+          in: query
+          description: >-
+            The cursor for the next page of results, obtained from the
+            nextPageKey field of a previous response. When this parameter is
+            set, all other query parameters except pageSize are ignored.
+          required: false
+          schema:
+            type: string
+        - name: pageSize
+          in: query
+          description: >-
+            The number of problems to return per page. Default is 50, maximum
+            is 500.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 500
+            default: 50
+        - name: problemSelector
+          in: query
+          description: >-
+            Defines the scope of the query using the problem selector syntax.
+            Allows filtering by status, severity, management zone, and other
+            problem properties. For example, status(OPEN),severityLevel(AVAILABILITY).
+          required: false
+          schema:
+            type: string
+        - name: entitySelector
+          in: query
+          description: >-
+            Filters results to problems affecting entities matching this
+            selector. Use the entity selector syntax, e.g., type(SERVICE),
+            tag(production). Problems are returned if any affected or impacted
+            entity matches.
+          required: false
+          schema:
+            type: string
+        - name: from
+          in: query
+          description: >-
+            The start of the queried time range. Use a relative expression
+            (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds.
+            Default is now-2h.
+          required: false
+          schema:
+            type: string
+        - name: to
+          in: query
+          description: >-
+            The end of the queried time range. Use a relative expression (now),
+            ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is
+            now.
+          required: false
+          schema:
+            type: string
+        - name: sort
+          in: query
+          description: >-
+            Defines the sort order of the results. Use field name prefixed with
+            + for ascending or - for descending. For example, -startTime sorts
+            by start time descending (newest first).
+          required: false
+          schema:
+            type: string
+        - name: fields
+          in: query
+          description: >-
+            Defines additional fields to include in the response beyond the
+            default set. Use a comma-separated list. For example,
+            +evidenceDetails,+impactAnalysis to include evidence and impact data.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A paginated list of problems
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemCollection'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /problems/{problemId}:
+    get:
+      operationId: getProblem
+      summary: Get problem details
+      description: >-
+        Returns the full details of a specific problem, including its severity,
+        affected and impacted entities, root cause analysis, evidence, and
+        management zone assignments. The problem ID is available from the list
+        problems endpoint.
+      tags:
+        - Problems
+      parameters:
+        - $ref: '#/components/parameters/problemId'
+        - name: fields
+          in: query
+          description: >-
+            Defines additional fields to include in the response. Use a
+            comma-separated list prefixed with +, e.g., +evidenceDetails.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The problem details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /problems/{problemId}/close:
+    post:
+      operationId: closeProblem
+      summary: Close problem
+      description: >-
+        Closes the specified problem and optionally attaches a closing message
+        explaining the reason for closure. Only problems that are currently
+        OPEN can be closed. Closing a problem will trigger any configured
+        notifications for problem resolution.
+      tags:
+        - Problems
+      parameters:
+        - $ref: '#/components/parameters/problemId'
+      requestBody:
+        description: Optional message to attach when closing the problem
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProblemCloseRequest'
+      responses:
+        '200':
+          description: The problem was successfully closed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemCloseResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /problems/{problemId}/comments:
+    get:
+      operationId: listProblemComments
+      summary: List comments on a problem
+      description: >-
+        Returns a list of all comments attached to the specified problem.
+        Comments are used for collaboration and tracking investigation notes
+        or actions taken.
+      tags:
+        - Problems
+      parameters:
+        - $ref: '#/components/parameters/problemId'
+        - name: nextPageKey
+          in: query
+          description: Cursor for the next page of results.
+          required: false
+          schema:
+            type: string
+        - name: pageSize
+          in: query
+          description: The number of comments to return per page. Default is 50.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 200
+            default: 50
+      responses:
+        '200':
+          description: A list of comments on the problem
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentCollection'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    post:
+      operationId: createProblemComment
+      summary: Add comment to problem
+      description: >-
+        Creates a new comment on the specified problem. Comments can include
+        a context field to categorize or reference external systems. Useful
+        for attaching remediation notes, ticket references, or investigation
+        findings.
+      tags:
+        - Problems
+      parameters:
+        - $ref: '#/components/parameters/problemId'
+      requestBody:
+        description: The comment to add to the problem
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentRequestBody'
+      responses:
+        '201':
+          description: The comment was successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /problems/{problemId}/comments/{commentId}:
+    get:
+      operationId: getProblemComment
+      summary: Get comment
+      description: >-
+        Returns the details of a specific comment on a problem, identified by
+        both the problem ID and the comment ID.
+      tags:
+        - Problems
+      parameters:
+        - $ref: '#/components/parameters/problemId'
+        - $ref: '#/components/parameters/commentId'
+      responses:
+        '200':
+          description: The comment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      operationId: updateProblemComment
+      summary: Update comment
+      description: >-
+        Updates the content or context of an existing comment on a problem.
+        Only the comment author or an administrator can update a comment.
+      tags:
+        - Problems
+      parameters:
+        - $ref: '#/components/parameters/problemId'
+        - $ref: '#/components/parameters/commentId'
+      requestBody:
+        description: The updated comment content
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentRequestBody'
+      responses:
+        '200':
+          description: The comment was successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      operationId: deleteProblemComment
+      summary: Delete comment
+      description: >-
+        Permanently deletes a specific comment from a problem. This action
+        cannot be undone. Only the comment author or an administrator can
+        delete a comment.
+      tags:
+        - Problems
+      parameters:
+        - $ref: '#/components/parameters/problemId'
+        - $ref: '#/components/parameters/commentId'
+      responses:
+        '204':
+          description: The comment was successfully deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  securitySchemes:
+    api-token:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: >-
+        Dynatrace API token. Use the format: Api-Token {your-token}
+        Required scopes: problems.read (for GET operations), problems.write (for POST/PUT/DELETE)
+
+  parameters:
+    problemId:
+      name: problemId
+      in: path
+      description: >-
+        The unique identifier of the problem. Obtained from the list problems
+        endpoint or from problem notification callbacks.
+      required: true
+      schema:
+        type: string
+    commentId:
+      name: commentId
+      in: path
+      description: The unique identifier of the comment.
+      required: true
+      schema:
+        type: string
+
+  responses:
+    BadRequest:
+      description: Bad request — invalid query parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized — missing or invalid API token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Forbidden:
+      description: Forbidden — the API token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    NotFound:
+      description: Not found — the specified problem or comment does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+
+  schemas:
+    Problem:
+      type: object
+      description: >-
+        Represents a Dynatrace-detected problem, which is an aggregated
+        set of related events indicating a service degradation. Problems are
+        detected and correlated by the Davis AI engine.
+      properties:
+        problemId:
+          type: string
+          description: >-
+            The internal unique identifier of the problem, e.g.,
+            -1234567890123456789_V2.
+        displayId:
+          type: string
+          description: >-
+            The human-readable problem identifier displayed in the Dynatrace
+            UI, e.g., P-123456.
+        title:
+          type: string
+          description: >-
+            The title summarizing the nature of the problem, generated by the
+            Davis AI.
+        severityLevel:
+          type: string
+          description: >-
+            The severity classification of the problem, indicating the type
+            of impact.
+          enum:
+            - AVAILABILITY
+            - ERROR
+            - PERFORMANCE
+            - RESOURCE_CONTENTION
+            - CUSTOM_ALERT
+        status:
+          type: string
+          description: The current status of the problem.
+          enum:
+            - OPEN
+            - RESOLVED
+        startTime:
+          type: integer
+          format: int64
+          description: The Unix timestamp in milliseconds when the problem was first detected.
+        endTime:
+          type: integer
+          format: int64
+          description: >-
+            The Unix timestamp in milliseconds when the problem was resolved.
+            Returns -1 if the problem is still open.
+        affectedEntities:
+          type: array
+          description: >-
+            The list of entities directly affected by the problem. These are
+            the entities where the anomaly was first detected.
+          items:
+            $ref: '#/components/schemas/EntityStub'
+        impactedEntities:
+          type: array
+          description: >-
+            The list of entities experiencing degradation as a result of the
+            problem, including downstream dependencies.
+          items:
+            $ref: '#/components/schemas/EntityStub'
+        rootCauseEntity:
+          description: >-
+            The entity identified by Davis AI as the root cause of the problem.
+            Null if the root cause could not be determined.
+          nullable: true
+          oneOf:
+            - $ref: '#/components/schemas/EntityStub'
+        managementZones:
+          type: array
+          description: >-
+            The management zones that contain the affected entities, used for
+            access control and scoping.
+          items:
+            $ref: '#/components/schemas/ManagementZone'
+        problemFilters:
+          type: array
+          description: >-
+            The alerting profiles (problem filters) that match this problem
+            and control notification routing.
+          items:
+            $ref: '#/components/schemas/AlertingProfileStub'
+
+    ProblemCollection:
+      type: object
+      description: A paginated collection of problems.
+      properties:
+        nextPageKey:
+          type: string
+          description: Cursor for the next page of results. Null if no more pages.
+          nullable: true
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of problems matching the query.
+        pageSize:
+          type: integer
+          description: The number of results returned on this page.
+        problems:
+          type: array
+          description: The list of problems on this page.
+          items:
+            $ref: '#/components/schemas/Problem'
+
+    ProblemCloseRequest:
+      type: object
+      description: Request body for closing a problem.
+      properties:
+        message:
+          type: string
+          description: >-
+            An optional message explaining why the problem is being closed.
+            This is stored as a closing comment on the problem.
+
+    ProblemCloseResult:
+      type: object
+      description: The result returned after closing a problem.
+      properties:
+        problemId:
+          type: string
+          description: The ID of the closed problem.
+        closing:
+          type: boolean
+          description: >-
+            Whether the problem is in the process of closing. The problem
+            may take a short time to fully transition to RESOLVED status.
+
+    CommentRequestBody:
+      type: object
+      description: The request body for creating or updating a problem comment.
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: The text content of the comment.
+        context:
+          type: string
+          description: >-
+            An optional context reference for the comment, such as a ticket
+            ID, a link to a runbook, or a category label.
+
+    Comment:
+      type: object
+      description: A single comment attached to a problem.
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the comment.
+        createdAtTimestamp:
+          type: integer
+          format: int64
+          description: The Unix timestamp in milliseconds when the comment was created.
+        authorName:
+          type: string
+          description: The display name of the user who created the comment.
+        content:
+          type: string
+          description: The text content of the comment.
+        context:
+          type: string
+          description: Optional context reference attached to the comment.
+
+    CommentCollection:
+      type: object
+      description: A paginated collection of problem comments.
+      properties:
+        nextPageKey:
+          type: string
+          description: Cursor for the next page of results.
+          nullable: true
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of comments.
+        comments:
+          type: array
+          description: The list of comments on this page.
+          items:
+            $ref: '#/components/schemas/Comment'
+
+    EntityStub:
+      type: object
+      description: A lightweight reference to a monitored entity.
+      properties:
+        entityId:
+          type: string
+          description: >-
+            The unique identifier of the entity, e.g.,
+            SERVICE-1234567890ABCDEF.
+        name:
+          type: string
+          description: The display name of the entity.
+        type:
+          type: string
+          description: >-
+            The type of the entity, e.g., SERVICE, HOST, PROCESS_GROUP,
+            APPLICATION.
+
+    ManagementZone:
+      type: object
+      description: A management zone reference.
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the management zone.
+        name:
+          type: string
+          description: The display name of the management zone.
+
+    AlertingProfileStub:
+      type: object
+      description: A reference to an alerting profile (problem filter).
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the alerting profile.
+        name:
+          type: string
+          description: The display name of the alerting profile.
+
+    ErrorEnvelope:
+      type: object
+      description: Error response envelope returned when a request fails.
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+
+    Error:
+      type: object
+      description: Details of an API error.
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+        message:
+          type: string
+          description: A human-readable description of the error.
+        constraintViolations:
+          type: array
+          description: A list of constraint violations for validation errors (HTTP 400).
+          items:
+            $ref: '#/components/schemas/ConstraintViolation'
+
+    ConstraintViolation:
+      type: object
+      description: Details of a single constraint violation in a request.
+      properties:
+        path:
+          type: string
+          description: The JSON path to the field that caused the violation.
+        message:
+          type: string
+          description: A description of the constraint violation.
+        parameterLocation:
+          type: string
+          description: The location of the violating parameter (QUERY, PATH, BODY).
+        location:
+          type: string
+          description: The location detail for the violation.

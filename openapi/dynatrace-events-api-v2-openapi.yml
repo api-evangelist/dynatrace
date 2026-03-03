@@ -1,0 +1,465 @@
+openapi: 3.1.0
+info:
+  title: Dynatrace Events API v2
+  version: 2.0.0
+  description: >-
+    The Dynatrace Events API v2 enables you to push custom events into a
+    Dynatrace environment and retrieve event data from monitored systems. It
+    supports creating deployment events, custom annotations, configuration
+    events, and performance events targeting specific entities. Events ingested
+    via this API are subject to DDU (Davis Data Units) licensing and may trigger
+    Dynatrace AI analysis.
+  contact:
+    name: Dynatrace Support
+    url: https://www.dynatrace.com/support/
+  license:
+    name: Dynatrace Terms of Service
+    url: https://www.dynatrace.com/company/trust-center/terms/
+externalDocs:
+  description: Dynatrace Events API v2 Documentation
+  url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
+
+servers:
+  - url: https://{environmentId}.live.dynatrace.com/api/v2
+    description: Dynatrace SaaS environment
+    variables:
+      environmentId:
+        description: The unique identifier of your Dynatrace environment
+        default: mySampleEnv
+
+tags:
+  - name: Events
+    description: Operations for querying and ingesting custom events
+
+security:
+  - api-token: []
+
+paths:
+  /events:
+    get:
+      operationId: listEvents
+      summary: List events
+      description: >-
+        Returns a list of events from the Dynatrace environment matching the
+        specified filters. Results are paginated; use nextPageKey from the
+        response to retrieve additional pages. Time range defaults to the last
+        two hours if not specified.
+      tags:
+        - Events
+      parameters:
+        - name: nextPageKey
+          in: query
+          description: >-
+            The cursor for the next page of results, obtained from the
+            nextPageKey field of a previous response. When this parameter is
+            set, all other query parameters except pageSize are ignored.
+          required: false
+          schema:
+            type: string
+        - name: pageSize
+          in: query
+          description: >-
+            The number of events to return per page. Default is 50, maximum
+            is 1000.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 1000
+            default: 50
+        - name: from
+          in: query
+          description: >-
+            The start of the queried time range. Use a relative expression
+            (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds.
+            Default is now-2h.
+          required: false
+          schema:
+            type: string
+        - name: to
+          in: query
+          description: >-
+            The end of the queried time range. Use a relative expression (now),
+            ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is
+            now.
+          required: false
+          schema:
+            type: string
+        - name: eventSelector
+          in: query
+          description: >-
+            Defines the scope of the query using the event selector syntax.
+            For example, eventType("CUSTOM_DEPLOYMENT") to filter by type, or
+            title("My event") to filter by title. Multiple conditions can be
+            combined.
+          required: false
+          schema:
+            type: string
+        - name: entitySelector
+          in: query
+          description: >-
+            Filters events to those affecting entities matching this selector.
+            Use the standard entity selector syntax, e.g., type(HOST),tag(prod).
+          required: false
+          schema:
+            type: string
+        - name: eventType
+          in: query
+          description: >-
+            Filters results to events of the specified type. For a full list of
+            types, see the eventType enum in EventIngestPayload.
+          required: false
+          schema:
+            type: string
+            enum:
+              - AVAILABILITY_EVENT
+              - CUSTOM_ALERT
+              - CUSTOM_ANNOTATION
+              - CUSTOM_CONFIGURATION
+              - CUSTOM_DEPLOYMENT
+              - ERROR_EVENT
+              - MARKED_FOR_TERMINATION
+              - PERFORMANCE_EVENT
+              - RESOURCE_CONTENTION_EVENT
+      responses:
+        '200':
+          description: A paginated list of events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventCollection'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /events/{eventId}:
+    get:
+      operationId: getEvent
+      summary: Get event by ID
+      description: >-
+        Returns the details of a specific event identified by its event ID.
+        The event ID is obtained from the list events endpoint or from event
+        notification callbacks.
+      tags:
+        - Events
+      parameters:
+        - name: eventId
+          in: path
+          description: The unique identifier of the event to retrieve.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The event details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /events/ingest:
+    post:
+      operationId: ingestEvent
+      summary: Ingest a custom event
+      description: >-
+        Ingests a custom event into the Dynatrace environment. The event is
+        associated with one or more entities specified by the entitySelector.
+        Custom events are used to annotate the timeline with deployment
+        information, configuration changes, or custom alerts. Events consume
+        Davis Data Units (DDUs). The API token requires the events.ingest scope.
+      tags:
+        - Events
+      requestBody:
+        description: The custom event to ingest
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventIngestPayload'
+            example:
+              eventType: CUSTOM_DEPLOYMENT
+              title: Production deployment v2.5.1
+              entitySelector: type(SERVICE),tag(production)
+              startTime: 1609459200000
+              properties:
+                version: v2.5.1
+                deployedBy: CI/CD pipeline
+                remediationAction: https://runbook.example.com/rollback
+      responses:
+        '201':
+          description: The event was successfully ingested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventIngestResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+components:
+  securitySchemes:
+    api-token:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: >-
+        Dynatrace API token. Use the format: Api-Token {your-token}
+        Required scopes: events.read (for GET operations), events.ingest (for POST /events/ingest)
+
+  responses:
+    BadRequest:
+      description: Bad request — invalid query parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized — missing or invalid API token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Forbidden:
+      description: Forbidden — the API token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    NotFound:
+      description: Not found — the specified event does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+
+  schemas:
+    EventIngestPayload:
+      type: object
+      description: >-
+        The payload for ingesting a custom event into Dynatrace. All events
+        require at least an eventType and title. Custom events can target
+        specific entities, include a time window, and carry additional metadata
+        as key-value properties.
+      required:
+        - eventType
+        - title
+      properties:
+        eventType:
+          type: string
+          description: >-
+            The type of the custom event. Determines how the event is
+            categorized and whether it triggers alerts or problem detection.
+          enum:
+            - AVAILABILITY_EVENT
+            - CUSTOM_ALERT
+            - CUSTOM_ANNOTATION
+            - CUSTOM_CONFIGURATION
+            - CUSTOM_DEPLOYMENT
+            - ERROR_EVENT
+            - MARKED_FOR_TERMINATION
+            - PERFORMANCE_EVENT
+            - RESOURCE_CONTENTION_EVENT
+        timeout:
+          type: integer
+          description: >-
+            How long the event remains open, in minutes, if no endTime is
+            specified. Range: 1 to 60 minutes. If not specified, the event
+            closes after a short default duration.
+          minimum: 1
+          maximum: 60
+        entitySelector:
+          type: string
+          description: >-
+            The entity selector specifying which entities the event should be
+            associated with. For example, type(SERVICE),tag(production).
+            Required for most event types.
+        title:
+          type: string
+          description: >-
+            The title of the event. This is displayed in the Dynatrace UI and
+            in problem notifications. Required.
+        startTime:
+          type: integer
+          format: int64
+          description: >-
+            The start time of the event as a Unix timestamp in milliseconds.
+            If not specified, defaults to the current time.
+        endTime:
+          type: integer
+          format: int64
+          description: >-
+            The end time of the event as a Unix timestamp in milliseconds.
+            If specified, creates a closed event covering the time range.
+        properties:
+          type: object
+          description: >-
+            Additional key-value metadata to attach to the event. Maximum of
+            30 key-value pairs. Keys and values must be strings.
+          additionalProperties:
+            type: string
+          maxProperties: 30
+
+    EventIngestResult:
+      type: object
+      description: The result returned after successfully ingesting a custom event.
+      properties:
+        reportCount:
+          type: integer
+          description: >-
+            The number of event reports created. This may be greater than 1
+            if the entitySelector matched multiple entities.
+        eventIngestResults:
+          type: array
+          description: Details of each individual event ingestion result.
+          items:
+            $ref: '#/components/schemas/EventIngestResultItem'
+
+    EventIngestResultItem:
+      type: object
+      description: The result of ingesting an event for a single entity.
+      properties:
+        eventId:
+          type: string
+          description: The unique identifier assigned to the created event.
+        status:
+          type: string
+          description: >-
+            The ingestion status for this entity. OK indicates success;
+            other values indicate warnings or errors.
+
+    Event:
+      type: object
+      description: >-
+        Represents a single event in the Dynatrace environment. Events can
+        be ingested via the API or detected automatically by Dynatrace.
+      properties:
+        eventId:
+          type: string
+          description: The unique identifier of the event.
+        eventType:
+          type: string
+          description: The type of the event.
+        title:
+          type: string
+          description: The display title of the event.
+        startTime:
+          type: integer
+          format: int64
+          description: The start time of the event as a Unix timestamp in milliseconds.
+        endTime:
+          type: integer
+          format: int64
+          description: >-
+            The end time of the event as a Unix timestamp in milliseconds.
+            Null for open events.
+          nullable: true
+        entityId:
+          $ref: '#/components/schemas/EntityStub'
+        properties:
+          type: object
+          description: Additional key-value metadata attached to the event.
+          additionalProperties:
+            type: string
+        status:
+          type: string
+          description: >-
+            The current status of the event. OPEN indicates the event is
+            still active; CLOSED indicates it has ended.
+          enum:
+            - OPEN
+            - CLOSED
+
+    EventCollection:
+      type: object
+      description: A paginated collection of events.
+      properties:
+        nextPageKey:
+          type: string
+          description: >-
+            The cursor for the next page of results. Null if there are no more
+            pages.
+          nullable: true
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of events matching the query.
+        pageSize:
+          type: integer
+          description: The number of results returned on this page.
+        events:
+          type: array
+          description: The list of events on this page.
+          items:
+            $ref: '#/components/schemas/Event'
+
+    EntityStub:
+      type: object
+      description: A lightweight reference to a monitored entity.
+      properties:
+        entityId:
+          type: string
+          description: >-
+            The unique identifier of the entity, e.g.,
+            SERVICE-1234567890ABCDEF.
+        name:
+          type: string
+          description: The display name of the entity.
+        type:
+          type: string
+          description: >-
+            The type of the entity, e.g., SERVICE, HOST, PROCESS_GROUP,
+            APPLICATION.
+
+    ErrorEnvelope:
+      type: object
+      description: Error response envelope returned when a request fails.
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+
+    Error:
+      type: object
+      description: Details of an API error.
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+        message:
+          type: string
+          description: A human-readable description of the error.
+        constraintViolations:
+          type: array
+          description: A list of constraint violations for validation errors (HTTP 400).
+          items:
+            $ref: '#/components/schemas/ConstraintViolation'
+
+    ConstraintViolation:
+      type: object
+      description: Details of a single constraint violation in a request.
+      properties:
+        path:
+          type: string
+          description: The JSON path to the field that caused the violation.
+        message:
+          type: string
+          description: A description of the constraint violation.
+        parameterLocation:
+          type: string
+          description: The location of the violating parameter (QUERY, PATH, BODY).
+        location:
+          type: string
+          description: The location detail for the violation.

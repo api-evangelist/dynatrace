@@ -1,0 +1,604 @@
+openapi: 3.1.0
+info:
+  title: Dynatrace Metrics API v2
+  version: 2.0.0
+  description: >-
+    The Dynatrace Metrics API v2 allows you to query, ingest, and manage
+    time-series metric data within a Dynatrace environment. It supports
+    retrieving metric descriptors, querying data points with flexible selectors
+    (including transformations and aggregations), and ingesting custom metrics
+    from external sources using the MINT line protocol.
+  contact:
+    name: Dynatrace Support
+    url: https://www.dynatrace.com/support/
+  license:
+    name: Dynatrace Terms of Service
+    url: https://www.dynatrace.com/company/trust-center/terms/
+externalDocs:
+  description: Dynatrace Metrics API v2 Documentation
+  url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/metric-v2
+
+servers:
+  - url: https://{environmentId}.live.dynatrace.com/api/v2
+    description: Dynatrace SaaS environment
+    variables:
+      environmentId:
+        description: The unique identifier of your Dynatrace environment
+        default: mySampleEnv
+
+tags:
+  - name: Metrics
+    description: Operations for querying, managing, and ingesting time-series metrics
+
+security:
+  - api-token: []
+
+paths:
+  /metrics:
+    get:
+      operationId: listMetrics
+      summary: List all metrics
+      description: >-
+        Returns a list of all metrics available in the environment. You can
+        filter the list by metric selector, fields to return, and a time range
+        using the writtenSince parameter. Results are paginated; use nextPageKey
+        to retrieve subsequent pages.
+      tags:
+        - Metrics
+      parameters:
+        - name: nextPageKey
+          in: query
+          description: >-
+            The cursor for the next page of results. Obtained from the
+            nextPageKey field of a previous response. When this parameter is set,
+            all other query parameters are ignored.
+          required: false
+          schema:
+            type: string
+        - name: pageSize
+          in: query
+          description: The number of metric descriptors to return per page. Default is 50, maximum is 500.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 500
+            default: 50
+        - name: metricSelector
+          in: query
+          description: >-
+            Selects metrics for the response. Use the metric selector syntax to
+            filter metrics by key, entity type, or other properties. For example,
+            builtin:host.cpu.usage filters to only that metric.
+          required: false
+          schema:
+            type: string
+        - name: fields
+          in: query
+          description: >-
+            Defines the list of metric properties included in the response. Use
+            a comma-separated list of property names. To add a property, prefix
+            it with a plus (+) sign, e.g., +defaultAggregation.
+          required: false
+          schema:
+            type: string
+        - name: writtenSince
+          in: query
+          description: >-
+            Filters the resulted set of metrics to those that have been written
+            after the specified time. Use the timeframe format: now-1h, now-1d,
+            or an absolute timestamp.
+          required: false
+          schema:
+            type: string
+        - name: metricDescriptors
+          in: query
+          description: Whether to include metric descriptor details in the response.
+          required: false
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: A list of metric descriptors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricDescriptorCollection'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /metrics/{metricKey}:
+    get:
+      operationId: getMetricDescriptor
+      summary: Get metric descriptor
+      description: >-
+        Returns the descriptor for the specified metric key. The descriptor
+        includes metadata such as the display name, description, unit, supported
+        aggregation types, and entity dimensions.
+      tags:
+        - Metrics
+      parameters:
+        - $ref: '#/components/parameters/metricKey'
+      responses:
+        '200':
+          description: The metric descriptor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricDescriptor'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      operationId: deleteCustomMetric
+      summary: Delete custom metric
+      description: >-
+        Deletes the specified custom metric from the environment. Only custom
+        metrics (those not prefixed with builtin:) can be deleted. Built-in
+        metrics cannot be deleted.
+      tags:
+        - Metrics
+      parameters:
+        - $ref: '#/components/parameters/metricKey'
+      responses:
+        '204':
+          description: The custom metric was successfully deleted
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /metrics/query:
+    get:
+      operationId: queryMetricData
+      summary: Query metric data points
+      description: >-
+        Returns data points for the specified metrics. The metric selector
+        determines which metrics and transformations to apply. Time range is
+        specified with from and to parameters. Results can be scoped to specific
+        entities using entitySelector or management zones using mzSelector.
+        Data is returned at the specified resolution (e.g., 1h, 5m).
+      tags:
+        - Metrics
+      parameters:
+        - name: metricSelector
+          in: query
+          description: >-
+            Selects metrics for the query. Required. Supports transformations
+            such as :avg, :max, :sum, :splitBy, :filter. For example,
+            builtin:host.cpu.usage:avg:auto.
+          required: true
+          schema:
+            type: string
+        - name: resolution
+          in: query
+          description: >-
+            The desired time resolution of the data points. Valid units are m
+            (minutes), h (hours), d (days). For example, 5m, 1h. Use Inf for
+            a single data point aggregated over the full time range.
+          required: false
+          schema:
+            type: string
+        - name: from
+          in: query
+          description: >-
+            The start of the queried time range. Use one of: relative expression
+            (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds.
+            Default is now-2h.
+          required: false
+          schema:
+            type: string
+        - name: to
+          in: query
+          description: >-
+            The end of the queried time range. Use one of: relative expression
+            (now), ISO 8601 timestamp, or Unix timestamp in milliseconds.
+            Default is now.
+          required: false
+          schema:
+            type: string
+        - name: entitySelector
+          in: query
+          description: >-
+            Filters results to entities matching the selector. Use the entity
+            selector syntax, e.g., type(HOST),tag(production). Only metrics
+            with an entity dimension can be filtered this way.
+          required: false
+          schema:
+            type: string
+        - name: mzSelector
+          in: query
+          description: >-
+            Filters results to entities belonging to the specified management
+            zone. Use the management zone selector syntax, e.g., mzName(MyZone).
+          required: false
+          schema:
+            type: string
+        - name: selectorInputMetrics
+          in: query
+          description: >-
+            When set to true, the response includes the input metrics used by
+            the selector before transformations are applied.
+          required: false
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Metric data points for the specified query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricData'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /metrics/ingest:
+    post:
+      operationId: ingestCustomMetrics
+      summary: Ingest custom metrics
+      description: >-
+        Ingests custom metric data points into the Dynatrace environment using
+        the MINT (Metric INgest Text) line protocol. Each line represents one
+        data point. Requires the metrics.ingest API token scope. Data is
+        processed asynchronously and may take a short time to appear in queries.
+      tags:
+        - Metrics
+      requestBody:
+        description: >-
+          Metric data in MINT line protocol format. Each line follows the format:
+          metric.key[,dimensions] gauge|count|delta=value [timestamp_ms]
+          For example: custom.temperature,location=datacenter-1 gauge=72.3 1609459200000
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              example: |
+                custom.response.time,host=web-01,environment=production gauge=250.5 1609459200000
+                custom.error.count,service=auth-service count=12 1609459200000
+      responses:
+        '202':
+          description: The metric data was accepted for ingestion
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+components:
+  securitySchemes:
+    api-token:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: >-
+        Dynatrace API token. Use the format: Api-Token {your-token}
+        Required scopes: metrics.read (for GET operations), metrics.ingest (for POST /metrics/ingest)
+
+  parameters:
+    metricKey:
+      name: metricKey
+      in: path
+      description: >-
+        The key of the metric to operate on. For example,
+        builtin:host.cpu.usage or custom.my.metric.
+      required: true
+      schema:
+        type: string
+
+  responses:
+    BadRequest:
+      description: Bad request — invalid query parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized — missing or invalid API token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Forbidden:
+      description: Forbidden — the API token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    NotFound:
+      description: Not found — the specified metric does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+
+  schemas:
+    MetricDescriptor:
+      type: object
+      description: >-
+        Describes a single metric including its metadata, supported aggregations,
+        entity dimensions, and default aggregation settings.
+      properties:
+        metricId:
+          type: string
+          description: >-
+            The fully qualified key of the metric, potentially including applied
+            transformations. For example, builtin:host.cpu.usage:avg.
+        displayName:
+          type: string
+          description: The human-readable display name of the metric.
+        description:
+          type: string
+          description: A detailed description of what the metric measures.
+        unit:
+          type: string
+          description: >-
+            The unit of the metric values. For example, Percent, Byte, MilliSecond.
+        dduBillable:
+          type: boolean
+          description: Whether ingesting this metric consumes Davis Data Units (DDUs).
+        created:
+          type: integer
+          format: int64
+          description: The Unix timestamp in milliseconds when the metric was created.
+        lastWritten:
+          type: integer
+          format: int64
+          description: The Unix timestamp in milliseconds when the metric was last written.
+        entityType:
+          type: array
+          description: >-
+            The entity types that can be used to filter this metric, e.g.,
+            HOST, SERVICE, PROCESS_GROUP.
+          items:
+            type: string
+        aggregationTypes:
+          type: array
+          description: >-
+            The list of aggregation types supported for this metric. Valid values
+            include min, max, sum, count, avg, median, and percentile.
+          items:
+            type: string
+            enum:
+              - min
+              - max
+              - sum
+              - count
+              - avg
+              - median
+              - percentile
+        dimensionDefinitions:
+          type: array
+          description: >-
+            The list of dimension definitions for this metric. Each dimension
+            provides a label for data splitting.
+          items:
+            $ref: '#/components/schemas/MetricDimensionDefinition'
+        transformations:
+          type: array
+          description: >-
+            The list of transformation expressions that can be applied to this
+            metric using the metric selector.
+          items:
+            type: string
+        defaultAggregation:
+          $ref: '#/components/schemas/MetricDefaultAggregation'
+
+    MetricDimensionDefinition:
+      type: object
+      description: Defines a single dimension of a metric.
+      properties:
+        key:
+          type: string
+          description: The unique key identifying this dimension.
+        name:
+          type: string
+          description: The display name of the dimension.
+        type:
+          type: string
+          description: >-
+            The type of the dimension. For example, ENTITY for entity dimensions
+            or STRING for string dimensions.
+        displayName:
+          type: string
+          description: The human-readable display name of the dimension.
+
+    MetricDefaultAggregation:
+      type: object
+      description: The default aggregation setting for the metric.
+      properties:
+        type:
+          type: string
+          description: >-
+            The aggregation type to apply when no aggregation is specified in
+            the query. For example, avg, sum, or max.
+          enum:
+            - min
+            - max
+            - sum
+            - count
+            - avg
+            - median
+            - percentile
+        parameter:
+          type: number
+          format: double
+          description: >-
+            The parameter for the aggregation type, used for percentile
+            aggregation to specify the percentile value (e.g., 95).
+
+    MetricDescriptorCollection:
+      type: object
+      description: >-
+        A paginated collection of metric descriptors returned by the list
+        metrics endpoint.
+      properties:
+        nextPageKey:
+          type: string
+          description: >-
+            The cursor for the next page of results. Include this value as the
+            nextPageKey query parameter in the next request. Null if there are
+            no more results.
+          nullable: true
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of metrics available matching the query.
+        resolution:
+          type: string
+          description: The resolution of the data if applicable.
+        metrics:
+          type: array
+          description: The list of metric descriptors on this page.
+          items:
+            $ref: '#/components/schemas/MetricDescriptor'
+
+    MetricData:
+      type: object
+      description: >-
+        The result of a metric query, containing time-series data for each
+        requested metric and dimension combination.
+      properties:
+        resolution:
+          type: string
+          description: >-
+            The resolution of the data points in the response. For example, 1h
+            means each data point represents one hour of data.
+        nextPageKey:
+          type: string
+          description: >-
+            The cursor for the next page of results if the response is paginated.
+            Null if all results are returned.
+          nullable: true
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of data series in the result.
+        result:
+          type: array
+          description: >-
+            The list of metric series collections, one per metric key matched
+            by the selector.
+          items:
+            $ref: '#/components/schemas/MetricSeriesCollection'
+
+    MetricSeriesCollection:
+      type: object
+      description: >-
+        A collection of time-series data for a single metric key, containing
+        one series per unique dimension combination.
+      properties:
+        metricId:
+          type: string
+          description: >-
+            The metric key for this collection, including any applied
+            transformations.
+        data:
+          type: array
+          description: >-
+            The list of individual time series, one per unique combination of
+            dimension values.
+          items:
+            $ref: '#/components/schemas/MetricSeries'
+
+    MetricSeries:
+      type: object
+      description: >-
+        A single time series representing metric values for a specific
+        combination of dimension values over a time range.
+      required:
+        - timestamps
+        - values
+      properties:
+        dimensionMap:
+          type: object
+          description: >-
+            A map of dimension names to their values for this specific series.
+            For example, {"host": "web-01", "environment": "production"}.
+          additionalProperties:
+            type: string
+        dimensions:
+          type: array
+          description: >-
+            An ordered list of dimension values corresponding to the metric's
+            dimension definitions.
+          items:
+            type: string
+        timestamps:
+          type: array
+          description: >-
+            Unix timestamps in milliseconds for each data point in the series.
+            Aligns one-to-one with the values array.
+          items:
+            type: integer
+            format: int64
+        values:
+          type: array
+          description: >-
+            Metric values corresponding to each timestamp. A null value indicates
+            no data was recorded for that time slot (gap in the data).
+          items:
+            type:
+              - number
+              - 'null'
+            format: double
+
+    ErrorEnvelope:
+      type: object
+      description: Error response envelope returned when a request fails.
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+
+    Error:
+      type: object
+      description: Details of an API error.
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+        message:
+          type: string
+          description: A human-readable description of the error.
+        constraintViolations:
+          type: array
+          description: >-
+            A list of constraint violations for validation errors (HTTP 400).
+          items:
+            $ref: '#/components/schemas/ConstraintViolation'
+
+    ConstraintViolation:
+      type: object
+      description: Details of a single constraint violation in a request.
+      properties:
+        path:
+          type: string
+          description: The JSON path to the field that caused the violation.
+        message:
+          type: string
+          description: A description of the constraint violation.
+        parameterLocation:
+          type: string
+          description: The location of the violating parameter (QUERY, PATH, BODY).
+        location:
+          type: string
+          description: The location detail for the violation.

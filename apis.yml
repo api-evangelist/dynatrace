@@ -17,6 +17,8 @@ apis:
     type: Documentation
   - url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/dynatrace-api-authentication
     type: Authentication
+  - url: https://developer.dynatrace.com/develop/sdks/client-classic-environment-v2/
+    type: Client Libraries
   description: >-
     The Dynatrace Environment API provides access to monitoring data and
     configuration settings for a specific Dynatrace environment. It includes
@@ -125,6 +127,8 @@ apis:
     type: Reference
   - url: openapi/dynatrace-account-management-api-openapi.yml
     type: OpenAPI
+  - url: https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/environment-management-api
+    type: Getting Started
   description: >-
     The Dynatrace Account Management API allows you to manage your Dynatrace
     account including users, groups, permissions, environments, and service
@@ -306,12 +310,373 @@ apis:
     asynchronously using a POST to initiate and GET to poll for results, providing
     programmatic access to unified observability, security, and business data
     stored in Grail for custom analytics and automated workflows.
+- aid: dynatrace:dynatrace-access-tokens-api-v2
+  name: Dynatrace Access Tokens API v2
+  tags:
+  - Tokens
+  - Authentication
+  - Security
+  - Access Management
+  humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/tokens-v2
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  image: https://www.dynatrace.com/logo.png
+  properties:
+  - url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/tokens-v2
+    type: Documentation
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/tokens-v2/api-tokens
+    type: Reference
+  - url: https://docs.dynatrace.com/docs/manage/identity-access-management/access-tokens-and-oauth-clients/access-tokens
+    type: Getting Started
+  description: >-
+    The Dynatrace Access Tokens API v2 allows you to create, list, update, and
+    delete API access tokens and ActiveGate tokens within a Dynatrace
+    environment. It provides fine-grained scope management for controlling access
+    to specific product functionality, and supports both environment-level API
+    tokens and ActiveGate connection tokens.
+- aid: dynatrace:dynatrace-slo-api
+  name: Dynatrace Service-Level Objectives API
+  tags:
+  - SLO
+  - Service Level Objectives
+  - Reliability
+  - Observability
+  humanURL: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/service-level-objectives
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  image: https://www.dynatrace.com/logo.png
+  properties:
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/service-level-objectives
+    type: Documentation
+  - url: https://docs.dynatrace.com/docs/deliver/service-level-objectives
+    type: Reference
+  description: >-
+    The Dynatrace Service-Level Objectives API is a management API for creating,
+    editing, listing, deleting, and evaluating SLOs and SLO templates within a
+    Dynatrace environment. It enables programmatic definition of reliability
+    targets and automated evaluation of service-level compliance based on
+    Dynatrace monitoring data.
+- aid: dynatrace:dynatrace-releases-api
+  name: Dynatrace Releases API
+  tags:
+  - Releases
+  - Deployment
+  - Version Management
+  - Observability
+  humanURL: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/releaseapi
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  image: https://www.dynatrace.com/logo.png
+  properties:
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/releaseapi
+    type: Documentation
+  description: >-
+    The Dynatrace Releases API provides an overview of releases deployed in your
+    monitored environment. It allows you to retrieve information about software
+    releases, deployment versions, and release stages, enabling automated
+    tracking of deployment activity and version management across monitored
+    entities.
+- aid: dynatrace:dynatrace-network-zones-api
+  name: Dynatrace Network Zones API
+  tags:
+  - Network Zones
+  - Infrastructure
+  - Networking
+  - Monitoring
+  humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/network-zones
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  image: https://www.dynatrace.com/logo.png
+  properties:
+  - url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/network-zones
+    type: Documentation
+  - url: https://docs.dynatrace.com/docs/manage/network-zones/network-zones-basic-info
+    type: Reference
+  description: >-
+    The Dynatrace Network Zones API enables you to manage network zones within a
+    Dynatrace environment. It provides endpoints for listing all network zones,
+    retrieving zone details including OneAgent counts, creating and updating zone
+    configurations, deleting zones, and getting global network zone configuration
+    settings.
+- aid: dynatrace:dynatrace-deployment-api
+  name: Dynatrace Deployment API
+  tags:
+  - Deployment
+  - OneAgent
+  - ActiveGate
+  - Installation
+  humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/deployment
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  image: https://www.dynatrace.com/logo.png
+  properties:
+  - url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/deployment
+    type: Documentation
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/deployment/oneagent
+    type: Reference
+  description: >-
+    The Dynatrace Deployment API provides endpoints for downloading OneAgent and
+    ActiveGate installers, listing available installer versions, and retrieving
+    ActiveGate endpoint information. It enables automated deployment and upgrade
+    of monitoring agents across your infrastructure using the InstallerDownload
+    token scope.
+- aid: dynatrace:dynatrace-audit-logs-api
+  name: Dynatrace Audit Logs API
+  tags:
+  - Audit Logs
+  - Security
+  - Compliance
+  - Governance
+  humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/audit-logs
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  image: https://www.dynatrace.com/logo.png
+  properties:
+  - url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/audit-logs
+    type: Documentation
+  - url: https://docs.dynatrace.com/docs/manage/data-privacy-and-security/configuration/audit-logs-api
+    type: Reference
+  description: >-
+    The Dynatrace Audit Logs API provides access to audit-related events within
+    a Dynatrace environment including logins, logouts, configuration changes,
+    and API token modifications. Audit logs are retained for 30 days and support
+    filtering by event type, user, and time range for security monitoring and
+    compliance purposes.
+- aid: dynatrace:dynatrace-business-events-api-v2
+  name: Dynatrace Business Events API v2
+  tags:
+  - Business Events
+  - Business Analytics
+  - Observability
+  - Business Intelligence
+  humanURL: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/business-analytics-v2
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  image: https://www.dynatrace.com/logo.png
+  properties:
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/business-analytics-v2
+    type: Documentation
+  - url: https://docs.dynatrace.com/docs/observe/business-observability/bo-api-ingest
+    type: Reference
+  description: >-
+    The Dynatrace Business Events API v2 enables ingestion of business event data
+    in JSON format into Dynatrace via the bizevents/ingest endpoint. It supports
+    business-grade reporting and analytics through the Grail data lakehouse with
+    lossless data prioritization, deep data capture from in-flight payloads, and
+    powerful ad-hoc queries for business observability use cases.
+- aid: dynatrace:dynatrace-application-security-api
+  name: Dynatrace Application Security API
+  tags:
+  - Security
+  - Vulnerabilities
+  - Application Security
+  - Runtime Protection
+  humanURL: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/application-security/vulnerabilities
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  image: https://www.dynatrace.com/logo.png
+  properties:
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/application-security/vulnerabilities
+    type: Documentation
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/application-security/attacks
+    type: Reference
+  - url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/application-security/davis-security-advice
+    type: Reference
+  description: >-
+    The Dynatrace Application Security API provides endpoints for querying
+    vulnerabilities, vulnerability details, remediation items, vulnerable
+    functions, and security attacks within a Dynatrace environment. It includes
+    the Vulnerabilities API, Attacks API, and Davis Security Advisor API for
+    comprehensive runtime application security analysis and threat detection.
+- aid: dynatrace:dynatrace-custom-tags-api
+  name: Dynatrace Custom Tags API
+  tags:
+  - Tags
+  - Entities
+  - Metadata
+  - Monitoring
+  humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/custom-tags
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  image: https://www.dynatrace.com/logo.png
+  properties:
+  - url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/custom-tags
+    type: Documentation
+  description: >-
+    The Dynatrace Custom Tags API allows you to manage custom tags on monitored
+    entities within a Dynatrace environment. It provides endpoints for reading,
+    adding, and removing tags from entities such as hosts, services, processes,
+    and applications, enabling automated organization and categorization of
+    monitored resources.
+- aid: dynatrace:dynatrace-activegate-api
+  name: Dynatrace ActiveGate API
+  tags:
+  - ActiveGate
+  - Infrastructure
+  - Deployment
+  - Monitoring
+  humanURL: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/activegates
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  image: https://www.dynatrace.com/logo.png
+  properties:
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/activegates
+    type: Documentation
+  - url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/tokens-v2/activegate-tokens
+    type: Reference
+  description: >-
+    The Dynatrace ActiveGate API enables you to view and manage ActiveGate
+    configurations within a Dynatrace environment. It provides endpoints for
+    listing ActiveGates, retrieving ActiveGate details, managing auto-update
+    configurations, and monitoring auto-update job status for Environment
+    ActiveGates.
+- aid: dynatrace:dynatrace-credential-vault-api
+  name: Dynatrace Credential Vault API
+  tags:
+  - Credentials
+  - Secrets
+  - Security
+  - Synthetic Monitoring
+  humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/credential-vault
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  image: https://www.dynatrace.com/logo.png
+  properties:
+  - url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/credential-vault
+    type: Documentation
+  - url: https://docs.dynatrace.com/docs/manage/credential-vault
+    type: Reference
+  description: >-
+    The Dynatrace Credential Vault API enables management of credentials used
+    for synthetic browser and HTTP monitors within a Dynatrace environment. It
+    supports creating, listing, updating, and deleting credential sets of type
+    certificate, public certificate, token, and username/password for use in
+    synthetic monitoring configurations.
+- aid: dynatrace:dynatrace-document-api
+  name: Dynatrace Document API
+  tags:
+  - Documents
+  - Dashboards
+  - Notebooks
+  - Platform
+  humanURL: https://docs.dynatrace.com/docs/analyze-explore-automate/dashboards-and-notebooks/document-api
+  baseURL: https://mySampleEnv.live.dynatrace.com/platform/document/v1
+  image: https://www.dynatrace.com/logo.png
+  properties:
+  - url: https://docs.dynatrace.com/docs/analyze-explore-automate/dashboards-and-notebooks/document-api
+    type: Documentation
+  - url: https://developer.dynatrace.com/develop/sdks/client-document/
+    type: Client Libraries
+  - url: https://developer.dynatrace.com/plan/platform-services/document-service/
+    type: Reference
+  description: >-
+    The Dynatrace Document API provides a platform service for creating,
+    managing, and sharing documents such as dashboards, notebooks, and
+    launchpads within Dynatrace. It persists content-agnostic documents with
+    metadata and supports querying by document type, enabling programmatic
+    management of analytical and visualization assets.
+- aid: dynatrace:dynatrace-grail-bucket-management-api
+  name: Dynatrace Grail Bucket Management API
+  tags:
+  - Grail
+  - Storage
+  - Data Management
+  - Platform
+  humanURL: https://developer.dynatrace.com/develop/sdks/client-bucket-management/
+  baseURL: https://mySampleEnv.live.dynatrace.com/platform
+  image: https://www.dynatrace.com/logo.png
+  properties:
+  - url: https://developer.dynatrace.com/develop/sdks/client-bucket-management/
+    type: Documentation
+  - url: https://docs.dynatrace.com/docs/platform/grail/organize-data
+    type: Reference
+  description: >-
+    The Dynatrace Grail Bucket Management API provides a public API for managing
+    storage buckets within the Grail data lakehouse. It supports creating,
+    updating, deleting, and truncating buckets for organizing logs, events, and
+    business events data with configurable retention periods between 1 and 3657
+    days.
+- aid: dynatrace:dynatrace-davis-ai-api
+  name: Dynatrace Davis AI API
+  tags:
+  - Davis AI
+  - Machine Learning
+  - Predictive Analytics
+  - Causal Analysis
+  - Platform
+  humanURL: https://developer.dynatrace.com/develop/sdks/client-davis-analyzers/
+  baseURL: https://mySampleEnv.live.dynatrace.com/platform
+  image: https://www.dynatrace.com/logo.png
+  properties:
+  - url: https://developer.dynatrace.com/develop/sdks/client-davis-analyzers/
+    type: Documentation
+  - url: https://developer.dynatrace.com/develop/forecast-with-davis-ai/
+    type: Getting Started
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/platform/davis-ai
+    type: Reference
+  description: >-
+    The Dynatrace Davis AI API provides access to the Davis predictive and
+    causal AI platform service for customized AI/ML analysis. It delivers
+    time series forecasting, anomaly detection model training, and automated
+    monitoring of metric behavior changes, enabling application creators to
+    build intelligent automation and analytics within Dynatrace Apps.
+- aid: dynatrace:dynatrace-hub-api
+  name: Dynatrace Hub API
+  tags:
+  - Hub
+  - Catalog
+  - Extensions
+  - Apps
+  - Platform
+  humanURL: https://developer.dynatrace.com/develop/sdks/client-hub/
+  baseURL: https://mySampleEnv.live.dynatrace.com/platform
+  image: https://www.dynatrace.com/logo.png
+  properties:
+  - url: https://developer.dynatrace.com/develop/sdks/client-hub/
+    type: Documentation
+  - url: https://docs.dynatrace.com/docs/manage/hub
+    type: Reference
+  description: >-
+    The Dynatrace Hub API provides programmatic access to the Dynatrace Hub
+    catalog content including apps, extensions, and technologies in the context
+    of the current environment. It supports listing and retrieving details for
+    apps, extensions, technologies, and Hub categories for building custom
+    catalog integrations and discovery experiences.
+- aid: dynatrace:dynatrace-oneagent-on-host-api
+  name: Dynatrace OneAgent on a Host API
+  tags:
+  - OneAgent
+  - Host Monitoring
+  - Infrastructure
+  - Deployment
+  humanURL: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/oneagent-on-host
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  image: https://www.dynatrace.com/logo.png
+  properties:
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/oneagent-on-host
+    type: Documentation
+  description: >-
+    The Dynatrace OneAgent on a Host API enables you to check the configuration
+    and status of OneAgent instances deployed on your hosts. It provides endpoints
+    for listing hosts with OneAgent details, retrieving agent version information,
+    and monitoring agent health and connectivity within a Dynatrace environment.
+- aid: dynatrace:dynatrace-platform-management-api
+  name: Dynatrace Platform Management API
+  tags:
+  - Platform
+  - Environment Management
+  - Administration
+  - Settings
+  humanURL: https://developer.dynatrace.com/develop/sdks/client-platform-management-service/
+  baseURL: https://mySampleEnv.live.dynatrace.com/platform
+  image: https://www.dynatrace.com/logo.png
+  properties:
+  - url: https://developer.dynatrace.com/develop/sdks/client-platform-management-service/
+    type: Documentation
+  - url: https://developer.dynatrace.com/plan/platform-services/platform-management-service/
+    type: Reference
+  description: >-
+    The Dynatrace Platform Management API provides basic read-only information
+    about the currently logged-in environment including environment settings,
+    license information, and permissions. It is a core platform service used for
+    querying environment metadata and configuration context within Dynatrace
+    Apps and automation workflows.
 name: Dynatrace
 tags:
 - AI Operations
 - APM
 - Analytics
 - Application Performance Monitoring
+- Application Security
 - Automation
 - Cloud Monitoring
 - Digital Experience Management
@@ -321,7 +686,7 @@ type: Index
 image: https://www.dynatrace.com/logo.png
 access: 3rd-Party
 created: '2025-01-08'
-modified: '2026-03-02'
+modified: '2026-03-03'
 position: Consumer
 description: Dynatrace is a software intelligence platform that provides application performance monitoring, artificial intelligence for operations, cloud infrastructure monitoring, and digital experience management.
 maintainers:
@@ -371,3 +736,17 @@ common:
   type: JSONSchema
 - url: json-ld/dynatrace-context.jsonld
   type: JSON-LD
+- url: https://developer.dynatrace.com/develop/sdks/
+  type: SDKs
+- url: https://developer.dynatrace.com/develop/access-platform-apis-from-outside/
+  type: Authentication
+- url: https://docs.dynatrace.com/docs/manage/identity-access-management
+  type: Security
+- url: https://github.com/Dynatrace/dynatrace-api
+  type: GitHub Repository
+- url: https://www.dynatrace.com/hub/
+  type: Marketplace
+- url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides
+  type: Migration Guide
+- url: https://developer.dynatrace.com/plan/platform-services/
+  type: Platform Overview

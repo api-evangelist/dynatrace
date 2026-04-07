@@ -25,15 +25,15 @@ servers:
     description: Dynatrace Account Management API (global endpoint)
 
 tags:
-  - name: Users
-    description: Operations for managing account users
+  - name: Environments
+    description: Operations for listing environments in the account
+
   - name: Groups
     description: Operations for managing user groups and group membership
   - name: Permissions
     description: Operations for querying account-level permissions
-  - name: Environments
-    description: Operations for listing environments in the account
-
+  - name: Users
+    description: Operations for managing account users
 security:
   - oauth2: []
 

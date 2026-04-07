@@ -38,7 +38,7 @@ paths:
   /events:
     get:
       operationId: listEvents
-      summary: List events
+      summary: Dynatrace List events
       description: >-
         Returns a list of events from the Dynatrace environment matching the
         specified filters. Results are paginated; use nextPageKey from the
@@ -138,7 +138,7 @@ paths:
   /events/{eventId}:
     get:
       operationId: getEvent
-      summary: Get event by ID
+      summary: Dynatrace Get event by ID
       description: >-
         Returns the details of a specific event identified by its event ID.
         The event ID is obtained from the list events endpoint or from event
@@ -171,7 +171,7 @@ paths:
   /events/ingest:
     post:
       operationId: ingestEvent
-      summary: Ingest a custom event
+      summary: Dynatrace Ingest a custom event
       description: >-
         Ingests a custom event into the Dynatrace environment. The event is
         associated with one or more entities specified by the entitySelector.

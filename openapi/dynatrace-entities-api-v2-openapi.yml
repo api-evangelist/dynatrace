@@ -38,7 +38,7 @@ paths:
   /entities:
     get:
       operationId: listEntities
-      summary: List entities
+      summary: Dynatrace List entities
       description: >-
         Returns a list of monitored entities matching the specified entity
         selector. The entity selector is required and must specify at least
@@ -130,7 +130,7 @@ paths:
   /entities/{entityId}:
     get:
       operationId: getEntity
-      summary: Get entity
+      summary: Dynatrace Get entity
       description: >-
         Returns the details of a specific monitored entity by its entity ID.
         The entity ID format is TYPE-HEXADECIMALID, e.g.,
@@ -188,7 +188,7 @@ paths:
   /entityTypes:
     get:
       operationId: listEntityTypes
-      summary: List entity types
+      summary: Dynatrace List entity types
       description: >-
         Returns a list of all entity types available in the Dynatrace
         environment. Entity types describe the categories of monitored
@@ -229,7 +229,7 @@ paths:
   /entityTypes/{type}:
     get:
       operationId: getEntityType
-      summary: Get entity type definition
+      summary: Dynatrace Get entity type definition
       description: >-
         Returns the definition of a specific entity type, including its
         display name, description, available properties, and supported
@@ -265,7 +265,7 @@ paths:
   /entities/lookup:
     post:
       operationId: lookupEntity
-      summary: Look up entity by name
+      summary: Dynatrace Look up entity by name
       description: >-
         Looks up a specific entity by its display name and type. This is
         useful when you know the human-readable name of an entity but need

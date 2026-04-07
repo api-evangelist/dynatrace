@@ -38,7 +38,7 @@ paths:
   /problems:
     get:
       operationId: listProblems
-      summary: List problems
+      summary: Dynatrace List problems
       description: >-
         Returns a list of problems from the Dynatrace environment. You can
         filter problems by problem selector, entity selector, time range, and
@@ -139,7 +139,7 @@ paths:
   /problems/{problemId}:
     get:
       operationId: getProblem
-      summary: Get problem details
+      summary: Dynatrace Get problem details
       description: >-
         Returns the full details of a specific problem, including its severity,
         affected and impacted entities, root cause analysis, evidence, and
@@ -176,7 +176,7 @@ paths:
   /problems/{problemId}/close:
     post:
       operationId: closeProblem
-      summary: Close problem
+      summary: Dynatrace Close problem
       description: >-
         Closes the specified problem and optionally attaches a closing message
         explaining the reason for closure. Only problems that are currently
@@ -212,7 +212,7 @@ paths:
   /problems/{problemId}/comments:
     get:
       operationId: listProblemComments
-      summary: List comments on a problem
+      summary: Dynatrace List comments on a problem
       description: >-
         Returns a list of all comments attached to the specified problem.
         Comments are used for collaboration and tracking investigation notes
@@ -254,7 +254,7 @@ paths:
 
     post:
       operationId: createProblemComment
-      summary: Add comment to problem
+      summary: Dynatrace Add comment to problem
       description: >-
         Creates a new comment on the specified problem. Comments can include
         a context field to categorize or reference external systems. Useful
@@ -290,7 +290,7 @@ paths:
   /problems/{problemId}/comments/{commentId}:
     get:
       operationId: getProblemComment
-      summary: Get comment
+      summary: Dynatrace Get comment
       description: >-
         Returns the details of a specific comment on a problem, identified by
         both the problem ID and the comment ID.
@@ -315,7 +315,7 @@ paths:
 
     put:
       operationId: updateProblemComment
-      summary: Update comment
+      summary: Dynatrace Update comment
       description: >-
         Updates the content or context of an existing comment on a problem.
         Only the comment author or an administrator can update a comment.
@@ -349,7 +349,7 @@ paths:
 
     delete:
       operationId: deleteProblemComment
-      summary: Delete comment
+      summary: Dynatrace Delete comment
       description: >-
         Permanently deletes a specific comment from a problem. This action
         cannot be undone. Only the comment author or an administrator can

@@ -41,7 +41,7 @@ paths:
   /iam/v1/accounts/{accountUuid}/users:
     get:
       operationId: listUsers
-      summary: List users
+      summary: Dynatrace List users
       description: >-
         Returns a list of all users in the specified Dynatrace account. User
         records include basic profile information and group memberships.
@@ -81,7 +81,7 @@ paths:
 
     post:
       operationId: createUser
-      summary: Create user
+      summary: Dynatrace Create user
       description: >-
         Creates a new user in the Dynatrace account and sends an invitation
         email. The user's email address serves as their login identifier.
@@ -121,7 +121,7 @@ paths:
   /iam/v1/accounts/{accountUuid}/users/{userId}:
     get:
       operationId: getUser
-      summary: Get user
+      summary: Dynatrace Get user
       description: >-
         Returns the details of a specific user in the account, identified by
         their user ID (typically the email address or a UUID).
@@ -146,7 +146,7 @@ paths:
 
     put:
       operationId: updateUser
-      summary: Update user
+      summary: Dynatrace Update user
       description: >-
         Updates the profile information and group memberships for an existing
         user. The entire user record is replaced with the provided data. To
@@ -182,7 +182,7 @@ paths:
 
     delete:
       operationId: deleteUser
-      summary: Delete user
+      summary: Dynatrace Delete user
       description: >-
         Permanently removes the specified user from the Dynatrace account.
         This action cannot be undone. The user immediately loses access to
@@ -205,7 +205,7 @@ paths:
   /iam/v1/accounts/{accountUuid}/groups:
     get:
       operationId: listGroups
-      summary: List groups
+      summary: Dynatrace List groups
       description: >-
         Returns a list of all user groups defined in the account. Groups are
         the primary mechanism for assigning permissions and environment access
@@ -245,7 +245,7 @@ paths:
 
     post:
       operationId: createGroup
-      summary: Create group
+      summary: Dynatrace Create group
       description: >-
         Creates a new user group in the account. After creating the group,
         users can be assigned to it and permissions can be granted to the
@@ -281,7 +281,7 @@ paths:
   /iam/v1/accounts/{accountUuid}/groups/{groupId}:
     get:
       operationId: getGroup
-      summary: Get group
+      summary: Dynatrace Get group
       description: >-
         Returns the details of a specific group, including its name,
         description, and assigned permissions.
@@ -306,7 +306,7 @@ paths:
 
     put:
       operationId: updateGroup
-      summary: Update group
+      summary: Dynatrace Update group
       description: >-
         Updates the name and description of an existing group. Group
         permissions are managed separately via the permissions endpoints.
@@ -340,7 +340,7 @@ paths:
 
     delete:
       operationId: deleteGroup
-      summary: Delete group
+      summary: Dynatrace Delete group
       description: >-
         Permanently deletes the specified group from the account. All users
         who were members of this group lose any permissions that were granted
@@ -363,7 +363,7 @@ paths:
   /iam/v1/accounts/{accountUuid}/permissions:
     get:
       operationId: listPermissions
-      summary: List permissions for account
+      summary: Dynatrace List permissions for account
       description: >-
         Returns a list of all permissions defined for the account. Permissions
         control what actions groups and users can perform within Dynatrace
@@ -388,7 +388,7 @@ paths:
   /env/v1/accounts/{accountUuid}/environments:
     get:
       operationId: listEnvironments
-      summary: List environments
+      summary: Dynatrace List environments
       description: >-
         Returns a list of all Dynatrace environments associated with the
         specified account. Each environment record includes the environment ID,

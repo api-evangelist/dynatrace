@@ -38,7 +38,7 @@ paths:
   /logs/search:
     get:
       operationId: searchLogs
-      summary: Search log records
+      summary: Dynatrace Search log records
       description: >-
         Searches log records stored in Grail using a query expression. Results
         are returned in a paginated manner using a slice-based cursor. The query
@@ -127,7 +127,7 @@ paths:
   /logs/ingest:
     post:
       operationId: ingestLogs
-      summary: Ingest log records
+      summary: Dynatrace Ingest log records
       description: >-
         Ingests log records into the Dynatrace Grail data lakehouse. Accepts an
         array of log record objects. Each record must include at least a content
@@ -169,7 +169,7 @@ paths:
   /logs/aggregate:
     get:
       operationId: aggregateLogs
-      summary: Aggregate log records
+      summary: Dynatrace Aggregate log records
       description: >-
         Returns aggregated log data grouped by specified fields. Useful for
         building dashboards and summaries such as error counts by service or
@@ -234,7 +234,7 @@ paths:
   /logs/export:
     get:
       operationId: exportLogs
-      summary: Export log records
+      summary: Dynatrace Export log records
       description: >-
         Exports log records for bulk retrieval, suitable for integration with
         external SIEM, log management, or archiving systems. Results are

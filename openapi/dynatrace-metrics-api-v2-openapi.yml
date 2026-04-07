@@ -37,7 +37,7 @@ paths:
   /metrics:
     get:
       operationId: listMetrics
-      summary: List all metrics
+      summary: Dynatrace List all metrics
       description: >-
         Returns a list of all metrics available in the environment. You can
         filter the list by metric selector, fields to return, and a time range
@@ -114,7 +114,7 @@ paths:
   /metrics/{metricKey}:
     get:
       operationId: getMetricDescriptor
-      summary: Get metric descriptor
+      summary: Dynatrace Get metric descriptor
       description: >-
         Returns the descriptor for the specified metric key. The descriptor
         includes metadata such as the display name, description, unit, supported
@@ -141,7 +141,7 @@ paths:
 
     delete:
       operationId: deleteCustomMetric
-      summary: Delete custom metric
+      summary: Dynatrace Delete custom metric
       description: >-
         Deletes the specified custom metric from the environment. Only custom
         metrics (those not prefixed with builtin:) can be deleted. Built-in
@@ -165,7 +165,7 @@ paths:
   /metrics/query:
     get:
       operationId: queryMetricData
-      summary: Query metric data points
+      summary: Dynatrace Query metric data points
       description: >-
         Returns data points for the specified metrics. The metric selector
         determines which metrics and transformations to apply. Time range is
@@ -253,7 +253,7 @@ paths:
   /metrics/ingest:
     post:
       operationId: ingestCustomMetrics
-      summary: Ingest custom metrics
+      summary: Dynatrace Ingest custom metrics
       description: >-
         Ingests custom metric data points into the Dynatrace environment using
         the MINT (Metric INgest Text) line protocol. Each line represents one

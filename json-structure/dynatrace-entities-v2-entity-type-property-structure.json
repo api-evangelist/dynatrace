@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "description": "Describes a single property of an entity type.",
+  "name": "EntityTypeProperty",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The property key identifier."
+    },
+    "displayName": {
+      "type": "string",
+      "description": "The human-readable display name of the property."
+    },
+    "type": {
+      "type": "string",
+      "description": "The data type of the property value."
+    }
+  },
+  "$schema": "https://json-structure.org/draft/2020-12/schema"
+}

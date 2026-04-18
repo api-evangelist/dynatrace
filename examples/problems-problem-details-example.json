@@ -1,0 +1,15 @@
+{
+  "id": "-1234567890123456789_V2",
+  "title": "High failure rate on payment-service",
+  "severityLevel": "AVAILABILITY",
+  "status": "OPEN",
+  "startTime": 1609459200000,
+  "endTime": -1,
+  "affectedEntities": [
+    {
+      "entityId": "SERVICE-ABCDEF1234567890",
+      "name": "payment-service",
+      "type": "SERVICE"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "description": "A single aggregation group result.",
+  "name": "LogAggregateGroup",
+  "properties": {
+    "groupByFields": {
+      "type": "object",
+      "description": "The field values that define this aggregation group. Keys are the groupBy field names, values are the field values for this group."
+    },
+    "count": {
+      "type": "integer",
+      "description": "The number of log records in this aggregation group."
+    }
+  },
+  "$schema": "https://json-structure.org/draft/2020-12/schema"
+}

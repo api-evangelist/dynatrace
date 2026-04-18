@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-structure/problems-api-v2-comment-request-body-structure.json",
+  "description": "The request body for creating or updating a problem comment.",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string",
+      "description": "The text content of the comment.",
+      "example": "Example description."
+    },
+    "context": {
+      "type": "string",
+      "description": "An optional context reference for the comment, such as a ticket ID, a link to a runbook, or a category label.",
+      "example": "example-value"
+    }
+  },
+  "required": [
+    "message"
+  ],
+  "name": "CommentRequestBody"
+}

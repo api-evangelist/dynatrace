@@ -1,0 +1,13 @@
+{
+  "resolution": "example-value",
+  "nextPageKey": "example-value",
+  "totalCount": 500,
+  "result": [
+    {
+      "metricId": "abc123",
+      "data": [
+        {}
+      ]
+    }
+  ]
+}

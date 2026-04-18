@@ -1,0 +1,401 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Dynatrace Monitoring And Observability"
+  description: "Unified monitoring and observability workflow combining metrics, logs, events, and entity data for ops engineers managing infrastructure health and performance."
+  tags:
+    - Dynatrace
+    - Monitoring
+    - Observability
+    - Ops Engineering
+    - Metrics
+    - Logs
+  created: "2026-04-18"
+  modified: "2026-04-18"
+
+binds:
+  - namespace: env
+    keys:
+      DYNATRACE_API_TOKEN: DYNATRACE_API_TOKEN
+      DYNATRACE_ENVIRONMENT_ID: DYNATRACE_ENVIRONMENT_ID
+
+capability:
+  consumes:
+    - import: metrics-v2
+      location: ./shared/metrics-v2.yaml
+    - import: log-monitoring-v2
+      location: ./shared/log-monitoring-v2.yaml
+    - import: events-v2
+      location: ./shared/events-v2.yaml
+    - import: entities-v2
+      location: ./shared/entities-v2.yaml
+
+  exposes:
+    - type: rest
+      port: 8081
+      namespace: monitoring-observability-api
+      description: "Unified REST API for Dynatrace monitoring and observability workflows."
+      resources:
+        - path: /v1/metrics
+          name: metrics
+          description: "List metric descriptors"
+          operations:
+            - method: GET
+              name: list-metrics
+              description: "List all available metrics"
+              call: "metrics-v2.list-metrics"
+              with:
+                nextPageKey: "rest.nextPageKey"
+                pageSize: "rest.pageSize"
+                metricSelector: "rest.metricSelector"
+                fields: "rest.fields"
+                writtenSince: "rest.writtenSince"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/metrics/{metricKey}
+          name: metric-descriptor
+          description: "Get metric descriptor"
+          operations:
+            - method: GET
+              name: get-metric-descriptor
+              description: "Get descriptor for a specific metric"
+              call: "metrics-v2.get-metric-descriptor"
+              with:
+                metricKey: "rest.metricKey"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: DELETE
+              name: delete-custom-metric
+              description: "Delete a custom metric"
+              call: "metrics-v2.delete-custom-metric"
+              with:
+                metricKey: "rest.metricKey"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/metrics/query
+          name: metric-query
+          description: "Query metric data points"
+          operations:
+            - method: GET
+              name: query-metric-data
+              description: "Query metric data with selectors and time ranges"
+              call: "metrics-v2.query-metric-data"
+              with:
+                metricSelector: "rest.metricSelector"
+                resolution: "rest.resolution"
+                from: "rest.from"
+                to: "rest.to"
+                entitySelector: "rest.entitySelector"
+                mzSelector: "rest.mzSelector"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/metrics/ingest
+          name: metric-ingest
+          description: "Ingest custom metrics"
+          operations:
+            - method: POST
+              name: ingest-custom-metrics
+              description: "Ingest custom metrics via MINT protocol"
+              call: "metrics-v2.ingest-custom-metrics"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/logs/search
+          name: log-search
+          description: "Search log records"
+          operations:
+            - method: GET
+              name: search-logs
+              description: "Search logs using DQL queries"
+              call: "log-monitoring-v2.search-logs"
+              with:
+                nextSliceKey: "rest.nextSliceKey"
+                limit: "rest.limit"
+                query: "rest.query"
+                from: "rest.from"
+                to: "rest.to"
+                sort: "rest.sort"
+                fields: "rest.fields"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/logs/ingest
+          name: log-ingest
+          description: "Ingest log records"
+          operations:
+            - method: POST
+              name: ingest-logs
+              description: "Ingest logs into Grail"
+              call: "log-monitoring-v2.ingest-logs"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/logs/aggregate
+          name: log-aggregate
+          description: "Aggregate log data"
+          operations:
+            - method: GET
+              name: aggregate-logs
+              description: "Aggregate logs by dimensions"
+              call: "log-monitoring-v2.aggregate-logs"
+              with:
+                query: "rest.query"
+                from: "rest.from"
+                to: "rest.to"
+                groupBy: "rest.groupBy"
+                fields: "rest.fields"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/logs/export
+          name: log-export
+          description: "Export log records"
+          operations:
+            - method: GET
+              name: export-logs
+              description: "Export logs for bulk retrieval"
+              call: "log-monitoring-v2.export-logs"
+              with:
+                nextSliceKey: "rest.nextSliceKey"
+                pageSize: "rest.pageSize"
+                query: "rest.query"
+                from: "rest.from"
+                to: "rest.to"
+                sort: "rest.sort"
+                fields: "rest.fields"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/events
+          name: events
+          description: "Query events"
+          operations:
+            - method: GET
+              name: list-events
+              description: "List events"
+              call: "events-v2.list-events"
+              with:
+                nextPageKey: "rest.nextPageKey"
+                pageSize: "rest.pageSize"
+                from: "rest.from"
+                to: "rest.to"
+                eventSelector: "rest.eventSelector"
+                entitySelector: "rest.entitySelector"
+                eventType: "rest.eventType"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/entities
+          name: entities
+          description: "Query monitored entities"
+          operations:
+            - method: GET
+              name: list-entities
+              description: "List entities matching a selector"
+              call: "entities-v2.list-entities"
+              with:
+                entitySelector: "rest.entitySelector"
+                nextPageKey: "rest.nextPageKey"
+                pageSize: "rest.pageSize"
+                fields: "rest.fields"
+                from: "rest.from"
+                to: "rest.to"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/entities/{entityId}
+          name: entity-detail
+          description: "Get entity details"
+          operations:
+            - method: GET
+              name: get-entity
+              description: "Get entity details"
+              call: "entities-v2.get-entity"
+              with:
+                entityId: "rest.entityId"
+                fields: "rest.fields"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9091
+      namespace: monitoring-observability-mcp
+      transport: http
+      description: "MCP server for AI-assisted Dynatrace monitoring and observability."
+      tools:
+        - name: list-metrics
+          description: "List all available metric descriptors"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "metrics-v2.list-metrics"
+          with:
+            nextPageKey: "tools.nextPageKey"
+            pageSize: "tools.pageSize"
+            metricSelector: "tools.metricSelector"
+            fields: "tools.fields"
+            writtenSince: "tools.writtenSince"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-metric-descriptor
+          description: "Get the descriptor for a specific metric"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "metrics-v2.get-metric-descriptor"
+          with:
+            metricKey: "tools.metricKey"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: query-metric-data
+          description: "Query metric data points with selectors and time ranges"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "metrics-v2.query-metric-data"
+          with:
+            metricSelector: "tools.metricSelector"
+            resolution: "tools.resolution"
+            from: "tools.from"
+            to: "tools.to"
+            entitySelector: "tools.entitySelector"
+            mzSelector: "tools.mzSelector"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: ingest-custom-metrics
+          description: "Ingest custom metric data points via MINT protocol"
+          hints:
+            readOnly: false
+            openWorld: true
+          call: "metrics-v2.ingest-custom-metrics"
+          with:
+            metric_lines: "tools.metric_lines"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: delete-custom-metric
+          description: "Delete a custom metric from the environment"
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+            openWorld: true
+          call: "metrics-v2.delete-custom-metric"
+          with:
+            metricKey: "tools.metricKey"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: search-logs
+          description: "Search log records using DQL queries"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "log-monitoring-v2.search-logs"
+          with:
+            nextSliceKey: "tools.nextSliceKey"
+            limit: "tools.limit"
+            query: "tools.query"
+            from: "tools.from"
+            to: "tools.to"
+            sort: "tools.sort"
+            fields: "tools.fields"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: ingest-logs
+          description: "Ingest log records into Dynatrace Grail"
+          hints:
+            readOnly: false
+            openWorld: true
+          call: "log-monitoring-v2.ingest-logs"
+          with:
+            log_records: "tools.log_records"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: aggregate-logs
+          description: "Aggregate log data grouped by specified fields"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "log-monitoring-v2.aggregate-logs"
+          with:
+            query: "tools.query"
+            from: "tools.from"
+            to: "tools.to"
+            groupBy: "tools.groupBy"
+            fields: "tools.fields"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: export-logs
+          description: "Export log records for bulk retrieval"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "log-monitoring-v2.export-logs"
+          with:
+            nextSliceKey: "tools.nextSliceKey"
+            pageSize: "tools.pageSize"
+            query: "tools.query"
+            from: "tools.from"
+            to: "tools.to"
+            sort: "tools.sort"
+            fields: "tools.fields"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-events
+          description: "List events from the Dynatrace environment"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "events-v2.list-events"
+          with:
+            nextPageKey: "tools.nextPageKey"
+            pageSize: "tools.pageSize"
+            from: "tools.from"
+            to: "tools.to"
+            eventSelector: "tools.eventSelector"
+            entitySelector: "tools.entitySelector"
+            eventType: "tools.eventType"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-entities
+          description: "List monitored entities matching a selector"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "entities-v2.list-entities"
+          with:
+            entitySelector: "tools.entitySelector"
+            nextPageKey: "tools.nextPageKey"
+            pageSize: "tools.pageSize"
+            fields: "tools.fields"
+            from: "tools.from"
+            to: "tools.to"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-entity
+          description: "Get details of a specific monitored entity"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "entities-v2.get-entity"
+          with:
+            entityId: "tools.entityId"
+            fields: "tools.fields"
+          outputParameters:
+            - type: object
+              mapping: "$."

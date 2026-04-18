@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "description": "The result of a log export operation, containing a page of records.",
+  "name": "LogExportResult",
+  "properties": {
+    "nextSliceKey": {
+      "type": "string",
+      "description": "Cursor for the next page of export results."
+    },
+    "results": {
+      "type": "array",
+      "description": "The list of exported log records on this page.",
+      "items": {
+        "type": "object",
+        "description": "A log record retrieved from the Dynatrace Grail data lakehouse. Contains the original log content plus enriched metadata added by Dynatrace during ingestion and processing.",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "description": "The timestamp of the log record in ISO 8601 format."
+          },
+          "content": {
+            "type": "string",
+            "description": "The log message content."
+          },
+          "severity": {
+            "type": "string",
+            "description": "The severity level of the log record."
+          },
+          "log.source": {
+            "type": "string",
+            "description": "The source identifier of the log record."
+          },
+          "dt.entity.host": {
+            "type": "string",
+            "description": "The associated host entity ID."
+          },
+          "additionalFields": {
+            "type": "object",
+            "description": "Additional fields present in the log record beyond the standard set. Content varies based on what was ingested and how OpenPipeline processed the record."
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-structure.org/draft/2020-12/schema"
+}

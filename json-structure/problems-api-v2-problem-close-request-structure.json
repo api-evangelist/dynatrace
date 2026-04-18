@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-structure/problems-api-v2-problem-close-request-structure.json",
+  "description": "Request body for closing a problem.",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string",
+      "description": "An optional message explaining why the problem is being closed. This is stored as a closing comment on the problem.",
+      "example": "Example description."
+    }
+  },
+  "name": "ProblemCloseRequest"
+}

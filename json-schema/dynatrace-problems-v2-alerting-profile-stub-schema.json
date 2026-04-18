@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "description": "A reference to an alerting profile (problem filter).",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The unique identifier of the alerting profile.",
+      "example": "abc123"
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the alerting profile.",
+      "example": "Production Service"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AlertingProfileStub"
+}

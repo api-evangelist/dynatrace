@@ -1,0 +1,80 @@
+{
+  "type": "object",
+  "description": "A paginated collection of events.",
+  "name": "EventCollection",
+  "properties": {
+    "nextPageKey": {
+      "type": "string",
+      "description": "The cursor for the next page of results. Null if there are no more pages."
+    },
+    "totalCount": {
+      "type": "integer",
+      "description": "The total number of events matching the query."
+    },
+    "pageSize": {
+      "type": "integer",
+      "description": "The number of results returned on this page."
+    },
+    "events": {
+      "type": "array",
+      "description": "The list of events on this page.",
+      "items": {
+        "type": "object",
+        "description": "Represents a single event in the Dynatrace environment. Events can be ingested via the API or detected automatically by Dynatrace.",
+        "properties": {
+          "eventId": {
+            "type": "string",
+            "description": "The unique identifier of the event."
+          },
+          "eventType": {
+            "type": "string",
+            "description": "The type of the event."
+          },
+          "title": {
+            "type": "string",
+            "description": "The display title of the event."
+          },
+          "startTime": {
+            "type": "integer",
+            "description": "The start time of the event as a Unix timestamp in milliseconds."
+          },
+          "endTime": {
+            "type": "integer",
+            "description": "The end time of the event as a Unix timestamp in milliseconds. Null for open events."
+          },
+          "entityId": {
+            "type": "object",
+            "description": "A lightweight reference to a monitored entity.",
+            "properties": {
+              "entityId": {
+                "type": "string",
+                "description": "The unique identifier of the entity, e.g., SERVICE-1234567890ABCDEF."
+              },
+              "name": {
+                "type": "string",
+                "description": "The display name of the entity."
+              },
+              "type": {
+                "type": "string",
+                "description": "The type of the entity, e.g., SERVICE, HOST, PROCESS_GROUP, APPLICATION."
+              }
+            }
+          },
+          "properties": {
+            "type": "object",
+            "description": "Additional key-value metadata attached to the event."
+          },
+          "status": {
+            "type": "string",
+            "description": "The current status of the event. OPEN indicates the event is still active; CLOSED indicates it has ended.",
+            "enum": [
+              "OPEN",
+              "CLOSED"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-structure.org/draft/2020-12/schema"
+}

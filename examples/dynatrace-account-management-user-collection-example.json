@@ -1,0 +1,16 @@
+{
+  "nextPageKey": "example-value",
+  "totalCount": 500,
+  "items": [
+    {
+      "uid": "abc123",
+      "email": "admin@example.com",
+      "firstName": "Production Service",
+      "lastName": "Production Service",
+      "groups": [
+        "example-value"
+      ],
+      "userStatus": "ACTIVE"
+    }
+  ]
+}

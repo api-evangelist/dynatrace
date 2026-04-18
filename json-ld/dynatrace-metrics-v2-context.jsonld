@@ -1,0 +1,181 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "schema": "https://schema.org/",
+    "MetricDescriptor": {
+      "@id": "ns:MetricDescriptor",
+      "@context": {
+        "metricId": {
+          "@id": "ns:metricId",
+          "@type": "xsd:string"
+        },
+        "displayName": {
+          "@id": "ns:displayName",
+          "@type": "xsd:string"
+        },
+        "description": {
+          "@id": "ns:description",
+          "@type": "xsd:string"
+        },
+        "unit": {
+          "@id": "ns:unit",
+          "@type": "xsd:string"
+        },
+        "dduBillable": {
+          "@id": "ns:dduBillable",
+          "@type": "xsd:boolean"
+        },
+        "created": {
+          "@id": "ns:created",
+          "@type": "xsd:integer"
+        },
+        "lastWritten": {
+          "@id": "ns:lastWritten",
+          "@type": "xsd:integer"
+        },
+        "entityType": "ns:entityType",
+        "aggregationTypes": "ns:aggregationTypes",
+        "dimensionDefinitions": "ns:dimensionDefinitions",
+        "transformations": "ns:transformations",
+        "defaultAggregation": {
+          "@id": "ns:defaultAggregation",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "MetricDimensionDefinition": {
+      "@id": "ns:MetricDimensionDefinition",
+      "@context": {
+        "key": {
+          "@id": "ns:key",
+          "@type": "xsd:string"
+        },
+        "name": {
+          "@id": "ns:name",
+          "@type": "xsd:string"
+        },
+        "type": {
+          "@id": "ns:type",
+          "@type": "xsd:string"
+        },
+        "displayName": {
+          "@id": "ns:displayName",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "MetricDefaultAggregation": {
+      "@id": "ns:MetricDefaultAggregation",
+      "@context": {
+        "type": {
+          "@id": "ns:type",
+          "@type": "xsd:string"
+        },
+        "parameter": {
+          "@id": "ns:parameter",
+          "@type": "xsd:decimal"
+        }
+      }
+    },
+    "MetricDescriptorCollection": {
+      "@id": "ns:MetricDescriptorCollection",
+      "@context": {
+        "nextPageKey": {
+          "@id": "ns:nextPageKey",
+          "@type": "xsd:string"
+        },
+        "totalCount": {
+          "@id": "ns:totalCount",
+          "@type": "xsd:integer"
+        },
+        "resolution": {
+          "@id": "ns:resolution",
+          "@type": "xsd:string"
+        },
+        "metrics": "ns:metrics"
+      }
+    },
+    "MetricData": {
+      "@id": "ns:MetricData",
+      "@context": {
+        "resolution": {
+          "@id": "ns:resolution",
+          "@type": "xsd:string"
+        },
+        "nextPageKey": {
+          "@id": "ns:nextPageKey",
+          "@type": "xsd:string"
+        },
+        "totalCount": {
+          "@id": "ns:totalCount",
+          "@type": "xsd:integer"
+        },
+        "result": "ns:result"
+      }
+    },
+    "MetricSeriesCollection": {
+      "@id": "ns:MetricSeriesCollection",
+      "@context": {
+        "metricId": {
+          "@id": "ns:metricId",
+          "@type": "xsd:string"
+        },
+        "data": "ns:data"
+      }
+    },
+    "MetricSeries": {
+      "@id": "ns:MetricSeries",
+      "@context": {
+        "dimensionMap": "ns:dimensionMap",
+        "dimensions": "ns:dimensions",
+        "timestamps": "ns:timestamps",
+        "values": "ns:values"
+      }
+    },
+    "ErrorEnvelope": {
+      "@id": "ns:ErrorEnvelope",
+      "@context": {
+        "error": {
+          "@id": "ns:error",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "Error": {
+      "@id": "ns:Error",
+      "@context": {
+        "code": {
+          "@id": "ns:code",
+          "@type": "xsd:integer"
+        },
+        "message": {
+          "@id": "ns:message",
+          "@type": "xsd:string"
+        },
+        "constraintViolations": "ns:constraintViolations"
+      }
+    },
+    "ConstraintViolation": {
+      "@id": "ns:ConstraintViolation",
+      "@context": {
+        "path": {
+          "@id": "ns:path",
+          "@type": "xsd:string"
+        },
+        "message": {
+          "@id": "ns:message",
+          "@type": "xsd:string"
+        },
+        "parameterLocation": {
+          "@id": "ns:parameterLocation",
+          "@type": "xsd:string"
+        },
+        "location": {
+          "@id": "ns:location",
+          "@type": "xsd:string"
+        }
+      }
+    }
+  }
+}

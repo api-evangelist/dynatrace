@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-schema/events-api-v2-event-ingest-result-schema.json",
+  "title": "EventIngestResult",
+  "description": "The result returned after successfully ingesting a custom event.",
+  "type": "object",
+  "properties": {
+    "reportCount": {
+      "type": "integer",
+      "description": "The number of event reports created. This may be greater than 1 if the entitySelector matched multiple entities.",
+      "example": 500
+    },
+    "eventIngestResults": {
+      "type": "array",
+      "description": "Details of each individual event ingestion result.",
+      "items": {
+        "$ref": "#/components/schemas/EventIngestResultItem"
+      },
+      "example": [
+        {
+          "eventId": "abc123",
+          "status": "ACTIVE"
+        }
+      ]
+    }
+  }
+}

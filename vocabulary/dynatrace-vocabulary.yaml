@@ -1,0 +1,30 @@
+name: dynatrace API Vocabulary
+provider: dynatrace
+created: '2026-04-18'
+modified: '2026-04-18'
+apis:
+- name: Dynatrace Account Management API
+  version: 1.0.0
+- name: Dynatrace Entities API v2
+  version: 2.0.0
+- name: Dynatrace Events API v2
+  version: 2.0.0
+- name: Dynatrace Log Monitoring API v2
+  version: 2.0.0
+- name: Dynatrace Metrics API v2
+  version: 2.0.0
+- name: Dynatrace Problems API v2
+  version: 2.0.0
+resources: 8
+operations: 37
+schemas: 49
+tags:
+- Entities
+- Environments
+- Events
+- Groups
+- Logs
+- Metrics
+- Permissions
+- Problems
+- Users

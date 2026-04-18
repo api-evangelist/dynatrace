@@ -1,0 +1,610 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Dynatrace Account Management API"
+  description: "The Dynatrace Account Management API allows you to manage your Dynatrace account including users, groups, permissions, and environments. It uses OAuth 2.0 authentication with account-level scopes."
+  tags:
+    - Dynatrace
+    - Account Management
+    - Identity
+    - Access Control
+  created: "2026-04-18"
+  modified: "2026-04-18"
+
+binds:
+  - namespace: env
+    keys:
+      DYNATRACE_OAUTH_TOKEN: DYNATRACE_OAUTH_TOKEN
+
+capability:
+  consumes:
+    - type: http
+      namespace: account-management
+      baseUri: https://api.dynatrace.com
+      description: "Dynatrace Account Management API for managing users, groups, permissions, and environments."
+      authentication:
+        type: bearer
+        token: "{{DYNATRACE_OAUTH_TOKEN}}"
+      resources:
+        - name: users
+          path: /iam/v1/accounts/{accountUuid}/users
+          description: "Manage account users"
+          operations:
+            - name: list-users
+              method: GET
+              description: "Returns a list of all users in the specified Dynatrace account."
+              inputParameters:
+                - name: accountUuid
+                  in: path
+                  type: string
+                  required: true
+                  description: "The UUID of the Dynatrace account."
+                - name: nextPageKey
+                  in: query
+                  type: string
+                  required: false
+                  description: "Cursor for the next page of results."
+                - name: pageSize
+                  in: query
+                  type: integer
+                  required: false
+                  description: "The number of users to return per page."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-user
+              method: POST
+              description: "Creates a new user in the Dynatrace account and sends an invitation email."
+              inputParameters:
+                - name: accountUuid
+                  in: path
+                  type: string
+                  required: true
+                  description: "The UUID of the Dynatrace account."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  email: "{{tools.email}}"
+                  firstName: "{{tools.first_name}}"
+                  lastName: "{{tools.last_name}}"
+                  groups: "{{tools.groups}}"
+        - name: user-detail
+          path: /iam/v1/accounts/{accountUuid}/users/{userId}
+          description: "Get, update, or delete a specific user"
+          operations:
+            - name: get-user
+              method: GET
+              description: "Returns the details of a specific user in the account."
+              inputParameters:
+                - name: accountUuid
+                  in: path
+                  type: string
+                  required: true
+                  description: "The UUID of the Dynatrace account."
+                - name: userId
+                  in: path
+                  type: string
+                  required: true
+                  description: "The unique identifier of the user."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: update-user
+              method: PUT
+              description: "Updates the profile information and group memberships for an existing user."
+              inputParameters:
+                - name: accountUuid
+                  in: path
+                  type: string
+                  required: true
+                  description: "The UUID of the Dynatrace account."
+                - name: userId
+                  in: path
+                  type: string
+                  required: true
+                  description: "The unique identifier of the user."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  email: "{{tools.email}}"
+                  firstName: "{{tools.first_name}}"
+                  lastName: "{{tools.last_name}}"
+                  groups: "{{tools.groups}}"
+            - name: delete-user
+              method: DELETE
+              description: "Permanently removes the specified user from the Dynatrace account."
+              inputParameters:
+                - name: accountUuid
+                  in: path
+                  type: string
+                  required: true
+                  description: "The UUID of the Dynatrace account."
+                - name: userId
+                  in: path
+                  type: string
+                  required: true
+                  description: "The unique identifier of the user."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: groups
+          path: /iam/v1/accounts/{accountUuid}/groups
+          description: "Manage user groups"
+          operations:
+            - name: list-groups
+              method: GET
+              description: "Returns a list of all user groups defined in the account."
+              inputParameters:
+                - name: accountUuid
+                  in: path
+                  type: string
+                  required: true
+                  description: "The UUID of the Dynatrace account."
+                - name: nextPageKey
+                  in: query
+                  type: string
+                  required: false
+                  description: "Cursor for the next page of results."
+                - name: pageSize
+                  in: query
+                  type: integer
+                  required: false
+                  description: "The number of groups to return per page."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-group
+              method: POST
+              description: "Creates a new user group in the account."
+              inputParameters:
+                - name: accountUuid
+                  in: path
+                  type: string
+                  required: true
+                  description: "The UUID of the Dynatrace account."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  name: "{{tools.name}}"
+                  description: "{{tools.description}}"
+        - name: group-detail
+          path: /iam/v1/accounts/{accountUuid}/groups/{groupId}
+          description: "Get, update, or delete a specific group"
+          operations:
+            - name: get-group
+              method: GET
+              description: "Returns the details of a specific group."
+              inputParameters:
+                - name: accountUuid
+                  in: path
+                  type: string
+                  required: true
+                  description: "The UUID of the Dynatrace account."
+                - name: groupId
+                  in: path
+                  type: string
+                  required: true
+                  description: "The unique identifier of the group."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: update-group
+              method: PUT
+              description: "Updates the name and description of an existing group."
+              inputParameters:
+                - name: accountUuid
+                  in: path
+                  type: string
+                  required: true
+                  description: "The UUID of the Dynatrace account."
+                - name: groupId
+                  in: path
+                  type: string
+                  required: true
+                  description: "The unique identifier of the group."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  name: "{{tools.name}}"
+                  description: "{{tools.description}}"
+            - name: delete-group
+              method: DELETE
+              description: "Permanently deletes the specified group from the account."
+              inputParameters:
+                - name: accountUuid
+                  in: path
+                  type: string
+                  required: true
+                  description: "The UUID of the Dynatrace account."
+                - name: groupId
+                  in: path
+                  type: string
+                  required: true
+                  description: "The unique identifier of the group."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: permissions
+          path: /iam/v1/accounts/{accountUuid}/permissions
+          description: "Query account-level permissions"
+          operations:
+            - name: list-permissions
+              method: GET
+              description: "Returns a list of all permissions defined for the account."
+              inputParameters:
+                - name: accountUuid
+                  in: path
+                  type: string
+                  required: true
+                  description: "The UUID of the Dynatrace account."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: environments
+          path: /env/v1/accounts/{accountUuid}/environments
+          description: "List environments associated with the account"
+          operations:
+            - name: list-environments
+              method: GET
+              description: "Returns a list of all Dynatrace environments associated with the specified account."
+              inputParameters:
+                - name: accountUuid
+                  in: path
+                  type: string
+                  required: true
+                  description: "The UUID of the Dynatrace account."
+                - name: nextPageKey
+                  in: query
+                  type: string
+                  required: false
+                  description: "Cursor for the next page of results."
+                - name: pageSize
+                  in: query
+                  type: integer
+                  required: false
+                  description: "The number of environments to return per page."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: account-management-api
+      resources:
+        - path: /v1/users
+          name: users
+          description: "Manage Dynatrace account users"
+          operations:
+            - method: GET
+              name: list-users
+              description: "List all users in the account"
+              call: "account-management.list-users"
+              with:
+                accountUuid: "rest.accountUuid"
+                nextPageKey: "rest.nextPageKey"
+                pageSize: "rest.pageSize"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-user
+              description: "Create a new user in the account"
+              call: "account-management.create-user"
+              with:
+                accountUuid: "rest.accountUuid"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/users/{userId}
+          name: user-detail
+          description: "Get, update, or delete a specific user"
+          operations:
+            - method: GET
+              name: get-user
+              description: "Get user details"
+              call: "account-management.get-user"
+              with:
+                accountUuid: "rest.accountUuid"
+                userId: "rest.userId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: PUT
+              name: update-user
+              description: "Update user profile and group memberships"
+              call: "account-management.update-user"
+              with:
+                accountUuid: "rest.accountUuid"
+                userId: "rest.userId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: DELETE
+              name: delete-user
+              description: "Delete a user from the account"
+              call: "account-management.delete-user"
+              with:
+                accountUuid: "rest.accountUuid"
+                userId: "rest.userId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/groups
+          name: groups
+          description: "Manage user groups"
+          operations:
+            - method: GET
+              name: list-groups
+              description: "List all groups in the account"
+              call: "account-management.list-groups"
+              with:
+                accountUuid: "rest.accountUuid"
+                nextPageKey: "rest.nextPageKey"
+                pageSize: "rest.pageSize"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-group
+              description: "Create a new group"
+              call: "account-management.create-group"
+              with:
+                accountUuid: "rest.accountUuid"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/groups/{groupId}
+          name: group-detail
+          description: "Get, update, or delete a specific group"
+          operations:
+            - method: GET
+              name: get-group
+              description: "Get group details"
+              call: "account-management.get-group"
+              with:
+                accountUuid: "rest.accountUuid"
+                groupId: "rest.groupId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: PUT
+              name: update-group
+              description: "Update group name and description"
+              call: "account-management.update-group"
+              with:
+                accountUuid: "rest.accountUuid"
+                groupId: "rest.groupId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: DELETE
+              name: delete-group
+              description: "Delete a group"
+              call: "account-management.delete-group"
+              with:
+                accountUuid: "rest.accountUuid"
+                groupId: "rest.groupId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/permissions
+          name: permissions
+          description: "Query account permissions"
+          operations:
+            - method: GET
+              name: list-permissions
+              description: "List all permissions for the account"
+              call: "account-management.list-permissions"
+              with:
+                accountUuid: "rest.accountUuid"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/environments
+          name: environments
+          description: "List account environments"
+          operations:
+            - method: GET
+              name: list-environments
+              description: "List all environments in the account"
+              call: "account-management.list-environments"
+              with:
+                accountUuid: "rest.accountUuid"
+                nextPageKey: "rest.nextPageKey"
+                pageSize: "rest.pageSize"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9100
+      namespace: account-management-mcp
+      transport: http
+      tools:
+        - name: list-users
+          description: "List all users in a Dynatrace account"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "account-management.list-users"
+          with:
+            accountUuid: "tools.accountUuid"
+            nextPageKey: "tools.nextPageKey"
+            pageSize: "tools.pageSize"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-user
+          description: "Create a new user in a Dynatrace account"
+          hints:
+            readOnly: false
+            openWorld: true
+          call: "account-management.create-user"
+          with:
+            accountUuid: "tools.accountUuid"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-user
+          description: "Get details of a specific user"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "account-management.get-user"
+          with:
+            accountUuid: "tools.accountUuid"
+            userId: "tools.userId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: update-user
+          description: "Update a user's profile and group memberships"
+          hints:
+            readOnly: false
+            idempotent: true
+            openWorld: true
+          call: "account-management.update-user"
+          with:
+            accountUuid: "tools.accountUuid"
+            userId: "tools.userId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: delete-user
+          description: "Permanently remove a user from the account"
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+            openWorld: true
+          call: "account-management.delete-user"
+          with:
+            accountUuid: "tools.accountUuid"
+            userId: "tools.userId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-groups
+          description: "List all user groups in a Dynatrace account"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "account-management.list-groups"
+          with:
+            accountUuid: "tools.accountUuid"
+            nextPageKey: "tools.nextPageKey"
+            pageSize: "tools.pageSize"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-group
+          description: "Create a new user group"
+          hints:
+            readOnly: false
+            openWorld: true
+          call: "account-management.create-group"
+          with:
+            accountUuid: "tools.accountUuid"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-group
+          description: "Get details of a specific group"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "account-management.get-group"
+          with:
+            accountUuid: "tools.accountUuid"
+            groupId: "tools.groupId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: update-group
+          description: "Update a group's name and description"
+          hints:
+            readOnly: false
+            idempotent: true
+            openWorld: true
+          call: "account-management.update-group"
+          with:
+            accountUuid: "tools.accountUuid"
+            groupId: "tools.groupId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: delete-group
+          description: "Permanently delete a group from the account"
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+            openWorld: true
+          call: "account-management.delete-group"
+          with:
+            accountUuid: "tools.accountUuid"
+            groupId: "tools.groupId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-permissions
+          description: "List all permissions defined for the account"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "account-management.list-permissions"
+          with:
+            accountUuid: "tools.accountUuid"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-environments
+          description: "List all environments associated with the account"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "account-management.list-environments"
+          with:
+            accountUuid: "tools.accountUuid"
+            nextPageKey: "tools.nextPageKey"
+            pageSize: "tools.pageSize"
+          outputParameters:
+            - type: object
+              mapping: "$."

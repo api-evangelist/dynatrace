@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-schema/log-monitoring-api-v2-constraint-violation-schema.json",
+  "title": "ConstraintViolation",
+  "description": "Details of a single constraint violation in a request.",
+  "type": "object",
+  "properties": {
+    "path": {
+      "type": "string",
+      "description": "The JSON path to the field that caused the violation.",
+      "example": "example-value"
+    },
+    "message": {
+      "type": "string",
+      "description": "A description of the constraint violation.",
+      "example": "Example description."
+    },
+    "parameterLocation": {
+      "type": "string",
+      "description": "The location of the violating parameter (QUERY, PATH, BODY).",
+      "example": "example-value"
+    },
+    "location": {
+      "type": "string",
+      "description": "The location detail for the violation.",
+      "example": "example-value"
+    }
+  }
+}

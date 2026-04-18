@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-schema/metrics-api-v2-metric-descriptor-schema.json",
+  "title": "MetricDescriptor",
+  "description": "Describes a single metric including its metadata, supported aggregations, entity dimensions, and default aggregation settings.",
+  "type": "object",
+  "properties": {
+    "metricId": {
+      "type": "string",
+      "description": "The fully qualified key of the metric, potentially including applied transformations. For example, builtin:host.cpu.usage:avg.",
+      "example": "abc123"
+    },
+    "displayName": {
+      "type": "string",
+      "description": "The human-readable display name of the metric.",
+      "example": "Production Service"
+    },
+    "description": {
+      "type": "string",
+      "description": "A detailed description of what the metric measures.",
+      "example": "Example description."
+    },
+    "unit": {
+      "type": "string",
+      "description": "The unit of the metric values. For example, Percent, Byte, MilliSecond.",
+      "example": "example-value"
+    },
+    "dduBillable": {
+      "type": "boolean",
+      "description": "Whether ingesting this metric consumes Davis Data Units (DDUs).",
+      "example": true
+    },
+    "created": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The Unix timestamp in milliseconds when the metric was created.",
+      "example": 500
+    },
+    "lastWritten": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The Unix timestamp in milliseconds when the metric was last written.",
+      "example": 500
+    },
+    "entityType": {
+      "type": "array",
+      "description": "The entity types that can be used to filter this metric, e.g., HOST, SERVICE, PROCESS_GROUP.",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "STANDARD"
+      ]
+    },
+    "aggregationTypes": {
+      "type": "array",
+      "description": "The list of aggregation types supported for this metric. Valid values include min, max, sum, count, avg, median, and percentile.",
+      "items": {
+        "type": "string",
+        "enum": [
+          "min",
+          "max",
+          "sum",
+          "count",
+          "avg",
+          "median",
+          "percentile"
+        ]
+      },
+      "example": [
+        "min"
+      ]
+    },
+    "dimensionDefinitions": {
+      "type": "array",
+      "description": "The list of dimension definitions for this metric. Each dimension provides a label for data splitting.",
+      "items": {
+        "$ref": "#/components/schemas/MetricDimensionDefinition"
+      },
+      "example": [
+        {
+          "key": "example-value",
+          "name": "Production Service",
+          "type": "STANDARD",
+          "displayName": "Production Service"
+        }
+      ]
+    },
+    "transformations": {
+      "type": "array",
+      "description": "The list of transformation expressions that can be applied to this metric using the metric selector.",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "example-value"
+      ]
+    },
+    "defaultAggregation": {
+      "$ref": "#/components/schemas/MetricDefaultAggregation"
+    }
+  }
+}

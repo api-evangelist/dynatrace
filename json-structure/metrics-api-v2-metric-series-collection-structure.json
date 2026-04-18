@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-structure/metrics-api-v2-metric-series-collection-structure.json",
+  "description": "A collection of time-series data for a single metric key, containing one series per unique dimension combination.",
+  "type": "object",
+  "properties": {
+    "metricId": {
+      "type": "string",
+      "description": "The metric key for this collection, including any applied transformations.",
+      "example": "abc123"
+    },
+    "data": {
+      "type": "array",
+      "description": "The list of individual time series, one per unique combination of dimension values.",
+      "items": {
+        "$ref": "#/components/schemas/MetricSeries"
+      },
+      "example": [
+        {
+          "dimensionMap": {},
+          "dimensions": [
+            {}
+          ],
+          "timestamps": [
+            {}
+          ],
+          "values": [
+            {}
+          ]
+        }
+      ]
+    }
+  },
+  "name": "MetricSeriesCollection"
+}

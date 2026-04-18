@@ -1,0 +1,102 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "dt": "https://dt.dynatrace.com/schema/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "ConstraintViolation": "dt:ConstraintViolation",
+    "path": {
+      "@id": "dt:path",
+      "@type": "xsd:string"
+    },
+    "message": {
+      "@id": "dt:message",
+      "@type": "xsd:string"
+    },
+    "parameterLocation": {
+      "@id": "dt:parameterLocation",
+      "@type": "xsd:string"
+    },
+    "location": {
+      "@id": "dt:location",
+      "@type": "xsd:string"
+    },
+    "EntityStub": "dt:EntityStub",
+    "entityId": {
+      "@id": "dt:entityId",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "type": {
+      "@id": "dt:type",
+      "@type": "xsd:string"
+    },
+    "EventCollection": "dt:EventCollection",
+    "nextPageKey": {
+      "@id": "dt:nextPageKey",
+      "@type": "xsd:string"
+    },
+    "totalCount": {
+      "@id": "dt:totalCount",
+      "@type": "xsd:integer"
+    },
+    "pageSize": {
+      "@id": "dt:pageSize",
+      "@type": "xsd:integer"
+    },
+    "events": {
+      "@id": "dt:events",
+      "@container": "@set"
+    },
+    "EventIngestPayload": "dt:EventIngestPayload",
+    "eventType": {
+      "@id": "dt:eventType",
+      "@type": "xsd:string"
+    },
+    "timeout": {
+      "@id": "dt:timeout",
+      "@type": "xsd:integer"
+    },
+    "entitySelector": {
+      "@id": "dt:entitySelector",
+      "@type": "xsd:string"
+    },
+    "title": {
+      "@id": "dt:title",
+      "@type": "xsd:string"
+    },
+    "startTime": {
+      "@id": "dt:startTime",
+      "@type": "xsd:integer"
+    },
+    "endTime": {
+      "@id": "dt:endTime",
+      "@type": "xsd:integer"
+    },
+    "properties": {
+      "@id": "dt:properties"
+    },
+    "EventIngestResultItem": "dt:EventIngestResultItem",
+    "eventId": {
+      "@id": "dt:eventId",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "dt:status",
+      "@type": "xsd:string"
+    },
+    "EventIngestResult": "dt:EventIngestResult",
+    "reportCount": {
+      "@id": "dt:reportCount",
+      "@type": "xsd:integer"
+    },
+    "eventIngestResults": {
+      "@id": "dt:eventIngestResults",
+      "@container": "@set"
+    },
+    "Event": "dt:Event"
+  }
+}

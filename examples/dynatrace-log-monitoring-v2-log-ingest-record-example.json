@@ -1,0 +1,7 @@
+{
+  "content": "example-value",
+  "severity": "EMERGENCY",
+  "timestamp": "example-value",
+  "log.source": "example-value",
+  "dt.entity.host": "example-value"
+}

@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "description": "A single comment attached to a problem.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The unique identifier of the comment.",
+      "example": "abc123"
+    },
+    "createdAtTimestamp": {
+      "type": "integer",
+      "description": "The Unix timestamp in milliseconds when the comment was created.",
+      "format": "int64",
+      "example": 1718153645993
+    },
+    "authorName": {
+      "type": "string",
+      "description": "The display name of the user who created the comment.",
+      "example": "Production Service"
+    },
+    "content": {
+      "type": "string",
+      "description": "The text content of the comment.",
+      "example": "example-value"
+    },
+    "context": {
+      "type": "string",
+      "description": "Optional context reference attached to the comment.",
+      "example": "example-value"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Comment"
+}

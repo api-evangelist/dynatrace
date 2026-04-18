@@ -1,0 +1,135 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "dt": "https://dt.dynatrace.com/schema/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "ConstraintViolation": "dt:ConstraintViolation",
+    "path": {
+      "@id": "dt:path",
+      "@type": "xsd:string"
+    },
+    "message": {
+      "@id": "dt:message",
+      "@type": "xsd:string"
+    },
+    "parameterLocation": {
+      "@id": "dt:parameterLocation",
+      "@type": "xsd:string"
+    },
+    "location": {
+      "@id": "dt:location",
+      "@type": "xsd:string"
+    },
+    "MetricData": "dt:MetricData",
+    "resolution": {
+      "@id": "dt:resolution",
+      "@type": "xsd:string"
+    },
+    "nextPageKey": {
+      "@id": "dt:nextPageKey",
+      "@type": "xsd:string"
+    },
+    "totalCount": {
+      "@id": "dt:totalCount",
+      "@type": "xsd:integer"
+    },
+    "result": {
+      "@id": "dt:result",
+      "@container": "@set"
+    },
+    "MetricDefaultAggregation": "dt:MetricDefaultAggregation",
+    "type": {
+      "@id": "dt:type",
+      "@type": "xsd:string"
+    },
+    "parameter": {
+      "@id": "dt:parameter",
+      "@type": "xsd:decimal"
+    },
+    "MetricDescriptorCollection": "dt:MetricDescriptorCollection",
+    "metrics": {
+      "@id": "dt:metrics",
+      "@container": "@set"
+    },
+    "MetricDescriptor": "dt:MetricDescriptor",
+    "metricId": {
+      "@id": "dt:metricId",
+      "@type": "xsd:string"
+    },
+    "displayName": {
+      "@id": "dt:displayName",
+      "@type": "xsd:string"
+    },
+    "description": {
+      "@id": "schema:description",
+      "@type": "xsd:string"
+    },
+    "unit": {
+      "@id": "dt:unit",
+      "@type": "xsd:string"
+    },
+    "dduBillable": {
+      "@id": "dt:dduBillable",
+      "@type": "xsd:boolean"
+    },
+    "created": {
+      "@id": "dt:created",
+      "@type": "xsd:integer"
+    },
+    "lastWritten": {
+      "@id": "dt:lastWritten",
+      "@type": "xsd:integer"
+    },
+    "entityType": {
+      "@id": "dt:entityType",
+      "@container": "@set"
+    },
+    "aggregationTypes": {
+      "@id": "dt:aggregationTypes",
+      "@container": "@set"
+    },
+    "dimensionDefinitions": {
+      "@id": "dt:dimensionDefinitions",
+      "@container": "@set"
+    },
+    "transformations": {
+      "@id": "dt:transformations",
+      "@container": "@set"
+    },
+    "defaultAggregation": {
+      "@id": "dt:defaultAggregation",
+      "@type": "xsd:string"
+    },
+    "MetricDimensionDefinition": "dt:MetricDimensionDefinition",
+    "key": {
+      "@id": "dt:key",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "MetricSeriesCollection": "dt:MetricSeriesCollection",
+    "data": {
+      "@id": "dt:data",
+      "@container": "@set"
+    },
+    "MetricSeries": "dt:MetricSeries",
+    "dimensionMap": {
+      "@id": "dt:dimensionMap"
+    },
+    "dimensions": {
+      "@id": "dt:dimensions",
+      "@container": "@set"
+    },
+    "timestamps": {
+      "@id": "dt:timestamps",
+      "@container": "@set"
+    },
+    "values": {
+      "@id": "dt:values",
+      "@container": "@set"
+    }
+  }
+}

@@ -1,0 +1,218 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Dynatrace Events API v2"
+  description: "The Dynatrace Events API v2 enables you to push custom events into a Dynatrace environment and retrieve event data from monitored systems."
+  tags:
+    - Dynatrace
+    - Events
+    - Monitoring
+    - Observability
+  created: "2026-04-18"
+  modified: "2026-04-18"
+
+binds:
+  - namespace: env
+    keys:
+      DYNATRACE_API_TOKEN: DYNATRACE_API_TOKEN
+      DYNATRACE_ENVIRONMENT_ID: DYNATRACE_ENVIRONMENT_ID
+
+capability:
+  consumes:
+    - type: http
+      namespace: events-v2
+      baseUri: https://${DYNATRACE_ENVIRONMENT_ID}.live.dynatrace.com/api/v2
+      description: "Dynatrace Events API v2 for querying and ingesting custom events."
+      authentication:
+        type: apikey
+        key: Authorization
+        value: "Api-Token {{DYNATRACE_API_TOKEN}}"
+        placement: header
+      resources:
+        - name: events
+          path: /events
+          description: "Query events"
+          operations:
+            - name: list-events
+              method: GET
+              description: "Returns a list of events matching the specified filters."
+              inputParameters:
+                - name: nextPageKey
+                  in: query
+                  type: string
+                  required: false
+                  description: "Cursor for the next page of results."
+                - name: pageSize
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Number of events to return per page."
+                - name: from
+                  in: query
+                  type: string
+                  required: false
+                  description: "Start of the queried time range."
+                - name: to
+                  in: query
+                  type: string
+                  required: false
+                  description: "End of the queried time range."
+                - name: eventSelector
+                  in: query
+                  type: string
+                  required: false
+                  description: "Event selector expression."
+                - name: entitySelector
+                  in: query
+                  type: string
+                  required: false
+                  description: "Entity selector to filter events by affected entities."
+                - name: eventType
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter by event type."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: event-detail
+          path: /events/{eventId}
+          description: "Get a specific event"
+          operations:
+            - name: get-event
+              method: GET
+              description: "Returns the details of a specific event by ID."
+              inputParameters:
+                - name: eventId
+                  in: path
+                  type: string
+                  required: true
+                  description: "The unique identifier of the event."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: event-ingest
+          path: /events/ingest
+          description: "Ingest custom events"
+          operations:
+            - name: ingest-event
+              method: POST
+              description: "Ingests a custom event into the Dynatrace environment."
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  eventType: "{{tools.event_type}}"
+                  title: "{{tools.title}}"
+                  entitySelector: "{{tools.entity_selector}}"
+                  startTime: "{{tools.start_time}}"
+                  endTime: "{{tools.end_time}}"
+                  properties: "{{tools.properties}}"
+
+  exposes:
+    - type: rest
+      port: 8102
+      namespace: events-v2-api
+      resources:
+        - path: /v1/events
+          name: events
+          description: "Query events"
+          operations:
+            - method: GET
+              name: list-events
+              description: "List events matching filters"
+              call: "events-v2.list-events"
+              with:
+                nextPageKey: "rest.nextPageKey"
+                pageSize: "rest.pageSize"
+                from: "rest.from"
+                to: "rest.to"
+                eventSelector: "rest.eventSelector"
+                entitySelector: "rest.entitySelector"
+                eventType: "rest.eventType"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/events/{eventId}
+          name: event-detail
+          description: "Get event details"
+          operations:
+            - method: GET
+              name: get-event
+              description: "Get a specific event by ID"
+              call: "events-v2.get-event"
+              with:
+                eventId: "rest.eventId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/events/ingest
+          name: event-ingest
+          description: "Ingest custom events"
+          operations:
+            - method: POST
+              name: ingest-event
+              description: "Ingest a custom event"
+              call: "events-v2.ingest-event"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9102
+      namespace: events-v2-mcp
+      transport: http
+      tools:
+        - name: list-events
+          description: "List events from the Dynatrace environment"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "events-v2.list-events"
+          with:
+            nextPageKey: "tools.nextPageKey"
+            pageSize: "tools.pageSize"
+            from: "tools.from"
+            to: "tools.to"
+            eventSelector: "tools.eventSelector"
+            entitySelector: "tools.entitySelector"
+            eventType: "tools.eventType"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-event
+          description: "Get details of a specific event"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "events-v2.get-event"
+          with:
+            eventId: "tools.eventId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: ingest-event
+          description: "Ingest a custom event into Dynatrace"
+          hints:
+            readOnly: false
+            openWorld: true
+          call: "events-v2.ingest-event"
+          with:
+            event_type: "tools.event_type"
+            title: "tools.title"
+            entity_selector: "tools.entity_selector"
+            start_time: "tools.start_time"
+            end_time: "tools.end_time"
+            properties: "tools.properties"
+          outputParameters:
+            - type: object
+              mapping: "$."

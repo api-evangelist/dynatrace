@@ -1,0 +1,17 @@
+{
+  "metricId": "abc123",
+  "data": [
+    {
+      "dimensionMap": {},
+      "dimensions": [
+        {}
+      ],
+      "timestamps": [
+        {}
+      ],
+      "values": [
+        {}
+      ]
+    }
+  ]
+}

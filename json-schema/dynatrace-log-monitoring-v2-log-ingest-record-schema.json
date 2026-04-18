@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "description": "A single log record to ingest into the Dynatrace Grail data lakehouse. The content field is required. Additional fields provide context for routing, filtering, and entity association.",
+  "properties": {
+    "content": {
+      "type": "string",
+      "description": "The main log message or text. Required. This is the primary searchable content of the log record.",
+      "example": "example-value"
+    },
+    "severity": {
+      "type": "string",
+      "description": "The severity level of the log record. Standard syslog severity levels are supported.",
+      "example": "EMERGENCY",
+      "enum": [
+        "EMERGENCY",
+        "ALERT",
+        "CRITICAL",
+        "ERROR",
+        "WARNING",
+        "NOTICE",
+        "INFO",
+        "DEBUG",
+        "TRACE"
+      ]
+    },
+    "timestamp": {
+      "type": "string",
+      "description": "The timestamp of the log record. Accepts ISO 8601 format (e.g., 2024-01-15T10:30:00.000Z) or Unix timestamp in milliseconds. If not specified, the ingestion time is used.",
+      "example": "example-value"
+    },
+    "log.source": {
+      "type": "string",
+      "description": "A string identifier for the source of the log record, such as an application name, component, or log file path.",
+      "example": "example-value"
+    },
+    "dt.entity.host": {
+      "type": "string",
+      "description": "The Dynatrace host entity ID to associate this log record with, e.g., HOST-1234567890ABCDEF. This enables correlation between logs and monitored infrastructure.",
+      "example": "example-value"
+    }
+  },
+  "required": [
+    "content"
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LogIngestRecord"
+}

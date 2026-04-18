@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-structure/entities-api-v2-entity-collection-structure.json",
+  "description": "A paginated collection of monitored entities.",
+  "type": "object",
+  "properties": {
+    "nextPageKey": {
+      "type": "string",
+      "description": "Cursor for the next page of results. Null if no more pages.",
+      "nullable": true,
+      "example": "example-value"
+    },
+    "totalCount": {
+      "type": "int64",
+      "description": "The total number of entities matching the query.",
+      "example": 500
+    },
+    "pageSize": {
+      "type": "int32",
+      "description": "The number of results returned on this page.",
+      "example": 500
+    },
+    "entities": {
+      "type": "array",
+      "description": "The list of entities on this page.",
+      "items": {
+        "$ref": "#/components/schemas/Entity"
+      },
+      "example": [
+        {
+          "entityId": "abc123",
+          "displayName": "Production Service",
+          "type": "STANDARD",
+          "firstSeenTms": 500,
+          "lastSeenTms": 500,
+          "properties": {},
+          "tags": [
+            {
+              "context": "example-value",
+              "key": "example-value",
+              "value": "example-value",
+              "stringRepresentation": "example-value"
+            }
+          ],
+          "managementZones": [
+            {
+              "id": "abc123",
+              "name": "Production Service"
+            }
+          ],
+          "toRelationships": {},
+          "fromRelationships": {}
+        }
+      ]
+    }
+  },
+  "name": "EntityCollection"
+}

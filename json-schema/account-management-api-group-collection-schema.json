@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-schema/account-management-api-group-collection-schema.json",
+  "title": "GroupCollection",
+  "description": "A paginated collection of groups.",
+  "type": "object",
+  "properties": {
+    "nextPageKey": {
+      "type": "string",
+      "description": "Cursor for the next page of results.",
+      "nullable": true,
+      "example": "example-value"
+    },
+    "totalCount": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The total number of groups in the account.",
+      "example": 500
+    },
+    "items": {
+      "type": "array",
+      "description": "The list of groups on this page.",
+      "items": {
+        "$ref": "#/components/schemas/Group"
+      },
+      "example": [
+        {
+          "groupId": "abc123",
+          "name": "Production Service",
+          "description": "Example description.",
+          "owner": "example-value",
+          "createdAt": "2025-03-15T14:30:00Z",
+          "updatedAt": "2025-03-15T14:30:00Z"
+        }
+      ]
+    }
+  }
+}

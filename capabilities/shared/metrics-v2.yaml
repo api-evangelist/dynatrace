@@ -1,0 +1,311 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Dynatrace Metrics API v2"
+  description: "The Dynatrace Metrics API v2 allows you to query, ingest, and manage time-series metric data within a Dynatrace environment."
+  tags:
+    - Dynatrace
+    - Metrics
+    - Time Series
+    - Observability
+  created: "2026-04-18"
+  modified: "2026-04-18"
+
+binds:
+  - namespace: env
+    keys:
+      DYNATRACE_API_TOKEN: DYNATRACE_API_TOKEN
+      DYNATRACE_ENVIRONMENT_ID: DYNATRACE_ENVIRONMENT_ID
+
+capability:
+  consumes:
+    - type: http
+      namespace: metrics-v2
+      baseUri: https://${DYNATRACE_ENVIRONMENT_ID}.live.dynatrace.com/api/v2
+      description: "Dynatrace Metrics API v2 for querying, ingesting, and managing time-series metrics."
+      authentication:
+        type: apikey
+        key: Authorization
+        value: "Api-Token {{DYNATRACE_API_TOKEN}}"
+        placement: header
+      resources:
+        - name: metrics
+          path: /metrics
+          description: "List metric descriptors"
+          operations:
+            - name: list-metrics
+              method: GET
+              description: "Returns a list of all metrics available in the environment."
+              inputParameters:
+                - name: nextPageKey
+                  in: query
+                  type: string
+                  required: false
+                  description: "Cursor for the next page of results."
+                - name: pageSize
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Number of metric descriptors to return per page."
+                - name: metricSelector
+                  in: query
+                  type: string
+                  required: false
+                  description: "Metric selector to filter metrics."
+                - name: fields
+                  in: query
+                  type: string
+                  required: false
+                  description: "Fields to include in the response."
+                - name: writtenSince
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter to metrics written since this time."
+                - name: metricDescriptors
+                  in: query
+                  type: boolean
+                  required: false
+                  description: "Whether to include descriptor details."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: metric-descriptor
+          path: /metrics/{metricKey}
+          description: "Get or delete a specific metric"
+          operations:
+            - name: get-metric-descriptor
+              method: GET
+              description: "Returns the descriptor for the specified metric key."
+              inputParameters:
+                - name: metricKey
+                  in: path
+                  type: string
+                  required: true
+                  description: "The key of the metric."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: delete-custom-metric
+              method: DELETE
+              description: "Deletes the specified custom metric from the environment."
+              inputParameters:
+                - name: metricKey
+                  in: path
+                  type: string
+                  required: true
+                  description: "The key of the custom metric to delete."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: metric-query
+          path: /metrics/query
+          description: "Query metric data points"
+          operations:
+            - name: query-metric-data
+              method: GET
+              description: "Returns data points for the specified metrics."
+              inputParameters:
+                - name: metricSelector
+                  in: query
+                  type: string
+                  required: true
+                  description: "Metric selector expression."
+                - name: resolution
+                  in: query
+                  type: string
+                  required: false
+                  description: "Desired time resolution, e.g., 5m, 1h."
+                - name: from
+                  in: query
+                  type: string
+                  required: false
+                  description: "Start of the queried time range."
+                - name: to
+                  in: query
+                  type: string
+                  required: false
+                  description: "End of the queried time range."
+                - name: entitySelector
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter to entities matching this selector."
+                - name: mzSelector
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter to a management zone."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: metric-ingest
+          path: /metrics/ingest
+          description: "Ingest custom metrics"
+          operations:
+            - name: ingest-custom-metrics
+              method: POST
+              description: "Ingests custom metric data points using MINT line protocol."
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: text
+                data: "{{tools.metric_lines}}"
+
+  exposes:
+    - type: rest
+      port: 8104
+      namespace: metrics-v2-api
+      resources:
+        - path: /v1/metrics
+          name: metrics
+          description: "List metric descriptors"
+          operations:
+            - method: GET
+              name: list-metrics
+              description: "List all available metrics"
+              call: "metrics-v2.list-metrics"
+              with:
+                nextPageKey: "rest.nextPageKey"
+                pageSize: "rest.pageSize"
+                metricSelector: "rest.metricSelector"
+                fields: "rest.fields"
+                writtenSince: "rest.writtenSince"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/metrics/{metricKey}
+          name: metric-descriptor
+          description: "Get or delete a metric"
+          operations:
+            - method: GET
+              name: get-metric-descriptor
+              description: "Get metric descriptor by key"
+              call: "metrics-v2.get-metric-descriptor"
+              with:
+                metricKey: "rest.metricKey"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: DELETE
+              name: delete-custom-metric
+              description: "Delete a custom metric"
+              call: "metrics-v2.delete-custom-metric"
+              with:
+                metricKey: "rest.metricKey"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/metrics/query
+          name: metric-query
+          description: "Query metric data points"
+          operations:
+            - method: GET
+              name: query-metric-data
+              description: "Query metric data with selectors and time ranges"
+              call: "metrics-v2.query-metric-data"
+              with:
+                metricSelector: "rest.metricSelector"
+                resolution: "rest.resolution"
+                from: "rest.from"
+                to: "rest.to"
+                entitySelector: "rest.entitySelector"
+                mzSelector: "rest.mzSelector"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/metrics/ingest
+          name: metric-ingest
+          description: "Ingest custom metrics"
+          operations:
+            - method: POST
+              name: ingest-custom-metrics
+              description: "Ingest custom metrics via MINT protocol"
+              call: "metrics-v2.ingest-custom-metrics"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9104
+      namespace: metrics-v2-mcp
+      transport: http
+      tools:
+        - name: list-metrics
+          description: "List all metric descriptors in the environment"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "metrics-v2.list-metrics"
+          with:
+            nextPageKey: "tools.nextPageKey"
+            pageSize: "tools.pageSize"
+            metricSelector: "tools.metricSelector"
+            fields: "tools.fields"
+            writtenSince: "tools.writtenSince"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-metric-descriptor
+          description: "Get the descriptor for a specific metric"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "metrics-v2.get-metric-descriptor"
+          with:
+            metricKey: "tools.metricKey"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: query-metric-data
+          description: "Query metric data points with selectors and time ranges"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "metrics-v2.query-metric-data"
+          with:
+            metricSelector: "tools.metricSelector"
+            resolution: "tools.resolution"
+            from: "tools.from"
+            to: "tools.to"
+            entitySelector: "tools.entitySelector"
+            mzSelector: "tools.mzSelector"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: ingest-custom-metrics
+          description: "Ingest custom metric data points into Dynatrace"
+          hints:
+            readOnly: false
+            openWorld: true
+          call: "metrics-v2.ingest-custom-metrics"
+          with:
+            metric_lines: "tools.metric_lines"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: delete-custom-metric
+          description: "Delete a custom metric from the environment"
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+            openWorld: true
+          call: "metrics-v2.delete-custom-metric"
+          with:
+            metricKey: "tools.metricKey"
+          outputParameters:
+            - type: object
+              mapping: "$."

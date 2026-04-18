@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "description": "A reference to an alerting profile (problem filter).",
+  "name": "AlertingProfileStub",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The unique identifier of the alerting profile."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the alerting profile."
+    }
+  },
+  "$schema": "https://json-structure.org/draft/2020-12/schema"
+}

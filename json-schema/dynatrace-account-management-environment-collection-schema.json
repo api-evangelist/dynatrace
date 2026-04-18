@@ -1,0 +1,62 @@
+{
+  "type": "object",
+  "description": "A paginated collection of environments.",
+  "properties": {
+    "nextPageKey": {
+      "type": "string",
+      "description": "Cursor for the next page of results.",
+      "example": "example-value"
+    },
+    "totalCount": {
+      "type": "integer",
+      "description": "The total number of environments in the account.",
+      "format": "int64",
+      "example": 500
+    },
+    "environments": {
+      "type": "array",
+      "description": "The list of environments on this page.",
+      "example": [
+        {
+          "id": "abc123",
+          "name": "Production Service",
+          "status": "ACTIVE",
+          "trial": true
+        }
+      ],
+      "items": {
+        "type": "object",
+        "description": "Represents a Dynatrace environment (tenant) associated with the account.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique environment identifier (tenant ID).",
+            "example": "abc123"
+          },
+          "name": {
+            "type": "string",
+            "description": "The display name of the environment.",
+            "example": "Production Service"
+          },
+          "status": {
+            "type": "string",
+            "description": "The current status of the environment.",
+            "example": "ACTIVE",
+            "enum": [
+              "ACTIVE",
+              "SUSPENDED",
+              "TRIAL"
+            ]
+          },
+          "trial": {
+            "type": "boolean",
+            "description": "Whether the environment is a trial environment.",
+            "example": true
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EnvironmentCollection"
+}

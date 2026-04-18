@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-structure/account-management-api-permission-collection-structure.json",
+  "description": "A collection of permission assignments for the account.",
+  "type": "object",
+  "properties": {
+    "permissions": {
+      "type": "array",
+      "description": "The list of all permissions in the account.",
+      "items": {
+        "$ref": "#/components/schemas/Permission"
+      },
+      "example": [
+        {
+          "permissionName": "Production Service",
+          "scope": "example-value",
+          "scopeType": "ACCOUNT",
+          "groupId": "abc123"
+        }
+      ]
+    }
+  },
+  "name": "PermissionCollection"
+}

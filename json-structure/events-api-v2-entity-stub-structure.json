@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-structure/events-api-v2-entity-stub-structure.json",
+  "description": "A lightweight reference to a monitored entity.",
+  "type": "object",
+  "properties": {
+    "entityId": {
+      "type": "string",
+      "description": "The unique identifier of the entity, e.g., SERVICE-1234567890ABCDEF.",
+      "example": "abc123"
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the entity.",
+      "example": "Production Service"
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of the entity, e.g., SERVICE, HOST, PROCESS_GROUP, APPLICATION.",
+      "example": "STANDARD"
+    }
+  },
+  "name": "EntityStub"
+}

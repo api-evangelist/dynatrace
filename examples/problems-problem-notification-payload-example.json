@@ -1,0 +1,17 @@
+{
+  "ProblemID": "P-123456",
+  "ProblemTitle": "High failure rate on payment-service",
+  "ProblemURL": "https://mySampleEnv.live.dynatrace.com/#problems/problemdetail;pid=-1234567890123456789_V2",
+  "ProblemSeverity": "PERFORMANCE",
+  "ProblemStatus": "OPEN",
+  "ImpactedEntities": [
+    {
+      "Entity": "SERVICE-ABCDEF1234567890",
+      "Name": "payment-service"
+    }
+  ],
+  "ImpactedEntityNames": "payment-service, checkout-service",
+  "Tags": "env:production, team:backend",
+  "State": "OPEN",
+  "ProblemDetailsJSON": "example-value"
+}

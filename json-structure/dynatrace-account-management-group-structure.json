@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "description": "Represents a user group in the Dynatrace account.",
+  "name": "Group",
+  "properties": {
+    "groupId": {
+      "type": "string",
+      "description": "The unique identifier of the group."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the group."
+    },
+    "description": {
+      "type": "string",
+      "description": "An optional description of the group's purpose or scope."
+    },
+    "owner": {
+      "type": "string",
+      "description": "The identifier of the group owner. LOCAL indicates the group is managed within Dynatrace; SSO indicates it is synced from an identity provider."
+    },
+    "createdAt": {
+      "type": "datetime",
+      "description": "The date and time when the group was created."
+    },
+    "updatedAt": {
+      "type": "datetime",
+      "description": "The date and time when the group was last updated."
+    }
+  },
+  "$schema": "https://json-structure.org/draft/2020-12/schema"
+}

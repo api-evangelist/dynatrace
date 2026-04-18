@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "description": "Error response envelope returned when a request fails.",
+  "name": "ErrorEnvelope",
+  "properties": {
+    "error": {
+      "type": "object",
+      "description": "Details of an API error.",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "description": "The HTTP status code of the error."
+        },
+        "message": {
+          "type": "string",
+          "description": "A human-readable description of the error."
+        }
+      }
+    }
+  },
+  "$schema": "https://json-structure.org/draft/2020-12/schema"
+}

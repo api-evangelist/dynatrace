@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "description": "A lightweight reference to a monitored entity.",
+  "name": "EntityStub",
+  "properties": {
+    "entityId": {
+      "type": "string",
+      "description": "The unique identifier of the entity, e.g., SERVICE-1234567890ABCDEF."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the entity."
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of the entity, e.g., SERVICE, HOST, PROCESS_GROUP, APPLICATION."
+    }
+  },
+  "$schema": "https://json-structure.org/draft/2020-12/schema"
+}

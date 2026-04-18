@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-schema/entities-api-v2-entity-tag-schema.json",
+  "title": "EntityTag",
+  "description": "A tag applied to a monitored entity.",
+  "type": "object",
+  "properties": {
+    "context": {
+      "type": "string",
+      "description": "The origin context of the tag. For example, CONTEXTLESS, ENVIRONMENT, AWS, KUBERNETES, etc.",
+      "example": "example-value"
+    },
+    "key": {
+      "type": "string",
+      "description": "The key of the tag.",
+      "example": "example-value"
+    },
+    "value": {
+      "type": "string",
+      "description": "The value of the tag, if applicable.",
+      "nullable": true,
+      "example": "example-value"
+    },
+    "stringRepresentation": {
+      "type": "string",
+      "description": "The full string representation of the tag as displayed in the Dynatrace UI, e.g., [KUBERNETES]app:my-service.",
+      "example": "example-value"
+    }
+  }
+}

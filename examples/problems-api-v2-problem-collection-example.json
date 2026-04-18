@@ -1,0 +1,43 @@
+{
+  "nextPageKey": "example-value",
+  "totalCount": 500,
+  "pageSize": 500,
+  "problems": [
+    {
+      "problemId": "abc123",
+      "displayId": "abc123",
+      "title": "example-value",
+      "severityLevel": "AVAILABILITY",
+      "status": "OPEN",
+      "startTime": 1718153645993,
+      "endTime": 1718153645993,
+      "affectedEntities": [
+        {
+          "entityId": "abc123",
+          "name": "Production Service",
+          "type": "STANDARD"
+        }
+      ],
+      "impactedEntities": [
+        {
+          "entityId": "abc123",
+          "name": "Production Service",
+          "type": "STANDARD"
+        }
+      ],
+      "rootCauseEntity": "example-value",
+      "managementZones": [
+        {
+          "id": "abc123",
+          "name": "Production Service"
+        }
+      ],
+      "problemFilters": [
+        {
+          "id": "abc123",
+          "name": "Production Service"
+        }
+      ]
+    }
+  ]
+}

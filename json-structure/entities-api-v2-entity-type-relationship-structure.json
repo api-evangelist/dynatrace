@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-structure/entities-api-v2-entity-type-relationship-structure.json",
+  "description": "Describes a relationship type for an entity type.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The relationship type identifier, e.g., runsOn.",
+      "example": "abc123"
+    },
+    "toTypes": {
+      "type": "array",
+      "description": "The entity types that can participate in this relationship.",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "STANDARD"
+      ]
+    }
+  },
+  "name": "EntityTypeRelationship"
+}

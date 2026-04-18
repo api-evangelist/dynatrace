@@ -1,0 +1,123 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "dt": "https://dt.dynatrace.com/schema/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "ConstraintViolation": "dt:ConstraintViolation",
+    "path": {
+      "@id": "dt:path",
+      "@type": "xsd:string"
+    },
+    "message": {
+      "@id": "dt:message",
+      "@type": "xsd:string"
+    },
+    "parameterLocation": {
+      "@id": "dt:parameterLocation",
+      "@type": "xsd:string"
+    },
+    "location": {
+      "@id": "dt:location",
+      "@type": "xsd:string"
+    },
+    "EntityCollection": "dt:EntityCollection",
+    "nextPageKey": {
+      "@id": "dt:nextPageKey",
+      "@type": "xsd:string"
+    },
+    "totalCount": {
+      "@id": "dt:totalCount",
+      "@type": "xsd:integer"
+    },
+    "pageSize": {
+      "@id": "dt:pageSize",
+      "@type": "xsd:integer"
+    },
+    "entities": {
+      "@id": "dt:entities",
+      "@container": "@set"
+    },
+    "EntityLookupRequest": "dt:EntityLookupRequest",
+    "name": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "type": {
+      "@id": "dt:type",
+      "@type": "xsd:string"
+    },
+    "Entity": "dt:Entity",
+    "entityId": {
+      "@id": "dt:entityId",
+      "@type": "xsd:string"
+    },
+    "displayName": {
+      "@id": "dt:displayName",
+      "@type": "xsd:string"
+    },
+    "firstSeenTms": {
+      "@id": "dt:firstSeenTms",
+      "@type": "xsd:integer"
+    },
+    "lastSeenTms": {
+      "@id": "dt:lastSeenTms",
+      "@type": "xsd:integer"
+    },
+    "properties": {
+      "@id": "dt:properties"
+    },
+    "tags": {
+      "@id": "dt:tags",
+      "@container": "@set"
+    },
+    "managementZones": {
+      "@id": "dt:managementZones",
+      "@container": "@set"
+    },
+    "toRelationships": {
+      "@id": "dt:toRelationships"
+    },
+    "fromRelationships": {
+      "@id": "dt:fromRelationships"
+    },
+    "EntityTag": "dt:EntityTag",
+    "context": {
+      "@id": "dt:context",
+      "@type": "xsd:string"
+    },
+    "key": {
+      "@id": "dt:key",
+      "@type": "xsd:string"
+    },
+    "value": {
+      "@id": "dt:value",
+      "@type": "xsd:string"
+    },
+    "stringRepresentation": {
+      "@id": "dt:stringRepresentation",
+      "@type": "xsd:string"
+    },
+    "EntityTypeCollection": "dt:EntityTypeCollection",
+    "types": {
+      "@id": "dt:types",
+      "@container": "@set"
+    },
+    "EntityTypeProperty": "dt:EntityTypeProperty",
+    "id": {
+      "@id": "dt:id",
+      "@type": "xsd:string"
+    },
+    "EntityTypeRelationship": "dt:EntityTypeRelationship",
+    "toTypes": {
+      "@id": "dt:toTypes",
+      "@container": "@set"
+    },
+    "EntityType": "dt:EntityType",
+    "description": {
+      "@id": "schema:description",
+      "@type": "xsd:string"
+    },
+    "ManagementZone": "dt:ManagementZone"
+  }
+}

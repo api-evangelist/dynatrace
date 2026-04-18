@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "description": "Describes a single property of an entity type.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The property key identifier.",
+      "example": "abc123"
+    },
+    "displayName": {
+      "type": "string",
+      "description": "The human-readable display name of the property.",
+      "example": "Production Service"
+    },
+    "type": {
+      "type": "string",
+      "description": "The data type of the property value.",
+      "example": "STANDARD"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EntityTypeProperty"
+}

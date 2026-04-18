@@ -1,0 +1,28 @@
+{
+  "type": "STANDARD",
+  "displayName": "Production Service",
+  "description": "Example description.",
+  "properties": [
+    {
+      "id": "abc123",
+      "displayName": "Production Service",
+      "type": "STANDARD"
+    }
+  ],
+  "fromRelationships": [
+    {
+      "id": "abc123",
+      "toTypes": [
+        {}
+      ]
+    }
+  ],
+  "toRelationships": [
+    {
+      "id": "abc123",
+      "toTypes": [
+        {}
+      ]
+    }
+  ]
+}

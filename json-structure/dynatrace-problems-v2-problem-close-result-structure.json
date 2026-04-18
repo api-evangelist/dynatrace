@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "description": "The result returned after closing a problem.",
+  "name": "ProblemCloseResult",
+  "properties": {
+    "problemId": {
+      "type": "string",
+      "description": "The ID of the closed problem."
+    },
+    "closing": {
+      "type": "boolean",
+      "description": "Whether the problem is in the process of closing. The problem may take a short time to fully transition to RESOLVED status."
+    }
+  },
+  "$schema": "https://json-structure.org/draft/2020-12/schema"
+}

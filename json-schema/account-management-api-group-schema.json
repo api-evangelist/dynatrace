@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-schema/account-management-api-group-schema.json",
+  "title": "Group",
+  "description": "Represents a user group in the Dynatrace account.",
+  "type": "object",
+  "properties": {
+    "groupId": {
+      "type": "string",
+      "description": "The unique identifier of the group.",
+      "example": "abc123"
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the group.",
+      "example": "Production Service"
+    },
+    "description": {
+      "type": "string",
+      "description": "An optional description of the group's purpose or scope.",
+      "example": "Example description."
+    },
+    "owner": {
+      "type": "string",
+      "description": "The identifier of the group owner. LOCAL indicates the group is managed within Dynatrace; SSO indicates it is synced from an identity provider.",
+      "example": "example-value"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time when the group was created.",
+      "example": "2025-03-15T14:30:00Z"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time when the group was last updated.",
+      "example": "2025-03-15T14:30:00Z"
+    }
+  }
+}

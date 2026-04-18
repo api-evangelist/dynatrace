@@ -1,0 +1,4 @@
+{
+  "name": "Authorization",
+  "value": "Bearer my-secret-token"
+}

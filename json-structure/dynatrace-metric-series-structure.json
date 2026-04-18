@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-structure/dynatrace-metric-series-structure.json",
+  "description": "A time-series data series returned by the Dynatrace Metrics API v2 query endpoint, representing metric values for a specific set of dimensions over a time range.",
+  "type": "object",
+  "required": [
+    "metricId",
+    "data"
+  ],
+  "properties": {
+    "metricId": {
+      "type": "string",
+      "description": "The metric key with applied transformations, e.g. builtin:host.cpu.usage:avg. This key identifies the metric and any selector transformations that were applied during the query.",
+      "examples": [
+        "builtin:host.cpu.usage:avg",
+        "builtin:service.response.time:percentile(95)",
+        "custom.my.metric:sum"
+      ]
+    },
+    "data": {
+      "type": "array",
+      "description": "Array of time series, one per unique dimension combination. Each item represents a distinct set of dimension values (e.g., a specific host or service) with its corresponding timestamps and metric values.",
+      "items": {
+        "$ref": "#/$defs/MetricSeries"
+      }
+    }
+  },
+  "$defs": {
+    "MetricSeries": {
+      "type": "object",
+      "title": "Metric Series",
+      "description": "A single time series for one unique combination of dimension values. Contains parallel arrays of timestamps and values where each index position corresponds to one data point.",
+      "required": [
+        "timestamps",
+        "values"
+      ],
+      "properties": {
+        "dimensionMap": {
+          "type": "object",
+          "description": "Key-value map of dimension names to their values for this series. For example, {\"host\": \"web-01\", \"environment\": \"production\"}. Provides named access to dimension values.",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "examples": [
+            {
+              "host": "web-01",
+              "environment": "production"
+            },
+            {
+              "dt.entity.service": "SERVICE-ABCDEF1234567890"
+            }
+          ]
+        },
+        "dimensions": {
+          "type": "array",
+          "description": "Ordered list of dimension values matching the metric's dimension definitions. The order corresponds to the dimensionDefinitions returned in the metric descriptor. Use dimensionMap for named access.",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            [
+              "web-01",
+              "production"
+            ],
+            [
+              "SERVICE-ABCDEF1234567890"
+            ]
+          ]
+        },
+        "timestamps": {
+          "type": "array",
+          "description": "Unix timestamps in milliseconds for each data point in the series. Each timestamp marks the start of the aggregation window for the corresponding value. Aligns one-to-one with the values array.",
+          "items": {
+            "type": "integer",
+            "description": "Unix timestamp in milliseconds",
+            "minimum": 0
+          },
+          "examples": [
+            [
+              1609459200000,
+              1609462800000,
+              1609466400000
+            ]
+          ]
+        },
+        "values": {
+          "type": "array",
+          "description": "Metric values corresponding to each timestamp. A null value indicates no data was available or recorded for that time slot (a gap in the time series). The array length always matches the timestamps array length.",
+          "items": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "The metric value for this time slot. Null indicates no data for the corresponding timestamp."
+          },
+          "examples": [
+            [
+              45.2,
+              67.8,
+              null,
+              51.3
+            ],
+            [
+              250.0,
+              310.5,
+              289.0
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "name": "Dynatrace Metric Series"
+}

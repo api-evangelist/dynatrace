@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-schema/entities-api-v2-entity-type-collection-schema.json",
+  "title": "EntityTypeCollection",
+  "description": "A paginated collection of entity type definitions.",
+  "type": "object",
+  "properties": {
+    "nextPageKey": {
+      "type": "string",
+      "description": "Cursor for the next page of results.",
+      "nullable": true,
+      "example": "example-value"
+    },
+    "totalCount": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The total number of entity types.",
+      "example": 500
+    },
+    "types": {
+      "type": "array",
+      "description": "The list of entity types on this page.",
+      "items": {
+        "$ref": "#/components/schemas/EntityType"
+      },
+      "example": [
+        {
+          "type": "STANDARD",
+          "displayName": "Production Service",
+          "description": "Example description.",
+          "properties": [
+            {
+              "id": "abc123",
+              "displayName": "Production Service",
+              "type": "STANDARD"
+            }
+          ],
+          "fromRelationships": [
+            {
+              "id": "abc123",
+              "toTypes": [
+                {}
+              ]
+            }
+          ],
+          "toRelationships": [
+            {
+              "id": "abc123",
+              "toTypes": [
+                {}
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

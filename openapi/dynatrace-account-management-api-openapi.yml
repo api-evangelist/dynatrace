@@ -16,55 +16,59 @@ info:
   license:
     name: Dynatrace Terms of Service
     url: https://www.dynatrace.com/company/trust-center/terms/
+  x-last-validated: '2026-04-18'
 externalDocs:
   description: Dynatrace Account Management API Documentation
   url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api
 
 servers:
-  - url: https://api.dynatrace.com
-    description: Dynatrace Account Management API (global endpoint)
+- url: https://api.dynatrace.com
+  description: Dynatrace Account Management API (global endpoint)
 
 tags:
-  - name: Environments
-    description: Operations for listing environments in the account
+- name: Environments
+  description: Operations for listing environments in the account
 
-  - name: Groups
-    description: Operations for managing user groups and group membership
-  - name: Permissions
-    description: Operations for querying account-level permissions
-  - name: Users
-    description: Operations for managing account users
+- name: Groups
+  description: Operations for managing user groups and group membership
+- name: Permissions
+  description: Operations for querying account-level permissions
+- name: Users
+  description: Operations for managing account users
 security:
-  - oauth2: []
+- oauth2: []
 
 paths:
   /iam/v1/accounts/{accountUuid}/users:
     get:
       operationId: listUsers
-      summary: Dynatrace List users
+      summary: Dynatrace List Users
       description: >-
         Returns a list of all users in the specified Dynatrace account. User
         records include basic profile information and group memberships.
         Results are paginated.
       tags:
-        - Users
+      - Users
       parameters:
-        - $ref: '#/components/parameters/accountUuid'
-        - name: nextPageKey
-          in: query
-          description: Cursor for the next page of results.
-          required: false
-          schema:
-            type: string
-        - name: pageSize
-          in: query
-          description: The number of users to return per page.
-          required: false
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 1000
-            default: 100
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
+      - name: nextPageKey
+        in: query
+        description: Cursor for the next page of results.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: pageSize
+        in: query
+        description: The number of users to return per page.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 1000
+          default: 100
+        example: 500
       responses:
         '200':
           description: A paginated list of users in the account
@@ -72,6 +76,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserCollection'
+              examples:
+                ListUsers200Example:
+                  summary: Default listUsers 200 response
+                  x-microcks-default: true
+                  value:
+                    nextPageKey: example-value
+                    totalCount: 500
+                    items: &id003
+                    - uid: abc123
+                      email: admin@example.com
+                      firstName: Production Service
+                      lastName: Production Service
+                      groups: &id001
+                      - example-value
+                      userStatus: ACTIVE
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -79,18 +98,22 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     post:
       operationId: createUser
-      summary: Dynatrace Create user
+      summary: Dynatrace Create User
       description: >-
         Creates a new user in the Dynatrace account and sends an invitation
         email. The user's email address serves as their login identifier.
         Groups can be assigned at creation time to grant appropriate
         environment access and permissions.
       tags:
-        - Users
+      - Users
       parameters:
-        - $ref: '#/components/parameters/accountUuid'
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
       requestBody:
         description: The user to create
         required: true
@@ -103,7 +126,7 @@ paths:
               firstName: Jane
               lastName: Doe
               groups:
-                - groupId-1234-abcd
+              - groupId-1234-abcd
       responses:
         '200':
           description: The user was successfully created
@@ -111,6 +134,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              examples:
+                CreateUser200Example:
+                  summary: Default createUser 200 response
+                  x-microcks-default: true
+                  value:
+                    uid: abc123
+                    email: admin@example.com
+                    firstName: Production Service
+                    lastName: Production Service
+                    groups: *id001
+                    userStatus: ACTIVE
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -118,18 +152,23 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /iam/v1/accounts/{accountUuid}/users/{userId}:
     get:
       operationId: getUser
-      summary: Dynatrace Get user
+      summary: Dynatrace Get User
       description: >-
         Returns the details of a specific user in the account, identified by
         their user ID (typically the email address or a UUID).
       tags:
-        - Users
+      - Users
       parameters:
-        - $ref: '#/components/parameters/accountUuid'
-        - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
+      - $ref: '#/components/parameters/userId'
+        example: example
       responses:
         '200':
           description: The user details
@@ -137,6 +176,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              examples:
+                GetUser200Example:
+                  summary: Default getUser 200 response
+                  x-microcks-default: true
+                  value:
+                    uid: abc123
+                    email: admin@example.com
+                    firstName: Production Service
+                    lastName: Production Service
+                    groups: *id001
+                    userStatus: ACTIVE
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -144,19 +194,24 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     put:
       operationId: updateUser
-      summary: Dynatrace Update user
+      summary: Dynatrace Update User
       description: >-
         Updates the profile information and group memberships for an existing
         user. The entire user record is replaced with the provided data. To
         add a user to new groups without removing existing memberships, first
         retrieve the current group list and include it in the update.
       tags:
-        - Users
+      - Users
       parameters:
-        - $ref: '#/components/parameters/accountUuid'
-        - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
+      - $ref: '#/components/parameters/userId'
+        example: example
       requestBody:
         description: The updated user data
         required: true
@@ -164,6 +219,16 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/UserCreateRequest'
+            examples:
+              UpdateUserRequestExample:
+                summary: Default updateUser request
+                x-microcks-default: true
+                value:
+                  email: admin@example.com
+                  firstName: Production Service
+                  lastName: Production Service
+                  groups: &id002
+                  - example-value
       responses:
         '200':
           description: The user was successfully updated
@@ -171,6 +236,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              examples:
+                UpdateUser200Example:
+                  summary: Default updateUser 200 response
+                  x-microcks-default: true
+                  value:
+                    uid: abc123
+                    email: admin@example.com
+                    firstName: Production Service
+                    lastName: Production Service
+                    groups: *id001
+                    userStatus: ACTIVE
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -180,18 +256,23 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteUser
-      summary: Dynatrace Delete user
+      summary: Dynatrace Delete User
       description: >-
         Permanently removes the specified user from the Dynatrace account.
         This action cannot be undone. The user immediately loses access to
         all Dynatrace environments and resources.
       tags:
-        - Users
+      - Users
       parameters:
-        - $ref: '#/components/parameters/accountUuid'
-        - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
+      - $ref: '#/components/parameters/userId'
+        example: example
       responses:
         '204':
           description: The user was successfully deleted
@@ -202,33 +283,39 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /iam/v1/accounts/{accountUuid}/groups:
     get:
       operationId: listGroups
-      summary: Dynatrace List groups
+      summary: Dynatrace List Groups
       description: >-
         Returns a list of all user groups defined in the account. Groups are
         the primary mechanism for assigning permissions and environment access
         to sets of users. Results are paginated.
       tags:
-        - Groups
+      - Groups
       parameters:
-        - $ref: '#/components/parameters/accountUuid'
-        - name: nextPageKey
-          in: query
-          description: Cursor for the next page of results.
-          required: false
-          schema:
-            type: string
-        - name: pageSize
-          in: query
-          description: The number of groups to return per page.
-          required: false
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 1000
-            default: 100
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
+      - name: nextPageKey
+        in: query
+        description: Cursor for the next page of results.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: pageSize
+        in: query
+        description: The number of groups to return per page.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 1000
+          default: 100
+        example: 500
       responses:
         '200':
           description: A paginated list of user groups in the account
@@ -236,6 +323,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GroupCollection'
+              examples:
+                ListGroups200Example:
+                  summary: Default listGroups 200 response
+                  x-microcks-default: true
+                  value:
+                    nextPageKey: example-value
+                    totalCount: 500
+                    items: &id004
+                    - groupId: abc123
+                      name: Production Service
+                      description: Example description.
+                      owner: example-value
+                      createdAt: '2025-03-15T14:30:00Z'
+                      updatedAt: '2025-03-15T14:30:00Z'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -243,17 +344,21 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     post:
       operationId: createGroup
-      summary: Dynatrace Create group
+      summary: Dynatrace Create Group
       description: >-
         Creates a new user group in the account. After creating the group,
         users can be assigned to it and permissions can be granted to the
         group for specific environments or account-level functions.
       tags:
-        - Groups
+      - Groups
       parameters:
-        - $ref: '#/components/parameters/accountUuid'
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
       requestBody:
         description: The group to create
         required: true
@@ -271,6 +376,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Group'
+              examples:
+                CreateGroup200Example:
+                  summary: Default createGroup 200 response
+                  x-microcks-default: true
+                  value:
+                    groupId: abc123
+                    name: Production Service
+                    description: Example description.
+                    owner: example-value
+                    createdAt: '2025-03-15T14:30:00Z'
+                    updatedAt: '2025-03-15T14:30:00Z'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -278,18 +394,23 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /iam/v1/accounts/{accountUuid}/groups/{groupId}:
     get:
       operationId: getGroup
-      summary: Dynatrace Get group
+      summary: Dynatrace Get Group
       description: >-
         Returns the details of a specific group, including its name,
         description, and assigned permissions.
       tags:
-        - Groups
+      - Groups
       parameters:
-        - $ref: '#/components/parameters/accountUuid'
-        - $ref: '#/components/parameters/groupId'
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
+      - $ref: '#/components/parameters/groupId'
+        example: example
       responses:
         '200':
           description: The group details
@@ -297,6 +418,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Group'
+              examples:
+                GetGroup200Example:
+                  summary: Default getGroup 200 response
+                  x-microcks-default: true
+                  value:
+                    groupId: abc123
+                    name: Production Service
+                    description: Example description.
+                    owner: example-value
+                    createdAt: '2025-03-15T14:30:00Z'
+                    updatedAt: '2025-03-15T14:30:00Z'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -304,17 +436,22 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     put:
       operationId: updateGroup
-      summary: Dynatrace Update group
+      summary: Dynatrace Update Group
       description: >-
         Updates the name and description of an existing group. Group
         permissions are managed separately via the permissions endpoints.
       tags:
-        - Groups
+      - Groups
       parameters:
-        - $ref: '#/components/parameters/accountUuid'
-        - $ref: '#/components/parameters/groupId'
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
+      - $ref: '#/components/parameters/groupId'
+        example: example
       requestBody:
         description: The updated group data
         required: true
@@ -322,6 +459,13 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/GroupCreateRequest'
+            examples:
+              UpdateGroupRequestExample:
+                summary: Default updateGroup request
+                x-microcks-default: true
+                value:
+                  name: Production Service
+                  description: Example description.
       responses:
         '200':
           description: The group was successfully updated
@@ -329,6 +473,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Group'
+              examples:
+                UpdateGroup200Example:
+                  summary: Default updateGroup 200 response
+                  x-microcks-default: true
+                  value:
+                    groupId: abc123
+                    name: Production Service
+                    description: Example description.
+                    owner: example-value
+                    createdAt: '2025-03-15T14:30:00Z'
+                    updatedAt: '2025-03-15T14:30:00Z'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -338,18 +493,23 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteGroup
-      summary: Dynatrace Delete group
+      summary: Dynatrace Delete Group
       description: >-
         Permanently deletes the specified group from the account. All users
         who were members of this group lose any permissions that were granted
         exclusively through this group.
       tags:
-        - Groups
+      - Groups
       parameters:
-        - $ref: '#/components/parameters/accountUuid'
-        - $ref: '#/components/parameters/groupId'
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
+      - $ref: '#/components/parameters/groupId'
+        example: example
       responses:
         '204':
           description: The group was successfully deleted
@@ -360,19 +520,23 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /iam/v1/accounts/{accountUuid}/permissions:
     get:
       operationId: listPermissions
-      summary: Dynatrace List permissions for account
+      summary: Dynatrace List Permissions for Account
       description: >-
         Returns a list of all permissions defined for the account. Permissions
         control what actions groups and users can perform within Dynatrace
         environments and at the account level. Results include both
         environment-scoped and account-scoped permissions.
       tags:
-        - Permissions
+      - Permissions
       parameters:
-        - $ref: '#/components/parameters/accountUuid'
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
       responses:
         '200':
           description: A list of permissions for the account
@@ -380,39 +544,55 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PermissionCollection'
+              examples:
+                ListPermissions200Example:
+                  summary: Default listPermissions 200 response
+                  x-microcks-default: true
+                  value:
+                    permissions: &id005
+                    - permissionName: Production Service
+                      scope: example-value
+                      scopeType: ACCOUNT
+                      groupId: abc123
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /env/v1/accounts/{accountUuid}/environments:
     get:
       operationId: listEnvironments
-      summary: Dynatrace List environments
+      summary: Dynatrace List Environments
       description: >-
         Returns a list of all Dynatrace environments associated with the
         specified account. Each environment record includes the environment ID,
         name, and URL. This information is useful for enumerating environments
         before making environment-level API calls.
       tags:
-        - Environments
+      - Environments
       parameters:
-        - $ref: '#/components/parameters/accountUuid'
-        - name: nextPageKey
-          in: query
-          description: Cursor for the next page of results.
-          required: false
-          schema:
-            type: string
-        - name: pageSize
-          in: query
-          description: The number of environments to return per page.
-          required: false
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 1000
-            default: 100
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
+      - name: nextPageKey
+        in: query
+        description: Cursor for the next page of results.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: pageSize
+        in: query
+        description: The number of environments to return per page.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 1000
+          default: 100
+        example: 500
       responses:
         '200':
           description: A list of environments in the account
@@ -420,11 +600,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EnvironmentCollection'
+              examples:
+                ListEnvironments200Example:
+                  summary: Default listEnvironments 200 response
+                  x-microcks-default: true
+                  value:
+                    nextPageKey: example-value
+                    totalCount: 500
+                    environments: &id006
+                    - id: abc123
+                      name: Production Service
+                      status: ACTIVE
+                      trial: true
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
 components:
   securitySchemes:
     oauth2:
@@ -504,47 +699,56 @@ components:
         uid:
           type: string
           description: The unique identifier of the user.
+          example: abc123
         email:
           type: string
           format: email
           description: The email address of the user, used as their login identifier.
+          example: admin@example.com
         firstName:
           type: string
           description: The first name of the user.
+          example: Production Service
         lastName:
           type: string
           description: The last name of the user.
+          example: Production Service
         groups:
           type: array
           description: The list of group IDs that the user belongs to.
           items:
             type: string
+          example: *id001
         userStatus:
           type: string
           description: The current status of the user account.
           enum:
-            - ACTIVE
-            - INACTIVE
-            - PENDING_INVITE
+          - ACTIVE
+          - INACTIVE
+          - PENDING_INVITE
 
+          example: ACTIVE
     UserCreateRequest:
       type: object
       description: Request body for creating or updating a user.
       required:
-        - email
-        - firstName
-        - lastName
+      - email
+      - firstName
+      - lastName
       properties:
         email:
           type: string
           format: email
           description: The email address of the user. Used as the login identifier.
+          example: admin@example.com
         firstName:
           type: string
           description: The first name of the user.
+          example: Production Service
         lastName:
           type: string
           description: The last name of the user.
+          example: Production Service
         groups:
           type: array
           description: >-
@@ -553,6 +757,7 @@ components:
           items:
             type: string
 
+          example: *id002
     UserCollection:
       type: object
       description: A paginated collection of users.
@@ -561,16 +766,19 @@ components:
           type: string
           description: Cursor for the next page of results.
           nullable: true
+          example: example-value
         totalCount:
           type: integer
           format: int64
           description: The total number of users in the account.
+          example: 500
         items:
           type: array
           description: The list of users on this page.
           items:
             $ref: '#/components/schemas/User'
 
+          example: *id003
     Group:
       type: object
       description: Represents a user group in the Dynatrace account.
@@ -578,40 +786,48 @@ components:
         groupId:
           type: string
           description: The unique identifier of the group.
+          example: abc123
         name:
           type: string
           description: The display name of the group.
+          example: Production Service
         description:
           type: string
           description: An optional description of the group's purpose or scope.
+          example: Example description.
         owner:
           type: string
           description: >-
             The identifier of the group owner. LOCAL indicates the group is
             managed within Dynatrace; SSO indicates it is synced from an
             identity provider.
+          example: example-value
         createdAt:
           type: string
           format: date-time
           description: The date and time when the group was created.
+          example: '2025-03-15T14:30:00Z'
         updatedAt:
           type: string
           format: date-time
           description: The date and time when the group was last updated.
 
+          example: '2025-03-15T14:30:00Z'
     GroupCreateRequest:
       type: object
       description: Request body for creating or updating a group.
       required:
-        - name
+      - name
       properties:
         name:
           type: string
           description: The display name of the group.
+          example: Production Service
         description:
           type: string
           description: An optional description of the group's purpose or access scope.
 
+          example: Example description.
     GroupCollection:
       type: object
       description: A paginated collection of groups.
@@ -620,16 +836,19 @@ components:
           type: string
           description: Cursor for the next page of results.
           nullable: true
+          example: example-value
         totalCount:
           type: integer
           format: int64
           description: The total number of groups in the account.
+          example: 500
         items:
           type: array
           description: The list of groups on this page.
           items:
             $ref: '#/components/schemas/Group'
 
+          example: *id004
     Permission:
       type: object
       description: >-
@@ -641,24 +860,28 @@ components:
           description: >-
             The name of the permission, e.g., tenant-viewer, tenant-operator,
             tenant-admin, account-company-info.
+          example: Production Service
         scope:
           type: string
           description: >-
             The scope identifier the permission applies to. For environment
             permissions, this is the environment ID. For account permissions,
             this is the account UUID.
+          example: example-value
         scopeType:
           type: string
           description: >-
             The type of scope. ACCOUNT for account-level permissions, TENANT
             for environment-level permissions.
           enum:
-            - ACCOUNT
-            - TENANT
+          - ACCOUNT
+          - TENANT
+          example: ACCOUNT
         groupId:
           type: string
           description: The ID of the group this permission is assigned to.
 
+          example: abc123
     PermissionCollection:
       type: object
       description: A collection of permission assignments for the account.
@@ -669,6 +892,7 @@ components:
           items:
             $ref: '#/components/schemas/Permission'
 
+          example: *id005
     Environment:
       type: object
       description: >-
@@ -677,20 +901,24 @@ components:
         id:
           type: string
           description: The unique environment identifier (tenant ID).
+          example: abc123
         name:
           type: string
           description: The display name of the environment.
+          example: Production Service
         status:
           type: string
           description: The current status of the environment.
           enum:
-            - ACTIVE
-            - SUSPENDED
-            - TRIAL
+          - ACTIVE
+          - SUSPENDED
+          - TRIAL
+          example: ACTIVE
         trial:
           type: boolean
           description: Whether the environment is a trial environment.
 
+          example: true
     EnvironmentCollection:
       type: object
       description: A paginated collection of environments.
@@ -699,16 +927,19 @@ components:
           type: string
           description: Cursor for the next page of results.
           nullable: true
+          example: example-value
         totalCount:
           type: integer
           format: int64
           description: The total number of environments in the account.
+          example: 500
         environments:
           type: array
           description: The list of environments on this page.
           items:
             $ref: '#/components/schemas/Environment'
 
+          example: *id006
     ErrorEnvelope:
       type: object
       description: Error response envelope returned when a request fails.
@@ -723,6 +954,8 @@ components:
         code:
           type: integer
           description: The HTTP status code of the error.
+          example: 500
         message:
           type: string
           description: A human-readable description of the error.
+          example: Example description.

@@ -1,0 +1,15 @@
+{
+  "type": "WEBHOOK",
+  "name": "My Problem Webhook",
+  "active": true,
+  "url": "https://webhook.example.com/webhook/dynatrace/problems",
+  "alertingProfile": "alerting-profile-uuid",
+  "headers": [
+    {
+      "name": "Authorization",
+      "value": "Bearer my-secret-token"
+    }
+  ],
+  "acceptAnyCertificate": false,
+  "payload": "example-value"
+}

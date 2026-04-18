@@ -1,0 +1,172 @@
+{
+  "type": "object",
+  "description": "A paginated collection of entity type definitions.",
+  "properties": {
+    "nextPageKey": {
+      "type": "string",
+      "description": "Cursor for the next page of results.",
+      "example": "example-value"
+    },
+    "totalCount": {
+      "type": "integer",
+      "description": "The total number of entity types.",
+      "format": "int64",
+      "example": 500
+    },
+    "types": {
+      "type": "array",
+      "description": "The list of entity types on this page.",
+      "example": [
+        {
+          "type": "STANDARD",
+          "displayName": "Production Service",
+          "description": "Example description.",
+          "properties": [
+            {
+              "id": "abc123",
+              "displayName": "Production Service",
+              "type": "STANDARD"
+            }
+          ],
+          "fromRelationships": [
+            {
+              "id": "abc123",
+              "toTypes": [
+                {}
+              ]
+            }
+          ],
+          "toRelationships": [
+            {
+              "id": "abc123",
+              "toTypes": [
+                {}
+              ]
+            }
+          ]
+        }
+      ],
+      "items": {
+        "type": "object",
+        "description": "Defines an entity type including its display name, available properties, and supported relationship types.",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The entity type identifier, e.g., SERVICE.",
+            "example": "STANDARD"
+          },
+          "displayName": {
+            "type": "string",
+            "description": "The human-readable display name of the entity type.",
+            "example": "Production Service"
+          },
+          "description": {
+            "type": "string",
+            "description": "A description of what this entity type represents.",
+            "example": "Example description."
+          },
+          "properties": {
+            "type": "array",
+            "description": "The list of properties available for this entity type.",
+            "example": [
+              {
+                "id": "abc123",
+                "displayName": "Production Service",
+                "type": "STANDARD"
+              }
+            ],
+            "items": {
+              "type": "object",
+              "description": "Describes a single property of an entity type.",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "The property key identifier.",
+                  "example": "abc123"
+                },
+                "displayName": {
+                  "type": "string",
+                  "description": "The human-readable display name of the property.",
+                  "example": "Production Service"
+                },
+                "type": {
+                  "type": "string",
+                  "description": "The data type of the property value.",
+                  "example": "STANDARD"
+                }
+              }
+            }
+          },
+          "fromRelationships": {
+            "type": "array",
+            "description": "The relationship types where entities of this type are the source.",
+            "example": [
+              {
+                "id": "abc123",
+                "toTypes": [
+                  {}
+                ]
+              }
+            ],
+            "items": {
+              "type": "object",
+              "description": "Describes a relationship type for an entity type.",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "The relationship type identifier, e.g., runsOn.",
+                  "example": "abc123"
+                },
+                "toTypes": {
+                  "type": "array",
+                  "description": "The entity types that can participate in this relationship.",
+                  "example": [
+                    "STANDARD"
+                  ],
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          },
+          "toRelationships": {
+            "type": "array",
+            "description": "The relationship types where entities of this type are the target.",
+            "example": [
+              {
+                "id": "abc123",
+                "toTypes": [
+                  {}
+                ]
+              }
+            ],
+            "items": {
+              "type": "object",
+              "description": "Describes a relationship type for an entity type.",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "The relationship type identifier, e.g., runsOn.",
+                  "example": "abc123"
+                },
+                "toTypes": {
+                  "type": "array",
+                  "description": "The entity types that can participate in this relationship.",
+                  "example": [
+                    "STANDARD"
+                  ],
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EntityTypeCollection"
+}

@@ -1,0 +1,207 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "schema": "https://schema.org/",
+    "Entity": {
+      "@id": "ns:Entity",
+      "@context": {
+        "entityId": {
+          "@id": "ns:entityId",
+          "@type": "xsd:string"
+        },
+        "displayName": {
+          "@id": "ns:displayName",
+          "@type": "xsd:string"
+        },
+        "type": {
+          "@id": "ns:type",
+          "@type": "xsd:string"
+        },
+        "firstSeenTms": {
+          "@id": "ns:firstSeenTms",
+          "@type": "xsd:integer"
+        },
+        "lastSeenTms": {
+          "@id": "ns:lastSeenTms",
+          "@type": "xsd:integer"
+        },
+        "properties": "ns:properties",
+        "tags": "ns:tags",
+        "managementZones": "ns:managementZones",
+        "toRelationships": "ns:toRelationships",
+        "fromRelationships": "ns:fromRelationships"
+      }
+    },
+    "EntityCollection": {
+      "@id": "ns:EntityCollection",
+      "@context": {
+        "nextPageKey": {
+          "@id": "ns:nextPageKey",
+          "@type": "xsd:string"
+        },
+        "totalCount": {
+          "@id": "ns:totalCount",
+          "@type": "xsd:integer"
+        },
+        "pageSize": {
+          "@id": "ns:pageSize",
+          "@type": "xsd:integer"
+        },
+        "entities": "ns:entities"
+      }
+    },
+    "EntityType": {
+      "@id": "ns:EntityType",
+      "@context": {
+        "type": {
+          "@id": "ns:type",
+          "@type": "xsd:string"
+        },
+        "displayName": {
+          "@id": "ns:displayName",
+          "@type": "xsd:string"
+        },
+        "description": {
+          "@id": "ns:description",
+          "@type": "xsd:string"
+        },
+        "properties": "ns:properties",
+        "fromRelationships": "ns:fromRelationships",
+        "toRelationships": "ns:toRelationships"
+      }
+    },
+    "EntityTypeProperty": {
+      "@id": "ns:EntityTypeProperty",
+      "@context": {
+        "id": {
+          "@id": "ns:id",
+          "@type": "xsd:string"
+        },
+        "displayName": {
+          "@id": "ns:displayName",
+          "@type": "xsd:string"
+        },
+        "type": {
+          "@id": "ns:type",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "EntityTypeRelationship": {
+      "@id": "ns:EntityTypeRelationship",
+      "@context": {
+        "id": {
+          "@id": "ns:id",
+          "@type": "xsd:string"
+        },
+        "toTypes": "ns:toTypes"
+      }
+    },
+    "EntityTypeCollection": {
+      "@id": "ns:EntityTypeCollection",
+      "@context": {
+        "nextPageKey": {
+          "@id": "ns:nextPageKey",
+          "@type": "xsd:string"
+        },
+        "totalCount": {
+          "@id": "ns:totalCount",
+          "@type": "xsd:integer"
+        },
+        "types": "ns:types"
+      }
+    },
+    "EntityLookupRequest": {
+      "@id": "ns:EntityLookupRequest",
+      "@context": {
+        "name": {
+          "@id": "ns:name",
+          "@type": "xsd:string"
+        },
+        "type": {
+          "@id": "ns:type",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "EntityTag": {
+      "@id": "ns:EntityTag",
+      "@context": {
+        "context": {
+          "@id": "ns:context",
+          "@type": "xsd:string"
+        },
+        "key": {
+          "@id": "ns:key",
+          "@type": "xsd:string"
+        },
+        "value": {
+          "@id": "ns:value",
+          "@type": "xsd:string"
+        },
+        "stringRepresentation": {
+          "@id": "ns:stringRepresentation",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "ManagementZone": {
+      "@id": "ns:ManagementZone",
+      "@context": {
+        "id": {
+          "@id": "ns:id",
+          "@type": "xsd:string"
+        },
+        "name": {
+          "@id": "ns:name",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "ErrorEnvelope": {
+      "@id": "ns:ErrorEnvelope",
+      "@context": {
+        "error": {
+          "@id": "ns:error",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "Error": {
+      "@id": "ns:Error",
+      "@context": {
+        "code": {
+          "@id": "ns:code",
+          "@type": "xsd:integer"
+        },
+        "message": {
+          "@id": "ns:message",
+          "@type": "xsd:string"
+        },
+        "constraintViolations": "ns:constraintViolations"
+      }
+    },
+    "ConstraintViolation": {
+      "@id": "ns:ConstraintViolation",
+      "@context": {
+        "path": {
+          "@id": "ns:path",
+          "@type": "xsd:string"
+        },
+        "message": {
+          "@id": "ns:message",
+          "@type": "xsd:string"
+        },
+        "parameterLocation": {
+          "@id": "ns:parameterLocation",
+          "@type": "xsd:string"
+        },
+        "location": {
+          "@id": "ns:location",
+          "@type": "xsd:string"
+        }
+      }
+    }
+  }
+}

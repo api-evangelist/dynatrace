@@ -1,0 +1,138 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "schema": "https://schema.org/",
+    "LogIngestRecord": {
+      "@id": "ns:LogIngestRecord",
+      "@context": {
+        "content": {
+          "@id": "ns:content",
+          "@type": "xsd:string"
+        },
+        "severity": {
+          "@id": "ns:severity",
+          "@type": "xsd:string"
+        },
+        "timestamp": {
+          "@id": "ns:timestamp",
+          "@type": "xsd:string"
+        },
+        "log.source": {
+          "@id": "ns:log.source",
+          "@type": "xsd:string"
+        },
+        "dt.entity.host": {
+          "@id": "ns:dt.entity.host",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "LogRecord": {
+      "@id": "ns:LogRecord",
+      "@context": {
+        "timestamp": {
+          "@id": "ns:timestamp",
+          "@type": "xsd:string"
+        },
+        "content": {
+          "@id": "ns:content",
+          "@type": "xsd:string"
+        },
+        "severity": {
+          "@id": "ns:severity",
+          "@type": "xsd:string"
+        },
+        "log.source": {
+          "@id": "ns:log.source",
+          "@type": "xsd:string"
+        },
+        "dt.entity.host": {
+          "@id": "ns:dt.entity.host",
+          "@type": "xsd:string"
+        },
+        "additionalFields": "ns:additionalFields"
+      }
+    },
+    "LogRecordSearchResult": {
+      "@id": "ns:LogRecordSearchResult",
+      "@context": {
+        "nextSliceKey": {
+          "@id": "ns:nextSliceKey",
+          "@type": "xsd:string"
+        },
+        "results": "ns:results"
+      }
+    },
+    "LogAggregateResult": {
+      "@id": "ns:LogAggregateResult",
+      "@context": {
+        "results": "ns:results"
+      }
+    },
+    "LogAggregateGroup": {
+      "@id": "ns:LogAggregateGroup",
+      "@context": {
+        "groupByFields": "ns:groupByFields",
+        "count": {
+          "@id": "ns:count",
+          "@type": "xsd:integer"
+        }
+      }
+    },
+    "LogExportResult": {
+      "@id": "ns:LogExportResult",
+      "@context": {
+        "nextSliceKey": {
+          "@id": "ns:nextSliceKey",
+          "@type": "xsd:string"
+        },
+        "results": "ns:results"
+      }
+    },
+    "ErrorEnvelope": {
+      "@id": "ns:ErrorEnvelope",
+      "@context": {
+        "error": {
+          "@id": "ns:error",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "Error": {
+      "@id": "ns:Error",
+      "@context": {
+        "code": {
+          "@id": "ns:code",
+          "@type": "xsd:integer"
+        },
+        "message": {
+          "@id": "ns:message",
+          "@type": "xsd:string"
+        },
+        "constraintViolations": "ns:constraintViolations"
+      }
+    },
+    "ConstraintViolation": {
+      "@id": "ns:ConstraintViolation",
+      "@context": {
+        "path": {
+          "@id": "ns:path",
+          "@type": "xsd:string"
+        },
+        "message": {
+          "@id": "ns:message",
+          "@type": "xsd:string"
+        },
+        "parameterLocation": {
+          "@id": "ns:parameterLocation",
+          "@type": "xsd:string"
+        },
+        "location": {
+          "@id": "ns:location",
+          "@type": "xsd:string"
+        }
+      }
+    }
+  }
+}

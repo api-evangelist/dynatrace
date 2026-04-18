@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "description": "The default aggregation setting for the metric.",
+  "name": "MetricDefaultAggregation",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "The aggregation type to apply when no aggregation is specified in the query. For example, avg, sum, or max.",
+      "enum": [
+        "min",
+        "max",
+        "sum",
+        "count",
+        "avg",
+        "median",
+        "percentile"
+      ]
+    },
+    "parameter": {
+      "type": "number",
+      "description": "The parameter for the aggregation type, used for percentile aggregation to specify the percentile value (e.g., 95)."
+    }
+  },
+  "$schema": "https://json-structure.org/draft/2020-12/schema"
+}

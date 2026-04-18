@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "description": "Represents a Dynatrace environment (tenant) associated with the account.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The unique environment identifier (tenant ID).",
+      "example": "abc123"
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the environment.",
+      "example": "Production Service"
+    },
+    "status": {
+      "type": "string",
+      "description": "The current status of the environment.",
+      "example": "ACTIVE",
+      "enum": [
+        "ACTIVE",
+        "SUSPENDED",
+        "TRIAL"
+      ]
+    },
+    "trial": {
+      "type": "boolean",
+      "description": "Whether the environment is a trial environment.",
+      "example": true
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Environment"
+}

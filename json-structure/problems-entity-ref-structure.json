@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-structure/problems-entity-ref-structure.json",
+  "description": "A reference to a monitored entity in problem details.",
+  "type": "object",
+  "properties": {
+    "entityId": {
+      "type": "string",
+      "description": "The unique Dynatrace entity ID.",
+      "example": "SERVICE-ABCDEF1234567890"
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the entity.",
+      "example": "payment-service"
+    },
+    "type": {
+      "type": "string",
+      "description": "The entity type, e.g., SERVICE, HOST, PROCESS_GROUP.",
+      "example": "SERVICE"
+    }
+  },
+  "name": "EntityRef"
+}

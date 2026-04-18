@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-structure/problems-webhook-header-structure.json",
+  "description": "An HTTP header to include in webhook notification requests.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The HTTP header name.",
+      "example": "Authorization"
+    },
+    "value": {
+      "type": "string",
+      "description": "The HTTP header value.",
+      "example": "Bearer my-secret-token"
+    }
+  },
+  "required": [
+    "name",
+    "value"
+  ],
+  "name": "WebhookHeader"
+}

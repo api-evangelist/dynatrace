@@ -1,0 +1,205 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "schema": "https://schema.org/",
+    "User": {
+      "@id": "ns:User",
+      "@context": {
+        "uid": {
+          "@id": "ns:uid",
+          "@type": "xsd:string"
+        },
+        "email": {
+          "@id": "ns:email",
+          "@type": "xsd:string"
+        },
+        "firstName": {
+          "@id": "ns:firstName",
+          "@type": "xsd:string"
+        },
+        "lastName": {
+          "@id": "ns:lastName",
+          "@type": "xsd:string"
+        },
+        "groups": "ns:groups",
+        "userStatus": {
+          "@id": "ns:userStatus",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "UserCreateRequest": {
+      "@id": "ns:UserCreateRequest",
+      "@context": {
+        "email": {
+          "@id": "ns:email",
+          "@type": "xsd:string"
+        },
+        "firstName": {
+          "@id": "ns:firstName",
+          "@type": "xsd:string"
+        },
+        "lastName": {
+          "@id": "ns:lastName",
+          "@type": "xsd:string"
+        },
+        "groups": "ns:groups"
+      }
+    },
+    "UserCollection": {
+      "@id": "ns:UserCollection",
+      "@context": {
+        "nextPageKey": {
+          "@id": "ns:nextPageKey",
+          "@type": "xsd:string"
+        },
+        "totalCount": {
+          "@id": "ns:totalCount",
+          "@type": "xsd:integer"
+        },
+        "items": "ns:items"
+      }
+    },
+    "Group": {
+      "@id": "ns:Group",
+      "@context": {
+        "groupId": {
+          "@id": "ns:groupId",
+          "@type": "xsd:string"
+        },
+        "name": {
+          "@id": "ns:name",
+          "@type": "xsd:string"
+        },
+        "description": {
+          "@id": "ns:description",
+          "@type": "xsd:string"
+        },
+        "owner": {
+          "@id": "ns:owner",
+          "@type": "xsd:string"
+        },
+        "createdAt": {
+          "@id": "ns:createdAt",
+          "@type": "xsd:string"
+        },
+        "updatedAt": {
+          "@id": "ns:updatedAt",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "GroupCreateRequest": {
+      "@id": "ns:GroupCreateRequest",
+      "@context": {
+        "name": {
+          "@id": "ns:name",
+          "@type": "xsd:string"
+        },
+        "description": {
+          "@id": "ns:description",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "GroupCollection": {
+      "@id": "ns:GroupCollection",
+      "@context": {
+        "nextPageKey": {
+          "@id": "ns:nextPageKey",
+          "@type": "xsd:string"
+        },
+        "totalCount": {
+          "@id": "ns:totalCount",
+          "@type": "xsd:integer"
+        },
+        "items": "ns:items"
+      }
+    },
+    "Permission": {
+      "@id": "ns:Permission",
+      "@context": {
+        "permissionName": {
+          "@id": "ns:permissionName",
+          "@type": "xsd:string"
+        },
+        "scope": {
+          "@id": "ns:scope",
+          "@type": "xsd:string"
+        },
+        "scopeType": {
+          "@id": "ns:scopeType",
+          "@type": "xsd:string"
+        },
+        "groupId": {
+          "@id": "ns:groupId",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "PermissionCollection": {
+      "@id": "ns:PermissionCollection",
+      "@context": {
+        "permissions": "ns:permissions"
+      }
+    },
+    "Environment": {
+      "@id": "ns:Environment",
+      "@context": {
+        "id": {
+          "@id": "ns:id",
+          "@type": "xsd:string"
+        },
+        "name": {
+          "@id": "ns:name",
+          "@type": "xsd:string"
+        },
+        "status": {
+          "@id": "ns:status",
+          "@type": "xsd:string"
+        },
+        "trial": {
+          "@id": "ns:trial",
+          "@type": "xsd:boolean"
+        }
+      }
+    },
+    "EnvironmentCollection": {
+      "@id": "ns:EnvironmentCollection",
+      "@context": {
+        "nextPageKey": {
+          "@id": "ns:nextPageKey",
+          "@type": "xsd:string"
+        },
+        "totalCount": {
+          "@id": "ns:totalCount",
+          "@type": "xsd:integer"
+        },
+        "environments": "ns:environments"
+      }
+    },
+    "ErrorEnvelope": {
+      "@id": "ns:ErrorEnvelope",
+      "@context": {
+        "error": {
+          "@id": "ns:error",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "Error": {
+      "@id": "ns:Error",
+      "@context": {
+        "code": {
+          "@id": "ns:code",
+          "@type": "xsd:integer"
+        },
+        "message": {
+          "@id": "ns:message",
+          "@type": "xsd:string"
+        }
+      }
+    }
+  }
+}

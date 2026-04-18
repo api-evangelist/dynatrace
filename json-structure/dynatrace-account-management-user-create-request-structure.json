@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "description": "Request body for creating or updating a user.",
+  "name": "UserCreateRequest",
+  "properties": {
+    "email": {
+      "type": "email",
+      "description": "The email address of the user. Used as the login identifier."
+    },
+    "firstName": {
+      "type": "string",
+      "description": "The first name of the user."
+    },
+    "lastName": {
+      "type": "string",
+      "description": "The last name of the user."
+    },
+    "groups": {
+      "type": "array",
+      "description": "The list of group IDs to assign the user to. The user gains all permissions associated with these groups.",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "email",
+    "firstName",
+    "lastName"
+  ],
+  "$schema": "https://json-structure.org/draft/2020-12/schema"
+}

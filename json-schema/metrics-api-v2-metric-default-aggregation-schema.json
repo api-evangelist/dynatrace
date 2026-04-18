@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-schema/metrics-api-v2-metric-default-aggregation-schema.json",
+  "title": "MetricDefaultAggregation",
+  "description": "The default aggregation setting for the metric.",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "The aggregation type to apply when no aggregation is specified in the query. For example, avg, sum, or max.",
+      "enum": [
+        "min",
+        "max",
+        "sum",
+        "count",
+        "avg",
+        "median",
+        "percentile"
+      ],
+      "example": "min"
+    },
+    "parameter": {
+      "type": "number",
+      "format": "double",
+      "description": "The parameter for the aggregation type, used for percentile aggregation to specify the percentile value (e.g., 95).",
+      "example": 87.5
+    }
+  }
+}

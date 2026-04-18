@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "description": "Represents a permission assignment granting a group access to a Dynatrace environment or account-level capability.",
+  "properties": {
+    "permissionName": {
+      "type": "string",
+      "description": "The name of the permission, e.g., tenant-viewer, tenant-operator, tenant-admin, account-company-info.",
+      "example": "Production Service"
+    },
+    "scope": {
+      "type": "string",
+      "description": "The scope identifier the permission applies to. For environment permissions, this is the environment ID. For account permissions, this is the account UUID.",
+      "example": "example-value"
+    },
+    "scopeType": {
+      "type": "string",
+      "description": "The type of scope. ACCOUNT for account-level permissions, TENANT for environment-level permissions.",
+      "example": "ACCOUNT",
+      "enum": [
+        "ACCOUNT",
+        "TENANT"
+      ]
+    },
+    "groupId": {
+      "type": "string",
+      "description": "The ID of the group this permission is assigned to.",
+      "example": "abc123"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Permission"
+}

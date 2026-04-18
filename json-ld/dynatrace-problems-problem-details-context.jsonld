@@ -1,0 +1,37 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "dt": "https://dt.dynatrace.com/schema/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "ProblemDetails": "dt:ProblemDetails",
+    "id": {
+      "@id": "dt:id",
+      "@type": "xsd:string"
+    },
+    "title": {
+      "@id": "dt:title",
+      "@type": "xsd:string"
+    },
+    "severityLevel": {
+      "@id": "dt:severityLevel",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "dt:status",
+      "@type": "xsd:string"
+    },
+    "startTime": {
+      "@id": "dt:startTime",
+      "@type": "xsd:integer"
+    },
+    "endTime": {
+      "@id": "dt:endTime",
+      "@type": "xsd:integer"
+    },
+    "affectedEntities": {
+      "@id": "dt:affectedEntities",
+      "@container": "@set"
+    }
+  }
+}

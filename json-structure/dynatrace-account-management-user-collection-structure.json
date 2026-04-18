@@ -1,0 +1,58 @@
+{
+  "type": "object",
+  "description": "A paginated collection of users.",
+  "name": "UserCollection",
+  "properties": {
+    "nextPageKey": {
+      "type": "string",
+      "description": "Cursor for the next page of results."
+    },
+    "totalCount": {
+      "type": "integer",
+      "description": "The total number of users in the account."
+    },
+    "items": {
+      "type": "array",
+      "description": "The list of users on this page.",
+      "items": {
+        "type": "object",
+        "description": "Represents a user in the Dynatrace account.",
+        "properties": {
+          "uid": {
+            "type": "string",
+            "description": "The unique identifier of the user."
+          },
+          "email": {
+            "type": "email",
+            "description": "The email address of the user, used as their login identifier."
+          },
+          "firstName": {
+            "type": "string",
+            "description": "The first name of the user."
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The last name of the user."
+          },
+          "groups": {
+            "type": "array",
+            "description": "The list of group IDs that the user belongs to.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "userStatus": {
+            "type": "string",
+            "description": "The current status of the user account.",
+            "enum": [
+              "ACTIVE",
+              "INACTIVE",
+              "PENDING_INVITE"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-structure.org/draft/2020-12/schema"
+}

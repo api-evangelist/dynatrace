@@ -1,0 +1,40 @@
+{
+  "problemId": "example-value",
+  "displayId": "example-value",
+  "title": "example-value",
+  "severityLevel": "AVAILABILITY",
+  "status": "OPEN",
+  "startTime": 500,
+  "endTime": 500,
+  "affectedEntities": [
+    "example-value"
+  ],
+  "impactedEntities": [
+    "example-value"
+  ],
+  "rootCauseEntity": "example-value",
+  "managementZones": [
+    "example-value"
+  ],
+  "tags": [
+    "example-value"
+  ],
+  "evidenceDetails": {
+    "totalCount": 500,
+    "details": [
+      {}
+    ]
+  },
+  "comments": {
+    "totalCount": 500,
+    "items": [
+      {
+        "id": {},
+        "createdAtTimestamp": {},
+        "authorName": {},
+        "content": {},
+        "context": {}
+      }
+    ]
+  }
+}

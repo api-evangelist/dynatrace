@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "description": "The request body for creating or updating a problem comment.",
+  "name": "CommentRequestBody",
+  "properties": {
+    "message": {
+      "type": "string",
+      "description": "The text content of the comment."
+    },
+    "context": {
+      "type": "string",
+      "description": "An optional context reference for the comment, such as a ticket ID, a link to a runbook, or a category label."
+    }
+  },
+  "required": [
+    "message"
+  ],
+  "$schema": "https://json-structure.org/draft/2020-12/schema"
+}

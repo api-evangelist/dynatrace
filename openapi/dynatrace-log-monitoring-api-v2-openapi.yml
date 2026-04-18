@@ -15,30 +15,31 @@ info:
   license:
     name: Dynatrace Terms of Service
     url: https://www.dynatrace.com/company/trust-center/terms/
+  x-last-validated: '2026-04-18'
 externalDocs:
   description: Dynatrace Log Monitoring API v2 Documentation
   url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/log-monitoring-v2
 
 servers:
-  - url: https://{environmentId}.live.dynatrace.com/api/v2
-    description: Dynatrace SaaS environment
-    variables:
-      environmentId:
-        description: The unique identifier of your Dynatrace environment
-        default: mySampleEnv
+- url: https://{environmentId}.live.dynatrace.com/api/v2
+  description: Dynatrace SaaS environment
+  variables:
+    environmentId:
+      description: The unique identifier of your Dynatrace environment
+      default: mySampleEnv
 
 tags:
-  - name: Logs
-    description: Operations for ingesting, searching, aggregating, and exporting log records
+- name: Logs
+  description: Operations for ingesting, searching, aggregating, and exporting log records
 
 security:
-  - api-token: []
+- api-token: []
 
 paths:
   /logs/search:
     get:
       operationId: searchLogs
-      summary: Dynatrace Search log records
+      summary: Dynatrace Search Log Records
       description: >-
         Searches log records stored in Grail using a query expression. Results
         are returned in a paginated manner using a slice-based cursor. The query
@@ -46,70 +47,77 @@ paths:
         transforming log data. Use nextSliceKey from the response to retrieve
         subsequent pages of results.
       tags:
-        - Logs
+      - Logs
       parameters:
-        - name: nextSliceKey
-          in: query
-          description: >-
-            The cursor for the next page (slice) of results, obtained from the
-            nextSliceKey field of a previous response. When this parameter is
-            set, all other query parameters are ignored.
-          required: false
-          schema:
-            type: string
-        - name: limit
-          in: query
-          description: >-
-            The maximum number of log records to return. Default is 1000,
-            maximum is 5000.
-          required: false
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 5000
-            default: 1000
-        - name: query
-          in: query
-          description: >-
-            The log search query in DQL syntax. For example,
-            fetch logs | filter severity == "ERROR" | limit 100.
-            If not specified, all logs within the time range are returned.
-          required: false
-          schema:
-            type: string
-        - name: from
-          in: query
-          description: >-
-            The start of the queried time range. Use a relative expression
-            (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds.
-            Default is now-2h.
-          required: false
-          schema:
-            type: string
-        - name: to
-          in: query
-          description: >-
-            The end of the queried time range. Default is now.
-          required: false
-          schema:
-            type: string
-        - name: sort
-          in: query
-          description: >-
-            Defines the sort order for results. Use timestamp in descending
-            order (-timestamp) for newest first, or ascending (+timestamp)
-            for oldest first. Default is -timestamp.
-          required: false
-          schema:
-            type: string
-        - name: fields
-          in: query
-          description: >-
-            Comma-separated list of fields to include in the log records.
-            If not specified, all available fields are returned.
-          required: false
-          schema:
-            type: string
+      - name: nextSliceKey
+        in: query
+        description: >-
+          The cursor for the next page (slice) of results, obtained from the
+          nextSliceKey field of a previous response. When this parameter is
+          set, all other query parameters are ignored.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: limit
+        in: query
+        description: >-
+          The maximum number of log records to return. Default is 1000,
+          maximum is 5000.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 5000
+          default: 1000
+        example: 500
+      - name: query
+        in: query
+        description: >-
+          The log search query in DQL syntax. For example,
+          fetch logs | filter severity == "ERROR" | limit 100.
+          If not specified, all logs within the time range are returned.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: from
+        in: query
+        description: >-
+          The start of the queried time range. Use a relative expression
+          (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds.
+          Default is now-2h.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: to
+        in: query
+        description: >-
+          The end of the queried time range. Default is now.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: sort
+        in: query
+        description: >-
+          Defines the sort order for results. Use timestamp in descending
+          order (-timestamp) for newest first, or ascending (+timestamp)
+          for oldest first. Default is -timestamp.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: fields
+        in: query
+        description: >-
+          Comma-separated list of fields to include in the log records.
+          If not specified, all available fields are returned.
+        required: false
+        schema:
+          type: string
+        example: example-value
       responses:
         '200':
           description: A page of log records matching the search query
@@ -117,6 +125,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LogRecordSearchResult'
+              examples:
+                SearchLogs200Example:
+                  summary: Default searchLogs 200 response
+                  x-microcks-default: true
+                  value:
+                    nextSliceKey: example-value
+                    results: &id002
+                    - timestamp: example-value
+                      content: example-value
+                      severity: HIGH
+                      log.source: example-value
+                      dt.entity.host: example-value
+                      additionalFields: &id001 {}
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -124,10 +145,13 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /logs/ingest:
     post:
       operationId: ingestLogs
-      summary: Dynatrace Ingest log records
+      summary: Dynatrace Ingest Log Records
       description: >-
         Ingests log records into the Dynatrace Grail data lakehouse. Accepts an
         array of log record objects. Each record must include at least a content
@@ -135,7 +159,7 @@ paths:
         and entity associations can be included. Log records are processed
         asynchronously. Requires the logs.ingest API token scope.
       tags:
-        - Logs
+      - Logs
       requestBody:
         description: An array of log records to ingest
         required: true
@@ -147,15 +171,15 @@ paths:
               items:
                 $ref: '#/components/schemas/LogIngestRecord'
             example:
-              - content: "Application started successfully"
-                severity: INFO
-                timestamp: "2024-01-15T10:30:00.000Z"
-                log.source: my-application
-                dt.entity.host: HOST-1234567890ABCDEF
-              - content: "Database connection timeout after 30s"
-                severity: ERROR
-                timestamp: "2024-01-15T10:30:05.123Z"
-                log.source: my-application
+            - content: "Application started successfully"
+              severity: INFO
+              timestamp: "2024-01-15T10:30:00.000Z"
+              log.source: my-application
+              dt.entity.host: HOST-1234567890ABCDEF
+            - content: "Database connection timeout after 30s"
+              severity: ERROR
+              timestamp: "2024-01-15T10:30:05.123Z"
+              log.source: my-application
       responses:
         '204':
           description: The log records were successfully accepted for ingestion
@@ -166,10 +190,13 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /logs/aggregate:
     get:
       operationId: aggregateLogs
-      summary: Dynatrace Aggregate log records
+      summary: Dynatrace Aggregate Log Records
       description: >-
         Returns aggregated log data grouped by specified fields. Useful for
         building dashboards and summaries such as error counts by service or
@@ -177,46 +204,51 @@ paths:
         conditions and the groupBy parameter specifies the dimensions to
         aggregate by.
       tags:
-        - Logs
+      - Logs
       parameters:
-        - name: query
-          in: query
-          description: >-
-            The log query expression for filtering records before aggregation.
-            Uses DQL-based syntax. For example, fetch logs | filter severity=="ERROR".
-          required: false
-          schema:
-            type: string
-        - name: from
-          in: query
-          description: >-
-            The start of the queried time range. Use a relative expression,
-            ISO 8601, or Unix timestamp in milliseconds. Default is now-2h.
-          required: false
-          schema:
-            type: string
-        - name: to
-          in: query
-          description: The end of the queried time range. Default is now.
-          required: false
-          schema:
-            type: string
-        - name: groupBy
-          in: query
-          description: >-
-            Comma-separated list of fields to group the aggregated results by.
-            For example, severity,log.source to count log records by severity
-            and source combination.
-          required: false
-          schema:
-            type: string
-        - name: fields
-          in: query
-          description: >-
-            Additional fields to include in the aggregation response.
-          required: false
-          schema:
-            type: string
+      - name: query
+        in: query
+        description: >-
+          The log query expression for filtering records before aggregation.
+          Uses DQL-based syntax. For example, fetch logs | filter severity=="ERROR".
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: from
+        in: query
+        description: >-
+          The start of the queried time range. Use a relative expression,
+          ISO 8601, or Unix timestamp in milliseconds. Default is now-2h.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: to
+        in: query
+        description: The end of the queried time range. Default is now.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: groupBy
+        in: query
+        description: >-
+          Comma-separated list of fields to group the aggregated results by.
+          For example, severity,log.source to count log records by severity
+          and source combination.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: fields
+        in: query
+        description: >-
+          Additional fields to include in the aggregation response.
+        required: false
+        schema:
+          type: string
+        example: example-value
       responses:
         '200':
           description: The aggregated log data
@@ -224,6 +256,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LogAggregateResult'
+              examples:
+                AggregateLogs200Example:
+                  summary: Default aggregateLogs 200 response
+                  x-microcks-default: true
+                  value:
+                    results: &id003
+                    - groupByFields: {}
+                      count: 500
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -231,10 +271,13 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /logs/export:
     get:
       operationId: exportLogs
-      summary: Dynatrace Export log records
+      summary: Dynatrace Export Log Records
       description: >-
         Exports log records for bulk retrieval, suitable for integration with
         external SIEM, log management, or archiving systems. Results are
@@ -242,58 +285,65 @@ paths:
         syntax as the search endpoint but is optimized for large volume
         data retrieval.
       tags:
-        - Logs
+      - Logs
       parameters:
-        - name: nextSliceKey
-          in: query
-          description: >-
-            The cursor for the next page of export results. When this parameter
-            is set, all other query parameters are ignored.
-          required: false
-          schema:
-            type: string
-        - name: pageSize
-          in: query
-          description: >-
-            The number of log records to return per page. Default is 1000,
-            maximum is 10000.
-          required: false
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 10000
-            default: 1000
-        - name: query
-          in: query
-          description: >-
-            The log export query expression for filtering records.
-          required: false
-          schema:
-            type: string
-        - name: from
-          in: query
-          description: The start of the queried time range.
-          required: false
-          schema:
-            type: string
-        - name: to
-          in: query
-          description: The end of the queried time range.
-          required: false
-          schema:
-            type: string
-        - name: sort
-          in: query
-          description: The sort order for export results. Default is -timestamp.
-          required: false
-          schema:
-            type: string
-        - name: fields
-          in: query
-          description: Fields to include in the exported log records.
-          required: false
-          schema:
-            type: string
+      - name: nextSliceKey
+        in: query
+        description: >-
+          The cursor for the next page of export results. When this parameter
+          is set, all other query parameters are ignored.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: pageSize
+        in: query
+        description: >-
+          The number of log records to return per page. Default is 1000,
+          maximum is 10000.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 10000
+          default: 1000
+        example: 500
+      - name: query
+        in: query
+        description: >-
+          The log export query expression for filtering records.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: from
+        in: query
+        description: The start of the queried time range.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: to
+        in: query
+        description: The end of the queried time range.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: sort
+        in: query
+        description: The sort order for export results. Default is -timestamp.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: fields
+        in: query
+        description: Fields to include in the exported log records.
+        required: false
+        schema:
+          type: string
+        example: example-value
       responses:
         '200':
           description: A page of exported log records
@@ -301,6 +351,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LogExportResult'
+              examples:
+                ExportLogs200Example:
+                  summary: Default exportLogs 200 response
+                  x-microcks-default: true
+                  value:
+                    nextSliceKey: example-value
+                    results: &id004
+                    - timestamp: example-value
+                      content: example-value
+                      severity: HIGH
+                      log.source: example-value
+                      dt.entity.host: example-value
+                      additionalFields: *id001
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -308,6 +371,9 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
 components:
   securitySchemes:
     api-token:
@@ -346,39 +412,43 @@ components:
         The content field is required. Additional fields provide context for
         routing, filtering, and entity association.
       required:
-        - content
+      - content
       properties:
         content:
           type: string
           description: >-
             The main log message or text. Required. This is the primary
             searchable content of the log record.
+          example: example-value
         severity:
           type: string
           description: >-
             The severity level of the log record. Standard syslog severity
             levels are supported.
           enum:
-            - EMERGENCY
-            - ALERT
-            - CRITICAL
-            - ERROR
-            - WARNING
-            - NOTICE
-            - INFO
-            - DEBUG
-            - TRACE
+          - EMERGENCY
+          - ALERT
+          - CRITICAL
+          - ERROR
+          - WARNING
+          - NOTICE
+          - INFO
+          - DEBUG
+          - TRACE
+          example: EMERGENCY
         timestamp:
           type: string
           description: >-
             The timestamp of the log record. Accepts ISO 8601 format
             (e.g., 2024-01-15T10:30:00.000Z) or Unix timestamp in
             milliseconds. If not specified, the ingestion time is used.
+          example: example-value
         log.source:
           type: string
           description: >-
             A string identifier for the source of the log record, such as
             an application name, component, or log file path.
+          example: example-value
         dt.entity.host:
           type: string
           description: >-
@@ -386,6 +456,7 @@ components:
             e.g., HOST-1234567890ABCDEF. This enables correlation between
             logs and monitored infrastructure.
 
+          example: example-value
     LogRecord:
       type: object
       description: >-
@@ -396,18 +467,23 @@ components:
         timestamp:
           type: string
           description: The timestamp of the log record in ISO 8601 format.
+          example: example-value
         content:
           type: string
           description: The log message content.
+          example: example-value
         severity:
           type: string
           description: The severity level of the log record.
+          example: HIGH
         log.source:
           type: string
           description: The source identifier of the log record.
+          example: example-value
         dt.entity.host:
           type: string
           description: The associated host entity ID.
+          example: example-value
         additionalFields:
           type: object
           description: >-
@@ -416,6 +492,7 @@ components:
             processed the record.
           additionalProperties: true
 
+          example: *id001
     LogRecordSearchResult:
       type: object
       description: The result of a log search query.
@@ -426,12 +503,14 @@ components:
             The cursor for the next page of results. Null if all results
             have been returned.
           nullable: true
+          example: example-value
         results:
           type: array
           description: The list of log records matching the search query on this page.
           items:
             $ref: '#/components/schemas/LogRecord'
 
+          example: *id002
     LogAggregateResult:
       type: object
       description: The result of a log aggregation query.
@@ -443,6 +522,7 @@ components:
           items:
             $ref: '#/components/schemas/LogAggregateGroup'
 
+          example: *id003
     LogAggregateGroup:
       type: object
       description: A single aggregation group result.
@@ -454,11 +534,13 @@ components:
             groupBy field names, values are the field values for this group.
           additionalProperties:
             type: string
+          example: {}
         count:
           type: integer
           format: int64
           description: The number of log records in this aggregation group.
 
+          example: 500
     LogExportResult:
       type: object
       description: The result of a log export operation, containing a page of records.
@@ -467,12 +549,14 @@ components:
           type: string
           description: Cursor for the next page of export results.
           nullable: true
+          example: example-value
         results:
           type: array
           description: The list of exported log records on this page.
           items:
             $ref: '#/components/schemas/LogRecord'
 
+          example: *id004
     ErrorEnvelope:
       type: object
       description: Error response envelope returned when a request fails.
@@ -487,15 +571,22 @@ components:
         code:
           type: integer
           description: The HTTP status code of the error.
+          example: 500
         message:
           type: string
           description: A human-readable description of the error.
+          example: Example description.
         constraintViolations:
           type: array
           description: A list of constraint violations for validation errors (HTTP 400).
           items:
             $ref: '#/components/schemas/ConstraintViolation'
 
+          example:
+          - path: example-value
+            message: Example description.
+            parameterLocation: example-value
+            location: example-value
     ConstraintViolation:
       type: object
       description: Details of a single constraint violation in a request.
@@ -503,12 +594,16 @@ components:
         path:
           type: string
           description: The JSON path to the field that caused the violation.
+          example: example-value
         message:
           type: string
           description: A description of the constraint violation.
+          example: Example description.
         parameterLocation:
           type: string
           description: The location of the violating parameter (QUERY, PATH, BODY).
+          example: example-value
         location:
           type: string
           description: The location detail for the violation.
+          example: example-value

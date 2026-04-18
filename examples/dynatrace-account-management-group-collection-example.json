@@ -1,0 +1,14 @@
+{
+  "nextPageKey": "example-value",
+  "totalCount": 500,
+  "items": [
+    {
+      "groupId": "abc123",
+      "name": "Production Service",
+      "description": "Example description.",
+      "owner": "example-value",
+      "createdAt": "2025-03-15T14:30:00Z",
+      "updatedAt": "2025-03-15T14:30:00Z"
+    }
+  ]
+}

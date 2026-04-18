@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "description": "Describes a relationship type for an entity type.",
+  "name": "EntityTypeRelationship",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The relationship type identifier, e.g., runsOn."
+    },
+    "toTypes": {
+      "type": "array",
+      "description": "The entity types that can participate in this relationship.",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$schema": "https://json-structure.org/draft/2020-12/schema"
+}

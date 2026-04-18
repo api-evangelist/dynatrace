@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-structure/events-api-v2-event-collection-structure.json",
+  "description": "A paginated collection of events.",
+  "type": "object",
+  "properties": {
+    "nextPageKey": {
+      "type": "string",
+      "description": "The cursor for the next page of results. Null if there are no more pages.",
+      "nullable": true,
+      "example": "example-value"
+    },
+    "totalCount": {
+      "type": "int64",
+      "description": "The total number of events matching the query.",
+      "example": 500
+    },
+    "pageSize": {
+      "type": "int32",
+      "description": "The number of results returned on this page.",
+      "example": 500
+    },
+    "events": {
+      "type": "array",
+      "description": "The list of events on this page.",
+      "items": {
+        "$ref": "#/components/schemas/Event"
+      },
+      "example": [
+        {
+          "eventId": "abc123",
+          "eventType": "STANDARD",
+          "title": "example-value",
+          "startTime": 1718153645993,
+          "endTime": 1718153645993,
+          "entityId": {},
+          "properties": {},
+          "status": "OPEN"
+        }
+      ]
+    }
+  },
+  "name": "EventCollection"
+}

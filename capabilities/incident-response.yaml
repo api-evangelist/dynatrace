@@ -1,0 +1,404 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Dynatrace Incident Response"
+  description: "Unified incident response workflow combining problems, events, and entity data for SREs investigating service degradations detected by Davis AI."
+  tags:
+    - Dynatrace
+    - Incident Response
+    - SRE
+    - Problems
+    - Events
+  created: "2026-04-18"
+  modified: "2026-04-18"
+
+binds:
+  - namespace: env
+    keys:
+      DYNATRACE_API_TOKEN: DYNATRACE_API_TOKEN
+      DYNATRACE_ENVIRONMENT_ID: DYNATRACE_ENVIRONMENT_ID
+
+capability:
+  consumes:
+    - import: problems-v2
+      location: ./shared/problems-v2.yaml
+    - import: events-v2
+      location: ./shared/events-v2.yaml
+    - import: entities-v2
+      location: ./shared/entities-v2.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: incident-response-api
+      description: "Unified REST API for Dynatrace incident response workflows."
+      resources:
+        - path: /v1/problems
+          name: problems
+          description: "Query and manage AI-detected problems"
+          operations:
+            - method: GET
+              name: list-problems
+              description: "List problems detected by Davis AI"
+              call: "problems-v2.list-problems"
+              with:
+                nextPageKey: "rest.nextPageKey"
+                pageSize: "rest.pageSize"
+                problemSelector: "rest.problemSelector"
+                entitySelector: "rest.entitySelector"
+                from: "rest.from"
+                to: "rest.to"
+                sort: "rest.sort"
+                fields: "rest.fields"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/problems/{problemId}
+          name: problem-detail
+          description: "Get problem details including root cause"
+          operations:
+            - method: GET
+              name: get-problem
+              description: "Get full problem details with root cause analysis"
+              call: "problems-v2.get-problem"
+              with:
+                problemId: "rest.problemId"
+                fields: "rest.fields"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/problems/{problemId}/close
+          name: problem-close
+          description: "Close a problem"
+          operations:
+            - method: POST
+              name: close-problem
+              description: "Close a problem with an optional message"
+              call: "problems-v2.close-problem"
+              with:
+                problemId: "rest.problemId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/problems/{problemId}/comments
+          name: problem-comments
+          description: "Manage investigation comments"
+          operations:
+            - method: GET
+              name: list-problem-comments
+              description: "List comments on a problem"
+              call: "problems-v2.list-problem-comments"
+              with:
+                problemId: "rest.problemId"
+                nextPageKey: "rest.nextPageKey"
+                pageSize: "rest.pageSize"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-problem-comment
+              description: "Add an investigation comment"
+              call: "problems-v2.create-problem-comment"
+              with:
+                problemId: "rest.problemId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/problems/{problemId}/comments/{commentId}
+          name: problem-comment-detail
+          description: "Manage a specific comment"
+          operations:
+            - method: GET
+              name: get-problem-comment
+              description: "Get a comment"
+              call: "problems-v2.get-problem-comment"
+              with:
+                problemId: "rest.problemId"
+                commentId: "rest.commentId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: PUT
+              name: update-problem-comment
+              description: "Update a comment"
+              call: "problems-v2.update-problem-comment"
+              with:
+                problemId: "rest.problemId"
+                commentId: "rest.commentId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: DELETE
+              name: delete-problem-comment
+              description: "Delete a comment"
+              call: "problems-v2.delete-problem-comment"
+              with:
+                problemId: "rest.problemId"
+                commentId: "rest.commentId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/events
+          name: events
+          description: "Query events related to incidents"
+          operations:
+            - method: GET
+              name: list-events
+              description: "List events matching filters"
+              call: "events-v2.list-events"
+              with:
+                nextPageKey: "rest.nextPageKey"
+                pageSize: "rest.pageSize"
+                from: "rest.from"
+                to: "rest.to"
+                eventSelector: "rest.eventSelector"
+                entitySelector: "rest.entitySelector"
+                eventType: "rest.eventType"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/events/{eventId}
+          name: event-detail
+          description: "Get event details"
+          operations:
+            - method: GET
+              name: get-event
+              description: "Get a specific event"
+              call: "events-v2.get-event"
+              with:
+                eventId: "rest.eventId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/events/ingest
+          name: event-ingest
+          description: "Ingest custom events"
+          operations:
+            - method: POST
+              name: ingest-event
+              description: "Ingest a custom event to annotate the timeline"
+              call: "events-v2.ingest-event"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/entities
+          name: entities
+          description: "Query affected entities"
+          operations:
+            - method: GET
+              name: list-entities
+              description: "List entities matching a selector"
+              call: "entities-v2.list-entities"
+              with:
+                entitySelector: "rest.entitySelector"
+                nextPageKey: "rest.nextPageKey"
+                pageSize: "rest.pageSize"
+                fields: "rest.fields"
+                from: "rest.from"
+                to: "rest.to"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/entities/{entityId}
+          name: entity-detail
+          description: "Get entity details"
+          operations:
+            - method: GET
+              name: get-entity
+              description: "Get entity details for root cause investigation"
+              call: "entities-v2.get-entity"
+              with:
+                entityId: "rest.entityId"
+                fields: "rest.fields"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: incident-response-mcp
+      transport: http
+      description: "MCP server for AI-assisted Dynatrace incident response."
+      tools:
+        - name: list-problems
+          description: "List problems detected by Davis AI in the Dynatrace environment"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "problems-v2.list-problems"
+          with:
+            nextPageKey: "tools.nextPageKey"
+            pageSize: "tools.pageSize"
+            problemSelector: "tools.problemSelector"
+            entitySelector: "tools.entitySelector"
+            from: "tools.from"
+            to: "tools.to"
+            sort: "tools.sort"
+            fields: "tools.fields"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-problem
+          description: "Get full details of a specific problem including root cause analysis"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "problems-v2.get-problem"
+          with:
+            problemId: "tools.problemId"
+            fields: "tools.fields"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: close-problem
+          description: "Close an open problem with an optional closing message"
+          hints:
+            readOnly: false
+            destructive: true
+            openWorld: true
+          call: "problems-v2.close-problem"
+          with:
+            problemId: "tools.problemId"
+            message: "tools.message"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-problem-comments
+          description: "List investigation comments on a problem"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "problems-v2.list-problem-comments"
+          with:
+            problemId: "tools.problemId"
+            nextPageKey: "tools.nextPageKey"
+            pageSize: "tools.pageSize"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-problem-comment
+          description: "Add an investigation comment to a problem"
+          hints:
+            readOnly: false
+            openWorld: true
+          call: "problems-v2.create-problem-comment"
+          with:
+            problemId: "tools.problemId"
+            message: "tools.message"
+            context: "tools.context"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-problem-comment
+          description: "Get a specific comment on a problem"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "problems-v2.get-problem-comment"
+          with:
+            problemId: "tools.problemId"
+            commentId: "tools.commentId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: update-problem-comment
+          description: "Update an investigation comment"
+          hints:
+            readOnly: false
+            idempotent: true
+            openWorld: true
+          call: "problems-v2.update-problem-comment"
+          with:
+            problemId: "tools.problemId"
+            commentId: "tools.commentId"
+            message: "tools.message"
+            context: "tools.context"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: delete-problem-comment
+          description: "Delete a comment from a problem"
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+            openWorld: true
+          call: "problems-v2.delete-problem-comment"
+          with:
+            problemId: "tools.problemId"
+            commentId: "tools.commentId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-events
+          description: "List events in the Dynatrace environment"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "events-v2.list-events"
+          with:
+            nextPageKey: "tools.nextPageKey"
+            pageSize: "tools.pageSize"
+            from: "tools.from"
+            to: "tools.to"
+            eventSelector: "tools.eventSelector"
+            entitySelector: "tools.entitySelector"
+            eventType: "tools.eventType"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-event
+          description: "Get details of a specific event"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "events-v2.get-event"
+          with:
+            eventId: "tools.eventId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: ingest-event
+          description: "Ingest a custom event to annotate the timeline"
+          hints:
+            readOnly: false
+            openWorld: true
+          call: "events-v2.ingest-event"
+          with:
+            event_type: "tools.event_type"
+            title: "tools.title"
+            entity_selector: "tools.entity_selector"
+            start_time: "tools.start_time"
+            end_time: "tools.end_time"
+            properties: "tools.properties"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-entities
+          description: "List monitored entities matching a selector"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "entities-v2.list-entities"
+          with:
+            entitySelector: "tools.entitySelector"
+            nextPageKey: "tools.nextPageKey"
+            pageSize: "tools.pageSize"
+            fields: "tools.fields"
+            from: "tools.from"
+            to: "tools.to"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-entity
+          description: "Get details of a specific monitored entity"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "entities-v2.get-entity"
+          with:
+            entityId: "tools.entityId"
+            fields: "tools.fields"
+          outputParameters:
+            - type: object
+              mapping: "$."

@@ -1,0 +1,8 @@
+{
+  "timestamp": "example-value",
+  "content": "example-value",
+  "severity": "HIGH",
+  "log.source": "example-value",
+  "dt.entity.host": "example-value",
+  "additionalFields": {}
+}

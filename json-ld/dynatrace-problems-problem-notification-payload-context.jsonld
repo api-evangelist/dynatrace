@@ -1,0 +1,49 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "dt": "https://dt.dynatrace.com/schema/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "ProblemNotificationPayload": "dt:ProblemNotificationPayload",
+    "ProblemID": {
+      "@id": "dt:ProblemID",
+      "@type": "xsd:string"
+    },
+    "ProblemTitle": {
+      "@id": "dt:ProblemTitle",
+      "@type": "xsd:string"
+    },
+    "ProblemURL": {
+      "@id": "dt:ProblemURL",
+      "@type": "xsd:string"
+    },
+    "ProblemSeverity": {
+      "@id": "dt:ProblemSeverity",
+      "@type": "xsd:string"
+    },
+    "ProblemStatus": {
+      "@id": "dt:ProblemStatus",
+      "@type": "xsd:string"
+    },
+    "ImpactedEntities": {
+      "@id": "dt:ImpactedEntities",
+      "@container": "@set"
+    },
+    "ImpactedEntityNames": {
+      "@id": "dt:ImpactedEntityNames",
+      "@type": "xsd:string"
+    },
+    "Tags": {
+      "@id": "dt:Tags",
+      "@type": "xsd:string"
+    },
+    "State": {
+      "@id": "dt:State",
+      "@type": "xsd:string"
+    },
+    "ProblemDetailsJSON": {
+      "@id": "dt:ProblemDetailsJSON",
+      "@type": "xsd:string"
+    }
+  }
+}

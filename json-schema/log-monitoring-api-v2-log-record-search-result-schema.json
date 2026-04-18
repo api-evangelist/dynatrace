@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-schema/log-monitoring-api-v2-log-record-search-result-schema.json",
+  "title": "LogRecordSearchResult",
+  "description": "The result of a log search query.",
+  "type": "object",
+  "properties": {
+    "nextSliceKey": {
+      "type": "string",
+      "description": "The cursor for the next page of results. Null if all results have been returned.",
+      "nullable": true,
+      "example": "example-value"
+    },
+    "results": {
+      "type": "array",
+      "description": "The list of log records matching the search query on this page.",
+      "items": {
+        "$ref": "#/components/schemas/LogRecord"
+      },
+      "example": [
+        {
+          "timestamp": "example-value",
+          "content": "example-value",
+          "severity": "HIGH",
+          "log.source": "example-value",
+          "dt.entity.host": "example-value",
+          "additionalFields": {}
+        }
+      ]
+    }
+  }
+}

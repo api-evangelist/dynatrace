@@ -1,0 +1,10 @@
+{
+  "eventId": "abc123",
+  "eventType": "STANDARD",
+  "title": "example-value",
+  "startTime": 1718153645993,
+  "endTime": 1718153645993,
+  "entityId": "example-value",
+  "properties": {},
+  "status": "OPEN"
+}

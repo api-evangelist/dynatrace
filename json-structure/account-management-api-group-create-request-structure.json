@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-structure/account-management-api-group-create-request-structure.json",
+  "description": "Request body for creating or updating a group.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The display name of the group.",
+      "example": "Production Service"
+    },
+    "description": {
+      "type": "string",
+      "description": "An optional description of the group's purpose or access scope.",
+      "example": "Example description."
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "name": "GroupCreateRequest"
+}

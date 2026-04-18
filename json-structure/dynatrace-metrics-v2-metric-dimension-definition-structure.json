@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "description": "Defines a single dimension of a metric.",
+  "name": "MetricDimensionDefinition",
+  "properties": {
+    "key": {
+      "type": "string",
+      "description": "The unique key identifying this dimension."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the dimension."
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of the dimension. For example, ENTITY for entity dimensions or STRING for string dimensions."
+    },
+    "displayName": {
+      "type": "string",
+      "description": "The human-readable display name of the dimension."
+    }
+  },
+  "$schema": "https://json-structure.org/draft/2020-12/schema"
+}

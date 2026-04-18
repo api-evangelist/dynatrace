@@ -1,0 +1,21 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "dt": "https://dt.dynatrace.com/schema/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "EntityRef": "dt:EntityRef",
+    "entityId": {
+      "@id": "dt:entityId",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "type": {
+      "@id": "dt:type",
+      "@type": "xsd:string"
+    }
+  }
+}

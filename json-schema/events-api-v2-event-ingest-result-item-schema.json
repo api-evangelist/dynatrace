@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-schema/events-api-v2-event-ingest-result-item-schema.json",
+  "title": "EventIngestResultItem",
+  "description": "The result of ingesting an event for a single entity.",
+  "type": "object",
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "description": "The unique identifier assigned to the created event.",
+      "example": "abc123"
+    },
+    "status": {
+      "type": "string",
+      "description": "The ingestion status for this entity. OK indicates success; other values indicate warnings or errors.",
+      "example": "ACTIVE"
+    }
+  }
+}

@@ -1,0 +1,469 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Dynatrace Problems API v2"
+  description: "The Dynatrace Problems API v2 allows you to query and manage detected problems within a Dynatrace environment. Problems represent degradations in service quality detected by the Dynatrace AI (Davis)."
+  tags:
+    - Dynatrace
+    - Problems
+    - Incident Management
+    - Davis AI
+  created: "2026-04-18"
+  modified: "2026-04-18"
+
+binds:
+  - namespace: env
+    keys:
+      DYNATRACE_API_TOKEN: DYNATRACE_API_TOKEN
+      DYNATRACE_ENVIRONMENT_ID: DYNATRACE_ENVIRONMENT_ID
+
+capability:
+  consumes:
+    - type: http
+      namespace: problems-v2
+      baseUri: https://${DYNATRACE_ENVIRONMENT_ID}.live.dynatrace.com/api/v2
+      description: "Dynatrace Problems API v2 for querying and managing AI-detected problems."
+      authentication:
+        type: apikey
+        key: Authorization
+        value: "Api-Token {{DYNATRACE_API_TOKEN}}"
+        placement: header
+      resources:
+        - name: problems
+          path: /problems
+          description: "Query problems"
+          operations:
+            - name: list-problems
+              method: GET
+              description: "Returns a list of problems from the Dynatrace environment."
+              inputParameters:
+                - name: nextPageKey
+                  in: query
+                  type: string
+                  required: false
+                  description: "Cursor for the next page of results."
+                - name: pageSize
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Number of problems to return per page."
+                - name: problemSelector
+                  in: query
+                  type: string
+                  required: false
+                  description: "Problem selector expression."
+                - name: entitySelector
+                  in: query
+                  type: string
+                  required: false
+                  description: "Entity selector to filter by affected entities."
+                - name: from
+                  in: query
+                  type: string
+                  required: false
+                  description: "Start of the queried time range."
+                - name: to
+                  in: query
+                  type: string
+                  required: false
+                  description: "End of the queried time range."
+                - name: sort
+                  in: query
+                  type: string
+                  required: false
+                  description: "Sort order for results."
+                - name: fields
+                  in: query
+                  type: string
+                  required: false
+                  description: "Additional fields to include."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: problem-detail
+          path: /problems/{problemId}
+          description: "Get a specific problem"
+          operations:
+            - name: get-problem
+              method: GET
+              description: "Returns the full details of a specific problem."
+              inputParameters:
+                - name: problemId
+                  in: path
+                  type: string
+                  required: true
+                  description: "The unique identifier of the problem."
+                - name: fields
+                  in: query
+                  type: string
+                  required: false
+                  description: "Additional fields to include."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: problem-close
+          path: /problems/{problemId}/close
+          description: "Close a problem"
+          operations:
+            - name: close-problem
+              method: POST
+              description: "Closes the specified problem with an optional closing message."
+              inputParameters:
+                - name: problemId
+                  in: path
+                  type: string
+                  required: true
+                  description: "The unique identifier of the problem."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  message: "{{tools.message}}"
+        - name: problem-comments
+          path: /problems/{problemId}/comments
+          description: "Manage problem comments"
+          operations:
+            - name: list-problem-comments
+              method: GET
+              description: "Returns a list of all comments attached to the specified problem."
+              inputParameters:
+                - name: problemId
+                  in: path
+                  type: string
+                  required: true
+                  description: "The unique identifier of the problem."
+                - name: nextPageKey
+                  in: query
+                  type: string
+                  required: false
+                  description: "Cursor for the next page of results."
+                - name: pageSize
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Number of comments to return per page."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-problem-comment
+              method: POST
+              description: "Creates a new comment on the specified problem."
+              inputParameters:
+                - name: problemId
+                  in: path
+                  type: string
+                  required: true
+                  description: "The unique identifier of the problem."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  message: "{{tools.message}}"
+                  context: "{{tools.context}}"
+        - name: problem-comment-detail
+          path: /problems/{problemId}/comments/{commentId}
+          description: "Get, update, or delete a specific comment"
+          operations:
+            - name: get-problem-comment
+              method: GET
+              description: "Returns the details of a specific comment."
+              inputParameters:
+                - name: problemId
+                  in: path
+                  type: string
+                  required: true
+                  description: "The unique identifier of the problem."
+                - name: commentId
+                  in: path
+                  type: string
+                  required: true
+                  description: "The unique identifier of the comment."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: update-problem-comment
+              method: PUT
+              description: "Updates the content or context of an existing comment."
+              inputParameters:
+                - name: problemId
+                  in: path
+                  type: string
+                  required: true
+                  description: "The unique identifier of the problem."
+                - name: commentId
+                  in: path
+                  type: string
+                  required: true
+                  description: "The unique identifier of the comment."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  message: "{{tools.message}}"
+                  context: "{{tools.context}}"
+            - name: delete-problem-comment
+              method: DELETE
+              description: "Permanently deletes a specific comment from a problem."
+              inputParameters:
+                - name: problemId
+                  in: path
+                  type: string
+                  required: true
+                  description: "The unique identifier of the problem."
+                - name: commentId
+                  in: path
+                  type: string
+                  required: true
+                  description: "The unique identifier of the comment."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8105
+      namespace: problems-v2-api
+      resources:
+        - path: /v1/problems
+          name: problems
+          description: "Query problems"
+          operations:
+            - method: GET
+              name: list-problems
+              description: "List problems matching filters"
+              call: "problems-v2.list-problems"
+              with:
+                nextPageKey: "rest.nextPageKey"
+                pageSize: "rest.pageSize"
+                problemSelector: "rest.problemSelector"
+                entitySelector: "rest.entitySelector"
+                from: "rest.from"
+                to: "rest.to"
+                sort: "rest.sort"
+                fields: "rest.fields"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/problems/{problemId}
+          name: problem-detail
+          description: "Get problem details"
+          operations:
+            - method: GET
+              name: get-problem
+              description: "Get full details of a specific problem"
+              call: "problems-v2.get-problem"
+              with:
+                problemId: "rest.problemId"
+                fields: "rest.fields"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/problems/{problemId}/close
+          name: problem-close
+          description: "Close a problem"
+          operations:
+            - method: POST
+              name: close-problem
+              description: "Close a problem with an optional message"
+              call: "problems-v2.close-problem"
+              with:
+                problemId: "rest.problemId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/problems/{problemId}/comments
+          name: problem-comments
+          description: "Manage problem comments"
+          operations:
+            - method: GET
+              name: list-problem-comments
+              description: "List comments on a problem"
+              call: "problems-v2.list-problem-comments"
+              with:
+                problemId: "rest.problemId"
+                nextPageKey: "rest.nextPageKey"
+                pageSize: "rest.pageSize"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-problem-comment
+              description: "Add a comment to a problem"
+              call: "problems-v2.create-problem-comment"
+              with:
+                problemId: "rest.problemId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/problems/{problemId}/comments/{commentId}
+          name: problem-comment-detail
+          description: "Get, update, or delete a comment"
+          operations:
+            - method: GET
+              name: get-problem-comment
+              description: "Get a specific comment"
+              call: "problems-v2.get-problem-comment"
+              with:
+                problemId: "rest.problemId"
+                commentId: "rest.commentId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: PUT
+              name: update-problem-comment
+              description: "Update a comment"
+              call: "problems-v2.update-problem-comment"
+              with:
+                problemId: "rest.problemId"
+                commentId: "rest.commentId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: DELETE
+              name: delete-problem-comment
+              description: "Delete a comment"
+              call: "problems-v2.delete-problem-comment"
+              with:
+                problemId: "rest.problemId"
+                commentId: "rest.commentId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9105
+      namespace: problems-v2-mcp
+      transport: http
+      tools:
+        - name: list-problems
+          description: "List problems detected by Davis AI"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "problems-v2.list-problems"
+          with:
+            nextPageKey: "tools.nextPageKey"
+            pageSize: "tools.pageSize"
+            problemSelector: "tools.problemSelector"
+            entitySelector: "tools.entitySelector"
+            from: "tools.from"
+            to: "tools.to"
+            sort: "tools.sort"
+            fields: "tools.fields"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-problem
+          description: "Get full details of a specific problem including root cause"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "problems-v2.get-problem"
+          with:
+            problemId: "tools.problemId"
+            fields: "tools.fields"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: close-problem
+          description: "Close an open problem with an optional message"
+          hints:
+            readOnly: false
+            destructive: true
+            openWorld: true
+          call: "problems-v2.close-problem"
+          with:
+            problemId: "tools.problemId"
+            message: "tools.message"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-problem-comments
+          description: "List all comments on a problem"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "problems-v2.list-problem-comments"
+          with:
+            problemId: "tools.problemId"
+            nextPageKey: "tools.nextPageKey"
+            pageSize: "tools.pageSize"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-problem-comment
+          description: "Add a comment to a problem"
+          hints:
+            readOnly: false
+            openWorld: true
+          call: "problems-v2.create-problem-comment"
+          with:
+            problemId: "tools.problemId"
+            message: "tools.message"
+            context: "tools.context"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-problem-comment
+          description: "Get a specific comment on a problem"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "problems-v2.get-problem-comment"
+          with:
+            problemId: "tools.problemId"
+            commentId: "tools.commentId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: update-problem-comment
+          description: "Update a comment on a problem"
+          hints:
+            readOnly: false
+            idempotent: true
+            openWorld: true
+          call: "problems-v2.update-problem-comment"
+          with:
+            problemId: "tools.problemId"
+            commentId: "tools.commentId"
+            message: "tools.message"
+            context: "tools.context"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: delete-problem-comment
+          description: "Delete a comment from a problem"
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+            openWorld: true
+          call: "problems-v2.delete-problem-comment"
+          with:
+            problemId: "tools.problemId"
+            commentId: "tools.commentId"
+          outputParameters:
+            - type: object
+              mapping: "$."

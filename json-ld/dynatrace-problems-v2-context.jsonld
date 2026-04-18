@@ -1,0 +1,227 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "schema": "https://schema.org/",
+    "Problem": {
+      "@id": "ns:Problem",
+      "@context": {
+        "problemId": {
+          "@id": "ns:problemId",
+          "@type": "xsd:string"
+        },
+        "displayId": {
+          "@id": "ns:displayId",
+          "@type": "xsd:string"
+        },
+        "title": {
+          "@id": "ns:title",
+          "@type": "xsd:string"
+        },
+        "severityLevel": {
+          "@id": "ns:severityLevel",
+          "@type": "xsd:string"
+        },
+        "status": {
+          "@id": "ns:status",
+          "@type": "xsd:string"
+        },
+        "startTime": {
+          "@id": "ns:startTime",
+          "@type": "xsd:integer"
+        },
+        "endTime": {
+          "@id": "ns:endTime",
+          "@type": "xsd:integer"
+        },
+        "affectedEntities": "ns:affectedEntities",
+        "impactedEntities": "ns:impactedEntities",
+        "rootCauseEntity": {
+          "@id": "ns:rootCauseEntity",
+          "@type": "xsd:string"
+        },
+        "managementZones": "ns:managementZones",
+        "problemFilters": "ns:problemFilters"
+      }
+    },
+    "ProblemCollection": {
+      "@id": "ns:ProblemCollection",
+      "@context": {
+        "nextPageKey": {
+          "@id": "ns:nextPageKey",
+          "@type": "xsd:string"
+        },
+        "totalCount": {
+          "@id": "ns:totalCount",
+          "@type": "xsd:integer"
+        },
+        "pageSize": {
+          "@id": "ns:pageSize",
+          "@type": "xsd:integer"
+        },
+        "problems": "ns:problems"
+      }
+    },
+    "ProblemCloseRequest": {
+      "@id": "ns:ProblemCloseRequest",
+      "@context": {
+        "message": {
+          "@id": "ns:message",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "ProblemCloseResult": {
+      "@id": "ns:ProblemCloseResult",
+      "@context": {
+        "problemId": {
+          "@id": "ns:problemId",
+          "@type": "xsd:string"
+        },
+        "closing": {
+          "@id": "ns:closing",
+          "@type": "xsd:boolean"
+        }
+      }
+    },
+    "CommentRequestBody": {
+      "@id": "ns:CommentRequestBody",
+      "@context": {
+        "message": {
+          "@id": "ns:message",
+          "@type": "xsd:string"
+        },
+        "context": {
+          "@id": "ns:context",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "Comment": {
+      "@id": "ns:Comment",
+      "@context": {
+        "id": {
+          "@id": "ns:id",
+          "@type": "xsd:string"
+        },
+        "createdAtTimestamp": {
+          "@id": "ns:createdAtTimestamp",
+          "@type": "xsd:integer"
+        },
+        "authorName": {
+          "@id": "ns:authorName",
+          "@type": "xsd:string"
+        },
+        "content": {
+          "@id": "ns:content",
+          "@type": "xsd:string"
+        },
+        "context": {
+          "@id": "ns:context",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "CommentCollection": {
+      "@id": "ns:CommentCollection",
+      "@context": {
+        "nextPageKey": {
+          "@id": "ns:nextPageKey",
+          "@type": "xsd:string"
+        },
+        "totalCount": {
+          "@id": "ns:totalCount",
+          "@type": "xsd:integer"
+        },
+        "comments": "ns:comments"
+      }
+    },
+    "EntityStub": {
+      "@id": "ns:EntityStub",
+      "@context": {
+        "entityId": {
+          "@id": "ns:entityId",
+          "@type": "xsd:string"
+        },
+        "name": {
+          "@id": "ns:name",
+          "@type": "xsd:string"
+        },
+        "type": {
+          "@id": "ns:type",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "ManagementZone": {
+      "@id": "ns:ManagementZone",
+      "@context": {
+        "id": {
+          "@id": "ns:id",
+          "@type": "xsd:string"
+        },
+        "name": {
+          "@id": "ns:name",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "AlertingProfileStub": {
+      "@id": "ns:AlertingProfileStub",
+      "@context": {
+        "id": {
+          "@id": "ns:id",
+          "@type": "xsd:string"
+        },
+        "name": {
+          "@id": "ns:name",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "ErrorEnvelope": {
+      "@id": "ns:ErrorEnvelope",
+      "@context": {
+        "error": {
+          "@id": "ns:error",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "Error": {
+      "@id": "ns:Error",
+      "@context": {
+        "code": {
+          "@id": "ns:code",
+          "@type": "xsd:integer"
+        },
+        "message": {
+          "@id": "ns:message",
+          "@type": "xsd:string"
+        },
+        "constraintViolations": "ns:constraintViolations"
+      }
+    },
+    "ConstraintViolation": {
+      "@id": "ns:ConstraintViolation",
+      "@context": {
+        "path": {
+          "@id": "ns:path",
+          "@type": "xsd:string"
+        },
+        "message": {
+          "@id": "ns:message",
+          "@type": "xsd:string"
+        },
+        "parameterLocation": {
+          "@id": "ns:parameterLocation",
+          "@type": "xsd:string"
+        },
+        "location": {
+          "@id": "ns:location",
+          "@type": "xsd:string"
+        }
+      }
+    }
+  }
+}

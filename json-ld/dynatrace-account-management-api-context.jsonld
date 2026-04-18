@@ -1,0 +1,110 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "dt": "https://dt.dynatrace.com/schema/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "EnvironmentCollection": "dt:EnvironmentCollection",
+    "nextPageKey": {
+      "@id": "dt:nextPageKey",
+      "@type": "xsd:string"
+    },
+    "totalCount": {
+      "@id": "dt:totalCount",
+      "@type": "xsd:integer"
+    },
+    "environments": {
+      "@id": "dt:environments",
+      "@container": "@set"
+    },
+    "Environment": "dt:Environment",
+    "id": {
+      "@id": "dt:id",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "dt:status",
+      "@type": "xsd:string"
+    },
+    "trial": {
+      "@id": "dt:trial",
+      "@type": "xsd:boolean"
+    },
+    "GroupCollection": "dt:GroupCollection",
+    "items": {
+      "@id": "dt:items",
+      "@container": "@set"
+    },
+    "GroupCreateRequest": "dt:GroupCreateRequest",
+    "description": {
+      "@id": "schema:description",
+      "@type": "xsd:string"
+    },
+    "Group": "dt:Group",
+    "groupId": {
+      "@id": "dt:groupId",
+      "@type": "xsd:string"
+    },
+    "owner": {
+      "@id": "dt:owner",
+      "@type": "xsd:string"
+    },
+    "createdAt": {
+      "@id": "dt:createdAt",
+      "@type": "xsd:dateTime"
+    },
+    "updatedAt": {
+      "@id": "dt:updatedAt",
+      "@type": "xsd:dateTime"
+    },
+    "PermissionCollection": "dt:PermissionCollection",
+    "permissions": {
+      "@id": "dt:permissions",
+      "@container": "@set"
+    },
+    "Permission": "dt:Permission",
+    "permissionName": {
+      "@id": "dt:permissionName",
+      "@type": "xsd:string"
+    },
+    "scope": {
+      "@id": "dt:scope",
+      "@type": "xsd:string"
+    },
+    "scopeType": {
+      "@id": "dt:scopeType",
+      "@type": "xsd:string"
+    },
+    "UserCollection": "dt:UserCollection",
+    "UserCreateRequest": "dt:UserCreateRequest",
+    "email": {
+      "@id": "schema:email",
+      "@type": "xsd:string"
+    },
+    "firstName": {
+      "@id": "dt:firstName",
+      "@type": "xsd:string"
+    },
+    "lastName": {
+      "@id": "dt:lastName",
+      "@type": "xsd:string"
+    },
+    "groups": {
+      "@id": "dt:groups",
+      "@container": "@set"
+    },
+    "User": "dt:User",
+    "uid": {
+      "@id": "dt:uid",
+      "@type": "xsd:string"
+    },
+    "userStatus": {
+      "@id": "dt:userStatus",
+      "@type": "xsd:string"
+    }
+  }
+}

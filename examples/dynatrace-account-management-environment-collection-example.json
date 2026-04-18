@@ -1,0 +1,12 @@
+{
+  "nextPageKey": "example-value",
+  "totalCount": 500,
+  "environments": [
+    {
+      "id": "abc123",
+      "name": "Production Service",
+      "status": "ACTIVE",
+      "trial": true
+    }
+  ]
+}

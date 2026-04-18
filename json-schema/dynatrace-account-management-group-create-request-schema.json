@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "description": "Request body for creating or updating a group.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The display name of the group.",
+      "example": "Production Service"
+    },
+    "description": {
+      "type": "string",
+      "description": "An optional description of the group's purpose or access scope.",
+      "example": "Example description."
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GroupCreateRequest"
+}

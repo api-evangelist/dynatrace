@@ -1,0 +1,9 @@
+{
+  "eventType": "AVAILABILITY_EVENT",
+  "timeout": 1718153645993,
+  "entitySelector": "type(SERVICE)",
+  "title": "example-value",
+  "startTime": 1718153645993,
+  "endTime": 1718153645993,
+  "properties": {}
+}

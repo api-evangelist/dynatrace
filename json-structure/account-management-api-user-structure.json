@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-structure/account-management-api-user-structure.json",
+  "description": "Represents a user in the Dynatrace account.",
+  "type": "object",
+  "properties": {
+    "uid": {
+      "type": "string",
+      "description": "The unique identifier of the user.",
+      "example": "abc123"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "The email address of the user, used as their login identifier.",
+      "example": "admin@example.com"
+    },
+    "firstName": {
+      "type": "string",
+      "description": "The first name of the user.",
+      "example": "Production Service"
+    },
+    "lastName": {
+      "type": "string",
+      "description": "The last name of the user.",
+      "example": "Production Service"
+    },
+    "groups": {
+      "type": "array",
+      "description": "The list of group IDs that the user belongs to.",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "example-value"
+      ]
+    },
+    "userStatus": {
+      "type": "string",
+      "description": "The current status of the user account.",
+      "enum": [
+        "ACTIVE",
+        "INACTIVE",
+        "PENDING_INVITE"
+      ],
+      "example": "ACTIVE"
+    }
+  },
+  "name": "User"
+}

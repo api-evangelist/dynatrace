@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-structure/account-management-api-user-collection-structure.json",
+  "description": "A paginated collection of users.",
+  "type": "object",
+  "properties": {
+    "nextPageKey": {
+      "type": "string",
+      "description": "Cursor for the next page of results.",
+      "nullable": true,
+      "example": "example-value"
+    },
+    "totalCount": {
+      "type": "int64",
+      "description": "The total number of users in the account.",
+      "example": 500
+    },
+    "items": {
+      "type": "array",
+      "description": "The list of users on this page.",
+      "items": {
+        "$ref": "#/components/schemas/User"
+      },
+      "example": [
+        {
+          "uid": "abc123",
+          "email": "admin@example.com",
+          "firstName": "Production Service",
+          "lastName": "Production Service",
+          "groups": [
+            "example-value"
+          ],
+          "userStatus": "ACTIVE"
+        }
+      ]
+    }
+  },
+  "name": "UserCollection"
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-structure/problems-api-v2-comment-collection-structure.json",
+  "description": "A paginated collection of problem comments.",
+  "type": "object",
+  "properties": {
+    "nextPageKey": {
+      "type": "string",
+      "description": "Cursor for the next page of results.",
+      "nullable": true,
+      "example": "example-value"
+    },
+    "totalCount": {
+      "type": "int64",
+      "description": "The total number of comments.",
+      "example": 500
+    },
+    "comments": {
+      "type": "array",
+      "description": "The list of comments on this page.",
+      "items": {
+        "$ref": "#/components/schemas/Comment"
+      },
+      "example": [
+        {
+          "id": "abc123",
+          "createdAtTimestamp": 1718153645993,
+          "authorName": "Production Service",
+          "content": "example-value",
+          "context": "example-value"
+        }
+      ]
+    }
+  },
+  "name": "CommentCollection"
+}

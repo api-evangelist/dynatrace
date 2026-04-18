@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-schema/problems-webhook-notification-config-schema.json",
+  "title": "WebhookNotificationConfig",
+  "description": "Configuration for a webhook notification integration in Dynatrace. Posted to POST /api/config/v1/notifications to register the webhook.",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "The notification type. Must be WEBHOOK for webhook integrations.",
+      "enum": [
+        "WEBHOOK"
+      ],
+      "example": "WEBHOOK"
+    },
+    "name": {
+      "type": "string",
+      "description": "A display name for this notification configuration.",
+      "example": "My Problem Webhook"
+    },
+    "active": {
+      "type": "boolean",
+      "description": "Whether this notification integration is active.",
+      "example": true
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "The HTTPS URL of the webhook endpoint that will receive problem notifications.",
+      "example": "https://webhook.example.com/webhook/dynatrace/problems"
+    },
+    "alertingProfile": {
+      "type": "string",
+      "description": "The ID of the alerting profile (problem filter) that controls which problems trigger this notification.",
+      "example": "alerting-profile-uuid"
+    },
+    "headers": {
+      "type": "array",
+      "description": "Optional HTTP headers to include in the webhook request, such as authorization headers or content-type overrides.",
+      "items": {
+        "$ref": "#/components/schemas/WebhookHeader"
+      },
+      "example": [
+        {
+          "name": "Authorization",
+          "value": "Bearer my-secret-token"
+        }
+      ]
+    },
+    "acceptAnyCertificate": {
+      "type": "boolean",
+      "description": "Whether to accept any TLS certificate from the webhook endpoint. Should be false in production environments.",
+      "example": false
+    },
+    "payload": {
+      "type": "string",
+      "description": "The custom payload template using Dynatrace placeholder variables such as {ProblemID}, {ProblemTitle}, {State}. If not specified, Dynatrace uses the default JSON payload format.",
+      "example": "example-value"
+    }
+  },
+  "required": [
+    "type",
+    "name",
+    "active",
+    "url",
+    "alertingProfile"
+  ]
+}

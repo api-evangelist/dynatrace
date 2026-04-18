@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-schema/log-monitoring-api-v2-log-aggregate-result-schema.json",
+  "title": "LogAggregateResult",
+  "description": "The result of a log aggregation query.",
+  "type": "object",
+  "properties": {
+    "results": {
+      "type": "array",
+      "description": "The aggregated log data grouped by the specified dimensions.",
+      "items": {
+        "$ref": "#/components/schemas/LogAggregateGroup"
+      },
+      "example": [
+        {
+          "groupByFields": {},
+          "count": 500
+        }
+      ]
+    }
+  }
+}

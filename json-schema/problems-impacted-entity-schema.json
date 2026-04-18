@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-schema/problems-impacted-entity-schema.json",
+  "title": "ImpactedEntity",
+  "description": "A monitored entity that is impacted by the problem.",
+  "type": "object",
+  "properties": {
+    "Entity": {
+      "type": "string",
+      "description": "The Dynatrace entity ID of the impacted entity, in the format TYPE-HEXADECIMALID, e.g., SERVICE-1234567890ABCDEF.",
+      "example": "SERVICE-ABCDEF1234567890"
+    },
+    "Name": {
+      "type": "string",
+      "description": "The display name of the impacted entity.",
+      "example": "payment-service"
+    }
+  }
+}

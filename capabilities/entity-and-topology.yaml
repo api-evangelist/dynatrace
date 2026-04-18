@@ -1,0 +1,279 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Dynatrace Entity And Topology"
+  description: "Entity discovery and topology mapping workflow combining entities, metrics, and events for developers understanding service dependencies and infrastructure layout."
+  tags:
+    - Dynatrace
+    - Entity Management
+    - Topology
+    - Developer
+    - Infrastructure
+  created: "2026-04-18"
+  modified: "2026-04-18"
+
+binds:
+  - namespace: env
+    keys:
+      DYNATRACE_API_TOKEN: DYNATRACE_API_TOKEN
+      DYNATRACE_ENVIRONMENT_ID: DYNATRACE_ENVIRONMENT_ID
+
+capability:
+  consumes:
+    - import: entities-v2
+      location: ./shared/entities-v2.yaml
+    - import: metrics-v2
+      location: ./shared/metrics-v2.yaml
+    - import: events-v2
+      location: ./shared/events-v2.yaml
+
+  exposes:
+    - type: rest
+      port: 8082
+      namespace: entity-topology-api
+      description: "Unified REST API for Dynatrace entity discovery and topology mapping."
+      resources:
+        - path: /v1/entities
+          name: entities
+          description: "Query monitored entities"
+          operations:
+            - method: GET
+              name: list-entities
+              description: "List entities matching a selector"
+              call: "entities-v2.list-entities"
+              with:
+                entitySelector: "rest.entitySelector"
+                nextPageKey: "rest.nextPageKey"
+                pageSize: "rest.pageSize"
+                fields: "rest.fields"
+                from: "rest.from"
+                to: "rest.to"
+                sort: "rest.sort"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/entities/{entityId}
+          name: entity-detail
+          description: "Get entity details with relationships"
+          operations:
+            - method: GET
+              name: get-entity
+              description: "Get entity details including topology relationships"
+              call: "entities-v2.get-entity"
+              with:
+                entityId: "rest.entityId"
+                fields: "rest.fields"
+                from: "rest.from"
+                to: "rest.to"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/entity-types
+          name: entity-types
+          description: "Query entity types"
+          operations:
+            - method: GET
+              name: list-entity-types
+              description: "List all entity types"
+              call: "entities-v2.list-entity-types"
+              with:
+                nextPageKey: "rest.nextPageKey"
+                pageSize: "rest.pageSize"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/entity-types/{type}
+          name: entity-type-detail
+          description: "Get entity type definition"
+          operations:
+            - method: GET
+              name: get-entity-type
+              description: "Get a specific entity type definition"
+              call: "entities-v2.get-entity-type"
+              with:
+                type: "rest.type"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/entities/lookup
+          name: entity-lookup
+          description: "Look up entity by name"
+          operations:
+            - method: POST
+              name: lookup-entity
+              description: "Look up an entity by display name and type"
+              call: "entities-v2.lookup-entity"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/metrics/query
+          name: metric-query
+          description: "Query metrics for entity performance"
+          operations:
+            - method: GET
+              name: query-metric-data
+              description: "Query metric data for entities"
+              call: "metrics-v2.query-metric-data"
+              with:
+                metricSelector: "rest.metricSelector"
+                resolution: "rest.resolution"
+                from: "rest.from"
+                to: "rest.to"
+                entitySelector: "rest.entitySelector"
+                mzSelector: "rest.mzSelector"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/events
+          name: events
+          description: "Query entity events"
+          operations:
+            - method: GET
+              name: list-events
+              description: "List events for entities"
+              call: "events-v2.list-events"
+              with:
+                nextPageKey: "rest.nextPageKey"
+                pageSize: "rest.pageSize"
+                from: "rest.from"
+                to: "rest.to"
+                eventSelector: "rest.eventSelector"
+                entitySelector: "rest.entitySelector"
+                eventType: "rest.eventType"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/events/ingest
+          name: event-ingest
+          description: "Ingest deployment events"
+          operations:
+            - method: POST
+              name: ingest-event
+              description: "Ingest a deployment or custom event"
+              call: "events-v2.ingest-event"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9092
+      namespace: entity-topology-mcp
+      transport: http
+      description: "MCP server for AI-assisted entity discovery and topology mapping."
+      tools:
+        - name: list-entities
+          description: "List monitored entities matching a selector expression"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "entities-v2.list-entities"
+          with:
+            entitySelector: "tools.entitySelector"
+            nextPageKey: "tools.nextPageKey"
+            pageSize: "tools.pageSize"
+            fields: "tools.fields"
+            from: "tools.from"
+            to: "tools.to"
+            sort: "tools.sort"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-entity
+          description: "Get entity details including topology relationships"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "entities-v2.get-entity"
+          with:
+            entityId: "tools.entityId"
+            fields: "tools.fields"
+            from: "tools.from"
+            to: "tools.to"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-entity-types
+          description: "List all available entity types in the environment"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "entities-v2.list-entity-types"
+          with:
+            nextPageKey: "tools.nextPageKey"
+            pageSize: "tools.pageSize"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-entity-type
+          description: "Get the definition of a specific entity type"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "entities-v2.get-entity-type"
+          with:
+            type: "tools.type"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: lookup-entity
+          description: "Look up an entity by its display name and type"
+          hints:
+            readOnly: true
+            idempotent: true
+            openWorld: true
+          call: "entities-v2.lookup-entity"
+          with:
+            name: "tools.name"
+            type: "tools.type"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: query-metric-data
+          description: "Query metric data points for entities"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "metrics-v2.query-metric-data"
+          with:
+            metricSelector: "tools.metricSelector"
+            resolution: "tools.resolution"
+            from: "tools.from"
+            to: "tools.to"
+            entitySelector: "tools.entitySelector"
+            mzSelector: "tools.mzSelector"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-events
+          description: "List events affecting entities"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "events-v2.list-events"
+          with:
+            nextPageKey: "tools.nextPageKey"
+            pageSize: "tools.pageSize"
+            from: "tools.from"
+            to: "tools.to"
+            eventSelector: "tools.eventSelector"
+            entitySelector: "tools.entitySelector"
+            eventType: "tools.eventType"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: ingest-event
+          description: "Ingest a deployment or custom event for an entity"
+          hints:
+            readOnly: false
+            openWorld: true
+          call: "events-v2.ingest-event"
+          with:
+            event_type: "tools.event_type"
+            title: "tools.title"
+            entity_selector: "tools.entity_selector"
+            start_time: "tools.start_time"
+            end_time: "tools.end_time"
+            properties: "tools.properties"
+          outputParameters:
+            - type: object
+              mapping: "$."

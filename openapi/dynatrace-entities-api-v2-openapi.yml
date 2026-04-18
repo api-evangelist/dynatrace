@@ -15,30 +15,31 @@ info:
   license:
     name: Dynatrace Terms of Service
     url: https://www.dynatrace.com/company/trust-center/terms/
+  x-last-validated: '2026-04-18'
 externalDocs:
   description: Dynatrace Entities API v2 Documentation
   url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/entity-v2
 
 servers:
-  - url: https://{environmentId}.live.dynatrace.com/api/v2
-    description: Dynatrace SaaS environment
-    variables:
-      environmentId:
-        description: The unique identifier of your Dynatrace environment
-        default: mySampleEnv
+- url: https://{environmentId}.live.dynatrace.com/api/v2
+  description: Dynatrace SaaS environment
+  variables:
+    environmentId:
+      description: The unique identifier of your Dynatrace environment
+      default: mySampleEnv
 
 tags:
-  - name: Entities
-    description: Operations for querying monitored entities and entity types
+- name: Entities
+  description: Operations for querying monitored entities and entity types
 
 security:
-  - api-token: []
+- api-token: []
 
 paths:
   /entities:
     get:
       operationId: listEntities
-      summary: Dynatrace List entities
+      summary: Dynatrace List Entities
       description: >-
         Returns a list of monitored entities matching the specified entity
         selector. The entity selector is required and must specify at least
@@ -46,73 +47,80 @@ paths:
         additional fields including properties, tags, management zones, and
         relationships. Results are paginated.
       tags:
-        - Entities
+      - Entities
       parameters:
-        - name: nextPageKey
-          in: query
-          description: >-
-            The cursor for the next page of results, obtained from the
-            nextPageKey field of a previous response. When this parameter is
-            set, all other query parameters except pageSize are ignored.
-          required: false
-          schema:
-            type: string
-        - name: pageSize
-          in: query
-          description: >-
-            The number of entities to return per page. Default is 50, maximum
-            is 500.
-          required: false
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 500
-            default: 50
-        - name: entitySelector
-          in: query
-          description: >-
-            Defines the scope of the query by specifying entity filter
-            conditions. Required. Use the entity selector syntax, for example:
-            type(SERVICE) to select all services, or type(HOST),tag(production)
-            to select production hosts. Multiple conditions are ANDed together.
-          required: true
-          schema:
-            type: string
-        - name: fields
-          in: query
-          description: >-
-            Defines additional fields to include in the entity response beyond
-            the default set. Use a comma-separated list. For example,
-            +properties,+tags,+toRelationships.runsOn to include entity
-            properties, tags, and specific relationship types.
-          required: false
-          schema:
-            type: string
-        - name: from
-          in: query
-          description: >-
-            The start of the time range for entity discovery. Entities seen
-            within this range are returned. Use a relative expression (now-7d),
-            ISO 8601, or Unix timestamp in milliseconds.
-          required: false
-          schema:
-            type: string
-        - name: to
-          in: query
-          description: >-
-            The end of the time range for entity discovery. Default is now.
-          required: false
-          schema:
-            type: string
-        - name: sort
-          in: query
-          description: >-
-            Defines the sort order of results. Use the field name prefixed with
-            + (ascending) or - (descending). For example, +displayName or
-            -lastSeenTms.
-          required: false
-          schema:
-            type: string
+      - name: nextPageKey
+        in: query
+        description: >-
+          The cursor for the next page of results, obtained from the
+          nextPageKey field of a previous response. When this parameter is
+          set, all other query parameters except pageSize are ignored.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: pageSize
+        in: query
+        description: >-
+          The number of entities to return per page. Default is 50, maximum
+          is 500.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 500
+          default: 50
+        example: 500
+      - name: entitySelector
+        in: query
+        description: >-
+          Defines the scope of the query by specifying entity filter
+          conditions. Required. Use the entity selector syntax, for example:
+          type(SERVICE) to select all services, or type(HOST),tag(production)
+          to select production hosts. Multiple conditions are ANDed together.
+        required: true
+        schema:
+          type: string
+        example: type(SERVICE)
+      - name: fields
+        in: query
+        description: >-
+          Defines additional fields to include in the entity response beyond
+          the default set. Use a comma-separated list. For example,
+          +properties,+tags,+toRelationships.runsOn to include entity
+          properties, tags, and specific relationship types.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: from
+        in: query
+        description: >-
+          The start of the time range for entity discovery. Entities seen
+          within this range are returned. Use a relative expression (now-7d),
+          ISO 8601, or Unix timestamp in milliseconds.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: to
+        in: query
+        description: >-
+          The end of the time range for entity discovery. Default is now.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: sort
+        in: query
+        description: >-
+          Defines the sort order of results. Use the field name prefixed with
+          + (ascending) or - (descending). For example, +displayName or
+          -lastSeenTms.
+        required: false
+        schema:
+          type: string
+        example: example-value
       responses:
         '200':
           description: A paginated list of monitored entities
@@ -120,6 +128,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EntityCollection'
+              examples:
+                ListEntities200Example:
+                  summary: Default listEntities 200 response
+                  x-microcks-default: true
+                  value:
+                    nextPageKey: example-value
+                    totalCount: 500
+                    pageSize: 500
+                    entities: &id009
+                    - entityId: abc123
+                      displayName: Production Service
+                      type: STANDARD
+                      firstSeenTms: 500
+                      lastSeenTms: 500
+                      properties: &id001 {}
+                      tags: &id002
+                      - context: example-value
+                        key: example-value
+                        value: example-value
+                        stringRepresentation: example-value
+                      managementZones: &id003
+                      - id: abc123
+                        name: Production Service
+                      toRelationships: &id004 {}
+                      fromRelationships: &id005 {}
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -127,48 +160,55 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /entities/{entityId}:
     get:
       operationId: getEntity
-      summary: Dynatrace Get entity
+      summary: Dynatrace Get Entity
       description: >-
         Returns the details of a specific monitored entity by its entity ID.
         The entity ID format is TYPE-HEXADECIMALID, e.g.,
         SERVICE-1234567890ABCDEF. You can request additional fields including
         properties, tags, relationships, and management zone assignments.
       tags:
-        - Entities
+      - Entities
       parameters:
-        - name: entityId
-          in: path
-          description: >-
-            The unique identifier of the entity to retrieve, in the format
-            TYPE-HEXADECIMALID, e.g., SERVICE-1234567890ABCDEF.
-          required: true
-          schema:
-            type: string
-        - name: fields
-          in: query
-          description: >-
-            Defines additional fields to include in the response. Use a
-            comma-separated list prefixed with +, e.g., +properties,+tags.
-          required: false
-          schema:
-            type: string
-        - name: from
-          in: query
-          description: >-
-            The start of the time range for properties and relationships.
-            Defaults to now-3d.
-          required: false
-          schema:
-            type: string
-        - name: to
-          in: query
-          description: The end of the time range. Defaults to now.
-          required: false
-          schema:
-            type: string
+      - name: entityId
+        in: path
+        description: >-
+          The unique identifier of the entity to retrieve, in the format
+          TYPE-HEXADECIMALID, e.g., SERVICE-1234567890ABCDEF.
+        required: true
+        schema:
+          type: string
+        example: abc123
+      - name: fields
+        in: query
+        description: >-
+          Defines additional fields to include in the response. Use a
+          comma-separated list prefixed with +, e.g., +properties,+tags.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: from
+        in: query
+        description: >-
+          The start of the time range for properties and relationships.
+          Defaults to now-3d.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: to
+        in: query
+        description: The end of the time range. Defaults to now.
+        required: false
+        schema:
+          type: string
+        example: example-value
       responses:
         '200':
           description: The entity details
@@ -176,6 +216,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Entity'
+              examples:
+                GetEntity200Example:
+                  summary: Default getEntity 200 response
+                  x-microcks-default: true
+                  value:
+                    entityId: abc123
+                    displayName: Production Service
+                    type: STANDARD
+                    firstSeenTms: 500
+                    lastSeenTms: 500
+                    properties: *id001
+                    tags: *id002
+                    managementZones: *id003
+                    toRelationships: *id004
+                    fromRelationships: *id005
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -185,33 +240,38 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /entityTypes:
     get:
       operationId: listEntityTypes
-      summary: Dynatrace List entity types
+      summary: Dynatrace List Entity Types
       description: >-
         Returns a list of all entity types available in the Dynatrace
         environment. Entity types describe the categories of monitored
         entities, such as SERVICE, HOST, PROCESS_GROUP, APPLICATION, etc.
         Results are paginated.
       tags:
-        - Entities
+      - Entities
       parameters:
-        - name: nextPageKey
-          in: query
-          description: Cursor for the next page of results.
-          required: false
-          schema:
-            type: string
-        - name: pageSize
-          in: query
-          description: The number of entity types to return per page.
-          required: false
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 500
-            default: 50
+      - name: nextPageKey
+        in: query
+        description: Cursor for the next page of results.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: pageSize
+        in: query
+        description: The number of entity types to return per page.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 500
+          default: 50
+        example: 500
       responses:
         '200':
           description: A paginated list of entity types
@@ -219,6 +279,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EntityTypeCollection'
+              examples:
+                ListEntityTypes200Example:
+                  summary: Default listEntityTypes 200 response
+                  x-microcks-default: true
+                  value:
+                    nextPageKey: example-value
+                    totalCount: 500
+                    types: &id010
+                    - type: STANDARD
+                      displayName: Production Service
+                      description: Example description.
+                      properties: &id006
+                      - id: abc123
+                        displayName: Production Service
+                        type: STANDARD
+                      fromRelationships: &id007
+                      - id: abc123
+                        toTypes:
+                        - {}
+                      toRelationships: &id008
+                      - id: abc123
+                        toTypes:
+                        - {}
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -226,26 +309,30 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /entityTypes/{type}:
     get:
       operationId: getEntityType
-      summary: Dynatrace Get entity type definition
+      summary: Dynatrace Get Entity Type Definition
       description: >-
         Returns the definition of a specific entity type, including its
         display name, description, available properties, and supported
         relationship types. This is useful for understanding what fields
         are available when querying entities of a given type.
       tags:
-        - Entities
+      - Entities
       parameters:
-        - name: type
-          in: path
-          description: >-
-            The entity type identifier, e.g., SERVICE, HOST, PROCESS_GROUP,
-            APPLICATION.
-          required: true
-          schema:
-            type: string
+      - name: type
+        in: path
+        description: >-
+          The entity type identifier, e.g., SERVICE, HOST, PROCESS_GROUP,
+          APPLICATION.
+        required: true
+        schema:
+          type: string
+        example: STANDARD
       responses:
         '200':
           description: The entity type definition
@@ -253,6 +340,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EntityType'
+              examples:
+                GetEntityType200Example:
+                  summary: Default getEntityType 200 response
+                  x-microcks-default: true
+                  value:
+                    type: STANDARD
+                    displayName: Production Service
+                    description: Example description.
+                    properties: *id006
+                    fromRelationships: *id007
+                    toRelationships: *id008
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -262,17 +360,20 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /entities/lookup:
     post:
       operationId: lookupEntity
-      summary: Dynatrace Look up entity by name
+      summary: Dynatrace Look up Entity by Name
       description: >-
         Looks up a specific entity by its display name and type. This is
         useful when you know the human-readable name of an entity but need
         its Dynatrace entity ID for use in other API calls or selectors.
         Returns the matching entity or a 404 if not found.
       tags:
-        - Entities
+      - Entities
       requestBody:
         description: The entity name and type to look up
         required: true
@@ -290,6 +391,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Entity'
+              examples:
+                LookupEntity200Example:
+                  summary: Default lookupEntity 200 response
+                  x-microcks-default: true
+                  value:
+                    entityId: abc123
+                    displayName: Production Service
+                    type: STANDARD
+                    firstSeenTms: 500
+                    lastSeenTms: 500
+                    properties: *id001
+                    tags: *id002
+                    managementZones: *id003
+                    toRelationships: *id004
+                    fromRelationships: *id005
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -299,6 +415,9 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
 components:
   securitySchemes:
     api-token:
@@ -349,22 +468,27 @@ components:
           description: >-
             The unique identifier of the entity in the format
             TYPE-HEXADECIMALID, e.g., SERVICE-1234567890ABCDEF.
+          example: abc123
         displayName:
           type: string
           description: The human-readable display name of the entity.
+          example: Production Service
         type:
           type: string
           description: >-
             The type of the entity, e.g., SERVICE, HOST, PROCESS_GROUP,
             APPLICATION, SYNTHETIC_TEST.
+          example: STANDARD
         firstSeenTms:
           type: integer
           format: int64
           description: The Unix timestamp in milliseconds when the entity was first seen.
+          example: 500
         lastSeenTms:
           type: integer
           format: int64
           description: The Unix timestamp in milliseconds when the entity was last seen.
+          example: 500
         properties:
           type: object
           description: >-
@@ -372,6 +496,7 @@ components:
             vary by entity type. For example, a HOST entity may include
             osType, cpuCores, and memoryTotalBytes.
           additionalProperties: true
+          example: *id001
         tags:
           type: array
           description: >-
@@ -379,6 +504,7 @@ components:
             and manually defined tags.
           items:
             $ref: '#/components/schemas/EntityTag'
+          example: *id002
         managementZones:
           type: array
           description: >-
@@ -386,6 +512,7 @@ components:
             control and organizational scoping.
           items:
             $ref: '#/components/schemas/ManagementZone'
+          example: *id003
         toRelationships:
           type: object
           description: >-
@@ -396,6 +523,7 @@ components:
             type: array
             items:
               type: string
+          example: *id004
         fromRelationships:
           type: object
           description: >-
@@ -407,6 +535,7 @@ components:
             items:
               type: string
 
+          example: *id005
     EntityCollection:
       type: object
       description: A paginated collection of monitored entities.
@@ -415,19 +544,23 @@ components:
           type: string
           description: Cursor for the next page of results. Null if no more pages.
           nullable: true
+          example: example-value
         totalCount:
           type: integer
           format: int64
           description: The total number of entities matching the query.
+          example: 500
         pageSize:
           type: integer
           description: The number of results returned on this page.
+          example: 500
         entities:
           type: array
           description: The list of entities on this page.
           items:
             $ref: '#/components/schemas/Entity'
 
+          example: *id009
     EntityType:
       type: object
       description: >-
@@ -437,23 +570,28 @@ components:
         type:
           type: string
           description: The entity type identifier, e.g., SERVICE.
+          example: STANDARD
         displayName:
           type: string
           description: The human-readable display name of the entity type.
+          example: Production Service
         description:
           type: string
           description: A description of what this entity type represents.
+          example: Example description.
         properties:
           type: array
           description: The list of properties available for this entity type.
           items:
             $ref: '#/components/schemas/EntityTypeProperty'
+          example: *id006
         fromRelationships:
           type: array
           description: >-
             The relationship types where entities of this type are the source.
           items:
             $ref: '#/components/schemas/EntityTypeRelationship'
+          example: *id007
         toRelationships:
           type: array
           description: >-
@@ -461,6 +599,7 @@ components:
           items:
             $ref: '#/components/schemas/EntityTypeRelationship'
 
+          example: *id008
     EntityTypeProperty:
       type: object
       description: Describes a single property of an entity type.
@@ -468,13 +607,16 @@ components:
         id:
           type: string
           description: The property key identifier.
+          example: abc123
         displayName:
           type: string
           description: The human-readable display name of the property.
+          example: Production Service
         type:
           type: string
           description: The data type of the property value.
 
+          example: STANDARD
     EntityTypeRelationship:
       type: object
       description: Describes a relationship type for an entity type.
@@ -482,12 +624,15 @@ components:
         id:
           type: string
           description: The relationship type identifier, e.g., runsOn.
+          example: abc123
         toTypes:
           type: array
           description: The entity types that can participate in this relationship.
           items:
             type: string
 
+          example:
+          - STANDARD
     EntityTypeCollection:
       type: object
       description: A paginated collection of entity type definitions.
@@ -496,30 +641,35 @@ components:
           type: string
           description: Cursor for the next page of results.
           nullable: true
+          example: example-value
         totalCount:
           type: integer
           format: int64
           description: The total number of entity types.
+          example: 500
         types:
           type: array
           description: The list of entity types on this page.
           items:
             $ref: '#/components/schemas/EntityType'
 
+          example: *id010
     EntityLookupRequest:
       type: object
       description: Request body for looking up an entity by name and type.
       required:
-        - name
-        - type
+      - name
+      - type
       properties:
         name:
           type: string
           description: The display name of the entity to look up.
+          example: Production Service
         type:
           type: string
           description: The entity type to search within, e.g., SERVICE, HOST.
 
+          example: STANDARD
     EntityTag:
       type: object
       description: A tag applied to a monitored entity.
@@ -529,19 +679,23 @@ components:
           description: >-
             The origin context of the tag. For example, CONTEXTLESS,
             ENVIRONMENT, AWS, KUBERNETES, etc.
+          example: example-value
         key:
           type: string
           description: The key of the tag.
+          example: example-value
         value:
           type: string
           description: The value of the tag, if applicable.
           nullable: true
+          example: example-value
         stringRepresentation:
           type: string
           description: >-
             The full string representation of the tag as displayed in the
             Dynatrace UI, e.g., [KUBERNETES]app:my-service.
 
+          example: example-value
     ManagementZone:
       type: object
       description: A management zone reference.
@@ -549,10 +703,12 @@ components:
         id:
           type: string
           description: The unique identifier of the management zone.
+          example: abc123
         name:
           type: string
           description: The display name of the management zone.
 
+          example: Production Service
     ErrorEnvelope:
       type: object
       description: Error response envelope returned when a request fails.
@@ -567,15 +723,22 @@ components:
         code:
           type: integer
           description: The HTTP status code of the error.
+          example: 500
         message:
           type: string
           description: A human-readable description of the error.
+          example: Example description.
         constraintViolations:
           type: array
           description: A list of constraint violations for validation errors (HTTP 400).
           items:
             $ref: '#/components/schemas/ConstraintViolation'
 
+          example:
+          - path: example-value
+            message: Example description.
+            parameterLocation: example-value
+            location: example-value
     ConstraintViolation:
       type: object
       description: Details of a single constraint violation in a request.
@@ -583,12 +746,16 @@ components:
         path:
           type: string
           description: The JSON path to the field that caused the violation.
+          example: example-value
         message:
           type: string
           description: A description of the constraint violation.
+          example: Example description.
         parameterLocation:
           type: string
           description: The location of the violating parameter (QUERY, PATH, BODY).
+          example: example-value
         location:
           type: string
           description: The location detail for the violation.
+          example: example-value

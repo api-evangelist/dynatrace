@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "description": "A management zone reference.",
+  "name": "ManagementZone",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The unique identifier of the management zone."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the management zone."
+    }
+  },
+  "$schema": "https://json-structure.org/draft/2020-12/schema"
+}

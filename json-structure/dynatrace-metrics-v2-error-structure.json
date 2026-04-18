@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "description": "Details of an API error.",
+  "name": "Error",
+  "properties": {
+    "code": {
+      "type": "integer",
+      "description": "The HTTP status code of the error."
+    },
+    "message": {
+      "type": "string",
+      "description": "A human-readable description of the error."
+    },
+    "constraintViolations": {
+      "type": "array",
+      "description": "A list of constraint violations for validation errors (HTTP 400).",
+      "items": {
+        "type": "object",
+        "description": "Details of a single constraint violation in a request.",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "The JSON path to the field that caused the violation."
+          },
+          "message": {
+            "type": "string",
+            "description": "A description of the constraint violation."
+          },
+          "parameterLocation": {
+            "type": "string",
+            "description": "The location of the violating parameter (QUERY, PATH, BODY)."
+          },
+          "location": {
+            "type": "string",
+            "description": "The location detail for the violation."
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-structure.org/draft/2020-12/schema"
+}

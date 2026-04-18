@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "description": "A paginated collection of problem comments.",
+  "name": "CommentCollection",
+  "properties": {
+    "nextPageKey": {
+      "type": "string",
+      "description": "Cursor for the next page of results."
+    },
+    "totalCount": {
+      "type": "integer",
+      "description": "The total number of comments."
+    },
+    "comments": {
+      "type": "array",
+      "description": "The list of comments on this page.",
+      "items": {
+        "type": "object",
+        "description": "A single comment attached to a problem.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier of the comment."
+          },
+          "createdAtTimestamp": {
+            "type": "integer",
+            "description": "The Unix timestamp in milliseconds when the comment was created."
+          },
+          "authorName": {
+            "type": "string",
+            "description": "The display name of the user who created the comment."
+          },
+          "content": {
+            "type": "string",
+            "description": "The text content of the comment."
+          },
+          "context": {
+            "type": "string",
+            "description": "Optional context reference attached to the comment."
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-structure.org/draft/2020-12/schema"
+}

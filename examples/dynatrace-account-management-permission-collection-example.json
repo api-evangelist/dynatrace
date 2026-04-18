@@ -1,0 +1,10 @@
+{
+  "permissions": [
+    {
+      "permissionName": "Production Service",
+      "scope": "example-value",
+      "scopeType": "ACCOUNT",
+      "groupId": "abc123"
+    }
+  ]
+}

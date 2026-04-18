@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "description": "A tag applied to a monitored entity.",
+  "name": "EntityTag",
+  "properties": {
+    "context": {
+      "type": "string",
+      "description": "The origin context of the tag. For example, CONTEXTLESS, ENVIRONMENT, AWS, KUBERNETES, etc."
+    },
+    "key": {
+      "type": "string",
+      "description": "The key of the tag."
+    },
+    "value": {
+      "type": "string",
+      "description": "The value of the tag, if applicable."
+    },
+    "stringRepresentation": {
+      "type": "string",
+      "description": "The full string representation of the tag as displayed in the Dynatrace UI, e.g., [KUBERNETES]app:my-service."
+    }
+  },
+  "$schema": "https://json-structure.org/draft/2020-12/schema"
+}

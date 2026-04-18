@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "description": "Details of an API error.",
+  "name": "Error",
+  "properties": {
+    "code": {
+      "type": "integer",
+      "description": "The HTTP status code of the error."
+    },
+    "message": {
+      "type": "string",
+      "description": "A human-readable description of the error."
+    }
+  },
+  "$schema": "https://json-structure.org/draft/2020-12/schema"
+}

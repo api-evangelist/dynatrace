@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "description": "Request body for closing a problem.",
+  "properties": {
+    "message": {
+      "type": "string",
+      "description": "An optional message explaining why the problem is being closed. This is stored as a closing comment on the problem.",
+      "example": "Example description."
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ProblemCloseRequest"
+}

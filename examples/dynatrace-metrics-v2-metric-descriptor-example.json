@@ -1,0 +1,30 @@
+{
+  "metricId": "abc123",
+  "displayName": "Production Service",
+  "description": "Example description.",
+  "unit": "example-value",
+  "dduBillable": true,
+  "created": 500,
+  "lastWritten": 500,
+  "entityType": [
+    "STANDARD"
+  ],
+  "aggregationTypes": [
+    "min"
+  ],
+  "dimensionDefinitions": [
+    {
+      "key": "example-value",
+      "name": "Production Service",
+      "type": "STANDARD",
+      "displayName": "Production Service"
+    }
+  ],
+  "transformations": [
+    "example-value"
+  ],
+  "defaultAggregation": {
+    "type": "min",
+    "parameter": 87.5
+  }
+}

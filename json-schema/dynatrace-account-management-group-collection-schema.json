@@ -1,0 +1,71 @@
+{
+  "type": "object",
+  "description": "A paginated collection of groups.",
+  "properties": {
+    "nextPageKey": {
+      "type": "string",
+      "description": "Cursor for the next page of results.",
+      "example": "example-value"
+    },
+    "totalCount": {
+      "type": "integer",
+      "description": "The total number of groups in the account.",
+      "format": "int64",
+      "example": 500
+    },
+    "items": {
+      "type": "array",
+      "description": "The list of groups on this page.",
+      "example": [
+        {
+          "groupId": "abc123",
+          "name": "Production Service",
+          "description": "Example description.",
+          "owner": "example-value",
+          "createdAt": "2025-03-15T14:30:00Z",
+          "updatedAt": "2025-03-15T14:30:00Z"
+        }
+      ],
+      "items": {
+        "type": "object",
+        "description": "Represents a user group in the Dynatrace account.",
+        "properties": {
+          "groupId": {
+            "type": "string",
+            "description": "The unique identifier of the group.",
+            "example": "abc123"
+          },
+          "name": {
+            "type": "string",
+            "description": "The display name of the group.",
+            "example": "Production Service"
+          },
+          "description": {
+            "type": "string",
+            "description": "An optional description of the group's purpose or scope.",
+            "example": "Example description."
+          },
+          "owner": {
+            "type": "string",
+            "description": "The identifier of the group owner. LOCAL indicates the group is managed within Dynatrace; SSO indicates it is synced from an identity provider.",
+            "example": "example-value"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "The date and time when the group was created.",
+            "format": "date-time",
+            "example": "2025-03-15T14:30:00Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "The date and time when the group was last updated.",
+            "format": "date-time",
+            "example": "2025-03-15T14:30:00Z"
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GroupCollection"
+}

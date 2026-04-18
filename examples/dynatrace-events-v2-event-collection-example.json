@@ -1,0 +1,17 @@
+{
+  "nextPageKey": "example-value",
+  "totalCount": 500,
+  "pageSize": 500,
+  "events": [
+    {
+      "eventId": "abc123",
+      "eventType": "STANDARD",
+      "title": "example-value",
+      "startTime": 1718153645993,
+      "endTime": 1718153645993,
+      "entityId": {},
+      "properties": {},
+      "status": "OPEN"
+    }
+  ]
+}

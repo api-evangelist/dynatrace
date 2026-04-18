@@ -1,0 +1,319 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Dynatrace Log Monitoring API v2"
+  description: "The Dynatrace Log Monitoring API v2 enables ingestion, search, aggregation, and export of log records within a Dynatrace environment."
+  tags:
+    - Dynatrace
+    - Logs
+    - Log Monitoring
+    - Observability
+  created: "2026-04-18"
+  modified: "2026-04-18"
+
+binds:
+  - namespace: env
+    keys:
+      DYNATRACE_API_TOKEN: DYNATRACE_API_TOKEN
+      DYNATRACE_ENVIRONMENT_ID: DYNATRACE_ENVIRONMENT_ID
+
+capability:
+  consumes:
+    - type: http
+      namespace: log-monitoring-v2
+      baseUri: https://${DYNATRACE_ENVIRONMENT_ID}.live.dynatrace.com/api/v2
+      description: "Dynatrace Log Monitoring API v2 for searching, ingesting, aggregating, and exporting logs."
+      authentication:
+        type: apikey
+        key: Authorization
+        value: "Api-Token {{DYNATRACE_API_TOKEN}}"
+        placement: header
+      resources:
+        - name: log-search
+          path: /logs/search
+          description: "Search log records"
+          operations:
+            - name: search-logs
+              method: GET
+              description: "Searches log records stored in Grail using a query expression."
+              inputParameters:
+                - name: nextSliceKey
+                  in: query
+                  type: string
+                  required: false
+                  description: "Cursor for the next page of results."
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Maximum number of log records to return."
+                - name: query
+                  in: query
+                  type: string
+                  required: false
+                  description: "DQL log search query."
+                - name: from
+                  in: query
+                  type: string
+                  required: false
+                  description: "Start of the queried time range."
+                - name: to
+                  in: query
+                  type: string
+                  required: false
+                  description: "End of the queried time range."
+                - name: sort
+                  in: query
+                  type: string
+                  required: false
+                  description: "Sort order for results."
+                - name: fields
+                  in: query
+                  type: string
+                  required: false
+                  description: "Fields to include in the log records."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: log-ingest
+          path: /logs/ingest
+          description: "Ingest log records"
+          operations:
+            - name: ingest-logs
+              method: POST
+              description: "Ingests log records into the Dynatrace Grail data lakehouse."
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data: "{{tools.log_records}}"
+        - name: log-aggregate
+          path: /logs/aggregate
+          description: "Aggregate log data"
+          operations:
+            - name: aggregate-logs
+              method: GET
+              description: "Returns aggregated log data grouped by specified fields."
+              inputParameters:
+                - name: query
+                  in: query
+                  type: string
+                  required: false
+                  description: "Log query for filtering before aggregation."
+                - name: from
+                  in: query
+                  type: string
+                  required: false
+                  description: "Start of the queried time range."
+                - name: to
+                  in: query
+                  type: string
+                  required: false
+                  description: "End of the queried time range."
+                - name: groupBy
+                  in: query
+                  type: string
+                  required: false
+                  description: "Fields to group the aggregated results by."
+                - name: fields
+                  in: query
+                  type: string
+                  required: false
+                  description: "Additional fields to include."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: log-export
+          path: /logs/export
+          description: "Export log records"
+          operations:
+            - name: export-logs
+              method: GET
+              description: "Exports log records for bulk retrieval."
+              inputParameters:
+                - name: nextSliceKey
+                  in: query
+                  type: string
+                  required: false
+                  description: "Cursor for the next page of export results."
+                - name: pageSize
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Number of log records to return per page."
+                - name: query
+                  in: query
+                  type: string
+                  required: false
+                  description: "Log export query for filtering."
+                - name: from
+                  in: query
+                  type: string
+                  required: false
+                  description: "Start of the queried time range."
+                - name: to
+                  in: query
+                  type: string
+                  required: false
+                  description: "End of the queried time range."
+                - name: sort
+                  in: query
+                  type: string
+                  required: false
+                  description: "Sort order for export results."
+                - name: fields
+                  in: query
+                  type: string
+                  required: false
+                  description: "Fields to include in the exported records."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8103
+      namespace: log-monitoring-v2-api
+      resources:
+        - path: /v1/logs/search
+          name: log-search
+          description: "Search log records"
+          operations:
+            - method: GET
+              name: search-logs
+              description: "Search log records in Grail"
+              call: "log-monitoring-v2.search-logs"
+              with:
+                nextSliceKey: "rest.nextSliceKey"
+                limit: "rest.limit"
+                query: "rest.query"
+                from: "rest.from"
+                to: "rest.to"
+                sort: "rest.sort"
+                fields: "rest.fields"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/logs/ingest
+          name: log-ingest
+          description: "Ingest log records"
+          operations:
+            - method: POST
+              name: ingest-logs
+              description: "Ingest log records into Grail"
+              call: "log-monitoring-v2.ingest-logs"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/logs/aggregate
+          name: log-aggregate
+          description: "Aggregate log data"
+          operations:
+            - method: GET
+              name: aggregate-logs
+              description: "Aggregate logs by specified dimensions"
+              call: "log-monitoring-v2.aggregate-logs"
+              with:
+                query: "rest.query"
+                from: "rest.from"
+                to: "rest.to"
+                groupBy: "rest.groupBy"
+                fields: "rest.fields"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/logs/export
+          name: log-export
+          description: "Export log records"
+          operations:
+            - method: GET
+              name: export-logs
+              description: "Export logs for bulk retrieval"
+              call: "log-monitoring-v2.export-logs"
+              with:
+                nextSliceKey: "rest.nextSliceKey"
+                pageSize: "rest.pageSize"
+                query: "rest.query"
+                from: "rest.from"
+                to: "rest.to"
+                sort: "rest.sort"
+                fields: "rest.fields"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9103
+      namespace: log-monitoring-v2-mcp
+      transport: http
+      tools:
+        - name: search-logs
+          description: "Search log records using DQL queries"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "log-monitoring-v2.search-logs"
+          with:
+            nextSliceKey: "tools.nextSliceKey"
+            limit: "tools.limit"
+            query: "tools.query"
+            from: "tools.from"
+            to: "tools.to"
+            sort: "tools.sort"
+            fields: "tools.fields"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: ingest-logs
+          description: "Ingest log records into Dynatrace Grail"
+          hints:
+            readOnly: false
+            openWorld: true
+          call: "log-monitoring-v2.ingest-logs"
+          with:
+            log_records: "tools.log_records"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: aggregate-logs
+          description: "Aggregate log data grouped by specified fields"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "log-monitoring-v2.aggregate-logs"
+          with:
+            query: "tools.query"
+            from: "tools.from"
+            to: "tools.to"
+            groupBy: "tools.groupBy"
+            fields: "tools.fields"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: export-logs
+          description: "Export log records for bulk retrieval"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "log-monitoring-v2.export-logs"
+          with:
+            nextSliceKey: "tools.nextSliceKey"
+            pageSize: "tools.pageSize"
+            query: "tools.query"
+            from: "tools.from"
+            to: "tools.to"
+            sort: "tools.sort"
+            fields: "tools.fields"
+          outputParameters:
+            - type: object
+              mapping: "$."

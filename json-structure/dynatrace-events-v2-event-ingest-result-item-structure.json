@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "description": "The result of ingesting an event for a single entity.",
+  "name": "EventIngestResultItem",
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "description": "The unique identifier assigned to the created event."
+    },
+    "status": {
+      "type": "string",
+      "description": "The ingestion status for this entity. OK indicates success; other values indicate warnings or errors."
+    }
+  },
+  "$schema": "https://json-structure.org/draft/2020-12/schema"
+}

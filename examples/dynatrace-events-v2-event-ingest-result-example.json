@@ -1,0 +1,9 @@
+{
+  "reportCount": 500,
+  "eventIngestResults": [
+    {
+      "eventId": "abc123",
+      "status": "ACTIVE"
+    }
+  ]
+}

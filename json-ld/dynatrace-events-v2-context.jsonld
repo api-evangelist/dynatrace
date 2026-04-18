@@ -1,0 +1,173 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "schema": "https://schema.org/",
+    "EventIngestPayload": {
+      "@id": "ns:EventIngestPayload",
+      "@context": {
+        "eventType": {
+          "@id": "ns:eventType",
+          "@type": "xsd:string"
+        },
+        "timeout": {
+          "@id": "ns:timeout",
+          "@type": "xsd:integer"
+        },
+        "entitySelector": {
+          "@id": "ns:entitySelector",
+          "@type": "xsd:string"
+        },
+        "title": {
+          "@id": "ns:title",
+          "@type": "xsd:string"
+        },
+        "startTime": {
+          "@id": "ns:startTime",
+          "@type": "xsd:integer"
+        },
+        "endTime": {
+          "@id": "ns:endTime",
+          "@type": "xsd:integer"
+        },
+        "properties": "ns:properties"
+      }
+    },
+    "EventIngestResult": {
+      "@id": "ns:EventIngestResult",
+      "@context": {
+        "reportCount": {
+          "@id": "ns:reportCount",
+          "@type": "xsd:integer"
+        },
+        "eventIngestResults": "ns:eventIngestResults"
+      }
+    },
+    "EventIngestResultItem": {
+      "@id": "ns:EventIngestResultItem",
+      "@context": {
+        "eventId": {
+          "@id": "ns:eventId",
+          "@type": "xsd:string"
+        },
+        "status": {
+          "@id": "ns:status",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "Event": {
+      "@id": "ns:Event",
+      "@context": {
+        "eventId": {
+          "@id": "ns:eventId",
+          "@type": "xsd:string"
+        },
+        "eventType": {
+          "@id": "ns:eventType",
+          "@type": "xsd:string"
+        },
+        "title": {
+          "@id": "ns:title",
+          "@type": "xsd:string"
+        },
+        "startTime": {
+          "@id": "ns:startTime",
+          "@type": "xsd:integer"
+        },
+        "endTime": {
+          "@id": "ns:endTime",
+          "@type": "xsd:integer"
+        },
+        "entityId": {
+          "@id": "ns:entityId",
+          "@type": "xsd:string"
+        },
+        "properties": "ns:properties",
+        "status": {
+          "@id": "ns:status",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "EventCollection": {
+      "@id": "ns:EventCollection",
+      "@context": {
+        "nextPageKey": {
+          "@id": "ns:nextPageKey",
+          "@type": "xsd:string"
+        },
+        "totalCount": {
+          "@id": "ns:totalCount",
+          "@type": "xsd:integer"
+        },
+        "pageSize": {
+          "@id": "ns:pageSize",
+          "@type": "xsd:integer"
+        },
+        "events": "ns:events"
+      }
+    },
+    "EntityStub": {
+      "@id": "ns:EntityStub",
+      "@context": {
+        "entityId": {
+          "@id": "ns:entityId",
+          "@type": "xsd:string"
+        },
+        "name": {
+          "@id": "ns:name",
+          "@type": "xsd:string"
+        },
+        "type": {
+          "@id": "ns:type",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "ErrorEnvelope": {
+      "@id": "ns:ErrorEnvelope",
+      "@context": {
+        "error": {
+          "@id": "ns:error",
+          "@type": "xsd:string"
+        }
+      }
+    },
+    "Error": {
+      "@id": "ns:Error",
+      "@context": {
+        "code": {
+          "@id": "ns:code",
+          "@type": "xsd:integer"
+        },
+        "message": {
+          "@id": "ns:message",
+          "@type": "xsd:string"
+        },
+        "constraintViolations": "ns:constraintViolations"
+      }
+    },
+    "ConstraintViolation": {
+      "@id": "ns:ConstraintViolation",
+      "@context": {
+        "path": {
+          "@id": "ns:path",
+          "@type": "xsd:string"
+        },
+        "message": {
+          "@id": "ns:message",
+          "@type": "xsd:string"
+        },
+        "parameterLocation": {
+          "@id": "ns:parameterLocation",
+          "@type": "xsd:string"
+        },
+        "location": {
+          "@id": "ns:location",
+          "@type": "xsd:string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "description": "Details of a single constraint violation in a request.",
+  "name": "ConstraintViolation",
+  "properties": {
+    "path": {
+      "type": "string",
+      "description": "The JSON path to the field that caused the violation."
+    },
+    "message": {
+      "type": "string",
+      "description": "A description of the constraint violation."
+    },
+    "parameterLocation": {
+      "type": "string",
+      "description": "The location of the violating parameter (QUERY, PATH, BODY)."
+    },
+    "location": {
+      "type": "string",
+      "description": "The location detail for the violation."
+    }
+  },
+  "$schema": "https://json-structure.org/draft/2020-12/schema"
+}

@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "description": "Request body for looking up an entity by name and type.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The display name of the entity to look up.",
+      "example": "Production Service"
+    },
+    "type": {
+      "type": "string",
+      "description": "The entity type to search within, e.g., SERVICE, HOST.",
+      "example": "STANDARD"
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EntityLookupRequest"
+}

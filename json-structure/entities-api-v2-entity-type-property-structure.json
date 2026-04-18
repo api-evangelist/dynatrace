@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/json-structure/entities-api-v2-entity-type-property-structure.json",
+  "description": "Describes a single property of an entity type.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The property key identifier.",
+      "example": "abc123"
+    },
+    "displayName": {
+      "type": "string",
+      "description": "The human-readable display name of the property.",
+      "example": "Production Service"
+    },
+    "type": {
+      "type": "string",
+      "description": "The data type of the property value.",
+      "example": "STANDARD"
+    }
+  },
+  "name": "EntityTypeProperty"
+}

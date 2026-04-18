@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "description": "The result returned after successfully ingesting a custom event.",
+  "name": "EventIngestResult",
+  "properties": {
+    "reportCount": {
+      "type": "integer",
+      "description": "The number of event reports created. This may be greater than 1 if the entitySelector matched multiple entities."
+    },
+    "eventIngestResults": {
+      "type": "array",
+      "description": "Details of each individual event ingestion result.",
+      "items": {
+        "type": "object",
+        "description": "The result of ingesting an event for a single entity.",
+        "properties": {
+          "eventId": {
+            "type": "string",
+            "description": "The unique identifier assigned to the created event."
+          },
+          "status": {
+            "type": "string",
+            "description": "The ingestion status for this entity. OK indicates success; other values indicate warnings or errors."
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-structure.org/draft/2020-12/schema"
+}

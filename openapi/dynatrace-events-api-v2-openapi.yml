@@ -15,112 +15,120 @@ info:
   license:
     name: Dynatrace Terms of Service
     url: https://www.dynatrace.com/company/trust-center/terms/
+  x-last-validated: '2026-04-18'
 externalDocs:
   description: Dynatrace Events API v2 Documentation
   url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
 
 servers:
-  - url: https://{environmentId}.live.dynatrace.com/api/v2
-    description: Dynatrace SaaS environment
-    variables:
-      environmentId:
-        description: The unique identifier of your Dynatrace environment
-        default: mySampleEnv
+- url: https://{environmentId}.live.dynatrace.com/api/v2
+  description: Dynatrace SaaS environment
+  variables:
+    environmentId:
+      description: The unique identifier of your Dynatrace environment
+      default: mySampleEnv
 
 tags:
-  - name: Events
-    description: Operations for querying and ingesting custom events
+- name: Events
+  description: Operations for querying and ingesting custom events
 
 security:
-  - api-token: []
+- api-token: []
 
 paths:
   /events:
     get:
       operationId: listEvents
-      summary: Dynatrace List events
+      summary: Dynatrace List Events
       description: >-
         Returns a list of events from the Dynatrace environment matching the
         specified filters. Results are paginated; use nextPageKey from the
         response to retrieve additional pages. Time range defaults to the last
         two hours if not specified.
       tags:
-        - Events
+      - Events
       parameters:
-        - name: nextPageKey
-          in: query
-          description: >-
-            The cursor for the next page of results, obtained from the
-            nextPageKey field of a previous response. When this parameter is
-            set, all other query parameters except pageSize are ignored.
-          required: false
-          schema:
-            type: string
-        - name: pageSize
-          in: query
-          description: >-
-            The number of events to return per page. Default is 50, maximum
-            is 1000.
-          required: false
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 1000
-            default: 50
-        - name: from
-          in: query
-          description: >-
-            The start of the queried time range. Use a relative expression
-            (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds.
-            Default is now-2h.
-          required: false
-          schema:
-            type: string
-        - name: to
-          in: query
-          description: >-
-            The end of the queried time range. Use a relative expression (now),
-            ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is
-            now.
-          required: false
-          schema:
-            type: string
-        - name: eventSelector
-          in: query
-          description: >-
-            Defines the scope of the query using the event selector syntax.
-            For example, eventType("CUSTOM_DEPLOYMENT") to filter by type, or
-            title("My event") to filter by title. Multiple conditions can be
-            combined.
-          required: false
-          schema:
-            type: string
-        - name: entitySelector
-          in: query
-          description: >-
-            Filters events to those affecting entities matching this selector.
-            Use the standard entity selector syntax, e.g., type(HOST),tag(prod).
-          required: false
-          schema:
-            type: string
-        - name: eventType
-          in: query
-          description: >-
-            Filters results to events of the specified type. For a full list of
-            types, see the eventType enum in EventIngestPayload.
-          required: false
-          schema:
-            type: string
-            enum:
-              - AVAILABILITY_EVENT
-              - CUSTOM_ALERT
-              - CUSTOM_ANNOTATION
-              - CUSTOM_CONFIGURATION
-              - CUSTOM_DEPLOYMENT
-              - ERROR_EVENT
-              - MARKED_FOR_TERMINATION
-              - PERFORMANCE_EVENT
-              - RESOURCE_CONTENTION_EVENT
+      - name: nextPageKey
+        in: query
+        description: >-
+          The cursor for the next page of results, obtained from the
+          nextPageKey field of a previous response. When this parameter is
+          set, all other query parameters except pageSize are ignored.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: pageSize
+        in: query
+        description: >-
+          The number of events to return per page. Default is 50, maximum
+          is 1000.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 1000
+          default: 50
+        example: 500
+      - name: from
+        in: query
+        description: >-
+          The start of the queried time range. Use a relative expression
+          (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds.
+          Default is now-2h.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: to
+        in: query
+        description: >-
+          The end of the queried time range. Use a relative expression (now),
+          ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is
+          now.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: eventSelector
+        in: query
+        description: >-
+          Defines the scope of the query using the event selector syntax.
+          For example, eventType("CUSTOM_DEPLOYMENT") to filter by type, or
+          title("My event") to filter by title. Multiple conditions can be
+          combined.
+        required: false
+        schema:
+          type: string
+        example: type(SERVICE)
+      - name: entitySelector
+        in: query
+        description: >-
+          Filters events to those affecting entities matching this selector.
+          Use the standard entity selector syntax, e.g., type(HOST),tag(prod).
+        required: false
+        schema:
+          type: string
+        example: type(SERVICE)
+      - name: eventType
+        in: query
+        description: >-
+          Filters results to events of the specified type. For a full list of
+          types, see the eventType enum in EventIngestPayload.
+        required: false
+        schema:
+          type: string
+          enum:
+          - AVAILABILITY_EVENT
+          - CUSTOM_ALERT
+          - CUSTOM_ANNOTATION
+          - CUSTOM_CONFIGURATION
+          - CUSTOM_DEPLOYMENT
+          - ERROR_EVENT
+          - MARKED_FOR_TERMINATION
+          - PERFORMANCE_EVENT
+          - RESOURCE_CONTENTION_EVENT
+        example: AVAILABILITY_EVENT
       responses:
         '200':
           description: A paginated list of events
@@ -128,6 +136,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EventCollection'
+              examples:
+                ListEvents200Example:
+                  summary: Default listEvents 200 response
+                  x-microcks-default: true
+                  value:
+                    nextPageKey: example-value
+                    totalCount: 500
+                    pageSize: 500
+                    events: &id003
+                    - eventId: abc123
+                      eventType: STANDARD
+                      title: example-value
+                      startTime: 1718153645993
+                      endTime: 1718153645993
+                      entityId: {}
+                      properties: &id001 {}
+                      status: OPEN
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -135,23 +160,27 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /events/{eventId}:
     get:
       operationId: getEvent
-      summary: Dynatrace Get event by ID
+      summary: Dynatrace Get Event by Id
       description: >-
         Returns the details of a specific event identified by its event ID.
         The event ID is obtained from the list events endpoint or from event
         notification callbacks.
       tags:
-        - Events
+      - Events
       parameters:
-        - name: eventId
-          in: path
-          description: The unique identifier of the event to retrieve.
-          required: true
-          schema:
-            type: string
+      - name: eventId
+        in: path
+        description: The unique identifier of the event to retrieve.
+        required: true
+        schema:
+          type: string
+        example: abc123
       responses:
         '200':
           description: The event details
@@ -159,6 +188,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Event'
+              examples:
+                GetEvent200Example:
+                  summary: Default getEvent 200 response
+                  x-microcks-default: true
+                  value:
+                    eventId: abc123
+                    eventType: STANDARD
+                    title: example-value
+                    startTime: 1718153645993
+                    endTime: 1718153645993
+                    entityId:
+                      entityId: {}
+                      name: {}
+                      type: {}
+                    properties: *id001
+                    status: OPEN
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -168,10 +213,13 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /events/ingest:
     post:
       operationId: ingestEvent
-      summary: Dynatrace Ingest a custom event
+      summary: Dynatrace Ingest a Custom Event
       description: >-
         Ingests a custom event into the Dynatrace environment. The event is
         associated with one or more entities specified by the entitySelector.
@@ -179,7 +227,7 @@ paths:
         information, configuration changes, or custom alerts. Events consume
         Davis Data Units (DDUs). The API token requires the events.ingest scope.
       tags:
-        - Events
+      - Events
       requestBody:
         description: The custom event to ingest
         required: true
@@ -203,6 +251,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EventIngestResult'
+              examples:
+                IngestEvent201Example:
+                  summary: Default ingestEvent 201 response
+                  x-microcks-default: true
+                  value:
+                    reportCount: 500
+                    eventIngestResults: &id002
+                    - eventId: abc123
+                      status: ACTIVE
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -210,6 +267,9 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
 components:
   securitySchemes:
     api-token:
@@ -255,8 +315,8 @@ components:
         specific entities, include a time window, and carry additional metadata
         as key-value properties.
       required:
-        - eventType
-        - title
+      - eventType
+      - title
       properties:
         eventType:
           type: string
@@ -264,15 +324,16 @@ components:
             The type of the custom event. Determines how the event is
             categorized and whether it triggers alerts or problem detection.
           enum:
-            - AVAILABILITY_EVENT
-            - CUSTOM_ALERT
-            - CUSTOM_ANNOTATION
-            - CUSTOM_CONFIGURATION
-            - CUSTOM_DEPLOYMENT
-            - ERROR_EVENT
-            - MARKED_FOR_TERMINATION
-            - PERFORMANCE_EVENT
-            - RESOURCE_CONTENTION_EVENT
+          - AVAILABILITY_EVENT
+          - CUSTOM_ALERT
+          - CUSTOM_ANNOTATION
+          - CUSTOM_CONFIGURATION
+          - CUSTOM_DEPLOYMENT
+          - ERROR_EVENT
+          - MARKED_FOR_TERMINATION
+          - PERFORMANCE_EVENT
+          - RESOURCE_CONTENTION_EVENT
+          example: AVAILABILITY_EVENT
         timeout:
           type: integer
           description: >-
@@ -281,29 +342,34 @@ components:
             closes after a short default duration.
           minimum: 1
           maximum: 60
+          example: 1718153645993
         entitySelector:
           type: string
           description: >-
             The entity selector specifying which entities the event should be
             associated with. For example, type(SERVICE),tag(production).
             Required for most event types.
+          example: type(SERVICE)
         title:
           type: string
           description: >-
             The title of the event. This is displayed in the Dynatrace UI and
             in problem notifications. Required.
+          example: example-value
         startTime:
           type: integer
           format: int64
           description: >-
             The start time of the event as a Unix timestamp in milliseconds.
             If not specified, defaults to the current time.
+          example: 1718153645993
         endTime:
           type: integer
           format: int64
           description: >-
             The end time of the event as a Unix timestamp in milliseconds.
             If specified, creates a closed event covering the time range.
+          example: 1718153645993
         properties:
           type: object
           description: >-
@@ -313,6 +379,7 @@ components:
             type: string
           maxProperties: 30
 
+          example: {}
     EventIngestResult:
       type: object
       description: The result returned after successfully ingesting a custom event.
@@ -322,12 +389,14 @@ components:
           description: >-
             The number of event reports created. This may be greater than 1
             if the entitySelector matched multiple entities.
+          example: 500
         eventIngestResults:
           type: array
           description: Details of each individual event ingestion result.
           items:
             $ref: '#/components/schemas/EventIngestResultItem'
 
+          example: *id002
     EventIngestResultItem:
       type: object
       description: The result of ingesting an event for a single entity.
@@ -335,12 +404,14 @@ components:
         eventId:
           type: string
           description: The unique identifier assigned to the created event.
+          example: abc123
         status:
           type: string
           description: >-
             The ingestion status for this entity. OK indicates success;
             other values indicate warnings or errors.
 
+          example: ACTIVE
     Event:
       type: object
       description: >-
@@ -350,16 +421,20 @@ components:
         eventId:
           type: string
           description: The unique identifier of the event.
+          example: abc123
         eventType:
           type: string
           description: The type of the event.
+          example: STANDARD
         title:
           type: string
           description: The display title of the event.
+          example: example-value
         startTime:
           type: integer
           format: int64
           description: The start time of the event as a Unix timestamp in milliseconds.
+          example: 1718153645993
         endTime:
           type: integer
           format: int64
@@ -367,6 +442,7 @@ components:
             The end time of the event as a Unix timestamp in milliseconds.
             Null for open events.
           nullable: true
+          example: 1718153645993
         entityId:
           $ref: '#/components/schemas/EntityStub'
         properties:
@@ -374,15 +450,17 @@ components:
           description: Additional key-value metadata attached to the event.
           additionalProperties:
             type: string
+          example: *id001
         status:
           type: string
           description: >-
             The current status of the event. OPEN indicates the event is
             still active; CLOSED indicates it has ended.
           enum:
-            - OPEN
-            - CLOSED
+          - OPEN
+          - CLOSED
 
+          example: OPEN
     EventCollection:
       type: object
       description: A paginated collection of events.
@@ -393,19 +471,23 @@ components:
             The cursor for the next page of results. Null if there are no more
             pages.
           nullable: true
+          example: example-value
         totalCount:
           type: integer
           format: int64
           description: The total number of events matching the query.
+          example: 500
         pageSize:
           type: integer
           description: The number of results returned on this page.
+          example: 500
         events:
           type: array
           description: The list of events on this page.
           items:
             $ref: '#/components/schemas/Event'
 
+          example: *id003
     EntityStub:
       type: object
       description: A lightweight reference to a monitored entity.
@@ -415,15 +497,18 @@ components:
           description: >-
             The unique identifier of the entity, e.g.,
             SERVICE-1234567890ABCDEF.
+          example: abc123
         name:
           type: string
           description: The display name of the entity.
+          example: Production Service
         type:
           type: string
           description: >-
             The type of the entity, e.g., SERVICE, HOST, PROCESS_GROUP,
             APPLICATION.
 
+          example: STANDARD
     ErrorEnvelope:
       type: object
       description: Error response envelope returned when a request fails.
@@ -438,15 +523,22 @@ components:
         code:
           type: integer
           description: The HTTP status code of the error.
+          example: 500
         message:
           type: string
           description: A human-readable description of the error.
+          example: Example description.
         constraintViolations:
           type: array
           description: A list of constraint violations for validation errors (HTTP 400).
           items:
             $ref: '#/components/schemas/ConstraintViolation'
 
+          example:
+          - path: example-value
+            message: Example description.
+            parameterLocation: example-value
+            location: example-value
     ConstraintViolation:
       type: object
       description: Details of a single constraint violation in a request.
@@ -454,12 +546,16 @@ components:
         path:
           type: string
           description: The JSON path to the field that caused the violation.
+          example: example-value
         message:
           type: string
           description: A description of the constraint violation.
+          example: Example description.
         parameterLocation:
           type: string
           description: The location of the violating parameter (QUERY, PATH, BODY).
+          example: example-value
         location:
           type: string
           description: The location detail for the violation.
+          example: example-value

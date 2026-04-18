@@ -1,0 +1,139 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "dt": "https://dt.dynatrace.com/schema/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "AlertingProfileStub": "dt:AlertingProfileStub",
+    "id": {
+      "@id": "dt:id",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "CommentCollection": "dt:CommentCollection",
+    "nextPageKey": {
+      "@id": "dt:nextPageKey",
+      "@type": "xsd:string"
+    },
+    "totalCount": {
+      "@id": "dt:totalCount",
+      "@type": "xsd:integer"
+    },
+    "comments": {
+      "@id": "dt:comments",
+      "@container": "@set"
+    },
+    "CommentRequestBody": "dt:CommentRequestBody",
+    "message": {
+      "@id": "dt:message",
+      "@type": "xsd:string"
+    },
+    "context": {
+      "@id": "dt:context",
+      "@type": "xsd:string"
+    },
+    "Comment": "dt:Comment",
+    "createdAtTimestamp": {
+      "@id": "dt:createdAtTimestamp",
+      "@type": "xsd:integer"
+    },
+    "authorName": {
+      "@id": "dt:authorName",
+      "@type": "xsd:string"
+    },
+    "content": {
+      "@id": "dt:content",
+      "@type": "xsd:string"
+    },
+    "ConstraintViolation": "dt:ConstraintViolation",
+    "path": {
+      "@id": "dt:path",
+      "@type": "xsd:string"
+    },
+    "parameterLocation": {
+      "@id": "dt:parameterLocation",
+      "@type": "xsd:string"
+    },
+    "location": {
+      "@id": "dt:location",
+      "@type": "xsd:string"
+    },
+    "EntityStub": "dt:EntityStub",
+    "entityId": {
+      "@id": "dt:entityId",
+      "@type": "xsd:string"
+    },
+    "type": {
+      "@id": "dt:type",
+      "@type": "xsd:string"
+    },
+    "ManagementZone": "dt:ManagementZone",
+    "ProblemCloseRequest": "dt:ProblemCloseRequest",
+    "ProblemCloseResult": "dt:ProblemCloseResult",
+    "problemId": {
+      "@id": "dt:problemId",
+      "@type": "xsd:string"
+    },
+    "closing": {
+      "@id": "dt:closing",
+      "@type": "xsd:boolean"
+    },
+    "ProblemCollection": "dt:ProblemCollection",
+    "pageSize": {
+      "@id": "dt:pageSize",
+      "@type": "xsd:integer"
+    },
+    "problems": {
+      "@id": "dt:problems",
+      "@container": "@set"
+    },
+    "Problem": "dt:Problem",
+    "displayId": {
+      "@id": "dt:displayId",
+      "@type": "xsd:string"
+    },
+    "title": {
+      "@id": "dt:title",
+      "@type": "xsd:string"
+    },
+    "severityLevel": {
+      "@id": "dt:severityLevel",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "dt:status",
+      "@type": "xsd:string"
+    },
+    "startTime": {
+      "@id": "dt:startTime",
+      "@type": "xsd:integer"
+    },
+    "endTime": {
+      "@id": "dt:endTime",
+      "@type": "xsd:integer"
+    },
+    "affectedEntities": {
+      "@id": "dt:affectedEntities",
+      "@container": "@set"
+    },
+    "impactedEntities": {
+      "@id": "dt:impactedEntities",
+      "@container": "@set"
+    },
+    "rootCauseEntity": {
+      "@id": "dt:rootCauseEntity",
+      "@type": "xsd:string"
+    },
+    "managementZones": {
+      "@id": "dt:managementZones",
+      "@container": "@set"
+    },
+    "problemFilters": {
+      "@id": "dt:problemFilters",
+      "@container": "@set"
+    }
+  }
+}

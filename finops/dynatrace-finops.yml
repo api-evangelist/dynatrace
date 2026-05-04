@@ -1,0 +1,411 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+provider: Dynatrace
+providerId: dynatrace
+publisherName: Dynatrace
+serviceCategory: API
+created: '2026-05-04'
+modified: '2026-05-04'
+tags:
+  - AI Operations
+  - Analytics
+  - APM
+  - Application Performance Monitoring
+  - Application Security
+  - Automation
+  - Cloud Monitoring
+  - Digital Experience Management
+  - Intelligence
+  - Observability
+  - FinOps
+  - Cost Management
+  - FOCUS
+description: FinOps framework definition for the Dynatrace API surface. Provides a FOCUS-aligned mapping
+  for cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
+principles:
+  - name: Visibility
+    description: Make API consumption costs visible to engineering, product, and finance teams in near
+      real-time.
+  - name: Allocation
+    description: Tag every chargeable API call with the consuming team, environment, application, and
+      feature so cost can be allocated.
+  - name: Optimization
+    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
+      cost per useful unit of work.
+  - name: Accountability
+    description: Establish budget owners and chargeback or showback flows for each consuming team.
+domains:
+  - name: Understand Usage and Cost
+    capabilities:
+      - Data Ingestion
+      - Allocation
+      - Reporting and Analytics
+      - Anomaly Management
+  - name: Quantify Business Value
+    capabilities:
+      - Planning and Estimating
+      - Forecasting
+      - Budgeting
+      - Benchmarking
+      - Unit Economics
+  - name: Optimize Usage and Cost
+    capabilities:
+      - Architecting for Cloud
+      - Rate Optimization
+      - Workload Optimization
+      - Cloud Sustainability
+      - Licensing and SaaS
+  - name: Manage the FinOps Practice
+    capabilities:
+      - FinOps Practice Operations
+      - FinOps Education and Enablement
+      - Invoicing and Chargeback
+      - Onboarding Workloads
+      - Intersecting Disciplines
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+    - Usage
+    - Purchase
+    - Tax
+    - Credit
+    - Adjustment
+  chargeFrequency: Recurring
+focusColumns:
+  ServiceName: Dynatrace
+  ServiceCategory: Developer Tools / API
+  ProviderName: Dynatrace
+  PublisherName: Dynatrace
+  InvoiceIssuerName: Dynatrace
+  PricingCategory: Usage-Based
+  PricingUnit: request
+  BillingCurrency: USD
+  ChargeCategory: Usage
+meters:
+  - name: api_requests
+    description: Count of billable API requests
+    unit: request
+    aggregation: sum
+    dimensions:
+      - api
+      - endpoint
+      - tier
+      - region
+      - consumer
+  - name: data_egress
+    description: Bytes returned over the network in API responses
+    unit: GB
+    aggregation: sum
+    dimensions:
+      - api
+      - region
+      - consumer
+  - name: compute_seconds
+    description: Server-side compute consumed by the request, where applicable
+    unit: second
+    aggregation: sum
+    dimensions:
+      - api
+      - endpoint
+      - tier
+apis:
+  - name: Dynatrace Environment API
+    baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+    tags:
+      - Analytics
+      - Automation
+      - Intelligence
+      - Monitoring
+      - Observability
+    serviceName: Dynatrace Environment API
+    serviceCategory: API
+  - name: Dynatrace Metrics API v2
+    baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+    tags:
+      - Metrics
+      - Monitoring
+      - Observability
+      - Time Series
+    serviceName: Dynatrace Metrics API v2
+    serviceCategory: API
+  - name: Dynatrace Log Monitoring API v2
+    baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+    tags:
+      - Log Management
+      - Logs
+      - Monitoring
+      - Observability
+    serviceName: Dynatrace Log Monitoring API v2
+    serviceCategory: API
+  - name: Dynatrace Synthetic API v2
+    baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+    tags:
+      - Digital Experience
+      - Observability
+      - Synthetic Monitoring
+      - Testing
+    serviceName: Dynatrace Synthetic API v2
+    serviceCategory: API
+  - name: Dynatrace Configuration API
+    baseURL: https://mySampleEnv.live.dynatrace.com/api/config/v1
+    tags:
+      - Configuration
+      - Management
+      - Monitoring
+      - Observability
+    serviceName: Dynatrace Configuration API
+    serviceCategory: API
+  - name: Dynatrace Account Management API
+    baseURL: https://api.dynatrace.com/iam/v1
+    tags:
+      - Access Management
+      - Account Management
+      - Administration
+      - Identity
+    serviceName: Dynatrace Account Management API
+    serviceCategory: API
+  - name: Dynatrace OpenPipeline API
+    baseURL: https://mySampleEnv.live.dynatrace.com/platform
+    tags:
+      - Data Ingestion
+      - Data Pipelines
+      - Observability
+      - Platform
+    serviceName: Dynatrace OpenPipeline API
+    serviceCategory: API
+  - name: Dynatrace Automation API
+    baseURL: https://mySampleEnv.live.dynatrace.com/platform
+    tags:
+      - Automation
+      - Orchestration
+      - Platform
+      - Workflows
+    serviceName: Dynatrace Automation API
+    serviceCategory: API
+  - name: Dynatrace Events API v2
+    baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+    tags:
+      - Alerting
+      - Events
+      - Monitoring
+      - Observability
+    serviceName: Dynatrace Events API v2
+    serviceCategory: API
+  - name: Dynatrace Problems API v2
+    baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+    tags:
+      - Alerting
+      - Monitoring
+      - Observability
+      - Problems
+    serviceName: Dynatrace Problems API v2
+    serviceCategory: API
+  - name: Dynatrace Entities API v2
+    baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+    tags:
+      - Entities
+      - Monitoring
+      - Observability
+      - Topology
+    serviceName: Dynatrace Entities API v2
+    serviceCategory: API
+  - name: Dynatrace Settings API 2.0
+    baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+    tags:
+      - Configuration
+      - Management
+      - Observability
+      - Settings
+    serviceName: Dynatrace Settings API 2.0
+    serviceCategory: API
+  - name: Dynatrace Extensions API 2.0
+    baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+    tags:
+      - Extensions
+      - Integrations
+      - Monitoring
+      - Observability
+    serviceName: Dynatrace Extensions API 2.0
+    serviceCategory: API
+  - name: Dynatrace DQL/Grail Query API
+    baseURL: https://mySampleEnv.live.dynatrace.com/platform
+    tags:
+      - Analytics
+      - DQL
+      - Grail
+      - Observability
+      - Query
+    serviceName: Dynatrace DQL/Grail Query API
+    serviceCategory: API
+  - name: Dynatrace Access Tokens API v2
+    baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+    tags:
+      - Access Management
+      - Authentication
+      - Security
+      - Tokens
+    serviceName: Dynatrace Access Tokens API v2
+    serviceCategory: API
+  - name: Dynatrace Service-Level Objectives API
+    baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+    tags:
+      - Observability
+      - Reliability
+      - Service Level Objectives
+      - SLO
+    serviceName: Dynatrace Service-Level Objectives API
+    serviceCategory: API
+  - name: Dynatrace Releases API
+    baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+    tags:
+      - Deployment
+      - Observability
+      - Releases
+      - Version Management
+    serviceName: Dynatrace Releases API
+    serviceCategory: API
+  - name: Dynatrace Network Zones API
+    baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+    tags:
+      - Infrastructure
+      - Monitoring
+      - Network Zones
+      - Networking
+    serviceName: Dynatrace Network Zones API
+    serviceCategory: API
+  - name: Dynatrace Deployment API
+    baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+    tags:
+      - ActiveGate
+      - Deployment
+      - Installation
+      - OneAgent
+    serviceName: Dynatrace Deployment API
+    serviceCategory: API
+  - name: Dynatrace Audit Logs API
+    baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+    tags:
+      - Audit Logs
+      - Compliance
+      - Governance
+      - Security
+    serviceName: Dynatrace Audit Logs API
+    serviceCategory: API
+  - name: Dynatrace Business Events API v2
+    baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+    tags:
+      - Business Analytics
+      - Business Events
+      - Business Intelligence
+      - Observability
+    serviceName: Dynatrace Business Events API v2
+    serviceCategory: API
+  - name: Dynatrace Application Security API
+    baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+    tags:
+      - Application Security
+      - Runtime Protection
+      - Security
+      - Vulnerabilities
+    serviceName: Dynatrace Application Security API
+    serviceCategory: API
+  - name: Dynatrace Custom Tags API
+    baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+    tags:
+      - Entities
+      - Metadata
+      - Monitoring
+    serviceName: Dynatrace Custom Tags API
+    serviceCategory: API
+  - name: Dynatrace ActiveGate API
+    baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+    tags:
+      - ActiveGate
+      - Deployment
+      - Infrastructure
+      - Monitoring
+    serviceName: Dynatrace ActiveGate API
+    serviceCategory: API
+  - name: Dynatrace Credential Vault API
+    baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+    tags:
+      - Credentials
+      - Secrets
+      - Security
+      - Synthetic Monitoring
+    serviceName: Dynatrace Credential Vault API
+    serviceCategory: API
+  - name: Dynatrace Document API
+    baseURL: https://mySampleEnv.live.dynatrace.com/platform/document/v1
+    tags:
+      - Dashboards
+      - Documents
+      - Notebooks
+      - Platform
+    serviceName: Dynatrace Document API
+    serviceCategory: API
+  - name: Dynatrace Grail Bucket Management API
+    baseURL: https://mySampleEnv.live.dynatrace.com/platform
+    tags:
+      - Data Management
+      - Grail
+      - Platform
+      - Storage
+    serviceName: Dynatrace Grail Bucket Management API
+    serviceCategory: API
+  - name: Dynatrace Davis AI API
+    baseURL: https://mySampleEnv.live.dynatrace.com/platform
+    tags:
+      - Causal Analysis
+      - Davis AI
+      - Machine Learning
+      - Platform
+      - Predictive Analytics
+    serviceName: Dynatrace Davis AI API
+    serviceCategory: API
+  - name: Dynatrace Hub API
+    baseURL: https://mySampleEnv.live.dynatrace.com/platform
+    tags:
+      - Apps
+      - Catalog
+      - Extensions
+      - Hub
+      - Platform
+    serviceName: Dynatrace Hub API
+    serviceCategory: API
+  - name: Dynatrace OneAgent on a Host API
+    baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+    tags:
+      - Deployment
+      - Host Monitoring
+      - Infrastructure
+      - OneAgent
+    serviceName: Dynatrace OneAgent on a Host API
+    serviceCategory: API
+  - name: Dynatrace Platform Management API
+    baseURL: https://mySampleEnv.live.dynatrace.com/platform
+    tags:
+      - Administration
+      - Environment Management
+      - Platform
+      - Settings
+    serviceName: Dynatrace Platform Management API
+    serviceCategory: API
+unitEconomics:
+  - name: Cost per 1K Requests
+    metric: billed_cost / (api_requests / 1000)
+    target: TBD
+  - name: Cost per Active Consumer
+    metric: billed_cost / active_consumers
+    target: TBD
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

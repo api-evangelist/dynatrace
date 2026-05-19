@@ -1012,6 +1012,8 @@ maintainers:
   email: kin@apievangelist.com
 specificationVersion: '0.19'
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/dynatrace
 - url: https://www.dynatrace.com/support/help/dynatrace-api
   type: Portal
 - url: https://docs.dynatrace.com/docs/dynatrace-api

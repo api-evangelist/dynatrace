@@ -1,0 +1,310 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Dynatrace Log Monitoring API v2 — Logs
+  description: 'Dynatrace Log Monitoring API v2 — Logs. 4 operations. Lead operation: Dynatrace Aggregate Log Records. Self-contained
+    Naftiko capability covering one Dynatrace business surface.'
+  tags:
+  - Dynatrace
+  - Logs
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    DYNATRACE_API_KEY: DYNATRACE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: log-monitoring-api-v2-logs
+    baseUri: https://{environmentId}.live.dynatrace.com/api/v2
+    description: Dynatrace Log Monitoring API v2 — Logs business capability. Self-contained, no shared references.
+    resources:
+    - name: logs-aggregate
+      path: /logs/aggregate
+      operations:
+      - name: aggregatelogs
+        method: GET
+        description: Dynatrace Aggregate Log Records
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: query
+          in: query
+          type: string
+          description: The log query expression for filtering records before aggregation. Uses DQL-based syntax. For example,
+            fetch logs | filter severity=="ERROR".
+        - name: from
+          in: query
+          type: string
+          description: The start of the queried time range. Use a relative expression, ISO 8601, or Unix timestamp in milliseconds.
+            Default is now-2h.
+        - name: to
+          in: query
+          type: string
+          description: The end of the queried time range. Default is now.
+        - name: groupBy
+          in: query
+          type: string
+          description: Comma-separated list of fields to group the aggregated results by. For example, severity,log.source
+            to count log records by severity and source combination.
+        - name: fields
+          in: query
+          type: string
+          description: Additional fields to include in the aggregation response.
+    - name: logs-export
+      path: /logs/export
+      operations:
+      - name: exportlogs
+        method: GET
+        description: Dynatrace Export Log Records
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: nextSliceKey
+          in: query
+          type: string
+          description: The cursor for the next page of export results. When this parameter is set, all other query parameters
+            are ignored.
+        - name: pageSize
+          in: query
+          type: integer
+          description: The number of log records to return per page. Default is 1000, maximum is 10000.
+        - name: query
+          in: query
+          type: string
+          description: The log export query expression for filtering records.
+        - name: from
+          in: query
+          type: string
+          description: The start of the queried time range.
+        - name: to
+          in: query
+          type: string
+          description: The end of the queried time range.
+        - name: sort
+          in: query
+          type: string
+          description: The sort order for export results. Default is -timestamp.
+        - name: fields
+          in: query
+          type: string
+          description: Fields to include in the exported log records.
+    - name: logs-ingest
+      path: /logs/ingest
+      operations:
+      - name: ingestlogs
+        method: POST
+        description: Dynatrace Ingest Log Records
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: logs-search
+      path: /logs/search
+      operations:
+      - name: searchlogs
+        method: GET
+        description: Dynatrace Search Log Records
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: nextSliceKey
+          in: query
+          type: string
+          description: The cursor for the next page (slice) of results, obtained from the nextSliceKey field of a previous
+            response. When this parameter is set, all other query parame
+        - name: limit
+          in: query
+          type: integer
+          description: The maximum number of log records to return. Default is 1000, maximum is 5000.
+        - name: query
+          in: query
+          type: string
+          description: The log search query in DQL syntax. For example, fetch logs | filter severity == "ERROR" | limit 100.
+            If not specified, all logs within the time range are retur
+        - name: from
+          in: query
+          type: string
+          description: The start of the queried time range. Use a relative expression (now-1h), ISO 8601 timestamp, or Unix
+            timestamp in milliseconds. Default is now-2h.
+        - name: to
+          in: query
+          type: string
+          description: The end of the queried time range. Default is now.
+        - name: sort
+          in: query
+          type: string
+          description: Defines the sort order for results. Use timestamp in descending order (-timestamp) for newest first,
+            or ascending (+timestamp) for oldest first. Default is -tim
+        - name: fields
+          in: query
+          type: string
+          description: Comma-separated list of fields to include in the log records. If not specified, all available fields
+            are returned.
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.DYNATRACE_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: log-monitoring-api-v2-logs-rest
+    port: 8080
+    description: REST adapter for Dynatrace Log Monitoring API v2 — Logs. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/logs/aggregate
+      name: logs-aggregate
+      description: REST surface for logs-aggregate.
+      operations:
+      - method: GET
+        name: aggregatelogs
+        description: Dynatrace Aggregate Log Records
+        call: log-monitoring-api-v2-logs.aggregatelogs
+        with:
+          query: rest.query
+          from: rest.from
+          to: rest.to
+          groupBy: rest.groupBy
+          fields: rest.fields
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/logs/export
+      name: logs-export
+      description: REST surface for logs-export.
+      operations:
+      - method: GET
+        name: exportlogs
+        description: Dynatrace Export Log Records
+        call: log-monitoring-api-v2-logs.exportlogs
+        with:
+          nextSliceKey: rest.nextSliceKey
+          pageSize: rest.pageSize
+          query: rest.query
+          from: rest.from
+          to: rest.to
+          sort: rest.sort
+          fields: rest.fields
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/logs/ingest
+      name: logs-ingest
+      description: REST surface for logs-ingest.
+      operations:
+      - method: POST
+        name: ingestlogs
+        description: Dynatrace Ingest Log Records
+        call: log-monitoring-api-v2-logs.ingestlogs
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/logs/search
+      name: logs-search
+      description: REST surface for logs-search.
+      operations:
+      - method: GET
+        name: searchlogs
+        description: Dynatrace Search Log Records
+        call: log-monitoring-api-v2-logs.searchlogs
+        with:
+          nextSliceKey: rest.nextSliceKey
+          limit: rest.limit
+          query: rest.query
+          from: rest.from
+          to: rest.to
+          sort: rest.sort
+          fields: rest.fields
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: log-monitoring-api-v2-logs-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Dynatrace Log Monitoring API v2 — Logs. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: dynatrace-aggregate-log-records
+      description: Dynatrace Aggregate Log Records
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: log-monitoring-api-v2-logs.aggregatelogs
+      with:
+        query: tools.query
+        from: tools.from
+        to: tools.to
+        groupBy: tools.groupBy
+        fields: tools.fields
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: dynatrace-export-log-records
+      description: Dynatrace Export Log Records
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: log-monitoring-api-v2-logs.exportlogs
+      with:
+        nextSliceKey: tools.nextSliceKey
+        pageSize: tools.pageSize
+        query: tools.query
+        from: tools.from
+        to: tools.to
+        sort: tools.sort
+        fields: tools.fields
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: dynatrace-ingest-log-records
+      description: Dynatrace Ingest Log Records
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: log-monitoring-api-v2-logs.ingestlogs
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: dynatrace-search-log-records
+      description: Dynatrace Search Log Records
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: log-monitoring-api-v2-logs.searchlogs
+      with:
+        nextSliceKey: tools.nextSliceKey
+        limit: tools.limit
+        query: tools.query
+        from: tools.from
+        to: tools.to
+        sort: tools.sort
+        fields: tools.fields
+      outputParameters:
+      - type: object
+        mapping: $.

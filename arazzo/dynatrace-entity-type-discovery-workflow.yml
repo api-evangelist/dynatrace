@@ -1,0 +1,79 @@
+arazzo: 1.0.1
+info:
+  title: Dynatrace Discover an Entity Type and Sample Its Entities
+  summary: List entity types, read one type definition, and list a sample of entities of that type.
+  description: >-
+    Helps an integration learn the topology model before querying it. The
+    workflow lists the available entity types, reads the definition of the first
+    type to learn its properties and relationships, and then lists a sample of
+    entities of that type. Every step spells out its request inline so the flow
+    can be read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: entitiesApi
+  url: ../openapi/dynatrace-entities-api-v2-openapi.yml
+  type: openapi
+workflows:
+- workflowId: entity-type-discovery
+  summary: List entity types, read one definition, and sample its entities.
+  description: >-
+    Lists entity types, reads the first type's definition for its properties and
+    relationships, and lists a sample of entities of that type.
+  inputs:
+    type: object
+    properties:
+      entityType:
+        type: string
+        description: >-
+          Optional explicit entity type to read and sample (e.g. SERVICE). If
+          omitted, the first listed type is used.
+  steps:
+  - stepId: listTypes
+    description: >-
+      List the available entity types in the environment to choose a type to
+      explore.
+    operationId: listEntityTypes
+    parameters:
+    - name: pageSize
+      in: query
+      value: 500
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      totalCount: $response.body#/totalCount
+      firstType: $response.body#/types/0/type
+  - stepId: readTypeDefinition
+    description: >-
+      Read the definition of the chosen entity type to learn its available
+      properties and supported relationship types.
+    operationId: getEntityType
+    parameters:
+    - name: type
+      in: path
+      value: $steps.listTypes.outputs.firstType
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      type: $response.body#/type
+      displayName: $response.body#/displayName
+  - stepId: sampleEntities
+    description: >-
+      List a sample of entities of the chosen type, constructing an entity
+      selector from the type identifier.
+    operationId: listEntities
+    parameters:
+    - name: entitySelector
+      in: query
+      value: "type($steps.readTypeDefinition.outputs.type)"
+    - name: pageSize
+      in: query
+      value: 50
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      entityCount: $response.body#/totalCount
+      firstEntityId: $response.body#/entities/0/entityId
+  outputs:
+    typeCount: $steps.listTypes.outputs.totalCount
+    sampledType: $steps.readTypeDefinition.outputs.type
+    entityCount: $steps.sampleEntities.outputs.entityCount

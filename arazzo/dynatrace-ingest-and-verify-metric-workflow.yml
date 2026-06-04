@@ -1,0 +1,93 @@
+arazzo: 1.0.1
+info:
+  title: Dynatrace Ingest a Custom Metric and Verify It
+  summary: Push custom metric data via MINT, confirm the metric is registered, and query it back.
+  description: >-
+    Closes the loop on custom metric ingestion. The workflow ingests one or more
+    data points using the MINT line protocol, lists metrics filtered to the new
+    key to confirm Dynatrace registered the descriptor, and then queries the
+    metric data back to verify the values landed. Every step spells out its
+    request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: metricsApi
+  url: ../openapi/dynatrace-metrics-api-v2-openapi.yml
+  type: openapi
+workflows:
+- workflowId: ingest-and-verify-metric
+  summary: Ingest MINT metric lines, confirm registration, and query the data back.
+  description: >-
+    Ingests custom metric data, lists metrics filtered by the metric selector
+    to confirm the descriptor exists, and queries the data points back.
+  inputs:
+    type: object
+    required:
+    - mintPayload
+    - metricSelector
+    properties:
+      mintPayload:
+        type: string
+        description: >-
+          One or more MINT line-protocol records, one per line (e.g.
+          "custom.response.time,host=web-01 gauge=250.5").
+      metricSelector:
+        type: string
+        description: The metric selector used to find and query the ingested metric.
+      from:
+        type: string
+        description: Start of the queried time range when reading the data back.
+  steps:
+  - stepId: ingestMetric
+    description: >-
+      Ingest custom metric data points using the MINT line protocol. Data is
+      processed asynchronously and accepted with a 202 status.
+    operationId: ingestCustomMetrics
+    requestBody:
+      contentType: text/plain
+      payload: $inputs.mintPayload
+    successCriteria:
+    - condition: $statusCode == 202
+    outputs:
+      statusCode: $statusCode
+  - stepId: confirmDescriptor
+    description: >-
+      List metrics filtered by the metric selector to confirm the custom metric
+      descriptor has been registered in the environment.
+    operationId: listMetrics
+    parameters:
+    - name: metricSelector
+      in: query
+      value: $inputs.metricSelector
+    - name: metricDescriptors
+      in: query
+      value: true
+    - name: pageSize
+      in: query
+      value: 50
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      totalCount: $response.body#/totalCount
+      metricId: $response.body#/metrics/0/metricId
+  - stepId: queryBack
+    description: >-
+      Query the metric data points back over the time range to verify the
+      ingested values are now retrievable.
+    operationId: queryMetricData
+    parameters:
+    - name: metricSelector
+      in: query
+      value: $inputs.metricSelector
+    - name: from
+      in: query
+      value: $inputs.from
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      seriesCount: $response.body#/totalCount
+      firstMetricId: $response.body#/result/0/metricId
+  outputs:
+    registeredMetricId: $steps.confirmDescriptor.outputs.metricId
+    descriptorCount: $steps.confirmDescriptor.outputs.totalCount
+    seriesCount: $steps.queryBack.outputs.seriesCount

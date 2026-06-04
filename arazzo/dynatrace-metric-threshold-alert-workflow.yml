@@ -1,0 +1,114 @@
+arazzo: 1.0.1
+info:
+  title: Dynatrace Query a Metric and Raise an Alert Event
+  summary: Confirm a metric exists, query its data points, and raise a custom alert event.
+  description: >-
+    A monitoring-as-code loop that turns a metric reading into a Dynatrace alert
+    annotation. The workflow first reads the metric descriptor to confirm the
+    metric and its supported aggregations, queries recent data points for the
+    target entities, and then ingests a CUSTOM_ALERT event describing the
+    condition. Every step spells out its request inline so the flow can be read
+    and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: metricsApi
+  url: ../openapi/dynatrace-metrics-api-v2-openapi.yml
+  type: openapi
+- name: eventsApi
+  url: ../openapi/dynatrace-events-api-v2-openapi.yml
+  type: openapi
+workflows:
+- workflowId: metric-threshold-alert
+  summary: Read a metric, query its data, and raise a custom alert event.
+  description: >-
+    Confirms a metric descriptor exists, queries its data points over a time
+    range scoped to an entity selector, and ingests a custom alert event.
+  inputs:
+    type: object
+    required:
+    - metricKey
+    - metricSelector
+    - entitySelector
+    - alertTitle
+    properties:
+      metricKey:
+        type: string
+        description: The metric key to inspect (e.g. builtin:host.cpu.usage).
+      metricSelector:
+        type: string
+        description: The metric selector with transformations (e.g. builtin:host.cpu.usage:avg).
+      entitySelector:
+        type: string
+        description: The entity selector scoping the query (e.g. type(HOST),tag(prod)).
+      resolution:
+        type: string
+        description: The desired data-point resolution (e.g. 5m, 1h).
+      from:
+        type: string
+        description: Start of the queried time range (e.g. now-2h).
+      alertTitle:
+        type: string
+        description: The title of the custom alert event to raise.
+  steps:
+  - stepId: getDescriptor
+    description: >-
+      Read the metric descriptor to confirm the metric exists and to learn its
+      unit and supported aggregation types before querying data.
+    operationId: getMetricDescriptor
+    parameters:
+    - name: metricKey
+      in: path
+      value: $inputs.metricKey
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      displayName: $response.body#/displayName
+      unit: $response.body#/unit
+  - stepId: queryData
+    description: >-
+      Query data points for the metric selector over the time range, scoped to
+      the supplied entity selector and resolution.
+    operationId: queryMetricData
+    parameters:
+    - name: metricSelector
+      in: query
+      value: $inputs.metricSelector
+    - name: entitySelector
+      in: query
+      value: $inputs.entitySelector
+    - name: resolution
+      in: query
+      value: $inputs.resolution
+    - name: from
+      in: query
+      value: $inputs.from
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      resolution: $response.body#/resolution
+      totalCount: $response.body#/totalCount
+      firstMetricId: $response.body#/result/0/metricId
+  - stepId: raiseAlertEvent
+    description: >-
+      Ingest a CUSTOM_ALERT event onto the affected entities' timeline,
+      attaching the metric key and reading as properties.
+    operationId: ingestEvent
+    parameters: []
+    requestBody:
+      contentType: application/json
+      payload:
+        eventType: CUSTOM_ALERT
+        title: $inputs.alertTitle
+        entitySelector: $inputs.entitySelector
+        properties:
+          metricKey: $inputs.metricKey
+          metricUnit: $steps.getDescriptor.outputs.unit
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      reportCount: $response.body#/reportCount
+      eventId: $response.body#/eventIngestResults/0/eventId
+  outputs:
+    metricDisplayName: $steps.getDescriptor.outputs.displayName
+    seriesCount: $steps.queryData.outputs.totalCount
+    eventId: $steps.raiseAlertEvent.outputs.eventId

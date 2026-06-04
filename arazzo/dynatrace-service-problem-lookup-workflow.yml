@@ -1,0 +1,92 @@
+arazzo: 1.0.1
+info:
+  title: Dynatrace Find Problems Affecting a Named Service
+  summary: Resolve a service by name, read its details, and list problems impacting it.
+  description: >-
+    Answers "is this named service healthy?" by chaining entity resolution with
+    problem discovery. The workflow looks up the service by its display name to
+    obtain the entity ID, reads the entity for context, and then lists problems
+    scoped to that entity. Every step spells out its request inline so the flow
+    can be read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: entitiesApi
+  url: ../openapi/dynatrace-entities-api-v2-openapi.yml
+  type: openapi
+- name: problemsApi
+  url: ../openapi/dynatrace-problems-api-v2-openapi.yml
+  type: openapi
+workflows:
+- workflowId: service-problem-lookup
+  summary: Resolve a service by name and list problems affecting it.
+  description: >-
+    Looks up a service by name, reads the entity, and lists problems whose
+    affected or impacted entities include that service.
+  inputs:
+    type: object
+    required:
+    - serviceName
+    properties:
+      serviceName:
+        type: string
+        description: The display name of the service to investigate.
+      from:
+        type: string
+        description: Start of the problem query time range (e.g. now-24h).
+  steps:
+  - stepId: resolveService
+    description: >-
+      Resolve the service display name to its Dynatrace entity ID for use in
+      the problem entity selector.
+    operationId: lookupEntity
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.serviceName
+        type: SERVICE
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      entityId: $response.body#/entityId
+      displayName: $response.body#/displayName
+  - stepId: readEntity
+    description: >-
+      Read the resolved entity with its tags and management zones to provide
+      context alongside the problem list.
+    operationId: getEntity
+    parameters:
+    - name: entityId
+      in: path
+      value: $steps.resolveService.outputs.entityId
+    - name: fields
+      in: query
+      value: +tags,+managementZones
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      type: $response.body#/type
+      lastSeenTms: $response.body#/lastSeenTms
+  - stepId: listServiceProblems
+    description: >-
+      List problems whose affected or impacted entities include the resolved
+      service, over the requested time range.
+    operationId: listProblems
+    parameters:
+    - name: entitySelector
+      in: query
+      value: "entityId($steps.resolveService.outputs.entityId)"
+    - name: from
+      in: query
+      value: $inputs.from
+    - name: pageSize
+      in: query
+      value: 100
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      totalCount: $response.body#/totalCount
+      topProblemId: $response.body#/problems/0/problemId
+  outputs:
+    entityId: $steps.resolveService.outputs.entityId
+    problemCount: $steps.listServiceProblems.outputs.totalCount
+    topProblemId: $steps.listServiceProblems.outputs.topProblemId

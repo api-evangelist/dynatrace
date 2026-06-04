@@ -1,0 +1,112 @@
+arazzo: 1.0.1
+info:
+  title: Dynatrace Onboard a User into a New Group
+  summary: Create a group, invite a user assigned to that group, and confirm the membership.
+  description: >-
+    Provisions access for a new team member in a Dynatrace account. The workflow
+    creates a user group to carry permissions, creates the user with that group
+    assigned at invitation time, and then reads the user back to confirm the
+    group membership took effect. Every step spells out its request inline so
+    the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: accountManagementApi
+  url: ../openapi/dynatrace-account-management-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: onboard-account-user
+  summary: Create a group, invite a user into it, and confirm membership.
+  description: >-
+    Creates a group, creates a user assigned to the new group, and reads the
+    user back to confirm the group membership.
+  inputs:
+    type: object
+    required:
+    - accountUuid
+    - groupName
+    - email
+    - firstName
+    - lastName
+    properties:
+      accountUuid:
+        type: string
+        description: The UUID of the Dynatrace account to onboard into.
+      groupName:
+        type: string
+        description: The display name of the group to create.
+      groupDescription:
+        type: string
+        description: An optional description of the group's purpose.
+      email:
+        type: string
+        description: The email address of the user to invite.
+      firstName:
+        type: string
+        description: The first name of the user.
+      lastName:
+        type: string
+        description: The last name of the user.
+  steps:
+  - stepId: createGroup
+    description: >-
+      Create a new user group in the account to carry the permissions the
+      onboarded user will receive.
+    operationId: createGroup
+    parameters:
+    - name: accountUuid
+      in: path
+      value: $inputs.accountUuid
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.groupName
+        description: $inputs.groupDescription
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      groupId: $response.body#/groupId
+  - stepId: createUser
+    description: >-
+      Create the user and send an invitation email, assigning the freshly
+      created group so the user gains the associated permissions.
+    operationId: createUser
+    parameters:
+    - name: accountUuid
+      in: path
+      value: $inputs.accountUuid
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $inputs.email
+        firstName: $inputs.firstName
+        lastName: $inputs.lastName
+        groups:
+        - $steps.createGroup.outputs.groupId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      uid: $response.body#/uid
+      userStatus: $response.body#/userStatus
+  - stepId: confirmMembership
+    description: >-
+      Read the user back by ID to confirm the group membership and invitation
+      status are as expected.
+    operationId: getUser
+    parameters:
+    - name: accountUuid
+      in: path
+      value: $inputs.accountUuid
+    - name: userId
+      in: path
+      value: $steps.createUser.outputs.uid
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      email: $response.body#/email
+      groups: $response.body#/groups
+      userStatus: $response.body#/userStatus
+  outputs:
+    groupId: $steps.createGroup.outputs.groupId
+    uid: $steps.createUser.outputs.uid
+    userStatus: $steps.confirmMembership.outputs.userStatus

@@ -1,0 +1,124 @@
+arazzo: 1.0.1
+info:
+  title: Dynatrace Service Health Snapshot
+  summary: Resolve a service, read a key metric, and list its open problems and recent events.
+  description: >-
+    Assembles a one-shot health snapshot for a named service across three
+    monitoring domains. The workflow resolves the service by name, queries a key
+    performance metric scoped to it, lists open problems affecting it, and lists
+    recent events on its timeline. Every step spells out its request inline so
+    the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: entitiesApi
+  url: ../openapi/dynatrace-entities-api-v2-openapi.yml
+  type: openapi
+- name: metricsApi
+  url: ../openapi/dynatrace-metrics-api-v2-openapi.yml
+  type: openapi
+- name: problemsApi
+  url: ../openapi/dynatrace-problems-api-v2-openapi.yml
+  type: openapi
+- name: eventsApi
+  url: ../openapi/dynatrace-events-api-v2-openapi.yml
+  type: openapi
+workflows:
+- workflowId: service-health-snapshot
+  summary: Resolve a service and gather its metric, problems, and events.
+  description: >-
+    Resolves a service by name, queries a key metric scoped to it, lists open
+    problems affecting it, and lists recent events on its timeline.
+  inputs:
+    type: object
+    required:
+    - serviceName
+    - metricSelector
+    properties:
+      serviceName:
+        type: string
+        description: The display name of the service to snapshot.
+      metricSelector:
+        type: string
+        description: The metric selector to query (e.g. builtin:service.response.time:avg).
+      from:
+        type: string
+        description: Start of the queried time range (e.g. now-2h).
+  steps:
+  - stepId: resolveService
+    description: >-
+      Resolve the service display name to its Dynatrace entity ID for scoping
+      the metric, problem, and event queries.
+    operationId: lookupEntity
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.serviceName
+        type: SERVICE
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      entityId: $response.body#/entityId
+      displayName: $response.body#/displayName
+  - stepId: queryMetric
+    description: >-
+      Query the key performance metric scoped to the resolved service over the
+      requested time range.
+    operationId: queryMetricData
+    parameters:
+    - name: metricSelector
+      in: query
+      value: $inputs.metricSelector
+    - name: entitySelector
+      in: query
+      value: "entityId($steps.resolveService.outputs.entityId)"
+    - name: from
+      in: query
+      value: $inputs.from
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      seriesCount: $response.body#/totalCount
+      firstMetricId: $response.body#/result/0/metricId
+  - stepId: listOpenProblems
+    description: >-
+      List open problems whose affected or impacted entities include the
+      resolved service.
+    operationId: listProblems
+    parameters:
+    - name: problemSelector
+      in: query
+      value: status(OPEN)
+    - name: entitySelector
+      in: query
+      value: "entityId($steps.resolveService.outputs.entityId)"
+    - name: from
+      in: query
+      value: $inputs.from
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      problemCount: $response.body#/totalCount
+      topProblemId: $response.body#/problems/0/problemId
+  - stepId: listRecentEvents
+    description: >-
+      List recent events on the resolved service's timeline to round out the
+      health snapshot.
+    operationId: listEvents
+    parameters:
+    - name: entitySelector
+      in: query
+      value: "entityId($steps.resolveService.outputs.entityId)"
+    - name: from
+      in: query
+      value: $inputs.from
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      eventCount: $response.body#/totalCount
+      latestEventId: $response.body#/events/0/eventId
+  outputs:
+    entityId: $steps.resolveService.outputs.entityId
+    metricSeriesCount: $steps.queryMetric.outputs.seriesCount
+    problemCount: $steps.listOpenProblems.outputs.problemCount
+    eventCount: $steps.listRecentEvents.outputs.eventCount

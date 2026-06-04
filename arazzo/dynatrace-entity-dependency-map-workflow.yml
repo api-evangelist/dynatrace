@@ -1,0 +1,84 @@
+arazzo: 1.0.1
+info:
+  title: Dynatrace Map an Entity's Dependencies
+  summary: List entities matching a selector and expand the top match with its relationships.
+  description: >-
+    Builds a dependency view for monitored infrastructure. The workflow lists
+    entities matching a selector enriched with tags and relationships, then
+    retrieves the first matched entity in full detail including its upstream and
+    downstream relationships for topology mapping. Every step spells out its
+    request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: entitiesApi
+  url: ../openapi/dynatrace-entities-api-v2-openapi.yml
+  type: openapi
+workflows:
+- workflowId: entity-dependency-map
+  summary: List entities by selector and expand the top match's relationships.
+  description: >-
+    Lists entities matching the selector with tags and relationships, then
+    reads the first entity in full to expose its dependency graph.
+  inputs:
+    type: object
+    required:
+    - entitySelector
+    properties:
+      entitySelector:
+        type: string
+        description: The entity selector scoping the list (e.g. type(SERVICE),tag(prod)).
+      from:
+        type: string
+        description: Start of the entity-discovery time range (e.g. now-7d).
+  steps:
+  - stepId: listEntities
+    description: >-
+      List entities matching the selector, requesting properties, tags,
+      management zones, and relationships so the topology is included.
+    operationId: listEntities
+    parameters:
+    - name: entitySelector
+      in: query
+      value: $inputs.entitySelector
+    - name: fields
+      in: query
+      value: +properties,+tags,+managementZones,+fromRelationships,+toRelationships
+    - name: from
+      in: query
+      value: $inputs.from
+    - name: pageSize
+      in: query
+      value: 100
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      totalCount: $response.body#/totalCount
+      entityId: $response.body#/entities/0/entityId
+      displayName: $response.body#/entities/0/displayName
+  - stepId: expandEntity
+    description: >-
+      Retrieve the first matched entity in full detail, including its upstream
+      (toRelationships) and downstream (fromRelationships) dependencies.
+    operationId: getEntity
+    parameters:
+    - name: entityId
+      in: path
+      value: $steps.listEntities.outputs.entityId
+    - name: fields
+      in: query
+      value: +properties,+tags,+fromRelationships,+toRelationships
+    - name: from
+      in: query
+      value: $inputs.from
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      entityId: $response.body#/entityId
+      type: $response.body#/type
+      toRelationships: $response.body#/toRelationships
+      fromRelationships: $response.body#/fromRelationships
+  outputs:
+    matchedCount: $steps.listEntities.outputs.totalCount
+    entityId: $steps.expandEntity.outputs.entityId
+    entityType: $steps.expandEntity.outputs.type

@@ -1,0 +1,92 @@
+arazzo: 1.0.1
+info:
+  title: Dynatrace Add a Comment to a Problem and Read the Thread
+  summary: Confirm a problem, post a collaboration comment, and list the full comment thread.
+  description: >-
+    Supports collaborative incident handling on a Dynatrace problem. The
+    workflow reads the problem to confirm it exists and is still open, adds a
+    comment carrying an external context reference, and then lists all comments
+    on the problem to return the updated thread. Every step spells out its
+    request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: problemsApi
+  url: ../openapi/dynatrace-problems-api-v2-openapi.yml
+  type: openapi
+workflows:
+- workflowId: problem-comment-thread
+  summary: Post a comment to a problem and return the full comment thread.
+  description: >-
+    Reads the problem, adds a comment with optional context, and lists all
+    comments on the problem to return the resulting thread.
+  inputs:
+    type: object
+    required:
+    - problemId
+    - commentMessage
+    properties:
+      problemId:
+        type: string
+        description: The unique identifier of the problem to comment on.
+      commentMessage:
+        type: string
+        description: The text content of the comment to add.
+      context:
+        type: string
+        description: Optional context reference such as a ticket ID or runbook link.
+  steps:
+  - stepId: confirmProblem
+    description: >-
+      Read the problem to confirm it exists and capture its current status and
+      title before commenting.
+    operationId: getProblem
+    parameters:
+    - name: problemId
+      in: path
+      value: $inputs.problemId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      title: $response.body#/title
+      status: $response.body#/status
+  - stepId: addComment
+    description: >-
+      Add a collaboration comment to the problem, carrying an optional context
+      reference for cross-linking to external systems.
+    operationId: createProblemComment
+    parameters:
+    - name: problemId
+      in: path
+      value: $inputs.problemId
+    requestBody:
+      contentType: application/json
+      payload:
+        message: $inputs.commentMessage
+        context: $inputs.context
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      commentId: $response.body#/id
+      authorName: $response.body#/authorName
+  - stepId: listThread
+    description: >-
+      List all comments on the problem to return the updated thread including
+      the comment just added.
+    operationId: listProblemComments
+    parameters:
+    - name: problemId
+      in: path
+      value: $inputs.problemId
+    - name: pageSize
+      in: query
+      value: 50
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      totalCount: $response.body#/totalCount
+      latestCommentId: $response.body#/comments/0/id
+  outputs:
+    problemTitle: $steps.confirmProblem.outputs.title
+    commentId: $steps.addComment.outputs.commentId
+    threadCount: $steps.listThread.outputs.totalCount

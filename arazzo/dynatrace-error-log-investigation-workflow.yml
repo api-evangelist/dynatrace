@@ -1,0 +1,113 @@
+arazzo: 1.0.1
+info:
+  title: Dynatrace Investigate Error Logs and Annotate
+  summary: Aggregate error logs by source, pull the matching records, and raise an error event.
+  description: >-
+    A log-driven investigation loop over the Grail data lakehouse. The workflow
+    aggregates error logs grouped by source to find the noisiest origins,
+    searches the underlying records for detail, and ingests an ERROR_EVENT so
+    the spike is visible on the Dynatrace timeline. Every step spells out its
+    request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: logsApi
+  url: ../openapi/dynatrace-log-monitoring-api-v2-openapi.yml
+  type: openapi
+- name: eventsApi
+  url: ../openapi/dynatrace-events-api-v2-openapi.yml
+  type: openapi
+workflows:
+- workflowId: error-log-investigation
+  summary: Aggregate error logs, fetch records, and raise an error event.
+  description: >-
+    Aggregates error logs grouped by source, searches the matching log records,
+    and ingests an ERROR_EVENT to annotate the affected entities.
+  inputs:
+    type: object
+    required:
+    - logQuery
+    - errorTitle
+    - entitySelector
+    properties:
+      logQuery:
+        type: string
+        description: DQL log query filtering to error records (e.g. 'fetch logs | filter severity=="ERROR"').
+      groupBy:
+        type: string
+        description: Comma-separated fields to aggregate by (e.g. log.source,dt.entity.host).
+      from:
+        type: string
+        description: Start of the queried time range (e.g. now-1h).
+      errorTitle:
+        type: string
+        description: The title for the raised ERROR_EVENT.
+      entitySelector:
+        type: string
+        description: The entity selector the error event targets.
+  steps:
+  - stepId: aggregateErrors
+    description: >-
+      Aggregate error logs grouped by the supplied fields to identify which
+      sources are producing the most error records.
+    operationId: aggregateLogs
+    parameters:
+    - name: query
+      in: query
+      value: $inputs.logQuery
+    - name: groupBy
+      in: query
+      value: $inputs.groupBy
+    - name: from
+      in: query
+      value: $inputs.from
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      topGroup: $response.body#/results/0/groupByFields
+      topCount: $response.body#/results/0/count
+  - stepId: searchRecords
+    description: >-
+      Search the matching error log records for detail, returning the most
+      recent records first.
+    operationId: searchLogs
+    parameters:
+    - name: query
+      in: query
+      value: $inputs.logQuery
+    - name: from
+      in: query
+      value: $inputs.from
+    - name: sort
+      in: query
+      value: -timestamp
+    - name: limit
+      in: query
+      value: 100
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      firstContent: $response.body#/results/0/content
+      nextSliceKey: $response.body#/nextSliceKey
+  - stepId: raiseErrorEvent
+    description: >-
+      Ingest an ERROR_EVENT onto the affected entities so the error spike is
+      annotated on the Dynatrace timeline.
+    operationId: ingestEvent
+    requestBody:
+      contentType: application/json
+      payload:
+        eventType: ERROR_EVENT
+        title: $inputs.errorTitle
+        entitySelector: $inputs.entitySelector
+        properties:
+          sampleLogLine: $steps.searchRecords.outputs.firstContent
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      reportCount: $response.body#/reportCount
+      eventId: $response.body#/eventIngestResults/0/eventId
+  outputs:
+    topErrorCount: $steps.aggregateErrors.outputs.topCount
+    sampleLogLine: $steps.searchRecords.outputs.firstContent
+    eventId: $steps.raiseErrorEvent.outputs.eventId

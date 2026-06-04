@@ -1,0 +1,122 @@
+arazzo: 1.0.1
+info:
+  title: Dynatrace Triage and Close a Problem
+  summary: List open problems, inspect the top one, annotate it, and close it.
+  description: >-
+    A common incident-response loop for Dynatrace Davis problems. The workflow
+    lists currently open problems, retrieves the full root-cause detail for the
+    highest-priority one, attaches an investigation comment documenting the
+    remediation, and then closes the problem with a closing message. Every step
+    spells out its request inline so the flow can be read and executed without
+    opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: problemsApi
+  url: ../openapi/dynatrace-problems-api-v2-openapi.yml
+  type: openapi
+workflows:
+- workflowId: triage-and-close-problem
+  summary: Find an open problem, comment on it, and close it.
+  description: >-
+    Lists open problems, reads the details of the first match, adds a comment
+    capturing the resolution, and closes the problem with a closing message.
+  inputs:
+    type: object
+    required:
+    - commentMessage
+    - closingMessage
+    properties:
+      problemSelector:
+        type: string
+        description: Problem selector scoping the list query (e.g. status(OPEN)).
+      from:
+        type: string
+        description: Start of the time range (e.g. now-24h).
+      commentMessage:
+        type: string
+        description: The investigation note to attach to the problem.
+      ticketContext:
+        type: string
+        description: Optional context reference such as a ticket ID or runbook link.
+      closingMessage:
+        type: string
+        description: The message explaining why the problem is being closed.
+  steps:
+  - stepId: listOpenProblems
+    description: >-
+      List problems matching the supplied problem selector over the requested
+      time range, returning the highest-priority match first.
+    operationId: listProblems
+    parameters:
+    - name: problemSelector
+      in: query
+      value: $inputs.problemSelector
+    - name: from
+      in: query
+      value: $inputs.from
+    - name: pageSize
+      in: query
+      value: 50
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      problemId: $response.body#/problems/0/problemId
+      totalCount: $response.body#/totalCount
+  - stepId: getProblemDetails
+    description: >-
+      Retrieve the full detail of the selected problem, including evidence and
+      impact, so the triage comment can reference the root cause.
+    operationId: getProblem
+    parameters:
+    - name: problemId
+      in: path
+      value: $steps.listOpenProblems.outputs.problemId
+    - name: fields
+      in: query
+      value: +evidenceDetails,+impactAnalysis
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      title: $response.body#/title
+      status: $response.body#/status
+      severityLevel: $response.body#/severityLevel
+  - stepId: commentOnProblem
+    description: >-
+      Attach an investigation comment to the problem documenting the findings
+      and any remediation taken.
+    operationId: createProblemComment
+    parameters:
+    - name: problemId
+      in: path
+      value: $steps.listOpenProblems.outputs.problemId
+    requestBody:
+      contentType: application/json
+      payload:
+        message: $inputs.commentMessage
+        context: $inputs.ticketContext
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      commentId: $response.body#/id
+  - stepId: closeProblem
+    description: >-
+      Close the problem and attach a closing message explaining the resolution.
+      Only problems currently OPEN can be closed.
+    operationId: closeProblem
+    parameters:
+    - name: problemId
+      in: path
+      value: $steps.listOpenProblems.outputs.problemId
+    requestBody:
+      contentType: application/json
+      payload:
+        message: $inputs.closingMessage
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      closing: $response.body#/closing
+  outputs:
+    problemId: $steps.listOpenProblems.outputs.problemId
+    title: $steps.getProblemDetails.outputs.title
+    commentId: $steps.commentOnProblem.outputs.commentId
+    closing: $steps.closeProblem.outputs.closing

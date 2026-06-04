@@ -1,0 +1,83 @@
+arazzo: 1.0.1
+info:
+  title: Dynatrace Audit Account Access
+  summary: Enumerate users, groups, and permissions across a Dynatrace account for an access review.
+  description: >-
+    Produces a point-in-time access snapshot for a Dynatrace account. The
+    workflow lists all users, lists all groups, and lists all account
+    permissions so an auditor can cross-reference who belongs to which group and
+    what each group is allowed to do. Every step spells out its request inline so
+    the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: accountManagementApi
+  url: ../openapi/dynatrace-account-management-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: account-access-audit
+  summary: List users, groups, and permissions for an access review.
+  description: >-
+    Lists all users, then all groups, then all account-level permissions to
+    assemble a complete access snapshot for the account.
+  inputs:
+    type: object
+    required:
+    - accountUuid
+    properties:
+      accountUuid:
+        type: string
+        description: The UUID of the Dynatrace account to audit.
+  steps:
+  - stepId: listUsers
+    description: >-
+      List all users in the account with their group memberships and status to
+      form the basis of the access review.
+    operationId: listUsers
+    parameters:
+    - name: accountUuid
+      in: path
+      value: $inputs.accountUuid
+    - name: pageSize
+      in: query
+      value: 1000
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      userCount: $response.body#/totalCount
+      firstUserUid: $response.body#/items/0/uid
+  - stepId: listGroups
+    description: >-
+      List all groups in the account so each user's memberships can be mapped to
+      named groups during the review.
+    operationId: listGroups
+    parameters:
+    - name: accountUuid
+      in: path
+      value: $inputs.accountUuid
+    - name: pageSize
+      in: query
+      value: 1000
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      groupCount: $response.body#/totalCount
+      firstGroupId: $response.body#/items/0/groupId
+  - stepId: listPermissions
+    description: >-
+      List all permissions defined for the account so each group's effective
+      access can be evaluated against policy.
+    operationId: listPermissions
+    parameters:
+    - name: accountUuid
+      in: path
+      value: $inputs.accountUuid
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      firstPermissionName: $response.body#/permissions/0/permissionName
+      firstScopeType: $response.body#/permissions/0/scopeType
+  outputs:
+    userCount: $steps.listUsers.outputs.userCount
+    groupCount: $steps.listGroups.outputs.groupCount
+    firstPermissionName: $steps.listPermissions.outputs.firstPermissionName

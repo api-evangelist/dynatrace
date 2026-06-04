@@ -1,0 +1,92 @@
+arazzo: 1.0.1
+info:
+  title: Dynatrace Export Logs for SIEM Forwarding
+  summary: Aggregate logs to size the export, then bulk-export the matching records page by page.
+  description: >-
+    Prepares a bulk log extract for an external SIEM or archive. The workflow
+    first aggregates the matching logs to understand the volume per group, then
+    runs the slice-based bulk export endpoint to retrieve the first page of
+    records along with the cursor for continued pagination. Every step spells
+    out its request inline so the flow can be read and executed without opening
+    the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: logsApi
+  url: ../openapi/dynatrace-log-monitoring-api-v2-openapi.yml
+  type: openapi
+workflows:
+- workflowId: export-logs-for-siem
+  summary: Size a log export with aggregation, then bulk-export the records.
+  description: >-
+    Aggregates the matching logs to estimate volume, then exports the first
+    page of records and returns the slice cursor for continued retrieval.
+  inputs:
+    type: object
+    required:
+    - exportQuery
+    properties:
+      exportQuery:
+        type: string
+        description: DQL query selecting the logs to export.
+      groupBy:
+        type: string
+        description: Comma-separated fields to aggregate by when sizing the export.
+      from:
+        type: string
+        description: Start of the queried time range (e.g. now-24h).
+      to:
+        type: string
+        description: End of the queried time range (e.g. now).
+  steps:
+  - stepId: sizeExport
+    description: >-
+      Aggregate the matching logs grouped by the supplied fields to estimate
+      the volume that the export will produce.
+    operationId: aggregateLogs
+    parameters:
+    - name: query
+      in: query
+      value: $inputs.exportQuery
+    - name: groupBy
+      in: query
+      value: $inputs.groupBy
+    - name: from
+      in: query
+      value: $inputs.from
+    - name: to
+      in: query
+      value: $inputs.to
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      topGroup: $response.body#/results/0/groupByFields
+      topCount: $response.body#/results/0/count
+  - stepId: exportRecords
+    description: >-
+      Export the first page of matching log records using the slice-based bulk
+      export endpoint, returning the cursor for continued pagination.
+    operationId: exportLogs
+    parameters:
+    - name: query
+      in: query
+      value: $inputs.exportQuery
+    - name: from
+      in: query
+      value: $inputs.from
+    - name: to
+      in: query
+      value: $inputs.to
+    - name: sort
+      in: query
+      value: -timestamp
+    - name: pageSize
+      in: query
+      value: 1000
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      firstContent: $response.body#/results/0/content
+      nextSliceKey: $response.body#/nextSliceKey
+  outputs:
+    estimatedTopCount: $steps.sizeExport.outputs.topCount
+    nextSliceKey: $steps.exportRecords.outputs.nextSliceKey

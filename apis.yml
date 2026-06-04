@@ -1012,6 +1012,54 @@ maintainers:
     email: kin@apievangelist.com
 specificationVersion: '0.19'
 common:
+  - type: ArazzoWorkflows
+    url: arazzo/
+    workflows:
+    - url: arazzo/dynatrace-account-access-audit-workflow.yml
+      name: Dynatrace Audit Account Access
+      summary: Enumerate users, groups, and permissions across a Dynatrace account for an access review.
+    - url: arazzo/dynatrace-annotate-deployment-event-workflow.yml
+      name: Dynatrace Annotate a Deployment with a Custom Event
+      summary: Resolve a service by name, push a deployment event onto its timeline, and verify it.
+    - url: arazzo/dynatrace-entity-dependency-map-workflow.yml
+      name: Dynatrace Map an Entity's Dependencies
+      summary: List entities matching a selector and expand the top match with its relationships.
+    - url: arazzo/dynatrace-entity-type-discovery-workflow.yml
+      name: Dynatrace Discover an Entity Type and Sample Its Entities
+      summary: List entity types, read one type definition, and list a sample of entities of that type.
+    - url: arazzo/dynatrace-error-log-investigation-workflow.yml
+      name: Dynatrace Investigate Error Logs and Annotate
+      summary: Aggregate error logs by source, pull the matching records, and raise an error event.
+    - url: arazzo/dynatrace-export-logs-for-siem-workflow.yml
+      name: Dynatrace Export Logs for SIEM Forwarding
+      summary: Aggregate logs to size the export, then bulk-export the matching records page by page.
+    - url: arazzo/dynatrace-ingest-and-search-logs-workflow.yml
+      name: Dynatrace Ingest Log Records and Search Them Back
+      summary: Stream log records into Grail and immediately search them back to confirm ingestion.
+    - url: arazzo/dynatrace-ingest-and-verify-metric-workflow.yml
+      name: Dynatrace Ingest a Custom Metric and Verify It
+      summary: Push custom metric data via MINT, confirm the metric is registered, and query it back.
+    - url: arazzo/dynatrace-metric-threshold-alert-workflow.yml
+      name: Dynatrace Query a Metric and Raise an Alert Event
+      summary: Confirm a metric exists, query its data points, and raise a custom alert event.
+    - url: arazzo/dynatrace-onboard-account-user-workflow.yml
+      name: Dynatrace Onboard a User into a New Group
+      summary: Create a group, invite a user assigned to that group, and confirm the membership.
+    - url: arazzo/dynatrace-problem-comment-lifecycle-workflow.yml
+      name: Dynatrace Manage a Problem Comment Lifecycle
+      summary: Add a comment to a problem, read it back, and update its content.
+    - url: arazzo/dynatrace-problem-comment-thread-workflow.yml
+      name: Dynatrace Add a Comment to a Problem and Read the Thread
+      summary: Confirm a problem, post a collaboration comment, and list the full comment thread.
+    - url: arazzo/dynatrace-problem-triage-and-close-workflow.yml
+      name: Dynatrace Triage and Close a Problem
+      summary: List open problems, inspect the top one, annotate it, and close it.
+    - url: arazzo/dynatrace-service-health-snapshot-workflow.yml
+      name: Dynatrace Service Health Snapshot
+      summary: Resolve a service, read a key metric, and list its open problems and recent events.
+    - url: arazzo/dynatrace-service-problem-lookup-workflow.yml
+      name: Dynatrace Find Problems Affecting a Named Service
+      summary: Resolve a service by name, read its details, and list problems impacting it.
   - type: LinkedIn
     url: https://www.linkedin.com/company/dynatrace
   - url: https://www.dynatrace.com/support/help/dynatrace-api

@@ -1,0 +1,100 @@
+arazzo: 1.0.1
+info:
+  title: Dynatrace Manage a Problem Comment Lifecycle
+  summary: Add a comment to a problem, read it back, and update its content.
+  description: >-
+    Walks a single problem comment through its create, read, and update
+    lifecycle. The workflow adds a comment to a problem, fetches it by ID to
+    confirm it persisted, and then updates its content with revised
+    investigation notes. Every step spells out its request inline so the flow
+    can be read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: problemsApi
+  url: ../openapi/dynatrace-problems-api-v2-openapi.yml
+  type: openapi
+workflows:
+- workflowId: problem-comment-lifecycle
+  summary: Create, read, and update a single problem comment.
+  description: >-
+    Adds a comment to a problem, retrieves it by ID, and updates its content
+    with revised notes.
+  inputs:
+    type: object
+    required:
+    - problemId
+    - initialMessage
+    - updatedMessage
+    properties:
+      problemId:
+        type: string
+        description: The unique identifier of the problem.
+      initialMessage:
+        type: string
+        description: The initial comment text to post.
+      updatedMessage:
+        type: string
+        description: The revised comment text to apply on update.
+      context:
+        type: string
+        description: Optional context reference such as a ticket ID.
+  steps:
+  - stepId: addComment
+    description: >-
+      Add the initial comment to the problem and capture its generated comment
+      ID for the subsequent read and update steps.
+    operationId: createProblemComment
+    parameters:
+    - name: problemId
+      in: path
+      value: $inputs.problemId
+    requestBody:
+      contentType: application/json
+      payload:
+        message: $inputs.initialMessage
+        context: $inputs.context
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      commentId: $response.body#/id
+  - stepId: readComment
+    description: >-
+      Read the comment back by problem ID and comment ID to confirm it
+      persisted with the expected content.
+    operationId: getProblemComment
+    parameters:
+    - name: problemId
+      in: path
+      value: $inputs.problemId
+    - name: commentId
+      in: path
+      value: $steps.addComment.outputs.commentId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      content: $response.body#/content
+      authorName: $response.body#/authorName
+  - stepId: updateComment
+    description: >-
+      Update the comment with revised investigation notes, replacing its
+      content.
+    operationId: updateProblemComment
+    parameters:
+    - name: problemId
+      in: path
+      value: $inputs.problemId
+    - name: commentId
+      in: path
+      value: $steps.addComment.outputs.commentId
+    requestBody:
+      contentType: application/json
+      payload:
+        message: $inputs.updatedMessage
+        context: $inputs.context
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      updatedContent: $response.body#/content
+  outputs:
+    commentId: $steps.addComment.outputs.commentId
+    updatedContent: $steps.updateComment.outputs.updatedContent

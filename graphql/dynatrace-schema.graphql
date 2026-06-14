@@ -1,0 +1,1414 @@
+"""
+Dynatrace GraphQL Schema
+Conceptual schema for the Dynatrace observability and AIOps platform.
+Derived from Dynatrace Environment API v2, Configuration API, Account Management API,
+Synthetic API, DQL/Grail Query API, Automation API, Application Security API, and Davis AI API.
+Docs: https://docs.dynatrace.com/docs/dynatrace-api
+GitHub: https://github.com/Dynatrace
+"""
+
+# ─── Scalars ──────────────────────────────────────────────────────────────────
+
+scalar DateTime
+scalar JSON
+scalar Long
+
+# ─── Enums ────────────────────────────────────────────────────────────────────
+
+enum ProblemStatus {
+  OPEN
+  RESOLVED
+}
+
+enum ProblemSeverity {
+  AVAILABILITY
+  CUSTOM_ALERT
+  ERROR
+  MONITORING_UNAVAILABLE
+  PERFORMANCE
+  RESOURCE_CONTENTION
+}
+
+enum AlertStatus {
+  FIRING
+  RESOLVED
+  ACKNOWLEDGED
+}
+
+enum EntityTypeCategory {
+  APPLICATION
+  SERVICE
+  HOST
+  PROCESS_GROUP
+  PROCESS_GROUP_INSTANCE
+  CLOUD
+  KUBERNETES
+  DATABASE
+  NETWORK
+  INFRASTRUCTURE
+  SYNTHETIC
+}
+
+enum MetricAggregationType {
+  AUTO
+  AVG
+  COUNT
+  MAX
+  MEDIAN
+  MIN
+  PERCENTILE
+  SUM
+  VALUE
+}
+
+enum SyntheticMonitorType {
+  BROWSER
+  HTTP
+}
+
+enum SyntheticTestStatus {
+  ENABLED
+  DISABLED
+  INVALID
+}
+
+enum SLOStatus {
+  SUCCESS
+  WARNING
+  FAILURE
+}
+
+enum EventType {
+  DEPLOYMENT_EVENT
+  CUSTOM_ANNOTATION
+  CUSTOM_CONFIGURATION
+  CUSTOM_DEPLOYMENT
+  CUSTOM_INFO
+  ERROR_EVENT
+  MARKED_FOR_TERMINATION
+  PERFORMANCE_EVENT
+  RESOURCE_CONTENTION_EVENT
+}
+
+enum VulnerabilitySeverity {
+  CRITICAL
+  HIGH
+  MEDIUM
+  LOW
+  NONE
+}
+
+enum VulnerabilityStatus {
+  OPEN
+  RESOLVED
+  MUTED
+}
+
+enum AttackType {
+  CMD_INJECTION
+  JNDI
+  SQL_INJECTION
+  SSRF
+  CODE_INJECTION
+}
+
+enum SpanKind {
+  INTERNAL
+  SERVER
+  CLIENT
+  PRODUCER
+  CONSUMER
+}
+
+enum TokenScope {
+  DATA_EXPORT
+  READ_CONFIG
+  WRITE_CONFIG
+  READ_PROBLEMS
+  WRITE_PROBLEMS
+  READ_SYNTHETIC_DATA
+  WRITE_SYNTHETIC
+  METRICS_READ
+  METRICS_WRITE
+  ENTITIES_READ
+  EVENTS_INGEST
+  LOGS_INGEST
+  LOGS_READ
+  SLO_READ
+  SLO_WRITE
+}
+
+enum CredentialType {
+  CERTIFICATE
+  PUBLIC_CERTIFICATE
+  TOKEN
+  USERNAME_PASSWORD
+}
+
+enum BucketStatus {
+  ACTIVE
+  CREATING
+  DELETING
+  UPDATING
+}
+
+enum WorkflowStatus {
+  RUNNING
+  SUCCESS
+  FAILED
+  CANCELLED
+  QUEUED
+}
+
+# ─── Environments & Management Zones ─────────────────────────────────────────
+
+"""Top-level Dynatrace environment (tenant)."""
+type Environment {
+  id: ID!
+  name: String!
+  url: String!
+  status: String
+  managementZones: [ManagementZone!]
+  features: [String!]
+  created: DateTime
+}
+
+"""Extended environment details including license and settings."""
+type EnvironmentDetails {
+  id: ID!
+  name: String!
+  url: String!
+  status: String
+  licenseType: String
+  clusterVersion: String
+  settings: JSON
+}
+
+"""A management zone used to partition entities and permissions."""
+type ManagementZone {
+  id: ID!
+  name: String!
+  description: String
+  rules: [JSON]
+}
+
+"""A unit of measurement used for metric descriptors."""
+type Unit {
+  unitId: String!
+  displayName: String!
+  symbol: String
+}
+
+"""A network zone that groups OneAgent traffic routing."""
+type NetworkZone {
+  id: ID!
+  name: String!
+  description: String
+  alternativeZones: [String!]
+  oneAgentCount: Int
+  activeGateCount: Int
+}
+
+# ─── Entities ─────────────────────────────────────────────────────────────────
+
+"""A monitored entity (host, service, process, application, etc.)."""
+type Entity {
+  entityId: ID!
+  displayName: String!
+  type: String!
+  firstSeenTime: DateTime
+  lastSeenTime: DateTime
+  tags: [EntityTag!]
+  managementZones: [ManagementZone!]
+  properties: [EntityProperty!]
+  toRelationships: [EntityRelationship!]
+  fromRelationships: [EntityRelationship!]
+}
+
+"""Full entity details including all properties and relationships."""
+type EntityDetails {
+  entityId: ID!
+  displayName: String!
+  type: String!
+  firstSeenTime: DateTime
+  lastSeenTime: DateTime
+  tags: [EntityTag!]
+  managementZones: [ManagementZone!]
+  properties: JSON
+  toRelationships: JSON
+  fromRelationships: JSON
+  icon: String
+}
+
+"""A descriptor for an entity type (host, service, etc.)."""
+type EntityType {
+  type: String!
+  displayName: String!
+  dimensionKey: String
+  properties: [EntityTypeProperty!]
+  relationships: [EntityTypeRelationship!]
+}
+
+"""A property descriptor on an entity type."""
+type EntityTypeProperty {
+  id: String!
+  displayName: String!
+  type: String!
+}
+
+"""A relationship descriptor between entity types."""
+type EntityTypeRelationship {
+  id: String!
+  sources: [String!]
+  targets: [String!]
+}
+
+"""A tag applied to a monitored entity."""
+type EntityTag {
+  context: String!
+  key: String!
+  value: String
+  source: String
+}
+
+"""A key-value property on a monitored entity."""
+type EntityProperty {
+  key: String!
+  value: JSON
+}
+
+"""A directional relationship between two entities."""
+type EntityRelationship {
+  fromEntityId: ID!
+  toEntityId: ID!
+  relationType: String!
+}
+
+# ─── Services ─────────────────────────────────────────────────────────────────
+
+"""A service entity monitored by Dynatrace."""
+type Service {
+  entityId: ID!
+  displayName: String!
+  type: String
+  tags: [EntityTag!]
+  managementZones: [ManagementZone!]
+  serviceType: String
+  webApplicationId: String
+  fromRelationships: [EntityRelationship!]
+  toRelationships: [EntityRelationship!]
+}
+
+"""Extended service details with performance data."""
+type ServiceDetails {
+  entityId: ID!
+  displayName: String!
+  serviceType: String
+  technologies: [String!]
+  throughput: Float
+  responseTime: Float
+  failureRate: Float
+  tags: [EntityTag!]
+  managementZones: [ManagementZone!]
+}
+
+"""Aggregated metric values for a service."""
+type ServiceMetrics {
+  serviceId: ID!
+  responseTime: Float
+  throughput: Float
+  failureRate: Float
+  requestCount: Long
+  from: DateTime
+  to: DateTime
+}
+
+"""A dependency relationship from one service to another."""
+type ServiceDependency {
+  fromServiceId: ID!
+  toServiceId: ID!
+  callsPerMinute: Float
+  latencyMs: Float
+}
+
+# ─── Applications ─────────────────────────────────────────────────────────────
+
+"""A web or mobile application entity."""
+type Application {
+  entityId: ID!
+  displayName: String!
+  type: String
+  tags: [EntityTag!]
+  managementZones: [ManagementZone!]
+}
+
+"""Extended application details."""
+type ApplicationDetails {
+  entityId: ID!
+  displayName: String!
+  type: String
+  url: String
+  realUserMonitoringEnabled: Boolean
+  sessionReplayEnabled: Boolean
+  tags: [EntityTag!]
+  managementZones: [ManagementZone!]
+}
+
+"""Aggregated UX and performance metrics for an application."""
+type ApplicationMetrics {
+  applicationId: ID!
+  satisfiedUsers: Float
+  toleratingUsers: Float
+  frustratedUsers: Float
+  bounceRate: Float
+  sessions: Long
+  from: DateTime
+  to: DateTime
+}
+
+"""An application detection rule that maps URLs to applications."""
+type ApplicationDetection {
+  id: ID!
+  applicationId: ID!
+  filterConfig: JSON
+  order: Int
+}
+
+# ─── Processes ────────────────────────────────────────────────────────────────
+
+"""A process group instance (single process on a host)."""
+type Process {
+  entityId: ID!
+  displayName: String!
+  hostId: ID
+  processGroupId: ID
+  tags: [EntityTag!]
+}
+
+"""Extended process instance details."""
+type ProcessDetails {
+  entityId: ID!
+  displayName: String!
+  hostId: ID
+  pid: Int
+  softwareTechnologies: [String!]
+  tags: [EntityTag!]
+  properties: [EntityProperty!]
+}
+
+"""A logical group of identical processes across hosts."""
+type ProcessGroup {
+  entityId: ID!
+  displayName: String!
+  tags: [EntityTag!]
+  managementZones: [ManagementZone!]
+}
+
+"""Extended process group details."""
+type ProcessGroupDetails {
+  entityId: ID!
+  displayName: String!
+  softwareTechnologies: [String!]
+  instances: [Process!]
+  tags: [EntityTag!]
+  managementZones: [ManagementZone!]
+}
+
+# ─── Metrics ─────────────────────────────────────────────────────────────────
+
+"""A single metric key with descriptor information."""
+type Metric {
+  metricId: String!
+  displayName: String!
+  unit: String
+  tags: [String!]
+  aggregationTypes: [MetricAggregationType!]
+}
+
+"""Full descriptor for a metric including dimensions and unit."""
+type MetricDescriptor {
+  metricId: String!
+  displayName: String!
+  description: String
+  unit: String
+  unitDisplayName: String
+  dimensions: [Dimension!]
+  defaultAggregation: MetricAggregationType
+  aggregationTypes: [MetricAggregationType!]
+  tags: [String!]
+  transformations: [String!]
+  created: Long
+  lastModified: Long
+}
+
+"""A metric selector expression for querying."""
+type MetricExpression {
+  metricSelector: String!
+  resolution: String
+  from: String
+  to: String
+}
+
+"""A time series result for a single metric key."""
+type MetricSeries {
+  metricId: String!
+  dimensionMap: JSON
+  timestamps: [Long!]
+  values: [Float]
+}
+
+"""A single data point (timestamp + value) in a metric series."""
+type MetricDataPoint {
+  timestamp: Long!
+  value: Float
+}
+
+"""A generic timestamp/value pair."""
+type DataPoint {
+  timestamp: Long!
+  value: Float
+}
+
+"""A metric dimension definition."""
+type Dimension {
+  key: String!
+  displayName: String!
+  type: String
+}
+
+"""A concrete value for a metric dimension."""
+type DimensionValue {
+  key: String!
+  value: String!
+}
+
+# ─── Traces & Spans ───────────────────────────────────────────────────────────
+
+"""A distributed trace (collection of spans for one request)."""
+type Trace {
+  traceId: ID!
+  rootSpanId: String
+  startTime: DateTime
+  endTime: DateTime
+  duration: Long
+  rootServiceId: ID
+  spans: [Span!]
+}
+
+"""Extended trace with segment breakdown."""
+type TraceDetails {
+  traceId: ID!
+  startTime: DateTime
+  endTime: DateTime
+  duration: Long
+  rootServiceId: ID
+  segments: [TraceSegment!]
+  spans: [Span!]
+}
+
+"""A segment grouping spans within a trace."""
+type TraceSegment {
+  segmentId: String!
+  serviceId: ID
+  startTime: DateTime
+  endTime: DateTime
+  duration: Long
+  spans: [Span!]
+}
+
+"""A single span within a distributed trace."""
+type Span {
+  spanId: String!
+  traceId: ID!
+  parentSpanId: String
+  operationName: String!
+  serviceName: String
+  startTime: DateTime
+  endTime: DateTime
+  duration: Long
+  kind: SpanKind
+  statusCode: String
+  statusMessage: String
+  attributes: JSON
+  events: [SpanEvent!]
+  links: [SpanLink!]
+}
+
+"""Extended span details."""
+type SpanDetails {
+  spanId: String!
+  traceId: ID!
+  parentSpanId: String
+  operationName: String!
+  serviceName: String
+  startTime: DateTime
+  duration: Long
+  kind: SpanKind
+  attributes: JSON
+  events: [SpanEvent!]
+  links: [SpanLink!]
+  resourceAttributes: JSON
+}
+
+"""An event recorded within a span."""
+type SpanEvent {
+  name: String!
+  timestamp: DateTime!
+  attributes: JSON
+}
+
+"""A link from one span to another (cross-trace reference)."""
+type SpanLink {
+  traceId: ID!
+  spanId: String!
+  attributes: JSON
+}
+
+# ─── Problems & Alerts ────────────────────────────────────────────────────────
+
+"""A detected problem (incident) in the Dynatrace environment."""
+type Problem {
+  problemId: ID!
+  displayId: String!
+  title: String!
+  status: ProblemStatus!
+  severity: ProblemSeverity!
+  startTime: DateTime!
+  endTime: DateTime
+  affectedEntities: [Entity!]
+  impactedEntities: [Entity!]
+  managementZones: [ManagementZone!]
+}
+
+"""Full problem details including root cause and evidence."""
+type ProblemDetails {
+  problemId: ID!
+  displayId: String!
+  title: String!
+  status: ProblemStatus!
+  severity: ProblemSeverity!
+  startTime: DateTime!
+  endTime: DateTime
+  affectedEntities: [Entity!]
+  impactedEntities: [Entity!]
+  managementZones: [ManagementZone!]
+  rootCause: RootCause
+  evidenceDetails: [Evidence!]
+  impacts: [ProblemImpact!]
+  comments: [ProblemComment!]
+}
+
+"""Impact details for a problem."""
+type ProblemImpact {
+  impactType: String!
+  impactedEntity: Entity
+  estimatedAffectedUsers: Int
+}
+
+"""Root cause determination for a problem."""
+type RootCause {
+  entity: Entity
+  evidenceType: String
+  rootCauseEvents: [RootCauseEvent!]
+}
+
+"""An event that contributed to a problem's root cause."""
+type RootCauseEvent {
+  eventId: String!
+  eventType: String!
+  entityId: ID
+  startTime: DateTime
+  endTime: DateTime
+  title: String
+}
+
+"""A piece of evidence supporting a problem analysis."""
+type Evidence {
+  evidenceType: String!
+  entity: Entity
+  displayName: String
+  startTime: DateTime
+  endTime: DateTime
+  rootCauseRelevant: Boolean
+  details: JSON
+}
+
+"""A user comment on a problem."""
+type ProblemComment {
+  id: ID!
+  createdAt: DateTime!
+  authorName: String
+  context: String
+  content: String!
+}
+
+"""An alert triggered by an alerting profile."""
+type Alert {
+  alertId: ID!
+  title: String!
+  status: AlertStatus!
+  severity: ProblemSeverity
+  createdAt: DateTime!
+  resolvedAt: DateTime
+  conditions: [AlertCondition!]
+}
+
+"""A condition that caused an alert to fire."""
+type AlertCondition {
+  conditionId: String!
+  metricKey: String
+  threshold: Float
+  operator: String
+  violationCount: Int
+}
+
+# ─── SLOs ─────────────────────────────────────────────────────────────────────
+
+"""A Service Level Objective definition."""
+type SLO {
+  id: ID!
+  name: String!
+  description: String
+  enabled: Boolean!
+  status: SLOStatus
+  target: Float!
+  warning: Float
+  evaluationType: String
+  filter: String
+  metricExpression: String
+}
+
+"""Full SLO details with evaluation results."""
+type SLODetails {
+  id: ID!
+  name: String!
+  description: String
+  enabled: Boolean!
+  status: SLOStatus
+  target: Float!
+  warning: Float
+  evaluationType: String
+  filter: String
+  metricExpression: String
+  numeratorValue: Float
+  denominatorValue: Float
+  evaluatedPercentage: Float
+  errorBudget: ErrorBudget
+  targets: [SLOTarget!]
+  burnRate: Float
+}
+
+"""A performance target within an SLO."""
+type SLOTarget {
+  target: Float!
+  warning: Float
+  period: String
+  timeframe: String
+}
+
+"""Budget information for an SLO."""
+type SLOBudget {
+  budgetRemaining: Float
+  budgetConsumed: Float
+  budgetTotal: Float
+  status: SLOStatus
+}
+
+"""Error budget computed from SLO evaluation."""
+type ErrorBudget {
+  burnRate: Float
+  burnRateType: String
+  estimated: Boolean
+  fastBurnThreshold: Float
+}
+
+# ─── Tags ─────────────────────────────────────────────────────────────────────
+
+"""A tag applied to or available for monitored entities."""
+type Tag {
+  context: String!
+  key: String!
+  value: String
+}
+
+"""An auto-tagging override for a specific entity."""
+type TagOverride {
+  entityId: ID!
+  tags: [Tag!]!
+}
+
+# ─── Dashboards ───────────────────────────────────────────────────────────────
+
+"""A Dynatrace dashboard document."""
+type Dashboard {
+  id: ID!
+  displayName: String!
+  owner: String
+  shared: Boolean
+  dashboardFilter: JSON
+  tilesCount: Int
+  created: DateTime
+  modified: DateTime
+}
+
+"""Full dashboard with tiles."""
+type DashboardDetails {
+  id: ID!
+  displayName: String!
+  owner: String
+  shared: Boolean
+  dashboardFilter: JSON
+  tiles: [Tile!]!
+  created: DateTime
+  modified: DateTime
+}
+
+"""A tile within a Dynatrace dashboard."""
+type Tile {
+  tileId: String!
+  tileType: String!
+  name: String
+  configured: Boolean
+  bounds: JSON
+  tileFilter: JSON
+  metricExpressions: [String!]
+  chartConfig: JSON
+}
+
+# ─── Synthetic Monitoring ─────────────────────────────────────────────────────
+
+"""Top-level synthetic monitoring resource."""
+type Synthetic {
+  monitorCount: Int!
+  monitors: [SyntheticMonitor!]!
+}
+
+"""A synthetic monitor (browser or HTTP)."""
+type SyntheticMonitor {
+  entityId: ID!
+  name: String!
+  type: SyntheticMonitorType!
+  frequencyMin: Int
+  enabled: Boolean!
+  status: SyntheticTestStatus
+  locations: [String!]
+  tags: [EntityTag!]
+  managementZones: [ManagementZone!]
+  script: JSON
+}
+
+"""A single synthetic test run."""
+type Test {
+  testId: ID!
+  monitorId: ID!
+  startTime: DateTime!
+  endTime: DateTime
+  location: String
+  success: Boolean
+  responseTime: Long
+  steps: [StepResult!]
+}
+
+"""A test execution result."""
+type TestResult {
+  monitorId: ID!
+  locationId: String
+  startTime: DateTime!
+  success: Boolean!
+  responseTime: Long
+  errorMessage: String
+  steps: [StepResult!]
+}
+
+"""Result of a single step within a synthetic test."""
+type StepResult {
+  stepId: Int!
+  stepName: String
+  startTime: DateTime
+  endTime: DateTime
+  duration: Long
+  success: Boolean
+  errorMessage: String
+  performanceMilestones: JSON
+}
+
+# ─── Auto-Tagging & API Tokens ────────────────────────────────────────────────
+
+"""An automatic tagging rule."""
+type AutoTag {
+  id: ID!
+  name: String!
+  description: String
+  rules: [JSON]
+}
+
+"""An API access token."""
+type APIToken {
+  id: ID!
+  name: String!
+  enabled: Boolean!
+  scopes: [TokenScope!]!
+  owner: String
+  created: DateTime
+  lastUsedDate: DateTime
+  expirationDate: DateTime
+  revoked: Boolean
+}
+
+# ─── Events & Logs ───────────────────────────────────────────────────────────
+
+"""A custom or system-generated event on an entity."""
+type Event {
+  eventId: String!
+  eventType: EventType!
+  title: String
+  entityId: ID
+  startTime: DateTime!
+  endTime: DateTime
+  properties: JSON
+}
+
+"""A single log record stored in Grail."""
+type LogRecord {
+  timestamp: DateTime!
+  content: String!
+  status: String
+  log_source: String
+  dt_entity_id: String
+  attributes: JSON
+}
+
+"""An audit log entry recording a user or system action."""
+type AuditLog {
+  logId: ID!
+  eventType: String!
+  category: String
+  entityId: String
+  user: String
+  userType: String
+  patch: JSON
+  timestamp: DateTime!
+  success: Boolean
+  message: String
+}
+
+"""A business event ingested for business observability."""
+type BusinessEvent {
+  id: ID!
+  eventType: String!
+  eventProvider: String
+  timestamp: DateTime!
+  data: JSON
+}
+
+# ─── Application Security ────────────────────────────────────────────────────
+
+"""A detected software vulnerability."""
+type Vulnerability {
+  id: ID!
+  displayName: String!
+  severity: VulnerabilitySeverity!
+  status: VulnerabilityStatus!
+  cvssScore: Float
+  cveIds: [String!]
+  affectedEntities: [Entity!]
+  firstDetectedAt: DateTime
+  lastUpdatedAt: DateTime
+  remediationItems: [RemediationItem!]
+}
+
+"""A remediation item for a vulnerability."""
+type RemediationItem {
+  id: ID!
+  vulnerableComponentId: String
+  remediationType: String
+  mutedStatus: String
+}
+
+"""A detected runtime attack."""
+type Attack {
+  id: ID!
+  attackType: AttackType!
+  displayName: String!
+  state: String
+  severity: VulnerabilitySeverity
+  sourceEntityId: ID
+  targetEntityId: ID
+  attackTimestamp: DateTime
+  requestAttributes: JSON
+}
+
+"""Security advice from Davis Security Advisor."""
+type SecurityAdvice {
+  adviceId: ID!
+  name: String!
+  adviceType: String
+  vulnerabilityId: ID
+  affectedEntities: [Entity!]
+}
+
+# ─── Davis AI & Analytics ────────────────────────────────────────────────────
+
+"""A Davis AI analysis result (anomaly detection or forecast)."""
+type DavisAnalysis {
+  analysisId: ID!
+  type: String!
+  metricKey: String
+  from: DateTime
+  to: DateTime
+  status: String
+  result: JSON
+}
+
+"""A metric forecast produced by Davis AI."""
+type Forecast {
+  metricKey: String!
+  forecastFrom: DateTime!
+  forecastTo: DateTime!
+  resolution: String
+  values: [DataPoint!]!
+  upperBounds: [DataPoint!]
+  lowerBounds: [DataPoint!]
+}
+
+"""An anomaly detected by Davis AI in a metric."""
+type Anomaly {
+  anomalyId: ID!
+  metricKey: String!
+  severity: String
+  startTime: DateTime!
+  endTime: DateTime
+  baseline: Float
+  peak: Float
+  entityId: ID
+}
+
+# ─── Automation (Workflows) ──────────────────────────────────────────────────
+
+"""An automation workflow definition."""
+type Workflow {
+  id: ID!
+  title: String!
+  description: String
+  owner: String
+  isPrivate: Boolean
+  trigger: JSON
+  tasks: [JSON]
+  schemaVersion: String
+}
+
+"""An execution instance of a workflow."""
+type WorkflowExecution {
+  id: ID!
+  workflowId: ID!
+  status: WorkflowStatus!
+  startedAt: DateTime
+  finishedAt: DateTime
+  trigger: JSON
+  tasks: [JSON]
+}
+
+# ─── Extensions ──────────────────────────────────────────────────────────────
+
+"""A Dynatrace monitoring extension (2.0 framework)."""
+type Extension {
+  extensionName: String!
+  version: String!
+  extensionType: String
+  status: String
+  description: String
+  minDynatraceVersion: String
+  metadata: JSON
+}
+
+# ─── Credentials & Storage ────────────────────────────────────────────────────
+
+"""A credential stored in the Dynatrace Credential Vault."""
+type Credential {
+  id: ID!
+  name: String!
+  description: String
+  type: CredentialType!
+  owner: String
+  scopes: [String!]
+}
+
+"""A Grail data lakehouse storage bucket."""
+type Bucket {
+  bucketName: String!
+  status: BucketStatus!
+  retentionDays: Int!
+  table: String
+  created: DateTime
+  updated: DateTime
+}
+
+"""A document (dashboard, notebook, launchpad) in Dynatrace."""
+type Document {
+  id: ID!
+  name: String!
+  type: String!
+  owner: String
+  isPrivate: Boolean
+  version: Long
+  created: DateTime
+  modified: DateTime
+  content: JSON
+}
+
+# ─── Input Types ─────────────────────────────────────────────────────────────
+
+input EventInput {
+  eventType: EventType!
+  title: String
+  entitySelector: String!
+  from: DateTime
+  to: DateTime
+  properties: JSON
+}
+
+input SLOInput {
+  name: String!
+  description: String
+  enabled: Boolean!
+  target: Float!
+  warning: Float
+  evaluationType: String!
+  filter: String!
+  metricExpression: String!
+}
+
+input SyntheticMonitorInput {
+  name: String!
+  type: SyntheticMonitorType!
+  frequencyMin: Int!
+  enabled: Boolean!
+  locations: [String!]!
+  script: JSON
+  tags: [TagInput]
+}
+
+input APITokenInput {
+  name: String!
+  scopes: [TokenScope!]!
+  expirationDate: DateTime
+}
+
+input TagInput {
+  context: String!
+  key: String!
+  value: String
+}
+
+input LogRecordInput {
+  timestamp: DateTime!
+  content: String!
+  status: String
+  log_source: String
+  attributes: JSON
+}
+
+input BusinessEventInput {
+  eventType: String!
+  eventProvider: String
+  timestamp: DateTime
+  data: JSON!
+}
+
+input WorkflowInput {
+  title: String!
+  description: String
+  isPrivate: Boolean
+  trigger: JSON
+  tasks: [JSON]!
+}
+
+input BucketInput {
+  bucketName: String!
+  table: String!
+  retentionDays: Int!
+}
+
+input CredentialInput {
+  name: String!
+  description: String
+  type: CredentialType!
+  token: String
+  username: String
+  password: String
+}
+
+# ─── Root Types ───────────────────────────────────────────────────────────────
+
+type Query {
+  """Fetch details about the current environment."""
+  environment(id: ID!): EnvironmentDetails
+
+  """List all Dynatrace environments in the account."""
+  environments: [Environment!]!
+
+  """List all management zones."""
+  managementZones: [ManagementZone!]!
+
+  """List all network zones."""
+  networkZones: [NetworkZone!]!
+
+  """Fetch a single monitored entity by ID."""
+  entity(entityId: ID!): EntityDetails
+
+  """Query monitored entities with an entity selector."""
+  entities(
+    entitySelector: String
+    type: String
+    tags: [String]
+    managementZone: String
+    from: String
+    to: String
+    nextPageKey: String
+    pageSize: Int
+  ): [Entity!]!
+
+  """List all entity types available in the environment."""
+  entityTypes: [EntityType!]!
+
+  """Fetch a service entity by ID."""
+  service(entityId: ID!): ServiceDetails
+
+  """List service entities."""
+  services(selector: String, tags: [String]): [Service!]!
+
+  """Fetch an application entity by ID."""
+  application(entityId: ID!): ApplicationDetails
+
+  """List application entities."""
+  applications(selector: String): [Application!]!
+
+  """Fetch a process group by ID."""
+  processGroup(entityId: ID!): ProcessGroupDetails
+
+  """List process groups."""
+  processGroups(selector: String): [ProcessGroup!]!
+
+  """Fetch a metric descriptor."""
+  metricDescriptor(metricKey: String!): MetricDescriptor
+
+  """List metric descriptors matching a selector."""
+  metricDescriptors(
+    metricSelector: String
+    text: String
+    pageSize: Int
+    nextPageKey: String
+  ): [MetricDescriptor!]!
+
+  """Query metric time series data."""
+  metricData(
+    metricSelector: String!
+    resolution: String
+    from: String
+    to: String
+    entitySelector: String
+  ): [MetricSeries!]!
+
+  """Fetch a distributed trace by trace ID."""
+  trace(traceId: ID!): TraceDetails
+
+  """Fetch a problem by ID."""
+  problem(problemId: ID!): ProblemDetails
+
+  """List problems in the environment."""
+  problems(
+    from: String
+    to: String
+    status: ProblemStatus
+    entitySelector: String
+    problemSelector: String
+    managementZone: String
+    nextPageKey: String
+    pageSize: Int
+  ): [Problem!]!
+
+  """Fetch an SLO by ID."""
+  slo(id: ID!): SLODetails
+
+  """List all SLOs."""
+  slos(from: String, to: String, nextPageKey: String): [SLO!]!
+
+  """Fetch a dashboard by ID."""
+  dashboard(id: ID!): DashboardDetails
+
+  """List dashboards."""
+  dashboards(owner: String): [Dashboard!]!
+
+  """Fetch a synthetic monitor by ID."""
+  syntheticMonitor(monitorId: ID!): SyntheticMonitor
+
+  """List synthetic monitors."""
+  syntheticMonitors(
+    type: SyntheticMonitorType
+    enabled: Boolean
+    tags: [String]
+  ): [SyntheticMonitor!]!
+
+  """Fetch an API token by ID."""
+  apiToken(id: ID!): APIToken
+
+  """List API tokens."""
+  apiTokens(nextPageKey: String): [APIToken!]!
+
+  """Query events for entities in a time range."""
+  events(
+    from: String
+    to: String
+    entitySelector: String
+    eventType: String
+    nextPageKey: String
+  ): [Event!]!
+
+  """Search log records using DQL or a simple query."""
+  logRecords(
+    query: String
+    from: String
+    to: String
+    limit: Int
+    nextSliceKey: String
+  ): [LogRecord!]!
+
+  """List audit log entries."""
+  auditLogs(
+    from: String
+    to: String
+    filter: String
+    sort: String
+    nextPageKey: String
+  ): [AuditLog!]!
+
+  """Fetch a vulnerability by ID."""
+  vulnerability(id: ID!): Vulnerability
+
+  """List detected vulnerabilities."""
+  vulnerabilities(
+    riskLevel: VulnerabilitySeverity
+    status: VulnerabilityStatus
+    nextPageKey: String
+  ): [Vulnerability!]!
+
+  """List detected runtime attacks."""
+  attacks(attackType: AttackType, state: String): [Attack!]!
+
+  """Fetch a workflow by ID."""
+  workflow(id: ID!): Workflow
+
+  """List automation workflows."""
+  workflows: [Workflow!]!
+
+  """List workflow executions."""
+  workflowExecutions(workflowId: ID, status: WorkflowStatus): [WorkflowExecution!]!
+
+  """List available extensions."""
+  extensions(nextPageKey: String): [Extension!]!
+
+  """Fetch a Grail storage bucket by name."""
+  bucket(id: ID!): Bucket
+
+  """List Grail storage buckets."""
+  buckets: [Bucket!]!
+
+  """List stored credentials."""
+  credentials(type: CredentialType): [Credential!]!
+
+  """List documents (dashboards, notebooks)."""
+  documents(type: String, owner: String): [Document!]!
+
+  """Fetch a document by ID."""
+  document(id: ID!): Document
+
+  """List auto-tagging rules."""
+  autoTags: [AutoTag!]!
+
+  """Run a Davis AI forecast on a metric."""
+  forecast(
+    metricKey: String!
+    from: String!
+    to: String!
+    forecastOffset: String!
+  ): Forecast
+
+  """List Davis AI anomalies."""
+  anomalies(
+    metricKey: String
+    from: String
+    to: String
+    entityId: ID
+  ): [Anomaly!]!
+}
+
+type Mutation {
+  """Ingest a custom event targeting entities."""
+  createEvent(input: EventInput!): Event
+
+  """Close an open problem with an optional comment."""
+  closeProblem(problemId: ID!, comment: String): ProblemDetails
+
+  """Add a comment to a problem."""
+  addProblemComment(problemId: ID!, comment: String!): ProblemComment
+
+  """Create a new SLO."""
+  createSLO(input: SLOInput!): SLODetails
+
+  """Update an existing SLO."""
+  updateSLO(id: ID!, input: SLOInput!): SLODetails
+
+  """Delete an SLO."""
+  deleteSLO(id: ID!): Boolean
+
+  """Create a synthetic monitor."""
+  createSyntheticMonitor(input: SyntheticMonitorInput!): SyntheticMonitor
+
+  """Update a synthetic monitor."""
+  updateSyntheticMonitor(id: ID!, input: SyntheticMonitorInput!): SyntheticMonitor
+
+  """Delete a synthetic monitor."""
+  deleteSyntheticMonitor(id: ID!): Boolean
+
+  """Create an API token."""
+  createAPIToken(input: APITokenInput!): APIToken
+
+  """Revoke an API token."""
+  revokeAPIToken(id: ID!): Boolean
+
+  """Add tags to a monitored entity."""
+  tagEntity(entityId: ID!, tags: [TagInput!]!): Entity
+
+  """Remove tags from a monitored entity."""
+  untagEntity(entityId: ID!, tags: [String!]!): Entity
+
+  """Ingest log records into Grail."""
+  ingestLogRecords(records: [LogRecordInput!]!): Boolean
+
+  """Push metric data via MINT line protocol."""
+  ingestMetric(lines: String!): Boolean
+
+  """Ingest a business event for business observability."""
+  ingestBusinessEvent(event: BusinessEventInput!): Boolean
+
+  """Create an automation workflow."""
+  createWorkflow(input: WorkflowInput!): Workflow
+
+  """Execute an automation workflow."""
+  executeWorkflow(id: ID!): WorkflowExecution
+
+  """Delete a workflow."""
+  deleteWorkflow(id: ID!): Boolean
+
+  """Create a Grail storage bucket."""
+  createBucket(input: BucketInput!): Bucket
+
+  """Delete a Grail storage bucket."""
+  deleteBucket(id: ID!): Boolean
+
+  """Store a credential in the vault."""
+  createCredential(input: CredentialInput!): Credential
+
+  """Delete a stored credential."""
+  deleteCredential(id: ID!): Boolean
+}

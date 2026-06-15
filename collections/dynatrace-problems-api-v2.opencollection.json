@@ -1,0 +1,268 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dynatrace Problems API v2",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Problems",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Dynatrace List Problems",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/problems",
+            "params": [
+              {
+                "name": "nextPageKey",
+                "value": "example-value",
+                "type": "query",
+                "description": "The cursor for the next page of results, obtained from the nextPageKey field of a previous response. When this parameter is set, all other query parameters except pageSize are ignored."
+              },
+              {
+                "name": "pageSize",
+                "value": "500",
+                "type": "query",
+                "description": "The number of problems to return per page. Default is 50, maximum is 500."
+              },
+              {
+                "name": "problemSelector",
+                "value": "type(SERVICE)",
+                "type": "query",
+                "description": "Defines the scope of the query using the problem selector syntax. Allows filtering by status, severity, management zone, and other problem properties. For example, status(OPEN),severityLevel(AVAILABILITY)."
+              },
+              {
+                "name": "entitySelector",
+                "value": "type(SERVICE)",
+                "type": "query",
+                "description": "Filters results to problems affecting entities matching this selector. Use the entity selector syntax, e.g., type(SERVICE), tag(production). Problems are returned if any affected or impacted entity matches."
+              },
+              {
+                "name": "from",
+                "value": "example-value",
+                "type": "query",
+                "description": "The start of the queried time range. Use a relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h."
+              },
+              {
+                "name": "to",
+                "value": "example-value",
+                "type": "query",
+                "description": "The end of the queried time range. Use a relative expression (now), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now."
+              },
+              {
+                "name": "sort",
+                "value": "example-value",
+                "type": "query",
+                "description": "Defines the sort order of the results. Use field name prefixed with + for ascending or - for descending. For example, -startTime sorts by start time descending (newest first)."
+              },
+              {
+                "name": "fields",
+                "value": "example-value",
+                "type": "query",
+                "description": "Defines additional fields to include in the response beyond the default set. Use a comma-separated list. For example, +evidenceDetails,+impactAnalysis to include evidence and impact data."
+              }
+            ]
+          },
+          "docs": "Returns a list of problems from the Dynatrace environment. You can filter problems by problem selector, entity selector, time range, and other criteria. Results are paginated. By default, returns problems from the last two hours."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Get Problem Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/problems/:problemId",
+            "params": [
+              {
+                "name": "problemId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+              },
+              {
+                "name": "fields",
+                "value": "example-value",
+                "type": "query",
+                "description": "Defines additional fields to include in the response. Use a comma-separated list prefixed with +, e.g., +evidenceDetails."
+              }
+            ]
+          },
+          "docs": "Returns the full details of a specific problem, including its severity, affected and impacted entities, root cause analysis, evidence, and management zone assignments. The problem ID is available from the list problems endpoint."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Close Problem",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/problems/:problemId/close",
+            "params": [
+              {
+                "name": "problemId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Closes the specified problem and optionally attaches a closing message explaining the reason for closure. Only problems that are currently OPEN can be closed. Closing a problem will trigger any configured notifications for problem resolution."
+        },
+        {
+          "info": {
+            "name": "Dynatrace List Comments on a Problem",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/problems/:problemId/comments",
+            "params": [
+              {
+                "name": "problemId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+              },
+              {
+                "name": "nextPageKey",
+                "value": "example-value",
+                "type": "query",
+                "description": "Cursor for the next page of results."
+              },
+              {
+                "name": "pageSize",
+                "value": "500",
+                "type": "query",
+                "description": "The number of comments to return per page. Default is 50."
+              }
+            ]
+          },
+          "docs": "Returns a list of all comments attached to the specified problem. Comments are used for collaboration and tracking investigation notes or actions taken."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Add Comment to Problem",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/problems/:problemId/comments",
+            "params": [
+              {
+                "name": "problemId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new comment on the specified problem. Comments can include a context field to categorize or reference external systems. Useful for attaching remediation notes, ticket references, or investigation findings."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Get Comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/problems/:problemId/comments/:commentId",
+            "params": [
+              {
+                "name": "problemId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+              },
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the comment."
+              }
+            ]
+          },
+          "docs": "Returns the details of a specific comment on a problem, identified by both the problem ID and the comment ID."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Update Comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/problems/:problemId/comments/:commentId",
+            "params": [
+              {
+                "name": "problemId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+              },
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the comment."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the content or context of an existing comment on a problem. Only the comment author or an administrator can update a comment."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Delete Comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/problems/:problemId/comments/:commentId",
+            "params": [
+              {
+                "name": "problemId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+              },
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the comment."
+              }
+            ]
+          },
+          "docs": "Permanently deletes a specific comment from a problem. This action cannot be undone. Only the comment author or an administrator can delete a comment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

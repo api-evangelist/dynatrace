@@ -1,0 +1,1725 @@
+{
+  "info": {
+    "_postman_id": "29d8b6ba-46b9-4bbd-af30-c28615404793",
+    "name": "Dynatrace Entities API v2",
+    "description": "The Dynatrace Entities API v2 enables querying of monitored entities such as services, hosts, processes, process groups, and applications within a Dynatrace environment. It supports filtering entities by type, tags, management zones, and time range. Entity responses include topology relationships, properties, tags, and management zone assignments for dependency mapping and infrastructure analysis.\n\nContact Support:\n Name: Dynatrace Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T15:01:27.000Z",
+    "updatedAt": "2026-06-05T15:01:28.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-29d8b6ba-46b9-4bbd-af30-c28615404793"
+  },
+  "item": [
+    {
+      "name": "entities",
+      "item": [
+        {
+          "name": "{entityId}",
+          "item": [
+            {
+              "name": "Dynatrace Get Entity",
+              "id": "99fe3e68-cf86-4aa4-953b-1774cbfc874f",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/entities/:entityId?fields=<string>&from=<string>&to=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "entities",
+                    ":entityId"
+                  ],
+                  "query": [
+                    {
+                      "description": "Defines additional fields to include in the response. Use a comma-separated list prefixed with +, e.g., +properties,+tags.",
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The start of the time range for properties and relationships. Defaults to now-3d.",
+                      "key": "from",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The end of the time range. Defaults to now.",
+                      "key": "to",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "610f8364-4ec6-4dc5-ae2f-474c88baea51",
+                      "key": "entityId",
+                      "value": "<string>",
+                      "description": "(Required) The unique identifier of the entity to retrieve, in the format TYPE-HEXADECIMALID, e.g., SERVICE-1234567890ABCDEF."
+                    }
+                  ]
+                },
+                "description": "Returns the details of a specific monitored entity by its entity ID. The entity ID format is TYPE-HEXADECIMALID, e.g., SERVICE-1234567890ABCDEF. You can request additional fields including properties, tags, relationships, and management zone assignments."
+              },
+              "response": [
+                {
+                  "id": "d0a0c68f-f918-465c-8ba3-e815fe50d0de",
+                  "name": "The entity details",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/entities/:entityId?fields=<string>&from=<string>&to=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "entities",
+                        ":entityId"
+                      ],
+                      "query": [
+                        {
+                          "description": "Defines additional fields to include in the response. Use a comma-separated list prefixed with +, e.g., +properties,+tags.",
+                          "key": "fields",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The start of the time range for properties and relationships. Defaults to now-3d.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The end of the time range. Defaults to now.",
+                          "key": "to",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "entityId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"entityId\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"type\": \"<string>\",\n  \"firstSeenTms\": \"<long>\",\n  \"lastSeenTms\": \"<long>\",\n  \"properties\": {\n    \"commodo_5\": \"nulla\"\n  },\n  \"tags\": [\n    {\n      \"context\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"stringRepresentation\": \"<string>\"\n    },\n    {\n      \"context\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"stringRepresentation\": \"<string>\"\n    }\n  ],\n  \"managementZones\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"toRelationships\": {\n    \"anim_e94\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"fromRelationships\": {\n    \"Lorem_c8e\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:28.000Z",
+                  "updatedAt": "2026-06-05T15:01:28.000Z",
+                  "uid": "35240-d0a0c68f-f918-465c-8ba3-e815fe50d0de"
+                },
+                {
+                  "id": "8df3df00-98a8-42d6-bfd6-76bf39aae3bf",
+                  "name": "Bad request \u2014 invalid query parameters or request body",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/entities/:entityId?fields=<string>&from=<string>&to=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "entities",
+                        ":entityId"
+                      ],
+                      "query": [
+                        {
+                          "description": "Defines additional fields to include in the response. Use a comma-separated list prefixed with +, e.g., +properties,+tags.",
+                          "key": "fields",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The start of the time range for properties and relationships. Defaults to now-3d.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The end of the time range. Defaults to now.",
+                          "key": "to",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "entityId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:28.000Z",
+                  "updatedAt": "2026-06-05T15:01:28.000Z",
+                  "uid": "35240-8df3df00-98a8-42d6-bfd6-76bf39aae3bf"
+                },
+                {
+                  "id": "e0823c28-5d8b-4b61-884f-78f07e921cbf",
+                  "name": "Unauthorized \u2014 missing or invalid API token",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/entities/:entityId?fields=<string>&from=<string>&to=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "entities",
+                        ":entityId"
+                      ],
+                      "query": [
+                        {
+                          "description": "Defines additional fields to include in the response. Use a comma-separated list prefixed with +, e.g., +properties,+tags.",
+                          "key": "fields",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The start of the time range for properties and relationships. Defaults to now-3d.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The end of the time range. Defaults to now.",
+                          "key": "to",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "entityId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:28.000Z",
+                  "updatedAt": "2026-06-05T15:01:28.000Z",
+                  "uid": "35240-e0823c28-5d8b-4b61-884f-78f07e921cbf"
+                },
+                {
+                  "id": "cc65fa3f-7677-4b8f-bb26-ccd5d18219f2",
+                  "name": "Forbidden \u2014 the API token lacks the required scope",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/entities/:entityId?fields=<string>&from=<string>&to=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "entities",
+                        ":entityId"
+                      ],
+                      "query": [
+                        {
+                          "description": "Defines additional fields to include in the response. Use a comma-separated list prefixed with +, e.g., +properties,+tags.",
+                          "key": "fields",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The start of the time range for properties and relationships. Defaults to now-3d.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The end of the time range. Defaults to now.",
+                          "key": "to",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "entityId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:28.000Z",
+                  "updatedAt": "2026-06-05T15:01:28.000Z",
+                  "uid": "35240-cc65fa3f-7677-4b8f-bb26-ccd5d18219f2"
+                },
+                {
+                  "id": "91ed12d9-3f6f-41fb-9049-3bc4a8827b53",
+                  "name": "Not found \u2014 the specified entity or entity type does not exist",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/entities/:entityId?fields=<string>&from=<string>&to=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "entities",
+                        ":entityId"
+                      ],
+                      "query": [
+                        {
+                          "description": "Defines additional fields to include in the response. Use a comma-separated list prefixed with +, e.g., +properties,+tags.",
+                          "key": "fields",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The start of the time range for properties and relationships. Defaults to now-3d.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The end of the time range. Defaults to now.",
+                          "key": "to",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "entityId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:28.000Z",
+                  "updatedAt": "2026-06-05T15:01:28.000Z",
+                  "uid": "35240-91ed12d9-3f6f-41fb-9049-3bc4a8827b53"
+                }
+              ],
+              "createdAt": "2026-06-05T15:01:28.000Z",
+              "updatedAt": "2026-06-05T15:01:28.000Z",
+              "uid": "35240-99fe3e68-cf86-4aa4-953b-1774cbfc874f"
+            }
+          ],
+          "id": "bdab19fc-f7e7-41fe-8ae4-1cf8108f515e",
+          "createdAt": "2026-06-05T15:01:28.000Z",
+          "updatedAt": "2026-06-05T15:01:28.000Z",
+          "uid": "35240-bdab19fc-f7e7-41fe-8ae4-1cf8108f515e"
+        },
+        {
+          "name": "lookup",
+          "item": [
+            {
+              "name": "Dynatrace Look up Entity by Name",
+              "id": "1df059bb-c48f-4ed9-9f8a-1c97be7beb91",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/entities/lookup",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "entities",
+                    "lookup"
+                  ]
+                },
+                "description": "Looks up a specific entity by its display name and type. This is useful when you know the human-readable name of an entity but need its Dynatrace entity ID for use in other API calls or selectors. Returns the matching entity or a 404 if not found."
+              },
+              "response": [
+                {
+                  "id": "1a22a59e-3da3-48fd-8295-aaccf991a8d1",
+                  "name": "The matching entity",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/entities/lookup",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "entities",
+                        "lookup"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"entityId\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"type\": \"<string>\",\n  \"firstSeenTms\": \"<long>\",\n  \"lastSeenTms\": \"<long>\",\n  \"properties\": {\n    \"commodo_5\": \"nulla\"\n  },\n  \"tags\": [\n    {\n      \"context\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"stringRepresentation\": \"<string>\"\n    },\n    {\n      \"context\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"stringRepresentation\": \"<string>\"\n    }\n  ],\n  \"managementZones\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"toRelationships\": {\n    \"anim_e94\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"fromRelationships\": {\n    \"Lorem_c8e\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:28.000Z",
+                  "updatedAt": "2026-06-05T15:01:28.000Z",
+                  "uid": "35240-1a22a59e-3da3-48fd-8295-aaccf991a8d1"
+                },
+                {
+                  "id": "6dbefcb1-c2d4-4dfd-95b8-e905e263951f",
+                  "name": "Bad request \u2014 invalid query parameters or request body",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/entities/lookup",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "entities",
+                        "lookup"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:28.000Z",
+                  "updatedAt": "2026-06-05T15:01:28.000Z",
+                  "uid": "35240-6dbefcb1-c2d4-4dfd-95b8-e905e263951f"
+                },
+                {
+                  "id": "b3aba4e7-ffb7-414e-be8e-4fabf5915ab4",
+                  "name": "Unauthorized \u2014 missing or invalid API token",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/entities/lookup",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "entities",
+                        "lookup"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:28.000Z",
+                  "updatedAt": "2026-06-05T15:01:28.000Z",
+                  "uid": "35240-b3aba4e7-ffb7-414e-be8e-4fabf5915ab4"
+                },
+                {
+                  "id": "23133c1e-9d23-410f-b53b-ef41abec9afd",
+                  "name": "Forbidden \u2014 the API token lacks the required scope",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/entities/lookup",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "entities",
+                        "lookup"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:28.000Z",
+                  "updatedAt": "2026-06-05T15:01:28.000Z",
+                  "uid": "35240-23133c1e-9d23-410f-b53b-ef41abec9afd"
+                },
+                {
+                  "id": "d1bcc98c-58ad-4d9b-b344-ae3997ca3ff1",
+                  "name": "Not found \u2014 the specified entity or entity type does not exist",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/entities/lookup",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "entities",
+                        "lookup"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:28.000Z",
+                  "updatedAt": "2026-06-05T15:01:28.000Z",
+                  "uid": "35240-d1bcc98c-58ad-4d9b-b344-ae3997ca3ff1"
+                }
+              ],
+              "createdAt": "2026-06-05T15:01:28.000Z",
+              "updatedAt": "2026-06-05T15:01:28.000Z",
+              "uid": "35240-1df059bb-c48f-4ed9-9f8a-1c97be7beb91"
+            }
+          ],
+          "id": "753cc67a-fa83-4241-8244-6d53705e3bf4",
+          "createdAt": "2026-06-05T15:01:28.000Z",
+          "updatedAt": "2026-06-05T15:01:28.000Z",
+          "uid": "35240-753cc67a-fa83-4241-8244-6d53705e3bf4"
+        },
+        {
+          "name": "Dynatrace List Entities",
+          "id": "ed245aa8-efc8-41b9-95ff-6ee807821e87",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/entities?nextPageKey=<string>&pageSize=50&entitySelector=<string>&fields=<string>&from=<string>&to=<string>&sort=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "entities"
+              ],
+              "query": [
+                {
+                  "description": "The cursor for the next page of results, obtained from the nextPageKey field of a previous response. When this parameter is set, all other query parameters except pageSize are ignored.",
+                  "key": "nextPageKey",
+                  "value": "<string>"
+                },
+                {
+                  "description": "The number of entities to return per page. Default is 50, maximum is 500.",
+                  "key": "pageSize",
+                  "value": "50"
+                },
+                {
+                  "description": "(Required) Defines the scope of the query by specifying entity filter conditions. Required. Use the entity selector syntax, for example: type(SERVICE) to select all services, or type(HOST),tag(production) to select production hosts. Multiple conditions are ANDed together.",
+                  "key": "entitySelector",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Defines additional fields to include in the entity response beyond the default set. Use a comma-separated list. For example, +properties,+tags,+toRelationships.runsOn to include entity properties, tags, and specific relationship types.",
+                  "key": "fields",
+                  "value": "<string>"
+                },
+                {
+                  "description": "The start of the time range for entity discovery. Entities seen within this range are returned. Use a relative expression (now-7d), ISO 8601, or Unix timestamp in milliseconds.",
+                  "key": "from",
+                  "value": "<string>"
+                },
+                {
+                  "description": "The end of the time range for entity discovery. Default is now.",
+                  "key": "to",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Defines the sort order of results. Use the field name prefixed with + (ascending) or - (descending). For example, +displayName or -lastSeenTms.",
+                  "key": "sort",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "Returns a list of monitored entities matching the specified entity selector. The entity selector is required and must specify at least one condition, such as entity type. Results can be enriched with additional fields including properties, tags, management zones, and relationships. Results are paginated."
+          },
+          "response": [
+            {
+              "id": "0bf9db70-e2c5-42cf-b956-3f32ef73d02f",
+              "name": "A paginated list of monitored entities",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/entities?nextPageKey=<string>&pageSize=50&entitySelector=<string>&fields=<string>&from=<string>&to=<string>&sort=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "entities"
+                  ],
+                  "query": [
+                    {
+                      "description": "The cursor for the next page of results, obtained from the nextPageKey field of a previous response. When this parameter is set, all other query parameters except pageSize are ignored.",
+                      "key": "nextPageKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The number of entities to return per page. Default is 50, maximum is 500.",
+                      "key": "pageSize",
+                      "value": "50"
+                    },
+                    {
+                      "description": "(Required) Defines the scope of the query by specifying entity filter conditions. Required. Use the entity selector syntax, for example: type(SERVICE) to select all services, or type(HOST),tag(production) to select production hosts. Multiple conditions are ANDed together.",
+                      "key": "entitySelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Defines additional fields to include in the entity response beyond the default set. Use a comma-separated list. For example, +properties,+tags,+toRelationships.runsOn to include entity properties, tags, and specific relationship types.",
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The start of the time range for entity discovery. Entities seen within this range are returned. Use a relative expression (now-7d), ISO 8601, or Unix timestamp in milliseconds.",
+                      "key": "from",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The end of the time range for entity discovery. Default is now.",
+                      "key": "to",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Defines the sort order of results. Use the field name prefixed with + (ascending) or - (descending). For example, +displayName or -lastSeenTms.",
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"nextPageKey\": \"<string>\",\n  \"totalCount\": \"<long>\",\n  \"pageSize\": \"<integer>\",\n  \"entities\": [\n    {\n      \"entityId\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"type\": \"<string>\",\n      \"firstSeenTms\": \"<long>\",\n      \"lastSeenTms\": \"<long>\",\n      \"properties\": {\n        \"exercitation_f2\": 25834003.53078118,\n        \"exercitation03\": -58455627.28517994\n      },\n      \"tags\": [\n        {\n          \"context\": \"<string>\",\n          \"key\": \"<string>\",\n          \"value\": \"<string>\",\n          \"stringRepresentation\": \"<string>\"\n        },\n        {\n          \"context\": \"<string>\",\n          \"key\": \"<string>\",\n          \"value\": \"<string>\",\n          \"stringRepresentation\": \"<string>\"\n        }\n      ],\n      \"managementZones\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"toRelationships\": {\n        \"do_7f\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"in_c5\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"magnaf87\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"non2\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"fromRelationships\": {\n        \"mollit_2b2\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    },\n    {\n      \"entityId\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"type\": \"<string>\",\n      \"firstSeenTms\": \"<long>\",\n      \"lastSeenTms\": \"<long>\",\n      \"properties\": {\n        \"officia_e4\": -66948388.11611339\n      },\n      \"tags\": [\n        {\n          \"context\": \"<string>\",\n          \"key\": \"<string>\",\n          \"value\": \"<string>\",\n          \"stringRepresentation\": \"<string>\"\n        },\n        {\n          \"context\": \"<string>\",\n          \"key\": \"<string>\",\n          \"value\": \"<string>\",\n          \"stringRepresentation\": \"<string>\"\n        }\n      ],\n      \"managementZones\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"toRelationships\": {\n        \"nostrud_91\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"fromRelationships\": {\n        \"cillum_e88\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"elit24\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    }\n  ]\n}",
+              "createdAt": "2026-06-05T15:01:28.000Z",
+              "updatedAt": "2026-06-05T15:01:28.000Z",
+              "uid": "35240-0bf9db70-e2c5-42cf-b956-3f32ef73d02f"
+            },
+            {
+              "id": "71c85e6e-e7f8-48d2-8353-5aba3021e7bf",
+              "name": "Bad request \u2014 invalid query parameters or request body",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/entities?nextPageKey=<string>&pageSize=50&entitySelector=<string>&fields=<string>&from=<string>&to=<string>&sort=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "entities"
+                  ],
+                  "query": [
+                    {
+                      "description": "The cursor for the next page of results, obtained from the nextPageKey field of a previous response. When this parameter is set, all other query parameters except pageSize are ignored.",
+                      "key": "nextPageKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The number of entities to return per page. Default is 50, maximum is 500.",
+                      "key": "pageSize",
+                      "value": "50"
+                    },
+                    {
+                      "description": "(Required) Defines the scope of the query by specifying entity filter conditions. Required. Use the entity selector syntax, for example: type(SERVICE) to select all services, or type(HOST),tag(production) to select production hosts. Multiple conditions are ANDed together.",
+                      "key": "entitySelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Defines additional fields to include in the entity response beyond the default set. Use a comma-separated list. For example, +properties,+tags,+toRelationships.runsOn to include entity properties, tags, and specific relationship types.",
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The start of the time range for entity discovery. Entities seen within this range are returned. Use a relative expression (now-7d), ISO 8601, or Unix timestamp in milliseconds.",
+                      "key": "from",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The end of the time range for entity discovery. Default is now.",
+                      "key": "to",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Defines the sort order of results. Use the field name prefixed with + (ascending) or - (descending). For example, +displayName or -lastSeenTms.",
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+              "createdAt": "2026-06-05T15:01:28.000Z",
+              "updatedAt": "2026-06-05T15:01:28.000Z",
+              "uid": "35240-71c85e6e-e7f8-48d2-8353-5aba3021e7bf"
+            },
+            {
+              "id": "30eb835e-38bc-44b8-8095-cba0a9f9a477",
+              "name": "Unauthorized \u2014 missing or invalid API token",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/entities?nextPageKey=<string>&pageSize=50&entitySelector=<string>&fields=<string>&from=<string>&to=<string>&sort=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "entities"
+                  ],
+                  "query": [
+                    {
+                      "description": "The cursor for the next page of results, obtained from the nextPageKey field of a previous response. When this parameter is set, all other query parameters except pageSize are ignored.",
+                      "key": "nextPageKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The number of entities to return per page. Default is 50, maximum is 500.",
+                      "key": "pageSize",
+                      "value": "50"
+                    },
+                    {
+                      "description": "(Required) Defines the scope of the query by specifying entity filter conditions. Required. Use the entity selector syntax, for example: type(SERVICE) to select all services, or type(HOST),tag(production) to select production hosts. Multiple conditions are ANDed together.",
+                      "key": "entitySelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Defines additional fields to include in the entity response beyond the default set. Use a comma-separated list. For example, +properties,+tags,+toRelationships.runsOn to include entity properties, tags, and specific relationship types.",
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The start of the time range for entity discovery. Entities seen within this range are returned. Use a relative expression (now-7d), ISO 8601, or Unix timestamp in milliseconds.",
+                      "key": "from",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The end of the time range for entity discovery. Default is now.",
+                      "key": "to",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Defines the sort order of results. Use the field name prefixed with + (ascending) or - (descending). For example, +displayName or -lastSeenTms.",
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+              "createdAt": "2026-06-05T15:01:28.000Z",
+              "updatedAt": "2026-06-05T15:01:28.000Z",
+              "uid": "35240-30eb835e-38bc-44b8-8095-cba0a9f9a477"
+            },
+            {
+              "id": "39be58d2-d0dc-4954-aca2-367ff85b317c",
+              "name": "Forbidden \u2014 the API token lacks the required scope",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/entities?nextPageKey=<string>&pageSize=50&entitySelector=<string>&fields=<string>&from=<string>&to=<string>&sort=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "entities"
+                  ],
+                  "query": [
+                    {
+                      "description": "The cursor for the next page of results, obtained from the nextPageKey field of a previous response. When this parameter is set, all other query parameters except pageSize are ignored.",
+                      "key": "nextPageKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The number of entities to return per page. Default is 50, maximum is 500.",
+                      "key": "pageSize",
+                      "value": "50"
+                    },
+                    {
+                      "description": "(Required) Defines the scope of the query by specifying entity filter conditions. Required. Use the entity selector syntax, for example: type(SERVICE) to select all services, or type(HOST),tag(production) to select production hosts. Multiple conditions are ANDed together.",
+                      "key": "entitySelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Defines additional fields to include in the entity response beyond the default set. Use a comma-separated list. For example, +properties,+tags,+toRelationships.runsOn to include entity properties, tags, and specific relationship types.",
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The start of the time range for entity discovery. Entities seen within this range are returned. Use a relative expression (now-7d), ISO 8601, or Unix timestamp in milliseconds.",
+                      "key": "from",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The end of the time range for entity discovery. Default is now.",
+                      "key": "to",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Defines the sort order of results. Use the field name prefixed with + (ascending) or - (descending). For example, +displayName or -lastSeenTms.",
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+              "createdAt": "2026-06-05T15:01:28.000Z",
+              "updatedAt": "2026-06-05T15:01:28.000Z",
+              "uid": "35240-39be58d2-d0dc-4954-aca2-367ff85b317c"
+            }
+          ],
+          "createdAt": "2026-06-05T15:01:28.000Z",
+          "updatedAt": "2026-06-05T15:01:28.000Z",
+          "uid": "35240-ed245aa8-efc8-41b9-95ff-6ee807821e87"
+        }
+      ],
+      "id": "ec957f36-18fc-49d5-8b32-656727b91377",
+      "createdAt": "2026-06-05T15:01:28.000Z",
+      "updatedAt": "2026-06-05T15:01:28.000Z",
+      "uid": "35240-ec957f36-18fc-49d5-8b32-656727b91377"
+    },
+    {
+      "name": "entityTypes",
+      "item": [
+        {
+          "name": "{type}",
+          "item": [
+            {
+              "name": "Dynatrace Get Entity Type Definition",
+              "id": "c0c1e933-72eb-472c-99b3-0b406278fba6",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/entityTypes/:type",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "entityTypes",
+                    ":type"
+                  ],
+                  "variable": [
+                    {
+                      "id": "ed1dfbbe-ba3b-444b-b998-78508ccacb92",
+                      "key": "type",
+                      "value": "<string>",
+                      "description": "(Required) The entity type identifier, e.g., SERVICE, HOST, PROCESS_GROUP, APPLICATION."
+                    }
+                  ]
+                },
+                "description": "Returns the definition of a specific entity type, including its display name, description, available properties, and supported relationship types. This is useful for understanding what fields are available when querying entities of a given type."
+              },
+              "response": [
+                {
+                  "id": "fea64ca3-cc01-4432-8756-ae10e1d17b28",
+                  "name": "The entity type definition",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/entityTypes/:type",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "entityTypes",
+                        ":type"
+                      ],
+                      "variable": [
+                        {
+                          "key": "type"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"properties\": [\n    {\n      \"id\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ],\n  \"fromRelationships\": [\n    {\n      \"id\": \"<string>\",\n      \"toTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"toTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"toRelationships\": [\n    {\n      \"id\": \"<string>\",\n      \"toTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"toTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+                  "createdAt": "2026-06-05T15:01:28.000Z",
+                  "updatedAt": "2026-06-05T15:01:28.000Z",
+                  "uid": "35240-fea64ca3-cc01-4432-8756-ae10e1d17b28"
+                },
+                {
+                  "id": "0a204f72-1873-4cde-a862-b6c2f49871f2",
+                  "name": "Bad request \u2014 invalid query parameters or request body",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/entityTypes/:type",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "entityTypes",
+                        ":type"
+                      ],
+                      "variable": [
+                        {
+                          "key": "type"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:28.000Z",
+                  "updatedAt": "2026-06-05T15:01:28.000Z",
+                  "uid": "35240-0a204f72-1873-4cde-a862-b6c2f49871f2"
+                },
+                {
+                  "id": "97becfe4-c041-4cc5-a96d-3ed192c2a6ec",
+                  "name": "Unauthorized \u2014 missing or invalid API token",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/entityTypes/:type",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "entityTypes",
+                        ":type"
+                      ],
+                      "variable": [
+                        {
+                          "key": "type"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:28.000Z",
+                  "updatedAt": "2026-06-05T15:01:28.000Z",
+                  "uid": "35240-97becfe4-c041-4cc5-a96d-3ed192c2a6ec"
+                },
+                {
+                  "id": "da5031f5-c9bb-4faf-b944-6aff6c1519de",
+                  "name": "Forbidden \u2014 the API token lacks the required scope",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/entityTypes/:type",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "entityTypes",
+                        ":type"
+                      ],
+                      "variable": [
+                        {
+                          "key": "type"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:28.000Z",
+                  "updatedAt": "2026-06-05T15:01:28.000Z",
+                  "uid": "35240-da5031f5-c9bb-4faf-b944-6aff6c1519de"
+                },
+                {
+                  "id": "6490e43d-85fb-4f37-a66f-b9bb9f4b5fd9",
+                  "name": "Not found \u2014 the specified entity or entity type does not exist",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/entityTypes/:type",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "entityTypes",
+                        ":type"
+                      ],
+                      "variable": [
+                        {
+                          "key": "type"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:28.000Z",
+                  "updatedAt": "2026-06-05T15:01:28.000Z",
+                  "uid": "35240-6490e43d-85fb-4f37-a66f-b9bb9f4b5fd9"
+                }
+              ],
+              "createdAt": "2026-06-05T15:01:28.000Z",
+              "updatedAt": "2026-06-05T15:01:28.000Z",
+              "uid": "35240-c0c1e933-72eb-472c-99b3-0b406278fba6"
+            }
+          ],
+          "id": "953dc17a-de20-42b8-a667-f4c47a61e5c7",
+          "createdAt": "2026-06-05T15:01:28.000Z",
+          "updatedAt": "2026-06-05T15:01:28.000Z",
+          "uid": "35240-953dc17a-de20-42b8-a667-f4c47a61e5c7"
+        },
+        {
+          "name": "Dynatrace List Entity Types",
+          "id": "8ca35924-b1dd-4c4e-aafa-b6ee84bf0a91",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/entityTypes?nextPageKey=<string>&pageSize=50",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "entityTypes"
+              ],
+              "query": [
+                {
+                  "description": "Cursor for the next page of results.",
+                  "key": "nextPageKey",
+                  "value": "<string>"
+                },
+                {
+                  "description": "The number of entity types to return per page.",
+                  "key": "pageSize",
+                  "value": "50"
+                }
+              ]
+            },
+            "description": "Returns a list of all entity types available in the Dynatrace environment. Entity types describe the categories of monitored entities, such as SERVICE, HOST, PROCESS_GROUP, APPLICATION, etc. Results are paginated."
+          },
+          "response": [
+            {
+              "id": "6132e9ab-08bb-4166-ae3a-402f8a1f094f",
+              "name": "A paginated list of entity types",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/entityTypes?nextPageKey=<string>&pageSize=50",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "entityTypes"
+                  ],
+                  "query": [
+                    {
+                      "description": "Cursor for the next page of results.",
+                      "key": "nextPageKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The number of entity types to return per page.",
+                      "key": "pageSize",
+                      "value": "50"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"nextPageKey\": \"<string>\",\n  \"totalCount\": \"<long>\",\n  \"types\": [\n    {\n      \"type\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"properties\": [\n        {\n          \"id\": \"<string>\",\n          \"displayName\": \"<string>\",\n          \"type\": \"<string>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"displayName\": \"<string>\",\n          \"type\": \"<string>\"\n        }\n      ],\n      \"fromRelationships\": [\n        {\n          \"id\": \"<string>\",\n          \"toTypes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"id\": \"<string>\",\n          \"toTypes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"toRelationships\": [\n        {\n          \"id\": \"<string>\",\n          \"toTypes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"id\": \"<string>\",\n          \"toTypes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"type\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"properties\": [\n        {\n          \"id\": \"<string>\",\n          \"displayName\": \"<string>\",\n          \"type\": \"<string>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"displayName\": \"<string>\",\n          \"type\": \"<string>\"\n        }\n      ],\n      \"fromRelationships\": [\n        {\n          \"id\": \"<string>\",\n          \"toTypes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"id\": \"<string>\",\n          \"toTypes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"toRelationships\": [\n        {\n          \"id\": \"<string>\",\n          \"toTypes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"id\": \"<string>\",\n          \"toTypes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "createdAt": "2026-06-05T15:01:28.000Z",
+              "updatedAt": "2026-06-05T15:01:28.000Z",
+              "uid": "35240-6132e9ab-08bb-4166-ae3a-402f8a1f094f"
+            },
+            {
+              "id": "5fca1a59-fcc5-4ba3-8a7b-72c5690f4043",
+              "name": "Bad request \u2014 invalid query parameters or request body",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/entityTypes?nextPageKey=<string>&pageSize=50",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "entityTypes"
+                  ],
+                  "query": [
+                    {
+                      "description": "Cursor for the next page of results.",
+                      "key": "nextPageKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The number of entity types to return per page.",
+                      "key": "pageSize",
+                      "value": "50"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+              "createdAt": "2026-06-05T15:01:28.000Z",
+              "updatedAt": "2026-06-05T15:01:28.000Z",
+              "uid": "35240-5fca1a59-fcc5-4ba3-8a7b-72c5690f4043"
+            },
+            {
+              "id": "d2904d83-1883-4a0e-8abf-dea78d9ae74b",
+              "name": "Unauthorized \u2014 missing or invalid API token",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/entityTypes?nextPageKey=<string>&pageSize=50",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "entityTypes"
+                  ],
+                  "query": [
+                    {
+                      "description": "Cursor for the next page of results.",
+                      "key": "nextPageKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The number of entity types to return per page.",
+                      "key": "pageSize",
+                      "value": "50"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+              "createdAt": "2026-06-05T15:01:28.000Z",
+              "updatedAt": "2026-06-05T15:01:28.000Z",
+              "uid": "35240-d2904d83-1883-4a0e-8abf-dea78d9ae74b"
+            },
+            {
+              "id": "80c50266-44c7-4b8f-96bd-6ba42e94a723",
+              "name": "Forbidden \u2014 the API token lacks the required scope",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/entityTypes?nextPageKey=<string>&pageSize=50",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "entityTypes"
+                  ],
+                  "query": [
+                    {
+                      "description": "Cursor for the next page of results.",
+                      "key": "nextPageKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The number of entity types to return per page.",
+                      "key": "pageSize",
+                      "value": "50"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+              "createdAt": "2026-06-05T15:01:28.000Z",
+              "updatedAt": "2026-06-05T15:01:28.000Z",
+              "uid": "35240-80c50266-44c7-4b8f-96bd-6ba42e94a723"
+            }
+          ],
+          "createdAt": "2026-06-05T15:01:28.000Z",
+          "updatedAt": "2026-06-05T15:01:28.000Z",
+          "uid": "35240-8ca35924-b1dd-4c4e-aafa-b6ee84bf0a91"
+        }
+      ],
+      "id": "d66e6b96-12ff-4cae-8c44-4c5fe40a55cd",
+      "createdAt": "2026-06-05T15:01:28.000Z",
+      "updatedAt": "2026-06-05T15:01:28.000Z",
+      "uid": "35240-d66e6b96-12ff-4cae-8c44-4c5fe40a55cd"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "environmentId",
+      "value": "mySampleEnv"
+    },
+    {
+      "key": "baseUrl",
+      "value": "https://{{environmentId}}.live.dynatrace.com/api/v2"
+    }
+  ]
+}

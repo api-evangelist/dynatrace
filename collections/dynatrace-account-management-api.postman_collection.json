@@ -1,0 +1,3868 @@
+{
+  "item": [
+    {
+      "id": "435cdf59-511e-42c8-bec5-b1d85c48a0f8",
+      "name": "Environments",
+      "description": {
+        "content": "Operations for listing environments in the account",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2a5e9109-daec-46fa-940e-fc5dedb25367",
+          "name": "Dynatrace List Environments",
+          "request": {
+            "name": "Dynatrace List Environments",
+            "description": {
+              "content": "Returns a list of all Dynatrace environments associated with the specified account. Each environment record includes the environment ID, name, and URL. This information is useful for enumerating environments before making environment-level API calls.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "env",
+                "v1",
+                "accounts",
+                ":accountUuid",
+                "environments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "nextPageKey",
+                  "value": "<string>",
+                  "description": "Cursor for the next page of results."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "100",
+                  "description": "The number of environments to return per page."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "accountUuid",
+                  "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8f6d7bed-ef52-46de-bd82-ae069028cc6d",
+              "name": "A list of environments in the account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "env",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "environments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nextPageKey\": \"example-value\",\n  \"totalCount\": 500,\n  \"environments\": [\n    {\n      \"id\": \"abc123\",\n      \"name\": \"Production Service\",\n      \"status\": \"ACTIVE\",\n      \"trial\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f924f79b-8eb3-4314-ab4c-4585a0edf3c4",
+              "name": "Unauthorized — missing or invalid OAuth token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "env",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "environments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "84daef04-6011-4385-8d09-daa73b62c5ec",
+              "name": "Forbidden — the token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "env",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "environments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "1b961332-1d2b-45d6-a933-ae850e0b84d5",
+      "name": "Groups",
+      "description": {
+        "content": "Operations for managing user groups and group membership",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2bde33bc-8f0a-47fa-b9d5-e3a3de894b8c",
+          "name": "Dynatrace List Groups",
+          "request": {
+            "name": "Dynatrace List Groups",
+            "description": {
+              "content": "Returns a list of all user groups defined in the account. Groups are the primary mechanism for assigning permissions and environment access to sets of users. Results are paginated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "iam",
+                "v1",
+                "accounts",
+                ":accountUuid",
+                "groups"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "nextPageKey",
+                  "value": "<string>",
+                  "description": "Cursor for the next page of results."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "100",
+                  "description": "The number of groups to return per page."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "accountUuid",
+                  "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b68271ec-1b9f-4c1f-bdc9-119e18f46bfe",
+              "name": "A paginated list of user groups in the account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nextPageKey\": \"example-value\",\n  \"totalCount\": 500,\n  \"items\": [\n    {\n      \"groupId\": \"abc123\",\n      \"name\": \"Production Service\",\n      \"description\": \"Example description.\",\n      \"owner\": \"example-value\",\n      \"createdAt\": \"2025-03-15T14:30:00Z\",\n      \"updatedAt\": \"2025-03-15T14:30:00Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bda911a6-3bff-4dab-924c-73ebff0cdcc1",
+              "name": "Bad request — invalid request body or parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4dde4708-ab84-4f2c-bdc1-a139dba3bc34",
+              "name": "Unauthorized — missing or invalid OAuth token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8f66653-1903-42ad-805d-6f1d773af68f",
+              "name": "Forbidden — the token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "29ea67d0-0e07-4df3-9d4f-eb1860ab44e2",
+          "name": "Dynatrace Create Group",
+          "request": {
+            "name": "Dynatrace Create Group",
+            "description": {
+              "content": "Creates a new user group in the account. After creating the group, users can be assigned to it and permissions can be granted to the group for specific environments or account-level functions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "iam",
+                "v1",
+                "accounts",
+                ":accountUuid",
+                "groups"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "accountUuid",
+                  "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "769cf06d-3479-4311-950d-1da950ad4041",
+              "name": "The group was successfully created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Platform Engineering\",\n  \"description\": \"Group for the platform engineering team\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"groupId\": \"abc123\",\n  \"name\": \"Production Service\",\n  \"description\": \"Example description.\",\n  \"owner\": \"example-value\",\n  \"createdAt\": \"2025-03-15T14:30:00Z\",\n  \"updatedAt\": \"2025-03-15T14:30:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d43420dd-87d4-4f62-8405-0059d6c43dc6",
+              "name": "Bad request — invalid request body or parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Platform Engineering\",\n  \"description\": \"Group for the platform engineering team\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f476ac3a-5534-4beb-a45f-e99dbcb77992",
+              "name": "Unauthorized — missing or invalid OAuth token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Platform Engineering\",\n  \"description\": \"Group for the platform engineering team\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a7c4e66-acb0-4b0f-a8b6-a798c2861ef7",
+              "name": "Forbidden — the token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Platform Engineering\",\n  \"description\": \"Group for the platform engineering team\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1290855b-f93d-449a-8e43-5c6237faa09c",
+          "name": "Dynatrace Get Group",
+          "request": {
+            "name": "Dynatrace Get Group",
+            "description": {
+              "content": "Returns the details of a specific group, including its name, description, and assigned permissions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "iam",
+                "v1",
+                "accounts",
+                ":accountUuid",
+                "groups",
+                ":groupId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "accountUuid",
+                  "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupId",
+                  "description": "(Required) The unique identifier of the group."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "365b00e4-69fc-486d-a487-a1e1a9b3c3fa",
+              "name": "The group details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "groups",
+                    ":groupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The unique identifier of the group."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"groupId\": \"abc123\",\n  \"name\": \"Production Service\",\n  \"description\": \"Example description.\",\n  \"owner\": \"example-value\",\n  \"createdAt\": \"2025-03-15T14:30:00Z\",\n  \"updatedAt\": \"2025-03-15T14:30:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5dbc34d7-7684-4714-8c69-936d56e4114c",
+              "name": "Unauthorized — missing or invalid OAuth token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "groups",
+                    ":groupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The unique identifier of the group."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43d40859-4bdb-4ca2-b7ed-c6c1d91fa454",
+              "name": "Forbidden — the token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "groups",
+                    ":groupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The unique identifier of the group."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e98ceb83-4891-4940-aeb1-9177f8fa17e9",
+              "name": "Not found — the specified user, group, or resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "groups",
+                    ":groupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The unique identifier of the group."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c64ea7fa-335c-4330-8dec-5054c9765664",
+          "name": "Dynatrace Update Group",
+          "request": {
+            "name": "Dynatrace Update Group",
+            "description": {
+              "content": "Updates the name and description of an existing group. Group permissions are managed separately via the permissions endpoints.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "iam",
+                "v1",
+                "accounts",
+                ":accountUuid",
+                "groups",
+                ":groupId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "accountUuid",
+                  "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupId",
+                  "description": "(Required) The unique identifier of the group."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1e46fc46-df14-41ff-967a-b10560136921",
+              "name": "The group was successfully updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "groups",
+                    ":groupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The unique identifier of the group."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Production Service\",\n  \"description\": \"Example description.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"groupId\": \"abc123\",\n  \"name\": \"Production Service\",\n  \"description\": \"Example description.\",\n  \"owner\": \"example-value\",\n  \"createdAt\": \"2025-03-15T14:30:00Z\",\n  \"updatedAt\": \"2025-03-15T14:30:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e82c0294-099f-48fc-b07f-a96bea8ff94e",
+              "name": "Bad request — invalid request body or parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "groups",
+                    ":groupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The unique identifier of the group."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Production Service\",\n  \"description\": \"Example description.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8098e69-c030-4fd2-ab55-4b9eaf8aba76",
+              "name": "Unauthorized — missing or invalid OAuth token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "groups",
+                    ":groupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The unique identifier of the group."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Production Service\",\n  \"description\": \"Example description.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dfc544a5-b041-4336-be8d-1c7cfa1aecbf",
+              "name": "Forbidden — the token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "groups",
+                    ":groupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The unique identifier of the group."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Production Service\",\n  \"description\": \"Example description.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "841e22be-0618-43ba-b232-090a4a742c1d",
+              "name": "Not found — the specified user, group, or resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "groups",
+                    ":groupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The unique identifier of the group."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Production Service\",\n  \"description\": \"Example description.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fa8066c5-22e3-4d47-9deb-05d1b2bdc1ee",
+          "name": "Dynatrace Delete Group",
+          "request": {
+            "name": "Dynatrace Delete Group",
+            "description": {
+              "content": "Permanently deletes the specified group from the account. All users who were members of this group lose any permissions that were granted exclusively through this group.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "iam",
+                "v1",
+                "accounts",
+                ":accountUuid",
+                "groups",
+                ":groupId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "accountUuid",
+                  "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupId",
+                  "description": "(Required) The unique identifier of the group."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "69a603b1-c090-4e23-809e-b45355b3dd47",
+              "name": "The group was successfully deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "groups",
+                    ":groupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The unique identifier of the group."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8e964b7e-241f-42fd-ac29-401feab1e8eb",
+              "name": "Unauthorized — missing or invalid OAuth token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "groups",
+                    ":groupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The unique identifier of the group."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "74de1126-ba2b-4e9f-9c8b-e062bcc90b93",
+              "name": "Forbidden — the token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "groups",
+                    ":groupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The unique identifier of the group."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a8f106aa-bf9a-4734-9c79-17593bcfc869",
+              "name": "Not found — the specified user, group, or resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "groups",
+                    ":groupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The unique identifier of the group."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "d2cc434e-8898-4a66-9995-aaa31f3a70f1",
+      "name": "Permissions",
+      "description": {
+        "content": "Operations for querying account-level permissions",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "11c7e743-f8f5-4b63-9d51-cc2702ff6c35",
+          "name": "Dynatrace List Permissions for Account",
+          "request": {
+            "name": "Dynatrace List Permissions for Account",
+            "description": {
+              "content": "Returns a list of all permissions defined for the account. Permissions control what actions groups and users can perform within Dynatrace environments and at the account level. Results include both environment-scoped and account-scoped permissions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "iam",
+                "v1",
+                "accounts",
+                ":accountUuid",
+                "permissions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "accountUuid",
+                  "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "55981e60-aa4b-408a-8dd2-57595a982725",
+              "name": "A list of permissions for the account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "permissions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"permissions\": [\n    {\n      \"permissionName\": \"Production Service\",\n      \"scope\": \"example-value\",\n      \"scopeType\": \"ACCOUNT\",\n      \"groupId\": \"abc123\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "276206c8-c224-4bff-8945-29a92a0c443d",
+              "name": "Unauthorized — missing or invalid OAuth token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "permissions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b61aa6a-660f-48f0-b722-4953514c15f4",
+              "name": "Forbidden — the token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "permissions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "643b9490-3193-4341-a01f-7625b591c9b6",
+      "name": "Users",
+      "description": {
+        "content": "Operations for managing account users",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e184d0a0-8bc2-4894-94f5-e64976b3ef82",
+          "name": "Dynatrace List Users",
+          "request": {
+            "name": "Dynatrace List Users",
+            "description": {
+              "content": "Returns a list of all users in the specified Dynatrace account. User records include basic profile information and group memberships. Results are paginated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "iam",
+                "v1",
+                "accounts",
+                ":accountUuid",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "nextPageKey",
+                  "value": "<string>",
+                  "description": "Cursor for the next page of results."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "100",
+                  "description": "The number of users to return per page."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "accountUuid",
+                  "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bbe88e45-9edc-44d2-9845-2958588b65e4",
+              "name": "A paginated list of users in the account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nextPageKey\": \"example-value\",\n  \"totalCount\": 500,\n  \"items\": [\n    {\n      \"uid\": \"abc123\",\n      \"email\": \"admin@example.com\",\n      \"firstName\": \"Production Service\",\n      \"lastName\": \"Production Service\",\n      \"groups\": [\n        \"example-value\"\n      ],\n      \"userStatus\": \"ACTIVE\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4706fed1-de72-4b80-85c4-ec44dc119e81",
+              "name": "Bad request — invalid request body or parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb833314-af4b-41a0-8d46-f75e1254858e",
+              "name": "Unauthorized — missing or invalid OAuth token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8cbac9a8-b9a1-4884-bc7c-827217631e33",
+              "name": "Forbidden — the token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "490dd1ae-f6ee-4f9b-b5ff-bbae1707d6a1",
+          "name": "Dynatrace Create User",
+          "request": {
+            "name": "Dynatrace Create User",
+            "description": {
+              "content": "Creates a new user in the Dynatrace account and sends an invitation email. The user's email address serves as their login identifier. Groups can be assigned at creation time to grant appropriate environment access and permissions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "iam",
+                "v1",
+                "accounts",
+                ":accountUuid",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "accountUuid",
+                  "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<email>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "31991427-ee81-48b7-bcfc-dff0ce06676a",
+              "name": "The user was successfully created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"jane.doe@example.com\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"groups\": [\n    \"groupId-1234-abcd\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uid\": \"abc123\",\n  \"email\": \"admin@example.com\",\n  \"firstName\": \"Production Service\",\n  \"lastName\": \"Production Service\",\n  \"groups\": [\n    \"example-value\"\n  ],\n  \"userStatus\": \"ACTIVE\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bacedc2a-f9dd-4cab-a799-1283b52a8d41",
+              "name": "Bad request — invalid request body or parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"jane.doe@example.com\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"groups\": [\n    \"groupId-1234-abcd\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cfb38a0e-c171-4135-a645-db45a2918f5b",
+              "name": "Unauthorized — missing or invalid OAuth token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"jane.doe@example.com\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"groups\": [\n    \"groupId-1234-abcd\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "781915dd-eb84-4361-a80f-06fb977b5583",
+              "name": "Forbidden — the token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"jane.doe@example.com\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"groups\": [\n    \"groupId-1234-abcd\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c1ba39dc-cab4-49b1-9002-0ac01f61c92b",
+          "name": "Dynatrace Get User",
+          "request": {
+            "name": "Dynatrace Get User",
+            "description": {
+              "content": "Returns the details of a specific user in the account, identified by their user ID (typically the email address or a UUID).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "iam",
+                "v1",
+                "accounts",
+                ":accountUuid",
+                "users",
+                ":userId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "accountUuid",
+                  "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "userId",
+                  "description": "(Required) The unique identifier of the user. Typically the user's email address or a UUID assigned by the system."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ec8f3263-04ff-436e-ab61-e2b8277f090c",
+              "name": "The user details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) The unique identifier of the user. Typically the user's email address or a UUID assigned by the system."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uid\": \"abc123\",\n  \"email\": \"admin@example.com\",\n  \"firstName\": \"Production Service\",\n  \"lastName\": \"Production Service\",\n  \"groups\": [\n    \"example-value\"\n  ],\n  \"userStatus\": \"ACTIVE\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a83db0b3-0f13-4942-9a4f-050baf88011b",
+              "name": "Unauthorized — missing or invalid OAuth token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) The unique identifier of the user. Typically the user's email address or a UUID assigned by the system."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6895594d-6759-4194-9313-fe225d96b3ab",
+              "name": "Forbidden — the token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) The unique identifier of the user. Typically the user's email address or a UUID assigned by the system."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0fe12ec8-1ec8-48ed-9df4-c10c12ff37da",
+              "name": "Not found — the specified user, group, or resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) The unique identifier of the user. Typically the user's email address or a UUID assigned by the system."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a1102b42-72b9-4cd2-9e64-b9b37c31f5a9",
+          "name": "Dynatrace Update User",
+          "request": {
+            "name": "Dynatrace Update User",
+            "description": {
+              "content": "Updates the profile information and group memberships for an existing user. The entire user record is replaced with the provided data. To add a user to new groups without removing existing memberships, first retrieve the current group list and include it in the update.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "iam",
+                "v1",
+                "accounts",
+                ":accountUuid",
+                "users",
+                ":userId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "accountUuid",
+                  "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "userId",
+                  "description": "(Required) The unique identifier of the user. Typically the user's email address or a UUID assigned by the system."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<email>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c1301cc4-dd6f-4581-95e8-70b84b3598b1",
+              "name": "The user was successfully updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) The unique identifier of the user. Typically the user's email address or a UUID assigned by the system."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"admin@example.com\",\n  \"firstName\": \"Production Service\",\n  \"lastName\": \"Production Service\",\n  \"groups\": [\n    \"example-value\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uid\": \"abc123\",\n  \"email\": \"admin@example.com\",\n  \"firstName\": \"Production Service\",\n  \"lastName\": \"Production Service\",\n  \"groups\": [\n    \"example-value\"\n  ],\n  \"userStatus\": \"ACTIVE\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48ab7e3c-3398-4b0e-b4f2-e2ebf0151119",
+              "name": "Bad request — invalid request body or parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) The unique identifier of the user. Typically the user's email address or a UUID assigned by the system."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"admin@example.com\",\n  \"firstName\": \"Production Service\",\n  \"lastName\": \"Production Service\",\n  \"groups\": [\n    \"example-value\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dae14258-3a30-4f23-b33f-d281adf879e3",
+              "name": "Unauthorized — missing or invalid OAuth token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) The unique identifier of the user. Typically the user's email address or a UUID assigned by the system."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"admin@example.com\",\n  \"firstName\": \"Production Service\",\n  \"lastName\": \"Production Service\",\n  \"groups\": [\n    \"example-value\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e9ac0da-b6e1-4a69-a0a3-b91ecf605e5d",
+              "name": "Forbidden — the token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) The unique identifier of the user. Typically the user's email address or a UUID assigned by the system."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"admin@example.com\",\n  \"firstName\": \"Production Service\",\n  \"lastName\": \"Production Service\",\n  \"groups\": [\n    \"example-value\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "de8c93ed-b681-4491-919f-f3fd9d85b86c",
+              "name": "Not found — the specified user, group, or resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) The unique identifier of the user. Typically the user's email address or a UUID assigned by the system."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"admin@example.com\",\n  \"firstName\": \"Production Service\",\n  \"lastName\": \"Production Service\",\n  \"groups\": [\n    \"example-value\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1da8d3cb-c597-46a7-97c1-7aeb0e211b7e",
+          "name": "Dynatrace Delete User",
+          "request": {
+            "name": "Dynatrace Delete User",
+            "description": {
+              "content": "Permanently removes the specified user from the Dynatrace account. This action cannot be undone. The user immediately loses access to all Dynatrace environments and resources.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "iam",
+                "v1",
+                "accounts",
+                ":accountUuid",
+                "users",
+                ":userId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "accountUuid",
+                  "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "userId",
+                  "description": "(Required) The unique identifier of the user. Typically the user's email address or a UUID assigned by the system."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4f3e71f7-a29e-42dc-a8bb-9646f55c4470",
+              "name": "The user was successfully deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) The unique identifier of the user. Typically the user's email address or a UUID assigned by the system."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c0e7333d-b832-4543-8f0d-425fa10d2b24",
+              "name": "Unauthorized — missing or invalid OAuth token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) The unique identifier of the user. Typically the user's email address or a UUID assigned by the system."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d89be35-9ffc-43cf-ba2b-4c175f89e23e",
+              "name": "Forbidden — the token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) The unique identifier of the user. Typically the user's email address or a UUID assigned by the system."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc4d8aa3-6720-4727-9171-def3136f4661",
+              "name": "Not found — the specified user, group, or resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iam",
+                    "v1",
+                    "accounts",
+                    ":accountUuid",
+                    "users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "accountUuid",
+                      "description": "(Required) The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) The unique identifier of the user. Typically the user's email address or a UUID assigned by the system."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.dynatrace.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "account-idm-read account-idm-write account-env-read"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://sso.dynatrace.com/sso/oauth2/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c7b8c930-2672-4b95-bba8-58af400d984c",
+    "name": "Dynatrace Account Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Dynatrace Account Management API allows you to manage your Dynatrace account including users, groups, permissions, and environments. It uses OAuth 2.0 authentication with account-level scopes. The API enables programmatic management of identity and access controls, including creating users, assigning users to groups, defining group permissions, and listing environments associated with the account. This is the primary API for automating IAM workflows in Dynatrace.\n\nContact Support:\n Name: Dynatrace Support",
+      "type": "text/plain"
+    }
+  }
+}

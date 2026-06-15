@@ -1,0 +1,1614 @@
+{
+  "info": {
+    "_postman_id": "6dcd5c53-ea20-4d69-a867-a0e49e8d54b9",
+    "name": "Dynatrace Metrics API v2",
+    "description": "The Dynatrace Metrics API v2 allows you to query, ingest, and manage time-series metric data within a Dynatrace environment. It supports retrieving metric descriptors, querying data points with flexible selectors (including transformations and aggregations), and ingesting custom metrics from external sources using the MINT line protocol.\n\nContact Support:\n Name: Dynatrace Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T15:01:00.000Z",
+    "updatedAt": "2026-06-05T15:01:00.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-6dcd5c53-ea20-4d69-a867-a0e49e8d54b9"
+  },
+  "item": [
+    {
+      "name": "metrics",
+      "item": [
+        {
+          "name": "{metricKey}",
+          "item": [
+            {
+              "name": "Dynatrace Get Metric Descriptor",
+              "id": "a3915014-27fb-45be-bac4-403b741fe16f",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/metrics/:metricKey",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "metrics",
+                    ":metricKey"
+                  ],
+                  "variable": [
+                    {
+                      "id": "7db3e30f-c37e-46b6-b501-489d49548449",
+                      "key": "metricKey",
+                      "value": "<string>",
+                      "description": "(Required) The key of the metric to operate on. For example, builtin:host.cpu.usage or custom.my.metric."
+                    }
+                  ]
+                },
+                "description": "Returns the descriptor for the specified metric key. The descriptor includes metadata such as the display name, description, unit, supported aggregation types, and entity dimensions."
+              },
+              "response": [
+                {
+                  "id": "444e36f8-2613-4839-a7a9-c79fbdc68d02",
+                  "name": "The metric descriptor",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/metrics/:metricKey",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "metrics",
+                        ":metricKey"
+                      ],
+                      "variable": [
+                        {
+                          "key": "metricKey"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"metricId\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"unit\": \"<string>\",\n  \"dduBillable\": \"<boolean>\",\n  \"created\": \"<long>\",\n  \"lastWritten\": \"<long>\",\n  \"entityType\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"aggregationTypes\": [\n    \"count\",\n    \"avg\"\n  ],\n  \"dimensionDefinitions\": [\n    {\n      \"key\": \"<string>\",\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"displayName\": \"<string>\"\n    },\n    {\n      \"key\": \"<string>\",\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"displayName\": \"<string>\"\n    }\n  ],\n  \"transformations\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"defaultAggregation\": {\n    \"type\": \"min\",\n    \"parameter\": \"<double>\"\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:01.000Z",
+                  "updatedAt": "2026-06-05T15:01:01.000Z",
+                  "uid": "35240-444e36f8-2613-4839-a7a9-c79fbdc68d02"
+                },
+                {
+                  "id": "c4597ada-b7fb-4015-a002-b2be2098c30f",
+                  "name": "Bad request \u2014 invalid query parameters or request body",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/metrics/:metricKey",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "metrics",
+                        ":metricKey"
+                      ],
+                      "variable": [
+                        {
+                          "key": "metricKey"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:01.000Z",
+                  "updatedAt": "2026-06-05T15:01:01.000Z",
+                  "uid": "35240-c4597ada-b7fb-4015-a002-b2be2098c30f"
+                },
+                {
+                  "id": "e156a15c-c947-43b7-a483-5256a575286b",
+                  "name": "Unauthorized \u2014 missing or invalid API token",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/metrics/:metricKey",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "metrics",
+                        ":metricKey"
+                      ],
+                      "variable": [
+                        {
+                          "key": "metricKey"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:01.000Z",
+                  "updatedAt": "2026-06-05T15:01:01.000Z",
+                  "uid": "35240-e156a15c-c947-43b7-a483-5256a575286b"
+                },
+                {
+                  "id": "31433dc7-453f-449a-b355-c1e195f94577",
+                  "name": "Forbidden \u2014 the API token lacks the required scope",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/metrics/:metricKey",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "metrics",
+                        ":metricKey"
+                      ],
+                      "variable": [
+                        {
+                          "key": "metricKey"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:01.000Z",
+                  "updatedAt": "2026-06-05T15:01:01.000Z",
+                  "uid": "35240-31433dc7-453f-449a-b355-c1e195f94577"
+                },
+                {
+                  "id": "c1a292d0-d0a8-4cd8-8f26-351f83c34345",
+                  "name": "Not found \u2014 the specified metric does not exist",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/metrics/:metricKey",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "metrics",
+                        ":metricKey"
+                      ],
+                      "variable": [
+                        {
+                          "key": "metricKey"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:01.000Z",
+                  "updatedAt": "2026-06-05T15:01:01.000Z",
+                  "uid": "35240-c1a292d0-d0a8-4cd8-8f26-351f83c34345"
+                }
+              ],
+              "createdAt": "2026-06-05T15:01:01.000Z",
+              "updatedAt": "2026-06-05T15:01:01.000Z",
+              "uid": "35240-a3915014-27fb-45be-bac4-403b741fe16f"
+            },
+            {
+              "name": "Dynatrace Delete Custom Metric",
+              "id": "0a78c4bf-0f6b-448d-b0e4-84827eb8b94d",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/metrics/:metricKey",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "metrics",
+                    ":metricKey"
+                  ],
+                  "variable": [
+                    {
+                      "id": "27605603-d1c4-40ae-ae3c-efbd40772c03",
+                      "key": "metricKey",
+                      "value": "<string>",
+                      "description": "(Required) The key of the metric to operate on. For example, builtin:host.cpu.usage or custom.my.metric."
+                    }
+                  ]
+                },
+                "description": "Deletes the specified custom metric from the environment. Only custom metrics (those not prefixed with builtin:) can be deleted. Built-in metrics cannot be deleted."
+              },
+              "response": [
+                {
+                  "id": "abdc5e8a-e35f-4c06-8f69-d4fce0f246cc",
+                  "name": "The custom metric was successfully deleted",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/metrics/:metricKey",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "metrics",
+                        ":metricKey"
+                      ],
+                      "variable": [
+                        {
+                          "key": "metricKey"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:01:01.000Z",
+                  "updatedAt": "2026-06-05T15:01:01.000Z",
+                  "uid": "35240-abdc5e8a-e35f-4c06-8f69-d4fce0f246cc"
+                },
+                {
+                  "id": "bb18c0c3-6aed-4e95-b69c-74056ea00682",
+                  "name": "Bad request \u2014 invalid query parameters or request body",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/metrics/:metricKey",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "metrics",
+                        ":metricKey"
+                      ],
+                      "variable": [
+                        {
+                          "key": "metricKey"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:01.000Z",
+                  "updatedAt": "2026-06-05T15:01:01.000Z",
+                  "uid": "35240-bb18c0c3-6aed-4e95-b69c-74056ea00682"
+                },
+                {
+                  "id": "7ac21618-84d3-4ec3-9fc8-a3825050d627",
+                  "name": "Unauthorized \u2014 missing or invalid API token",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/metrics/:metricKey",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "metrics",
+                        ":metricKey"
+                      ],
+                      "variable": [
+                        {
+                          "key": "metricKey"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:01.000Z",
+                  "updatedAt": "2026-06-05T15:01:01.000Z",
+                  "uid": "35240-7ac21618-84d3-4ec3-9fc8-a3825050d627"
+                },
+                {
+                  "id": "08553461-4550-462f-a705-4ac659c5bb18",
+                  "name": "Forbidden \u2014 the API token lacks the required scope",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/metrics/:metricKey",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "metrics",
+                        ":metricKey"
+                      ],
+                      "variable": [
+                        {
+                          "key": "metricKey"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:01.000Z",
+                  "updatedAt": "2026-06-05T15:01:01.000Z",
+                  "uid": "35240-08553461-4550-462f-a705-4ac659c5bb18"
+                },
+                {
+                  "id": "344e0b67-ed21-4898-b6f6-a14e4a80d39f",
+                  "name": "Not found \u2014 the specified metric does not exist",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/metrics/:metricKey",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "metrics",
+                        ":metricKey"
+                      ],
+                      "variable": [
+                        {
+                          "key": "metricKey"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:01.000Z",
+                  "updatedAt": "2026-06-05T15:01:01.000Z",
+                  "uid": "35240-344e0b67-ed21-4898-b6f6-a14e4a80d39f"
+                }
+              ],
+              "createdAt": "2026-06-05T15:01:01.000Z",
+              "updatedAt": "2026-06-05T15:01:01.000Z",
+              "uid": "35240-0a78c4bf-0f6b-448d-b0e4-84827eb8b94d"
+            }
+          ],
+          "id": "9ba38369-4e2b-4470-ab00-aa84d7033589",
+          "createdAt": "2026-06-05T15:01:01.000Z",
+          "updatedAt": "2026-06-05T15:01:01.000Z",
+          "uid": "35240-9ba38369-4e2b-4470-ab00-aa84d7033589"
+        },
+        {
+          "name": "query",
+          "item": [
+            {
+              "name": "Dynatrace Query Metric Data Points",
+              "id": "97bab930-b6b8-46fc-aab2-33c6dd8965c1",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/metrics/query?metricSelector=<string>&resolution=<string>&from=<string>&to=<string>&entitySelector=<string>&mzSelector=<string>&selectorInputMetrics=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "metrics",
+                    "query"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Selects metrics for the query. Required. Supports transformations such as :avg, :max, :sum, :splitBy, :filter. For example, builtin:host.cpu.usage:avg:auto.",
+                      "key": "metricSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The desired time resolution of the data points. Valid units are m (minutes), h (hours), d (days). For example, 5m, 1h. Use Inf for a single data point aggregated over the full time range.",
+                      "key": "resolution",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The start of the queried time range. Use one of: relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h.",
+                      "key": "from",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The end of the queried time range. Use one of: relative expression (now), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now.",
+                      "key": "to",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters results to entities matching the selector. Use the entity selector syntax, e.g., type(HOST),tag(production). Only metrics with an entity dimension can be filtered this way.",
+                      "key": "entitySelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters results to entities belonging to the specified management zone. Use the management zone selector syntax, e.g., mzName(MyZone).",
+                      "key": "mzSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "When set to true, the response includes the input metrics used by the selector before transformations are applied.",
+                      "key": "selectorInputMetrics",
+                      "value": "<boolean>"
+                    }
+                  ]
+                },
+                "description": "Returns data points for the specified metrics. The metric selector determines which metrics and transformations to apply. Time range is specified with from and to parameters. Results can be scoped to specific entities using entitySelector or management zones using mzSelector. Data is returned at the specified resolution (e.g., 1h, 5m)."
+              },
+              "response": [
+                {
+                  "id": "bf1fe63c-55ff-4514-982f-5356b3a0fe78",
+                  "name": "Metric data points for the specified query",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/metrics/query?metricSelector=<string>&resolution=<string>&from=<string>&to=<string>&entitySelector=<string>&mzSelector=<string>&selectorInputMetrics=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "metrics",
+                        "query"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Selects metrics for the query. Required. Supports transformations such as :avg, :max, :sum, :splitBy, :filter. For example, builtin:host.cpu.usage:avg:auto.",
+                          "key": "metricSelector",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The desired time resolution of the data points. Valid units are m (minutes), h (hours), d (days). For example, 5m, 1h. Use Inf for a single data point aggregated over the full time range.",
+                          "key": "resolution",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The start of the queried time range. Use one of: relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The end of the queried time range. Use one of: relative expression (now), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now.",
+                          "key": "to",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters results to entities matching the selector. Use the entity selector syntax, e.g., type(HOST),tag(production). Only metrics with an entity dimension can be filtered this way.",
+                          "key": "entitySelector",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters results to entities belonging to the specified management zone. Use the management zone selector syntax, e.g., mzName(MyZone).",
+                          "key": "mzSelector",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "When set to true, the response includes the input metrics used by the selector before transformations are applied.",
+                          "key": "selectorInputMetrics",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"resolution\": \"<string>\",\n  \"nextPageKey\": \"<string>\",\n  \"totalCount\": \"<long>\",\n  \"result\": [\n    {\n      \"metricId\": \"<string>\",\n      \"data\": [\n        {\n          \"timestamps\": [\n            \"<long>\",\n            \"<long>\"\n          ],\n          \"values\": [\n            \"<number,null-double>\",\n            \"<number,null-double>\"\n          ],\n          \"dimensionMap\": {\n            \"dolore_2\": \"<string>\"\n          },\n          \"dimensions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"timestamps\": [\n            \"<long>\",\n            \"<long>\"\n          ],\n          \"values\": [\n            \"<number,null-double>\",\n            \"<number,null-double>\"\n          ],\n          \"dimensionMap\": {\n            \"qui4_\": \"<string>\"\n          },\n          \"dimensions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"metricId\": \"<string>\",\n      \"data\": [\n        {\n          \"timestamps\": [\n            \"<long>\",\n            \"<long>\"\n          ],\n          \"values\": [\n            \"<number,null-double>\",\n            \"<number,null-double>\"\n          ],\n          \"dimensionMap\": {\n            \"cupidatat__\": \"<string>\",\n            \"aliquip90\": \"<string>\"\n          },\n          \"dimensions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"timestamps\": [\n            \"<long>\",\n            \"<long>\"\n          ],\n          \"values\": [\n            \"<number,null-double>\",\n            \"<number,null-double>\"\n          ],\n          \"dimensionMap\": {\n            \"dolor_81\": \"<string>\",\n            \"consecteturb98\": \"<string>\"\n          },\n          \"dimensions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "createdAt": "2026-06-05T15:01:01.000Z",
+                  "updatedAt": "2026-06-05T15:01:01.000Z",
+                  "uid": "35240-bf1fe63c-55ff-4514-982f-5356b3a0fe78"
+                },
+                {
+                  "id": "5cd02c56-2311-488d-92bf-acda8bd409b7",
+                  "name": "Bad request \u2014 invalid query parameters or request body",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/metrics/query?metricSelector=<string>&resolution=<string>&from=<string>&to=<string>&entitySelector=<string>&mzSelector=<string>&selectorInputMetrics=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "metrics",
+                        "query"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Selects metrics for the query. Required. Supports transformations such as :avg, :max, :sum, :splitBy, :filter. For example, builtin:host.cpu.usage:avg:auto.",
+                          "key": "metricSelector",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The desired time resolution of the data points. Valid units are m (minutes), h (hours), d (days). For example, 5m, 1h. Use Inf for a single data point aggregated over the full time range.",
+                          "key": "resolution",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The start of the queried time range. Use one of: relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The end of the queried time range. Use one of: relative expression (now), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now.",
+                          "key": "to",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters results to entities matching the selector. Use the entity selector syntax, e.g., type(HOST),tag(production). Only metrics with an entity dimension can be filtered this way.",
+                          "key": "entitySelector",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters results to entities belonging to the specified management zone. Use the management zone selector syntax, e.g., mzName(MyZone).",
+                          "key": "mzSelector",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "When set to true, the response includes the input metrics used by the selector before transformations are applied.",
+                          "key": "selectorInputMetrics",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:01.000Z",
+                  "updatedAt": "2026-06-05T15:01:01.000Z",
+                  "uid": "35240-5cd02c56-2311-488d-92bf-acda8bd409b7"
+                },
+                {
+                  "id": "d3ade18b-00c1-4a4a-8f19-6d9c26721470",
+                  "name": "Unauthorized \u2014 missing or invalid API token",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/metrics/query?metricSelector=<string>&resolution=<string>&from=<string>&to=<string>&entitySelector=<string>&mzSelector=<string>&selectorInputMetrics=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "metrics",
+                        "query"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Selects metrics for the query. Required. Supports transformations such as :avg, :max, :sum, :splitBy, :filter. For example, builtin:host.cpu.usage:avg:auto.",
+                          "key": "metricSelector",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The desired time resolution of the data points. Valid units are m (minutes), h (hours), d (days). For example, 5m, 1h. Use Inf for a single data point aggregated over the full time range.",
+                          "key": "resolution",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The start of the queried time range. Use one of: relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The end of the queried time range. Use one of: relative expression (now), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now.",
+                          "key": "to",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters results to entities matching the selector. Use the entity selector syntax, e.g., type(HOST),tag(production). Only metrics with an entity dimension can be filtered this way.",
+                          "key": "entitySelector",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters results to entities belonging to the specified management zone. Use the management zone selector syntax, e.g., mzName(MyZone).",
+                          "key": "mzSelector",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "When set to true, the response includes the input metrics used by the selector before transformations are applied.",
+                          "key": "selectorInputMetrics",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:01.000Z",
+                  "updatedAt": "2026-06-05T15:01:01.000Z",
+                  "uid": "35240-d3ade18b-00c1-4a4a-8f19-6d9c26721470"
+                },
+                {
+                  "id": "9d6d87c1-ebb5-4ac4-a8e2-0c29387f6636",
+                  "name": "Forbidden \u2014 the API token lacks the required scope",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/metrics/query?metricSelector=<string>&resolution=<string>&from=<string>&to=<string>&entitySelector=<string>&mzSelector=<string>&selectorInputMetrics=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "metrics",
+                        "query"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Selects metrics for the query. Required. Supports transformations such as :avg, :max, :sum, :splitBy, :filter. For example, builtin:host.cpu.usage:avg:auto.",
+                          "key": "metricSelector",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The desired time resolution of the data points. Valid units are m (minutes), h (hours), d (days). For example, 5m, 1h. Use Inf for a single data point aggregated over the full time range.",
+                          "key": "resolution",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The start of the queried time range. Use one of: relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The end of the queried time range. Use one of: relative expression (now), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now.",
+                          "key": "to",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters results to entities matching the selector. Use the entity selector syntax, e.g., type(HOST),tag(production). Only metrics with an entity dimension can be filtered this way.",
+                          "key": "entitySelector",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters results to entities belonging to the specified management zone. Use the management zone selector syntax, e.g., mzName(MyZone).",
+                          "key": "mzSelector",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "When set to true, the response includes the input metrics used by the selector before transformations are applied.",
+                          "key": "selectorInputMetrics",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:01.000Z",
+                  "updatedAt": "2026-06-05T15:01:01.000Z",
+                  "uid": "35240-9d6d87c1-ebb5-4ac4-a8e2-0c29387f6636"
+                }
+              ],
+              "createdAt": "2026-06-05T15:01:01.000Z",
+              "updatedAt": "2026-06-05T15:01:01.000Z",
+              "uid": "35240-97bab930-b6b8-46fc-aab2-33c6dd8965c1"
+            }
+          ],
+          "id": "3bbb4494-a068-4114-8db9-826ede8a72c9",
+          "createdAt": "2026-06-05T15:01:01.000Z",
+          "updatedAt": "2026-06-05T15:01:01.000Z",
+          "uid": "35240-3bbb4494-a068-4114-8db9-826ede8a72c9"
+        },
+        {
+          "name": "ingest",
+          "item": [
+            {
+              "name": "Dynatrace Ingest Custom Metrics",
+              "id": "ad617265-c4e2-443c-ad05-35063d481fb0",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "text/plain"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "<string>"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/metrics/ingest",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "metrics",
+                    "ingest"
+                  ]
+                },
+                "description": "Ingests custom metric data points into the Dynatrace environment using the MINT (Metric INgest Text) line protocol. Each line represents one data point. Requires the metrics.ingest API token scope. Data is processed asynchronously and may take a short time to appear in queries."
+              },
+              "response": [
+                {
+                  "id": "8f6b00da-1a57-4be2-855c-031d0f8984e6",
+                  "name": "The metric data was accepted for ingestion",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "text/plain"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "<string>"
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/metrics/ingest",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "metrics",
+                        "ingest"
+                      ]
+                    }
+                  },
+                  "status": "Accepted",
+                  "code": 202,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:01:01.000Z",
+                  "updatedAt": "2026-06-05T15:01:01.000Z",
+                  "uid": "35240-8f6b00da-1a57-4be2-855c-031d0f8984e6"
+                },
+                {
+                  "id": "ccfc554e-34e3-4f9e-aaac-7c5adfee67be",
+                  "name": "Bad request \u2014 invalid query parameters or request body",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "text/plain"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "<string>"
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/metrics/ingest",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "metrics",
+                        "ingest"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:01.000Z",
+                  "updatedAt": "2026-06-05T15:01:01.000Z",
+                  "uid": "35240-ccfc554e-34e3-4f9e-aaac-7c5adfee67be"
+                },
+                {
+                  "id": "08f65304-cae8-47d8-b161-9515ba861a57",
+                  "name": "Unauthorized \u2014 missing or invalid API token",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "text/plain"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "<string>"
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/metrics/ingest",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "metrics",
+                        "ingest"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:01.000Z",
+                  "updatedAt": "2026-06-05T15:01:01.000Z",
+                  "uid": "35240-08f65304-cae8-47d8-b161-9515ba861a57"
+                },
+                {
+                  "id": "aa8b1b77-684e-42a6-9758-0000a7cb820b",
+                  "name": "Forbidden \u2014 the API token lacks the required scope",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "text/plain"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "<string>"
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/metrics/ingest",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "metrics",
+                        "ingest"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:01.000Z",
+                  "updatedAt": "2026-06-05T15:01:01.000Z",
+                  "uid": "35240-aa8b1b77-684e-42a6-9758-0000a7cb820b"
+                }
+              ],
+              "createdAt": "2026-06-05T15:01:01.000Z",
+              "updatedAt": "2026-06-05T15:01:01.000Z",
+              "uid": "35240-ad617265-c4e2-443c-ad05-35063d481fb0"
+            }
+          ],
+          "id": "d69c35fd-2915-4c18-8c41-f1c2b84eacd3",
+          "createdAt": "2026-06-05T15:01:01.000Z",
+          "updatedAt": "2026-06-05T15:01:01.000Z",
+          "uid": "35240-d69c35fd-2915-4c18-8c41-f1c2b84eacd3"
+        },
+        {
+          "name": "Dynatrace List All Metrics",
+          "id": "83d62fcc-a8b3-4ae8-9ad7-182201065eba",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/metrics?nextPageKey=<string>&pageSize=50&metricSelector=<string>&fields=<string>&writtenSince=<string>&metricDescriptors=<boolean>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "metrics"
+              ],
+              "query": [
+                {
+                  "description": "The cursor for the next page of results. Obtained from the nextPageKey field of a previous response. When this parameter is set, all other query parameters are ignored.",
+                  "key": "nextPageKey",
+                  "value": "<string>"
+                },
+                {
+                  "description": "The number of metric descriptors to return per page. Default is 50, maximum is 500.",
+                  "key": "pageSize",
+                  "value": "50"
+                },
+                {
+                  "description": "Selects metrics for the response. Use the metric selector syntax to filter metrics by key, entity type, or other properties. For example, builtin:host.cpu.usage filters to only that metric.",
+                  "key": "metricSelector",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Defines the list of metric properties included in the response. Use a comma-separated list of property names. To add a property, prefix it with a plus (+) sign, e.g., +defaultAggregation.",
+                  "key": "fields",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filters the resulted set of metrics to those that have been written after the specified time. Use the timeframe format: now-1h, now-1d, or an absolute timestamp.",
+                  "key": "writtenSince",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Whether to include metric descriptor details in the response.",
+                  "key": "metricDescriptors",
+                  "value": "<boolean>"
+                }
+              ]
+            },
+            "description": "Returns a list of all metrics available in the environment. You can filter the list by metric selector, fields to return, and a time range using the writtenSince parameter. Results are paginated; use nextPageKey to retrieve subsequent pages."
+          },
+          "response": [
+            {
+              "id": "4dee42b1-7d1f-4a89-9b74-cdf2f4dbe439",
+              "name": "A list of metric descriptors",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/metrics?nextPageKey=<string>&pageSize=50&metricSelector=<string>&fields=<string>&writtenSince=<string>&metricDescriptors=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "metrics"
+                  ],
+                  "query": [
+                    {
+                      "description": "The cursor for the next page of results. Obtained from the nextPageKey field of a previous response. When this parameter is set, all other query parameters are ignored.",
+                      "key": "nextPageKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The number of metric descriptors to return per page. Default is 50, maximum is 500.",
+                      "key": "pageSize",
+                      "value": "50"
+                    },
+                    {
+                      "description": "Selects metrics for the response. Use the metric selector syntax to filter metrics by key, entity type, or other properties. For example, builtin:host.cpu.usage filters to only that metric.",
+                      "key": "metricSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Defines the list of metric properties included in the response. Use a comma-separated list of property names. To add a property, prefix it with a plus (+) sign, e.g., +defaultAggregation.",
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters the resulted set of metrics to those that have been written after the specified time. Use the timeframe format: now-1h, now-1d, or an absolute timestamp.",
+                      "key": "writtenSince",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Whether to include metric descriptor details in the response.",
+                      "key": "metricDescriptors",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"nextPageKey\": \"<string>\",\n  \"totalCount\": \"<long>\",\n  \"resolution\": \"<string>\",\n  \"metrics\": [\n    {\n      \"metricId\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"unit\": \"<string>\",\n      \"dduBillable\": \"<boolean>\",\n      \"created\": \"<long>\",\n      \"lastWritten\": \"<long>\",\n      \"entityType\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"aggregationTypes\": [\n        \"median\",\n        \"max\"\n      ],\n      \"dimensionDefinitions\": [\n        {\n          \"key\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"<string>\",\n          \"displayName\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"<string>\",\n          \"displayName\": \"<string>\"\n        }\n      ],\n      \"transformations\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defaultAggregation\": {\n        \"type\": \"min\",\n        \"parameter\": \"<double>\"\n      }\n    },\n    {\n      \"metricId\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"unit\": \"<string>\",\n      \"dduBillable\": \"<boolean>\",\n      \"created\": \"<long>\",\n      \"lastWritten\": \"<long>\",\n      \"entityType\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"aggregationTypes\": [\n        \"avg\",\n        \"max\"\n      ],\n      \"dimensionDefinitions\": [\n        {\n          \"key\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"<string>\",\n          \"displayName\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"name\": \"<string>\",\n          \"type\": \"<string>\",\n          \"displayName\": \"<string>\"\n        }\n      ],\n      \"transformations\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defaultAggregation\": {\n        \"type\": \"median\",\n        \"parameter\": \"<double>\"\n      }\n    }\n  ]\n}",
+              "createdAt": "2026-06-05T15:01:01.000Z",
+              "updatedAt": "2026-06-05T15:01:01.000Z",
+              "uid": "35240-4dee42b1-7d1f-4a89-9b74-cdf2f4dbe439"
+            },
+            {
+              "id": "480eeda4-f122-4c5f-8e58-44f75ecffc27",
+              "name": "Bad request \u2014 invalid query parameters or request body",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/metrics?nextPageKey=<string>&pageSize=50&metricSelector=<string>&fields=<string>&writtenSince=<string>&metricDescriptors=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "metrics"
+                  ],
+                  "query": [
+                    {
+                      "description": "The cursor for the next page of results. Obtained from the nextPageKey field of a previous response. When this parameter is set, all other query parameters are ignored.",
+                      "key": "nextPageKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The number of metric descriptors to return per page. Default is 50, maximum is 500.",
+                      "key": "pageSize",
+                      "value": "50"
+                    },
+                    {
+                      "description": "Selects metrics for the response. Use the metric selector syntax to filter metrics by key, entity type, or other properties. For example, builtin:host.cpu.usage filters to only that metric.",
+                      "key": "metricSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Defines the list of metric properties included in the response. Use a comma-separated list of property names. To add a property, prefix it with a plus (+) sign, e.g., +defaultAggregation.",
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters the resulted set of metrics to those that have been written after the specified time. Use the timeframe format: now-1h, now-1d, or an absolute timestamp.",
+                      "key": "writtenSince",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Whether to include metric descriptor details in the response.",
+                      "key": "metricDescriptors",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+              "createdAt": "2026-06-05T15:01:01.000Z",
+              "updatedAt": "2026-06-05T15:01:01.000Z",
+              "uid": "35240-480eeda4-f122-4c5f-8e58-44f75ecffc27"
+            },
+            {
+              "id": "6107b351-7092-4036-be28-c621af86f472",
+              "name": "Unauthorized \u2014 missing or invalid API token",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/metrics?nextPageKey=<string>&pageSize=50&metricSelector=<string>&fields=<string>&writtenSince=<string>&metricDescriptors=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "metrics"
+                  ],
+                  "query": [
+                    {
+                      "description": "The cursor for the next page of results. Obtained from the nextPageKey field of a previous response. When this parameter is set, all other query parameters are ignored.",
+                      "key": "nextPageKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The number of metric descriptors to return per page. Default is 50, maximum is 500.",
+                      "key": "pageSize",
+                      "value": "50"
+                    },
+                    {
+                      "description": "Selects metrics for the response. Use the metric selector syntax to filter metrics by key, entity type, or other properties. For example, builtin:host.cpu.usage filters to only that metric.",
+                      "key": "metricSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Defines the list of metric properties included in the response. Use a comma-separated list of property names. To add a property, prefix it with a plus (+) sign, e.g., +defaultAggregation.",
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters the resulted set of metrics to those that have been written after the specified time. Use the timeframe format: now-1h, now-1d, or an absolute timestamp.",
+                      "key": "writtenSince",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Whether to include metric descriptor details in the response.",
+                      "key": "metricDescriptors",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+              "createdAt": "2026-06-05T15:01:01.000Z",
+              "updatedAt": "2026-06-05T15:01:01.000Z",
+              "uid": "35240-6107b351-7092-4036-be28-c621af86f472"
+            },
+            {
+              "id": "95e4902d-6c09-405b-bc2e-bfb8943e471c",
+              "name": "Forbidden \u2014 the API token lacks the required scope",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/metrics?nextPageKey=<string>&pageSize=50&metricSelector=<string>&fields=<string>&writtenSince=<string>&metricDescriptors=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "metrics"
+                  ],
+                  "query": [
+                    {
+                      "description": "The cursor for the next page of results. Obtained from the nextPageKey field of a previous response. When this parameter is set, all other query parameters are ignored.",
+                      "key": "nextPageKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The number of metric descriptors to return per page. Default is 50, maximum is 500.",
+                      "key": "pageSize",
+                      "value": "50"
+                    },
+                    {
+                      "description": "Selects metrics for the response. Use the metric selector syntax to filter metrics by key, entity type, or other properties. For example, builtin:host.cpu.usage filters to only that metric.",
+                      "key": "metricSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Defines the list of metric properties included in the response. Use a comma-separated list of property names. To add a property, prefix it with a plus (+) sign, e.g., +defaultAggregation.",
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters the resulted set of metrics to those that have been written after the specified time. Use the timeframe format: now-1h, now-1d, or an absolute timestamp.",
+                      "key": "writtenSince",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Whether to include metric descriptor details in the response.",
+                      "key": "metricDescriptors",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+              "createdAt": "2026-06-05T15:01:01.000Z",
+              "updatedAt": "2026-06-05T15:01:01.000Z",
+              "uid": "35240-95e4902d-6c09-405b-bc2e-bfb8943e471c"
+            }
+          ],
+          "createdAt": "2026-06-05T15:01:01.000Z",
+          "updatedAt": "2026-06-05T15:01:01.000Z",
+          "uid": "35240-83d62fcc-a8b3-4ae8-9ad7-182201065eba"
+        }
+      ],
+      "id": "58f9fc43-27bc-4f46-9181-e3b4f8d8d134",
+      "createdAt": "2026-06-05T15:01:01.000Z",
+      "updatedAt": "2026-06-05T15:01:01.000Z",
+      "uid": "35240-58f9fc43-27bc-4f46-9181-e3b4f8d8d134"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "environmentId",
+      "value": "mySampleEnv"
+    },
+    {
+      "key": "baseUrl",
+      "value": "https://{{environmentId}}.live.dynatrace.com/api/v2"
+    }
+  ]
+}

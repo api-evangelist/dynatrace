@@ -1,0 +1,194 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dynatrace Log Monitoring API v2",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Logs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Dynatrace Search Log Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/logs/search",
+            "params": [
+              {
+                "name": "nextSliceKey",
+                "value": "example-value",
+                "type": "query",
+                "description": "The cursor for the next page (slice) of results, obtained from the nextSliceKey field of a previous response. When this parameter is set, all other query parameters are ignored."
+              },
+              {
+                "name": "limit",
+                "value": "500",
+                "type": "query",
+                "description": "The maximum number of log records to return. Default is 1000, maximum is 5000."
+              },
+              {
+                "name": "query",
+                "value": "example-value",
+                "type": "query",
+                "description": "The log search query in DQL syntax. For example, fetch logs | filter severity == \"ERROR\" | limit 100. If not specified, all logs within the time range are returned."
+              },
+              {
+                "name": "from",
+                "value": "example-value",
+                "type": "query",
+                "description": "The start of the queried time range. Use a relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h."
+              },
+              {
+                "name": "to",
+                "value": "example-value",
+                "type": "query",
+                "description": "The end of the queried time range. Default is now."
+              },
+              {
+                "name": "sort",
+                "value": "example-value",
+                "type": "query",
+                "description": "Defines the sort order for results. Use timestamp in descending order (-timestamp) for newest first, or ascending (+timestamp) for oldest first. Default is -timestamp."
+              },
+              {
+                "name": "fields",
+                "value": "example-value",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in the log records. If not specified, all available fields are returned."
+              }
+            ]
+          },
+          "docs": "Searches log records stored in Grail using a query expression. Results are returned in a paginated manner using a slice-based cursor. The query parameter accepts a DQL-based log search expression for filtering and transforming log data. Use nextSliceKey from the response to retrieve subsequent pages of results."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Ingest Log Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/logs/ingest",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Ingests log records into the Dynatrace Grail data lakehouse. Accepts an array of log record objects. Each record must include at least a content field (the log message). Additional fields such as severity, timestamp, and entity associations can be included. Log records are processed asynchronously. Requires the logs.ingest API token scope."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Aggregate Log Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/logs/aggregate",
+            "params": [
+              {
+                "name": "query",
+                "value": "example-value",
+                "type": "query",
+                "description": "The log query expression for filtering records before aggregation. Uses DQL-based syntax. For example, fetch logs | filter severity==\"ERROR\"."
+              },
+              {
+                "name": "from",
+                "value": "example-value",
+                "type": "query",
+                "description": "The start of the queried time range. Use a relative expression, ISO 8601, or Unix timestamp in milliseconds. Default is now-2h."
+              },
+              {
+                "name": "to",
+                "value": "example-value",
+                "type": "query",
+                "description": "The end of the queried time range. Default is now."
+              },
+              {
+                "name": "groupBy",
+                "value": "example-value",
+                "type": "query",
+                "description": "Comma-separated list of fields to group the aggregated results by. For example, severity,log.source to count log records by severity and source combination."
+              },
+              {
+                "name": "fields",
+                "value": "example-value",
+                "type": "query",
+                "description": "Additional fields to include in the aggregation response."
+              }
+            ]
+          },
+          "docs": "Returns aggregated log data grouped by specified fields. Useful for building dashboards and summaries such as error counts by service or log volume by severity. The query parameter specifies filtering conditions and the groupBy parameter specifies the dimensions to aggregate by."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Export Log Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/logs/export",
+            "params": [
+              {
+                "name": "nextSliceKey",
+                "value": "example-value",
+                "type": "query",
+                "description": "The cursor for the next page of export results. When this parameter is set, all other query parameters are ignored."
+              },
+              {
+                "name": "pageSize",
+                "value": "500",
+                "type": "query",
+                "description": "The number of log records to return per page. Default is 1000, maximum is 10000."
+              },
+              {
+                "name": "query",
+                "value": "example-value",
+                "type": "query",
+                "description": "The log export query expression for filtering records."
+              },
+              {
+                "name": "from",
+                "value": "example-value",
+                "type": "query",
+                "description": "The start of the queried time range."
+              },
+              {
+                "name": "to",
+                "value": "example-value",
+                "type": "query",
+                "description": "The end of the queried time range."
+              },
+              {
+                "name": "sort",
+                "value": "example-value",
+                "type": "query",
+                "description": "The sort order for export results. Default is -timestamp."
+              },
+              {
+                "name": "fields",
+                "value": "example-value",
+                "type": "query",
+                "description": "Fields to include in the exported log records."
+              }
+            ]
+          },
+          "docs": "Exports log records for bulk retrieval, suitable for integration with external SIEM, log management, or archiving systems. Results are paginated using a slice-based cursor. The export uses the same query syntax as the search endpoint but is optimized for large volume data retrieval."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

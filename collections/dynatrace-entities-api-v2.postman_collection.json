@@ -1,0 +1,1865 @@
+{
+  "item": [
+    {
+      "id": "c3339b13-f0a9-42e8-b039-e090839b9d89",
+      "name": "Entities",
+      "description": {
+        "content": "Operations for querying monitored entities and entity types",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "51620fec-7f9b-454a-895d-794a3bccd861",
+          "name": "Dynatrace List Entities",
+          "request": {
+            "name": "Dynatrace List Entities",
+            "description": {
+              "content": "Returns a list of monitored entities matching the specified entity selector. The entity selector is required and must specify at least one condition, such as entity type. Results can be enriched with additional fields including properties, tags, management zones, and relationships. Results are paginated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "entities"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "nextPageKey",
+                  "value": "<string>",
+                  "description": "The cursor for the next page of results, obtained from the nextPageKey field of a previous response. When this parameter is set, all other query parameters except pageSize are ignored."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "50",
+                  "description": "The number of entities to return per page. Default is 50, maximum is 500."
+                },
+                {
+                  "disabled": false,
+                  "key": "entitySelector",
+                  "value": "<string>",
+                  "description": "(Required) Defines the scope of the query by specifying entity filter conditions. Required. Use the entity selector syntax, for example: type(SERVICE) to select all services, or type(HOST),tag(production) to select production hosts. Multiple conditions are ANDed together."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Defines additional fields to include in the entity response beyond the default set. Use a comma-separated list. For example, +properties,+tags,+toRelationships.runsOn to include entity properties, tags, and specific relationship types."
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<string>",
+                  "description": "The start of the time range for entity discovery. Entities seen within this range are returned. Use a relative expression (now-7d), ISO 8601, or Unix timestamp in milliseconds."
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<string>",
+                  "description": "The end of the time range for entity discovery. Default is now."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Defines the sort order of results. Use the field name prefixed with + (ascending) or - (descending). For example, +displayName or -lastSeenTms."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cd60acea-4402-4717-be2b-ae3544f5e3e2",
+              "name": "A paginated list of monitored entities",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    },
+                    {
+                      "key": "entitySelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nextPageKey\": \"example-value\",\n  \"totalCount\": 500,\n  \"pageSize\": 500,\n  \"entities\": [\n    {\n      \"entityId\": \"abc123\",\n      \"displayName\": \"Production Service\",\n      \"type\": \"STANDARD\",\n      \"firstSeenTms\": 500,\n      \"lastSeenTms\": 500,\n      \"properties\": {},\n      \"tags\": [\n        {\n          \"context\": \"example-value\",\n          \"key\": \"example-value\",\n          \"value\": \"example-value\",\n          \"stringRepresentation\": \"example-value\"\n        }\n      ],\n      \"managementZones\": [\n        {\n          \"id\": \"abc123\",\n          \"name\": \"Production Service\"\n        }\n      ],\n      \"toRelationships\": {},\n      \"fromRelationships\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f8ca40a-6bdb-4dbb-8bbb-a1b5ddfb6c43",
+              "name": "Bad request — invalid query parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    },
+                    {
+                      "key": "entitySelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b4c0ad0b-eac8-46a3-9831-ab753a587709",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    },
+                    {
+                      "key": "entitySelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "944a5f2f-ccb0-404d-bc15-882d53903a82",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    },
+                    {
+                      "key": "entitySelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "28ac1456-6364-40a5-9960-3b71d2f6baec",
+          "name": "Dynatrace Get Entity",
+          "request": {
+            "name": "Dynatrace Get Entity",
+            "description": {
+              "content": "Returns the details of a specific monitored entity by its entity ID. The entity ID format is TYPE-HEXADECIMALID, e.g., SERVICE-1234567890ABCDEF. You can request additional fields including properties, tags, relationships, and management zone assignments.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "entities",
+                ":entityId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Defines additional fields to include in the response. Use a comma-separated list prefixed with +, e.g., +properties,+tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<string>",
+                  "description": "The start of the time range for properties and relationships. Defaults to now-3d."
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<string>",
+                  "description": "The end of the time range. Defaults to now."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "entityId",
+                  "description": "(Required) The unique identifier of the entity to retrieve, in the format TYPE-HEXADECIMALID, e.g., SERVICE-1234567890ABCDEF."
+                },
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "29aa6a5e-2690-4a5d-a4cf-7c6b4a5b8d73",
+              "name": "The entity details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entities",
+                    ":entityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entityId",
+                      "description": "(Required) The unique identifier of the entity to retrieve, in the format TYPE-HEXADECIMALID, e.g., SERVICE-1234567890ABCDEF."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entityId\": \"abc123\",\n  \"displayName\": \"Production Service\",\n  \"type\": \"STANDARD\",\n  \"firstSeenTms\": 500,\n  \"lastSeenTms\": 500,\n  \"properties\": {},\n  \"tags\": [\n    {\n      \"context\": \"example-value\",\n      \"key\": \"example-value\",\n      \"value\": \"example-value\",\n      \"stringRepresentation\": \"example-value\"\n    }\n  ],\n  \"managementZones\": [\n    {\n      \"id\": \"abc123\",\n      \"name\": \"Production Service\"\n    }\n  ],\n  \"toRelationships\": {},\n  \"fromRelationships\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aa76c14f-50c9-45ba-a4fc-4b85d19f503e",
+              "name": "Bad request — invalid query parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entities",
+                    ":entityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entityId",
+                      "description": "(Required) The unique identifier of the entity to retrieve, in the format TYPE-HEXADECIMALID, e.g., SERVICE-1234567890ABCDEF."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "75fffa53-d384-40cb-abf0-f806b953763b",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entities",
+                    ":entityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entityId",
+                      "description": "(Required) The unique identifier of the entity to retrieve, in the format TYPE-HEXADECIMALID, e.g., SERVICE-1234567890ABCDEF."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fdd629ac-1f4b-4a0f-9258-b5ee893cbf7c",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entities",
+                    ":entityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entityId",
+                      "description": "(Required) The unique identifier of the entity to retrieve, in the format TYPE-HEXADECIMALID, e.g., SERVICE-1234567890ABCDEF."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "724758a3-bbbd-44f1-9220-591ba0d00480",
+              "name": "Not found — the specified entity or entity type does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entities",
+                    ":entityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entityId",
+                      "description": "(Required) The unique identifier of the entity to retrieve, in the format TYPE-HEXADECIMALID, e.g., SERVICE-1234567890ABCDEF."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7e5cc3bf-42a1-4486-bc87-abe60051c679",
+          "name": "Dynatrace List Entity Types",
+          "request": {
+            "name": "Dynatrace List Entity Types",
+            "description": {
+              "content": "Returns a list of all entity types available in the Dynatrace environment. Entity types describe the categories of monitored entities, such as SERVICE, HOST, PROCESS_GROUP, APPLICATION, etc. Results are paginated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "entityTypes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "nextPageKey",
+                  "value": "<string>",
+                  "description": "Cursor for the next page of results."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "50",
+                  "description": "The number of entity types to return per page."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "77410882-41a5-4d0b-8033-8a55f5d898e5",
+              "name": "A paginated list of entity types",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entityTypes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nextPageKey\": \"example-value\",\n  \"totalCount\": 500,\n  \"types\": [\n    {\n      \"type\": \"STANDARD\",\n      \"displayName\": \"Production Service\",\n      \"description\": \"Example description.\",\n      \"properties\": [\n        {\n          \"id\": \"abc123\",\n          \"displayName\": \"Production Service\",\n          \"type\": \"STANDARD\"\n        }\n      ],\n      \"fromRelationships\": [\n        {\n          \"id\": \"abc123\",\n          \"toTypes\": [\n            {}\n          ]\n        }\n      ],\n      \"toRelationships\": [\n        {\n          \"id\": \"abc123\",\n          \"toTypes\": [\n            {}\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "36e398ba-55bb-45ba-bffc-9a5ff791ffe7",
+              "name": "Bad request — invalid query parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entityTypes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f74dde1-ce6c-43ed-a30f-e67e20ee6733",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entityTypes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97ecfced-37de-40a9-96d6-70f67fd5ed7f",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entityTypes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e8f01e13-2a31-412e-873a-8cc3e9a59b15",
+          "name": "Dynatrace Get Entity Type Definition",
+          "request": {
+            "name": "Dynatrace Get Entity Type Definition",
+            "description": {
+              "content": "Returns the definition of a specific entity type, including its display name, description, available properties, and supported relationship types. This is useful for understanding what fields are available when querying entities of a given type.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "entityTypes",
+                ":type"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "type",
+                  "description": "(Required) The entity type identifier, e.g., SERVICE, HOST, PROCESS_GROUP, APPLICATION."
+                },
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "daf3c0a9-242d-4fac-b2f1-f415753d6dc4",
+              "name": "The entity type definition",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entityTypes",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) The entity type identifier, e.g., SERVICE, HOST, PROCESS_GROUP, APPLICATION."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"STANDARD\",\n  \"displayName\": \"Production Service\",\n  \"description\": \"Example description.\",\n  \"properties\": [\n    {\n      \"id\": \"abc123\",\n      \"displayName\": \"Production Service\",\n      \"type\": \"STANDARD\"\n    }\n  ],\n  \"fromRelationships\": [\n    {\n      \"id\": \"abc123\",\n      \"toTypes\": [\n        {}\n      ]\n    }\n  ],\n  \"toRelationships\": [\n    {\n      \"id\": \"abc123\",\n      \"toTypes\": [\n        {}\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e01d6b96-23ec-4aa8-b707-19aba531aae9",
+              "name": "Bad request — invalid query parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entityTypes",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) The entity type identifier, e.g., SERVICE, HOST, PROCESS_GROUP, APPLICATION."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "32117173-00a9-4b86-a13b-26174861fe00",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entityTypes",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) The entity type identifier, e.g., SERVICE, HOST, PROCESS_GROUP, APPLICATION."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "547d9715-1de8-4345-a908-60c1b29770bf",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entityTypes",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) The entity type identifier, e.g., SERVICE, HOST, PROCESS_GROUP, APPLICATION."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "150758e0-1887-49c6-904b-f22690d046af",
+              "name": "Not found — the specified entity or entity type does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entityTypes",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) The entity type identifier, e.g., SERVICE, HOST, PROCESS_GROUP, APPLICATION."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2e207768-5b55-4a3f-ad30-d6c7d230ae7a",
+          "name": "Dynatrace Look up Entity by Name",
+          "request": {
+            "name": "Dynatrace Look up Entity by Name",
+            "description": {
+              "content": "Looks up a specific entity by its display name and type. This is useful when you know the human-readable name of an entity but need its Dynatrace entity ID for use in other API calls or selectors. Returns the matching entity or a 404 if not found.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "entities",
+                "lookup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bd39a059-2adf-4f2f-ad7c-9938947711a4",
+              "name": "The matching entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entities",
+                    "lookup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"my-production-service\",\n  \"type\": \"SERVICE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entityId\": \"abc123\",\n  \"displayName\": \"Production Service\",\n  \"type\": \"STANDARD\",\n  \"firstSeenTms\": 500,\n  \"lastSeenTms\": 500,\n  \"properties\": {},\n  \"tags\": [\n    {\n      \"context\": \"example-value\",\n      \"key\": \"example-value\",\n      \"value\": \"example-value\",\n      \"stringRepresentation\": \"example-value\"\n    }\n  ],\n  \"managementZones\": [\n    {\n      \"id\": \"abc123\",\n      \"name\": \"Production Service\"\n    }\n  ],\n  \"toRelationships\": {},\n  \"fromRelationships\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e897a0cb-a374-4f47-b7b4-5d4891b5be72",
+              "name": "Bad request — invalid query parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entities",
+                    "lookup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"my-production-service\",\n  \"type\": \"SERVICE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3053739f-f230-456c-b494-ee64d6d29369",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entities",
+                    "lookup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"my-production-service\",\n  \"type\": \"SERVICE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "71c37e58-0938-4548-a807-b0812cac88c9",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entities",
+                    "lookup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"my-production-service\",\n  \"type\": \"SERVICE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d337a75b-0e3c-4671-8e6d-efd36a441ef9",
+              "name": "Not found — the specified entity or entity type does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entities",
+                    "lookup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"my-production-service\",\n  \"type\": \"SERVICE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The unique identifier of your Dynatrace environment",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "mySampleEnv",
+      "key": "environmentId"
+    },
+    {
+      "type": "string",
+      "value": "https://{{environmentId}}.live.dynatrace.com/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f7faf793-7eb3-4b47-8732-0647a037df50",
+    "name": "Dynatrace Entities API v2",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Dynatrace Entities API v2 enables querying of monitored entities such as services, hosts, processes, process groups, and applications within a Dynatrace environment. It supports filtering entities by type, tags, management zones, and time range. Entity responses include topology relationships, properties, tags, and management zone assignments for dependency mapping and infrastructure analysis.\n\nContact Support:\n Name: Dynatrace Support",
+      "type": "text/plain"
+    }
+  }
+}

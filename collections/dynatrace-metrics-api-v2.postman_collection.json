@@ -1,0 +1,1782 @@
+{
+  "item": [
+    {
+      "id": "3cae502e-8f83-4e90-bd8c-5d06acb152c8",
+      "name": "Metrics",
+      "description": {
+        "content": "Operations for querying, managing, and ingesting time-series metrics",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c96593c8-7b16-4161-8924-55b73c837c68",
+          "name": "Dynatrace List All Metrics",
+          "request": {
+            "name": "Dynatrace List All Metrics",
+            "description": {
+              "content": "Returns a list of all metrics available in the environment. You can filter the list by metric selector, fields to return, and a time range using the writtenSince parameter. Results are paginated; use nextPageKey to retrieve subsequent pages.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metrics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "nextPageKey",
+                  "value": "<string>",
+                  "description": "The cursor for the next page of results. Obtained from the nextPageKey field of a previous response. When this parameter is set, all other query parameters are ignored."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "50",
+                  "description": "The number of metric descriptors to return per page. Default is 50, maximum is 500."
+                },
+                {
+                  "disabled": false,
+                  "key": "metricSelector",
+                  "value": "<string>",
+                  "description": "Selects metrics for the response. Use the metric selector syntax to filter metrics by key, entity type, or other properties. For example, builtin:host.cpu.usage filters to only that metric."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Defines the list of metric properties included in the response. Use a comma-separated list of property names. To add a property, prefix it with a plus (+) sign, e.g., +defaultAggregation."
+                },
+                {
+                  "disabled": false,
+                  "key": "writtenSince",
+                  "value": "<string>",
+                  "description": "Filters the resulted set of metrics to those that have been written after the specified time. Use the timeframe format: now-1h, now-1d, or an absolute timestamp."
+                },
+                {
+                  "disabled": false,
+                  "key": "metricDescriptors",
+                  "value": "<boolean>",
+                  "description": "Whether to include metric descriptor details in the response."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a63b4158-648c-455a-a88b-ed9efecbee53",
+              "name": "A list of metric descriptors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    },
+                    {
+                      "key": "metricSelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "writtenSince",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "metricDescriptors",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nextPageKey\": \"example-value\",\n  \"totalCount\": 500,\n  \"resolution\": \"example-value\",\n  \"metrics\": [\n    {\n      \"metricId\": \"abc123\",\n      \"displayName\": \"Production Service\",\n      \"description\": \"Example description.\",\n      \"unit\": \"example-value\",\n      \"dduBillable\": true,\n      \"created\": 500,\n      \"lastWritten\": 500,\n      \"entityType\": [\n        \"STANDARD\"\n      ],\n      \"aggregationTypes\": [\n        \"min\"\n      ],\n      \"dimensionDefinitions\": [\n        {\n          \"key\": \"example-value\",\n          \"name\": \"Production Service\",\n          \"type\": \"STANDARD\",\n          \"displayName\": \"Production Service\"\n        }\n      ],\n      \"transformations\": [\n        \"example-value\"\n      ],\n      \"defaultAggregation\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9840cff7-08bd-467f-85e5-d1b0e704f7da",
+              "name": "Bad request — invalid query parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    },
+                    {
+                      "key": "metricSelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "writtenSince",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "metricDescriptors",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37b81540-4ce9-45ec-8b8d-db88b8695b74",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    },
+                    {
+                      "key": "metricSelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "writtenSince",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "metricDescriptors",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "27c11ace-aad4-4222-ac5c-fc7e2232f4b7",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    },
+                    {
+                      "key": "metricSelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "writtenSince",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "metricDescriptors",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "01b5a567-e121-41cb-adac-4fe349e3b9e1",
+          "name": "Dynatrace Get Metric Descriptor",
+          "request": {
+            "name": "Dynatrace Get Metric Descriptor",
+            "description": {
+              "content": "Returns the descriptor for the specified metric key. The descriptor includes metadata such as the display name, description, unit, supported aggregation types, and entity dimensions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metrics",
+                ":metricKey"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "metricKey",
+                  "description": "(Required) The key of the metric to operate on. For example, builtin:host.cpu.usage or custom.my.metric."
+                },
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b82ac3a3-0bc8-4697-9d0f-a105248bb2c1",
+              "name": "The metric descriptor",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    ":metricKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "metricKey",
+                      "description": "(Required) The key of the metric to operate on. For example, builtin:host.cpu.usage or custom.my.metric."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"metricId\": \"abc123\",\n  \"displayName\": \"Production Service\",\n  \"description\": \"Example description.\",\n  \"unit\": \"example-value\",\n  \"dduBillable\": true,\n  \"created\": 500,\n  \"lastWritten\": 500,\n  \"entityType\": [\n    \"STANDARD\"\n  ],\n  \"aggregationTypes\": [\n    \"min\"\n  ],\n  \"dimensionDefinitions\": [\n    {\n      \"key\": \"example-value\",\n      \"name\": \"Production Service\",\n      \"type\": \"STANDARD\",\n      \"displayName\": \"Production Service\"\n    }\n  ],\n  \"transformations\": [\n    \"example-value\"\n  ],\n  \"defaultAggregation\": {\n    \"type\": {},\n    \"parameter\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f7943ed0-8828-42e6-8f34-1404de92ffef",
+              "name": "Bad request — invalid query parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    ":metricKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "metricKey",
+                      "description": "(Required) The key of the metric to operate on. For example, builtin:host.cpu.usage or custom.my.metric."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd338b30-e1af-4b89-b4bf-fd8d4f8e1ef4",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    ":metricKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "metricKey",
+                      "description": "(Required) The key of the metric to operate on. For example, builtin:host.cpu.usage or custom.my.metric."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "02725192-f6cf-47be-bc73-36048c224709",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    ":metricKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "metricKey",
+                      "description": "(Required) The key of the metric to operate on. For example, builtin:host.cpu.usage or custom.my.metric."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4c10d10-3489-4f7f-b3e5-ca6918b45e33",
+              "name": "Not found — the specified metric does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    ":metricKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "metricKey",
+                      "description": "(Required) The key of the metric to operate on. For example, builtin:host.cpu.usage or custom.my.metric."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ab1eeab0-6ed8-4e02-9e61-8701f8f7ab62",
+          "name": "Dynatrace Delete Custom Metric",
+          "request": {
+            "name": "Dynatrace Delete Custom Metric",
+            "description": {
+              "content": "Deletes the specified custom metric from the environment. Only custom metrics (those not prefixed with builtin:) can be deleted. Built-in metrics cannot be deleted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metrics",
+                ":metricKey"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "metricKey",
+                  "description": "(Required) The key of the metric to operate on. For example, builtin:host.cpu.usage or custom.my.metric."
+                },
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "84499963-bf37-4a98-b87f-d8489f3d51a0",
+              "name": "The custom metric was successfully deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    ":metricKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "metricKey",
+                      "description": "(Required) The key of the metric to operate on. For example, builtin:host.cpu.usage or custom.my.metric."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "14f10960-a9a4-45a8-8390-a949e2efe48f",
+              "name": "Bad request — invalid query parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    ":metricKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "metricKey",
+                      "description": "(Required) The key of the metric to operate on. For example, builtin:host.cpu.usage or custom.my.metric."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "788f3eb3-aad9-4597-9abe-c58850157829",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    ":metricKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "metricKey",
+                      "description": "(Required) The key of the metric to operate on. For example, builtin:host.cpu.usage or custom.my.metric."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d9d6d396-f73f-4c75-a80b-20c55c5cbbfd",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    ":metricKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "metricKey",
+                      "description": "(Required) The key of the metric to operate on. For example, builtin:host.cpu.usage or custom.my.metric."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "060381a9-cc83-4aa0-992b-9ec0e05c60f8",
+              "name": "Not found — the specified metric does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    ":metricKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "metricKey",
+                      "description": "(Required) The key of the metric to operate on. For example, builtin:host.cpu.usage or custom.my.metric."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0e1a856b-6119-4e3d-943d-530f37c75c18",
+          "name": "Dynatrace Query Metric Data Points",
+          "request": {
+            "name": "Dynatrace Query Metric Data Points",
+            "description": {
+              "content": "Returns data points for the specified metrics. The metric selector determines which metrics and transformations to apply. Time range is specified with from and to parameters. Results can be scoped to specific entities using entitySelector or management zones using mzSelector. Data is returned at the specified resolution (e.g., 1h, 5m).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metrics",
+                "query"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "metricSelector",
+                  "value": "<string>",
+                  "description": "(Required) Selects metrics for the query. Required. Supports transformations such as :avg, :max, :sum, :splitBy, :filter. For example, builtin:host.cpu.usage:avg:auto."
+                },
+                {
+                  "disabled": false,
+                  "key": "resolution",
+                  "value": "<string>",
+                  "description": "The desired time resolution of the data points. Valid units are m (minutes), h (hours), d (days). For example, 5m, 1h. Use Inf for a single data point aggregated over the full time range."
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<string>",
+                  "description": "The start of the queried time range. Use one of: relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h."
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<string>",
+                  "description": "The end of the queried time range. Use one of: relative expression (now), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now."
+                },
+                {
+                  "disabled": false,
+                  "key": "entitySelector",
+                  "value": "<string>",
+                  "description": "Filters results to entities matching the selector. Use the entity selector syntax, e.g., type(HOST),tag(production). Only metrics with an entity dimension can be filtered this way."
+                },
+                {
+                  "disabled": false,
+                  "key": "mzSelector",
+                  "value": "<string>",
+                  "description": "Filters results to entities belonging to the specified management zone. Use the management zone selector syntax, e.g., mzName(MyZone)."
+                },
+                {
+                  "disabled": false,
+                  "key": "selectorInputMetrics",
+                  "value": "<boolean>",
+                  "description": "When set to true, the response includes the input metrics used by the selector before transformations are applied."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0195596a-42e1-4f49-ba3b-51c3e0721aea",
+              "name": "Metric data points for the specified query",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "metricSelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "resolution",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "entitySelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "mzSelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "selectorInputMetrics",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"resolution\": \"example-value\",\n  \"nextPageKey\": \"example-value\",\n  \"totalCount\": 500,\n  \"result\": [\n    {\n      \"metricId\": \"abc123\",\n      \"data\": [\n        {}\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b5f35d32-575e-4ebc-be6e-19790c4bdbbc",
+              "name": "Bad request — invalid query parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "metricSelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "resolution",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "entitySelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "mzSelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "selectorInputMetrics",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3f582884-08dc-4c5f-b6f6-092f3a731e69",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "metricSelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "resolution",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "entitySelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "mzSelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "selectorInputMetrics",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d49685f7-e512-4cd8-ace8-9fc07dd4ffd6",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "metricSelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "resolution",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "entitySelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "mzSelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "selectorInputMetrics",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fa8d1423-a6cd-44ec-8603-52b3b0459a3c",
+          "name": "Dynatrace Ingest Custom Metrics",
+          "request": {
+            "name": "Dynatrace Ingest Custom Metrics",
+            "description": {
+              "content": "Ingests custom metric data points into the Dynatrace environment using the MINT (Metric INgest Text) line protocol. Each line represents one data point. Requires the metrics.ingest API token scope. Data is processed asynchronously and may take a short time to appear in queries.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metrics",
+                "ingest"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<string>"
+            }
+          },
+          "response": [
+            {
+              "id": "39e6c504-ceec-4936-843a-dbe319f63082",
+              "name": "The metric data was accepted for ingestion",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    "ingest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "custom.response.time,host=web-01,environment=production gauge=250.5 1609459200000\ncustom.error.count,service=auth-service count=12 1609459200000\n"
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f4b71a37-8dd6-4dc4-a12f-47f176bf5c93",
+              "name": "Bad request — invalid query parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    "ingest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "custom.response.time,host=web-01,environment=production gauge=250.5 1609459200000\ncustom.error.count,service=auth-service count=12 1609459200000\n"
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1979ee26-6f4d-45ec-9358-5e206c586371",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    "ingest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "custom.response.time,host=web-01,environment=production gauge=250.5 1609459200000\ncustom.error.count,service=auth-service count=12 1609459200000\n"
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d38f52e1-2f57-4258-bbd2-d67fe4a761bc",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    "ingest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "custom.response.time,host=web-01,environment=production gauge=250.5 1609459200000\ncustom.error.count,service=auth-service count=12 1609459200000\n"
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The unique identifier of your Dynatrace environment",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "mySampleEnv",
+      "key": "environmentId"
+    },
+    {
+      "type": "string",
+      "value": "https://{{environmentId}}.live.dynatrace.com/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e57e894c-0140-4a59-8417-4650a80a54ee",
+    "name": "Dynatrace Metrics API v2",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Dynatrace Metrics API v2 allows you to query, ingest, and manage time-series metric data within a Dynatrace environment. It supports retrieving metric descriptors, querying data points with flexible selectors (including transformations and aggregations), and ingesting custom metrics from external sources using the MINT line protocol.\n\nContact Support:\n Name: Dynatrace Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dynatrace Events API v2",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Dynatrace List Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/events",
+            "params": [
+              {
+                "name": "nextPageKey",
+                "value": "example-value",
+                "type": "query",
+                "description": "The cursor for the next page of results, obtained from the nextPageKey field of a previous response. When this parameter is set, all other query parameters except pageSize are ignored."
+              },
+              {
+                "name": "pageSize",
+                "value": "500",
+                "type": "query",
+                "description": "The number of events to return per page. Default is 50, maximum is 1000."
+              },
+              {
+                "name": "from",
+                "value": "example-value",
+                "type": "query",
+                "description": "The start of the queried time range. Use a relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h."
+              },
+              {
+                "name": "to",
+                "value": "example-value",
+                "type": "query",
+                "description": "The end of the queried time range. Use a relative expression (now), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now."
+              },
+              {
+                "name": "eventSelector",
+                "value": "type(SERVICE)",
+                "type": "query",
+                "description": "Defines the scope of the query using the event selector syntax. For example, eventType(\"CUSTOM_DEPLOYMENT\") to filter by type, or title(\"My event\") to filter by title. Multiple conditions can be combined."
+              },
+              {
+                "name": "entitySelector",
+                "value": "type(SERVICE)",
+                "type": "query",
+                "description": "Filters events to those affecting entities matching this selector. Use the standard entity selector syntax, e.g., type(HOST),tag(prod)."
+              },
+              {
+                "name": "eventType",
+                "value": "AVAILABILITY_EVENT",
+                "type": "query",
+                "description": "Filters results to events of the specified type. For a full list of types, see the eventType enum in EventIngestPayload."
+              }
+            ]
+          },
+          "docs": "Returns a list of events from the Dynatrace environment matching the specified filters. Results are paginated; use nextPageKey from the response to retrieve additional pages. Time range defaults to the last two hours if not specified."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Get Event by Id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/events/:eventId",
+            "params": [
+              {
+                "name": "eventId",
+                "value": "abc123",
+                "type": "path",
+                "description": "The unique identifier of the event to retrieve."
+              }
+            ]
+          },
+          "docs": "Returns the details of a specific event identified by its event ID. The event ID is obtained from the list events endpoint or from event notification callbacks."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Ingest a Custom Event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/events/ingest",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Ingests a custom event into the Dynatrace environment. The event is associated with one or more entities specified by the entitySelector. Custom events are used to annotate the timeline with deployment information, configuration changes, or custom alerts. Events consume Davis Data Units (DDUs). The API token requires the events.ingest scope."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

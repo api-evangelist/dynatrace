@@ -1,0 +1,369 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dynatrace Account Management API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "https://sso.dynatrace.com/sso/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Dynatrace List Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dynatrace.com/iam/v1/accounts/:accountUuid/users",
+            "params": [
+              {
+                "name": "accountUuid",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+              },
+              {
+                "name": "nextPageKey",
+                "value": "example-value",
+                "type": "query",
+                "description": "Cursor for the next page of results."
+              },
+              {
+                "name": "pageSize",
+                "value": "500",
+                "type": "query",
+                "description": "The number of users to return per page."
+              }
+            ]
+          },
+          "docs": "Returns a list of all users in the specified Dynatrace account. User records include basic profile information and group memberships. Results are paginated."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Create User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dynatrace.com/iam/v1/accounts/:accountUuid/users",
+            "params": [
+              {
+                "name": "accountUuid",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new user in the Dynatrace account and sends an invitation email. The user's email address serves as their login identifier. Groups can be assigned at creation time to grant appropriate environment access and permissions."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Get User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dynatrace.com/iam/v1/accounts/:accountUuid/users/:userId",
+            "params": [
+              {
+                "name": "accountUuid",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user. Typically the user's email address or a UUID assigned by the system."
+              }
+            ]
+          },
+          "docs": "Returns the details of a specific user in the account, identified by their user ID (typically the email address or a UUID)."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Update User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.dynatrace.com/iam/v1/accounts/:accountUuid/users/:userId",
+            "params": [
+              {
+                "name": "accountUuid",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user. Typically the user's email address or a UUID assigned by the system."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the profile information and group memberships for an existing user. The entire user record is replaced with the provided data. To add a user to new groups without removing existing memberships, first retrieve the current group list and include it in the update."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Delete User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.dynatrace.com/iam/v1/accounts/:accountUuid/users/:userId",
+            "params": [
+              {
+                "name": "accountUuid",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user. Typically the user's email address or a UUID assigned by the system."
+              }
+            ]
+          },
+          "docs": "Permanently removes the specified user from the Dynatrace account. This action cannot be undone. The user immediately loses access to all Dynatrace environments and resources."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Dynatrace List Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dynatrace.com/iam/v1/accounts/:accountUuid/groups",
+            "params": [
+              {
+                "name": "accountUuid",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+              },
+              {
+                "name": "nextPageKey",
+                "value": "example-value",
+                "type": "query",
+                "description": "Cursor for the next page of results."
+              },
+              {
+                "name": "pageSize",
+                "value": "500",
+                "type": "query",
+                "description": "The number of groups to return per page."
+              }
+            ]
+          },
+          "docs": "Returns a list of all user groups defined in the account. Groups are the primary mechanism for assigning permissions and environment access to sets of users. Results are paginated."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Create Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dynatrace.com/iam/v1/accounts/:accountUuid/groups",
+            "params": [
+              {
+                "name": "accountUuid",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new user group in the account. After creating the group, users can be assigned to it and permissions can be granted to the group for specific environments or account-level functions."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Get Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dynatrace.com/iam/v1/accounts/:accountUuid/groups/:groupId",
+            "params": [
+              {
+                "name": "accountUuid",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the group."
+              }
+            ]
+          },
+          "docs": "Returns the details of a specific group, including its name, description, and assigned permissions."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Update Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.dynatrace.com/iam/v1/accounts/:accountUuid/groups/:groupId",
+            "params": [
+              {
+                "name": "accountUuid",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the group."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the name and description of an existing group. Group permissions are managed separately via the permissions endpoints."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Delete Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.dynatrace.com/iam/v1/accounts/:accountUuid/groups/:groupId",
+            "params": [
+              {
+                "name": "accountUuid",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the group."
+              }
+            ]
+          },
+          "docs": "Permanently deletes the specified group from the account. All users who were members of this group lose any permissions that were granted exclusively through this group."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Permissions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Dynatrace List Permissions for Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dynatrace.com/iam/v1/accounts/:accountUuid/permissions",
+            "params": [
+              {
+                "name": "accountUuid",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+              }
+            ]
+          },
+          "docs": "Returns a list of all permissions defined for the account. Permissions control what actions groups and users can perform within Dynatrace environments and at the account level. Results include both environment-scoped and account-scoped permissions."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Environments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Dynatrace List Environments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dynatrace.com/env/v1/accounts/:accountUuid/environments",
+            "params": [
+              {
+                "name": "accountUuid",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+              },
+              {
+                "name": "nextPageKey",
+                "value": "example-value",
+                "type": "query",
+                "description": "Cursor for the next page of results."
+              },
+              {
+                "name": "pageSize",
+                "value": "500",
+                "type": "query",
+                "description": "The number of environments to return per page."
+              }
+            ]
+          },
+          "docs": "Returns a list of all Dynatrace environments associated with the specified account. Each environment record includes the environment ID, name, and URL. This information is useful for enumerating environments before making environment-level API calls."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

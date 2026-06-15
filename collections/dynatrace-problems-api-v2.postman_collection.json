@@ -1,0 +1,3152 @@
+{
+  "item": [
+    {
+      "id": "d65e4014-771e-4b4d-84f6-84ef864a7eb8",
+      "name": "Problems",
+      "description": {
+        "content": "Operations for querying and managing detected problems",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "23d58936-e2b5-4739-9ddf-3dd643e8ec9c",
+          "name": "Dynatrace List Problems",
+          "request": {
+            "name": "Dynatrace List Problems",
+            "description": {
+              "content": "Returns a list of problems from the Dynatrace environment. You can filter problems by problem selector, entity selector, time range, and other criteria. Results are paginated. By default, returns problems from the last two hours.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "problems"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "nextPageKey",
+                  "value": "<string>",
+                  "description": "The cursor for the next page of results, obtained from the nextPageKey field of a previous response. When this parameter is set, all other query parameters except pageSize are ignored."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "50",
+                  "description": "The number of problems to return per page. Default is 50, maximum is 500."
+                },
+                {
+                  "disabled": false,
+                  "key": "problemSelector",
+                  "value": "<string>",
+                  "description": "Defines the scope of the query using the problem selector syntax. Allows filtering by status, severity, management zone, and other problem properties. For example, status(OPEN),severityLevel(AVAILABILITY)."
+                },
+                {
+                  "disabled": false,
+                  "key": "entitySelector",
+                  "value": "<string>",
+                  "description": "Filters results to problems affecting entities matching this selector. Use the entity selector syntax, e.g., type(SERVICE), tag(production). Problems are returned if any affected or impacted entity matches."
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<string>",
+                  "description": "The start of the queried time range. Use a relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h."
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<string>",
+                  "description": "The end of the queried time range. Use a relative expression (now), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Defines the sort order of the results. Use field name prefixed with + for ascending or - for descending. For example, -startTime sorts by start time descending (newest first)."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Defines additional fields to include in the response beyond the default set. Use a comma-separated list. For example, +evidenceDetails,+impactAnalysis to include evidence and impact data."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ab06657b-470e-4f5b-a9ee-a5d8a0ac3812",
+              "name": "A paginated list of problems",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    },
+                    {
+                      "key": "problemSelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "entitySelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nextPageKey\": \"example-value\",\n  \"totalCount\": 500,\n  \"pageSize\": 500,\n  \"problems\": [\n    {\n      \"problemId\": \"abc123\",\n      \"displayId\": \"abc123\",\n      \"title\": \"example-value\",\n      \"severityLevel\": \"AVAILABILITY\",\n      \"status\": \"OPEN\",\n      \"startTime\": 1718153645993,\n      \"endTime\": 1718153645993,\n      \"affectedEntities\": [\n        {\n          \"entityId\": \"abc123\",\n          \"name\": \"Production Service\",\n          \"type\": \"STANDARD\"\n        }\n      ],\n      \"impactedEntities\": [\n        {\n          \"entityId\": \"abc123\",\n          \"name\": \"Production Service\",\n          \"type\": \"STANDARD\"\n        }\n      ],\n      \"rootCauseEntity\": \"example-value\",\n      \"managementZones\": [\n        {\n          \"id\": \"abc123\",\n          \"name\": \"Production Service\"\n        }\n      ],\n      \"problemFilters\": [\n        {\n          \"id\": \"abc123\",\n          \"name\": \"Production Service\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73fd18f4-b912-4a0e-b01c-2e357f35f1b3",
+              "name": "Bad request — invalid query parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    },
+                    {
+                      "key": "problemSelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "entitySelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "67733417-47d7-4f99-8e30-5d1835295588",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    },
+                    {
+                      "key": "problemSelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "entitySelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "293d39de-1481-401a-9fc8-d99869c7f15a",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    },
+                    {
+                      "key": "problemSelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "entitySelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8b7e6c02-2920-496a-8e8b-f8bf28968302",
+          "name": "Dynatrace Get Problem Details",
+          "request": {
+            "name": "Dynatrace Get Problem Details",
+            "description": {
+              "content": "Returns the full details of a specific problem, including its severity, affected and impacted entities, root cause analysis, evidence, and management zone assignments. The problem ID is available from the list problems endpoint.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "problems",
+                ":problemId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Defines additional fields to include in the response. Use a comma-separated list prefixed with +, e.g., +evidenceDetails."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "problemId",
+                  "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                },
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d70061c6-c017-4584-a67d-db5bf9cf0d46",
+              "name": "The problem details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"problemId\": \"abc123\",\n  \"displayId\": \"abc123\",\n  \"title\": \"example-value\",\n  \"severityLevel\": \"AVAILABILITY\",\n  \"status\": \"OPEN\",\n  \"startTime\": 1718153645993,\n  \"endTime\": 1718153645993,\n  \"affectedEntities\": [\n    {\n      \"entityId\": \"abc123\",\n      \"name\": \"Production Service\",\n      \"type\": \"STANDARD\"\n    }\n  ],\n  \"impactedEntities\": [\n    {\n      \"entityId\": \"abc123\",\n      \"name\": \"Production Service\",\n      \"type\": \"STANDARD\"\n    }\n  ],\n  \"rootCauseEntity\": \"example-value\",\n  \"managementZones\": [\n    {\n      \"id\": \"abc123\",\n      \"name\": \"Production Service\"\n    }\n  ],\n  \"problemFilters\": [\n    {\n      \"id\": \"abc123\",\n      \"name\": \"Production Service\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ca0f6c31-802d-4e43-bc8f-b3911dc15025",
+              "name": "Bad request — invalid query parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "acd0f328-b8ff-4aa1-bd0f-2c202f79e0e1",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bfd69e6e-00cd-4974-9eae-af59a09ae45e",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "821768b0-22f8-4f09-bba3-a40193c60742",
+              "name": "Not found — the specified problem or comment does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c8758061-05e9-4c3f-9481-27d1123ae565",
+          "name": "Dynatrace Close Problem",
+          "request": {
+            "name": "Dynatrace Close Problem",
+            "description": {
+              "content": "Closes the specified problem and optionally attaches a closing message explaining the reason for closure. Only problems that are currently OPEN can be closed. Closing a problem will trigger any configured notifications for problem resolution.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "problems",
+                ":problemId",
+                "close"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "problemId",
+                  "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                },
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9294d185-1763-4b54-b0d4-36d86730bea2",
+              "name": "The problem was successfully closed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "close"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"Example description.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"problemId\": \"abc123\",\n  \"closing\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f202bdd-dc82-437a-82fc-e0a93c5e0f33",
+              "name": "Bad request — invalid query parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "close"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"Example description.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4366ee9e-fe51-450e-9012-2ea9500dfe05",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "close"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"Example description.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05b9b6ea-7170-450a-adbd-31d6711407fb",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "close"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"Example description.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2d48292-5f7f-4a3e-9edd-6d0de22a8b63",
+              "name": "Not found — the specified problem or comment does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "close"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"Example description.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6e22639b-1b79-4a6b-afc5-96cb58e69d0e",
+          "name": "Dynatrace List Comments on a Problem",
+          "request": {
+            "name": "Dynatrace List Comments on a Problem",
+            "description": {
+              "content": "Returns a list of all comments attached to the specified problem. Comments are used for collaboration and tracking investigation notes or actions taken.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "problems",
+                ":problemId",
+                "comments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "nextPageKey",
+                  "value": "<string>",
+                  "description": "Cursor for the next page of results."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "50",
+                  "description": "The number of comments to return per page. Default is 50."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "problemId",
+                  "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                },
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "567d0003-282d-4d78-8d71-552f803b6a91",
+              "name": "A list of comments on the problem",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nextPageKey\": \"example-value\",\n  \"totalCount\": 500,\n  \"comments\": [\n    {\n      \"id\": \"abc123\",\n      \"createdAtTimestamp\": 1718153645993,\n      \"authorName\": \"Production Service\",\n      \"content\": \"example-value\",\n      \"context\": \"example-value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "02629884-51e2-4219-907c-0f26ccc8ba3a",
+              "name": "Bad request — invalid query parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "69f36d26-2c1f-4c8d-8889-9ce153bff42e",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50c0e8c0-e34a-4805-bd8c-709d69602102",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97da1be3-cd49-4b2e-b4e2-35d57f455827",
+              "name": "Not found — the specified problem or comment does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1e7842de-d9cb-4abc-8a67-8eb728fe7b21",
+          "name": "Dynatrace Add Comment to Problem",
+          "request": {
+            "name": "Dynatrace Add Comment to Problem",
+            "description": {
+              "content": "Creates a new comment on the specified problem. Comments can include a context field to categorize or reference external systems. Useful for attaching remediation notes, ticket references, or investigation findings.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "problems",
+                ":problemId",
+                "comments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "problemId",
+                  "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                },
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"<string>\",\n  \"context\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2a675d7d-ca47-4852-ab33-0e152f9002d5",
+              "name": "The comment was successfully created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"Example description.\",\n  \"context\": \"example-value\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"abc123\",\n  \"createdAtTimestamp\": 1718153645993,\n  \"authorName\": \"Production Service\",\n  \"content\": \"example-value\",\n  \"context\": \"example-value\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e8a821b6-26bc-40d1-bd3b-df966ccf4141",
+              "name": "Bad request — invalid query parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"Example description.\",\n  \"context\": \"example-value\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "113493f6-e5bf-473d-a9fa-6140376729b3",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"Example description.\",\n  \"context\": \"example-value\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d33065ed-848f-47d9-830e-90bc6edb94b8",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"Example description.\",\n  \"context\": \"example-value\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3bb59762-35cd-4dae-9604-d53ff3d1e5f5",
+              "name": "Not found — the specified problem or comment does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"Example description.\",\n  \"context\": \"example-value\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8c2edbf8-63fa-40e4-9b29-79a372bcee4f",
+          "name": "Dynatrace Get Comment",
+          "request": {
+            "name": "Dynatrace Get Comment",
+            "description": {
+              "content": "Returns the details of a specific comment on a problem, identified by both the problem ID and the comment ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "problems",
+                ":problemId",
+                "comments",
+                ":commentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "problemId",
+                  "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "commentId",
+                  "description": "(Required) The unique identifier of the comment."
+                },
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dc1c4c29-f12d-4f18-b64d-905254935ce8",
+              "name": "The comment details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "comments",
+                    ":commentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commentId",
+                      "description": "(Required) The unique identifier of the comment."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"abc123\",\n  \"createdAtTimestamp\": 1718153645993,\n  \"authorName\": \"Production Service\",\n  \"content\": \"example-value\",\n  \"context\": \"example-value\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "86a5231f-c67a-4297-8305-e66b26019e57",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "comments",
+                    ":commentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commentId",
+                      "description": "(Required) The unique identifier of the comment."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d7cd258-6bf6-49f6-a375-b0ff72397b4d",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "comments",
+                    ":commentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commentId",
+                      "description": "(Required) The unique identifier of the comment."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "22c84f51-eb92-4e20-b5cc-69fecb02f24d",
+              "name": "Not found — the specified problem or comment does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "comments",
+                    ":commentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commentId",
+                      "description": "(Required) The unique identifier of the comment."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "45b81cb0-9520-499f-b21b-c74b68248659",
+          "name": "Dynatrace Update Comment",
+          "request": {
+            "name": "Dynatrace Update Comment",
+            "description": {
+              "content": "Updates the content or context of an existing comment on a problem. Only the comment author or an administrator can update a comment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "problems",
+                ":problemId",
+                "comments",
+                ":commentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "problemId",
+                  "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "commentId",
+                  "description": "(Required) The unique identifier of the comment."
+                },
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"<string>\",\n  \"context\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5f231636-6ee2-44db-8703-8a59ce86ee39",
+              "name": "The comment was successfully updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "comments",
+                    ":commentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commentId",
+                      "description": "(Required) The unique identifier of the comment."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"Example description.\",\n  \"context\": \"example-value\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"abc123\",\n  \"createdAtTimestamp\": 1718153645993,\n  \"authorName\": \"Production Service\",\n  \"content\": \"example-value\",\n  \"context\": \"example-value\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb90b2d9-d80a-42fd-8aef-be7072bbbc5c",
+              "name": "Bad request — invalid query parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "comments",
+                    ":commentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commentId",
+                      "description": "(Required) The unique identifier of the comment."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"Example description.\",\n  \"context\": \"example-value\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26915613-c780-439d-ae65-5f573bc70427",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "comments",
+                    ":commentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commentId",
+                      "description": "(Required) The unique identifier of the comment."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"Example description.\",\n  \"context\": \"example-value\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2dd7327d-4a30-4125-9e07-f0e6ba96b8f7",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "comments",
+                    ":commentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commentId",
+                      "description": "(Required) The unique identifier of the comment."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"Example description.\",\n  \"context\": \"example-value\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2c13c08-83c0-4717-b31d-008012a8d240",
+              "name": "Not found — the specified problem or comment does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "comments",
+                    ":commentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commentId",
+                      "description": "(Required) The unique identifier of the comment."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"Example description.\",\n  \"context\": \"example-value\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "47daa187-85fe-457f-aecd-7320c8ea15f0",
+          "name": "Dynatrace Delete Comment",
+          "request": {
+            "name": "Dynatrace Delete Comment",
+            "description": {
+              "content": "Permanently deletes a specific comment from a problem. This action cannot be undone. Only the comment author or an administrator can delete a comment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "problems",
+                ":problemId",
+                "comments",
+                ":commentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "problemId",
+                  "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "commentId",
+                  "description": "(Required) The unique identifier of the comment."
+                },
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cfac0f25-b8a6-45c3-ba3a-5be1646b8ba6",
+              "name": "The comment was successfully deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "comments",
+                    ":commentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commentId",
+                      "description": "(Required) The unique identifier of the comment."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "02d306f4-1eab-409c-bc04-51c66c54a0af",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "comments",
+                    ":commentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commentId",
+                      "description": "(Required) The unique identifier of the comment."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fdbcfb72-ad6e-4abb-8e92-73a20d5afc50",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "comments",
+                    ":commentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commentId",
+                      "description": "(Required) The unique identifier of the comment."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "47c4a0c3-41ec-4de9-a509-192e47e7531d",
+              "name": "Not found — the specified problem or comment does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "problems",
+                    ":problemId",
+                    "comments",
+                    ":commentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "problemId",
+                      "description": "(Required) The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commentId",
+                      "description": "(Required) The unique identifier of the comment."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The unique identifier of your Dynatrace environment",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "mySampleEnv",
+      "key": "environmentId"
+    },
+    {
+      "type": "string",
+      "value": "https://{{environmentId}}.live.dynatrace.com/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a4e11c89-d331-4368-8730-ee9f4ec33b64",
+    "name": "Dynatrace Problems API v2",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Dynatrace Problems API v2 allows you to query and manage detected problems within a Dynatrace environment. Problems represent degradations in service quality detected by the Dynatrace AI (Davis). The API provides endpoints for listing open and closed problems, retrieving detailed problem information including root cause analysis, closing problems programmatically, and managing problem comments for collaboration.\n\nContact Support:\n Name: Dynatrace Support",
+      "type": "text/plain"
+    }
+  }
+}

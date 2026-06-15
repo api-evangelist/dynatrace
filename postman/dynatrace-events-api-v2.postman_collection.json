@@ -1,0 +1,1009 @@
+{
+  "info": {
+    "_postman_id": "66edc0bc-b3f5-409d-8056-ca5ab3bb621f",
+    "name": "Dynatrace Events API v2",
+    "description": "The Dynatrace Events API v2 enables you to push custom events into a Dynatrace environment and retrieve event data from monitored systems. It supports creating deployment events, custom annotations, configuration events, and performance events targeting specific entities. Events ingested via this API are subject to DDU (Davis Data Units) licensing and may trigger Dynatrace AI analysis.\n\nContact Support:\n Name: Dynatrace Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T15:01:17.000Z",
+    "updatedAt": "2026-06-05T15:01:17.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-66edc0bc-b3f5-409d-8056-ca5ab3bb621f"
+  },
+  "item": [
+    {
+      "name": "events",
+      "item": [
+        {
+          "name": "{eventId}",
+          "item": [
+            {
+              "name": "Dynatrace Get Event by Id",
+              "id": "dd7f2771-74e9-4e8d-8c74-54069f73d383",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/events/:eventId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "events",
+                    ":eventId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "8b9df879-f5e2-4f97-969b-fc6528b5215d",
+                      "key": "eventId",
+                      "value": "<string>",
+                      "description": "(Required) The unique identifier of the event to retrieve."
+                    }
+                  ]
+                },
+                "description": "Returns the details of a specific event identified by its event ID. The event ID is obtained from the list events endpoint or from event notification callbacks."
+              },
+              "response": [
+                {
+                  "id": "23d9443a-8382-450c-ba66-0a9dbd2bb76a",
+                  "name": "The event details",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/events/:eventId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "events",
+                        ":eventId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "eventId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"eventId\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"title\": \"<string>\",\n  \"startTime\": \"<long>\",\n  \"endTime\": \"<long>\",\n  \"entityId\": {\n    \"entityId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"type\": \"<string>\"\n  },\n  \"properties\": {\n    \"officia1f5\": \"<string>\",\n    \"Duisd\": \"<string>\",\n    \"nonca2\": \"<string>\"\n  },\n  \"status\": \"OPEN\"\n}",
+                  "createdAt": "2026-06-05T15:01:18.000Z",
+                  "updatedAt": "2026-06-05T15:01:18.000Z",
+                  "uid": "35240-23d9443a-8382-450c-ba66-0a9dbd2bb76a"
+                },
+                {
+                  "id": "d9f54308-a992-41a5-b0c1-b814be72e7af",
+                  "name": "Bad request \u2014 invalid query parameters or request body",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/events/:eventId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "events",
+                        ":eventId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "eventId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:18.000Z",
+                  "updatedAt": "2026-06-05T15:01:18.000Z",
+                  "uid": "35240-d9f54308-a992-41a5-b0c1-b814be72e7af"
+                },
+                {
+                  "id": "a9d6c55d-0646-4bdd-b3c5-4851699f206a",
+                  "name": "Unauthorized \u2014 missing or invalid API token",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/events/:eventId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "events",
+                        ":eventId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "eventId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:18.000Z",
+                  "updatedAt": "2026-06-05T15:01:18.000Z",
+                  "uid": "35240-a9d6c55d-0646-4bdd-b3c5-4851699f206a"
+                },
+                {
+                  "id": "c80f1a3b-c318-4187-a012-22e799a720a7",
+                  "name": "Forbidden \u2014 the API token lacks the required scope",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/events/:eventId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "events",
+                        ":eventId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "eventId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:18.000Z",
+                  "updatedAt": "2026-06-05T15:01:18.000Z",
+                  "uid": "35240-c80f1a3b-c318-4187-a012-22e799a720a7"
+                },
+                {
+                  "id": "b09263a5-57e1-42aa-96db-9c6f1c5b1baa",
+                  "name": "Not found \u2014 the specified event does not exist",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/events/:eventId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "events",
+                        ":eventId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "eventId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:18.000Z",
+                  "updatedAt": "2026-06-05T15:01:18.000Z",
+                  "uid": "35240-b09263a5-57e1-42aa-96db-9c6f1c5b1baa"
+                }
+              ],
+              "createdAt": "2026-06-05T15:01:18.000Z",
+              "updatedAt": "2026-06-05T15:01:18.000Z",
+              "uid": "35240-dd7f2771-74e9-4e8d-8c74-54069f73d383"
+            }
+          ],
+          "id": "205b5cd9-ac49-4154-b02a-0931ff3a0642",
+          "createdAt": "2026-06-05T15:01:18.000Z",
+          "updatedAt": "2026-06-05T15:01:18.000Z",
+          "uid": "35240-205b5cd9-ac49-4154-b02a-0931ff3a0642"
+        },
+        {
+          "name": "ingest",
+          "item": [
+            {
+              "name": "Dynatrace Ingest a Custom Event",
+              "id": "6abee427-de50-47d0-b451-55aeda2e2371",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"eventType\": \"CUSTOM_ANNOTATION\",\n  \"title\": \"<string>\",\n  \"timeout\": \"<integer>\",\n  \"entitySelector\": \"<string>\",\n  \"startTime\": \"<long>\",\n  \"endTime\": \"<long>\",\n  \"properties\": {\n    \"voluptate_4a1\": \"<string>\",\n    \"incididunt691\": \"<string>\",\n    \"ea_f1\": \"<string>\",\n    \"suntf9\": \"<string>\",\n    \"occaecat_b9\": \"<string>\",\n    \"est_51\": \"<string>\",\n    \"et_371\": \"<string>\",\n    \"ea_1cd\": \"<string>\",\n    \"do_6e7\": \"<string>\",\n    \"sunt_0\": \"<string>\",\n    \"doff8\": \"<string>\",\n    \"cillum_8\": \"<string>\",\n    \"culpa_abe\": \"<string>\",\n    \"consectetura\": \"<string>\",\n    \"irure_5\": \"<string>\",\n    \"reprehenderit_8\": \"<string>\",\n    \"do__4_\": \"<string>\",\n    \"sit11\": \"<string>\",\n    \"quisf0\": \"<string>\",\n    \"incididunt_fa0\": \"<string>\",\n    \"velitd2\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/events/ingest",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "events",
+                    "ingest"
+                  ]
+                },
+                "description": "Ingests a custom event into the Dynatrace environment. The event is associated with one or more entities specified by the entitySelector. Custom events are used to annotate the timeline with deployment information, configuration changes, or custom alerts. Events consume Davis Data Units (DDUs). The API token requires the events.ingest scope."
+              },
+              "response": [
+                {
+                  "id": "f3c15de2-45f2-4936-bd28-9fe496a95346",
+                  "name": "The event was successfully ingested",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"eventType\": \"CUSTOM_ANNOTATION\",\n  \"title\": \"<string>\",\n  \"timeout\": \"<integer>\",\n  \"entitySelector\": \"<string>\",\n  \"startTime\": \"<long>\",\n  \"endTime\": \"<long>\",\n  \"properties\": {\n    \"voluptate_4a1\": \"<string>\",\n    \"incididunt691\": \"<string>\",\n    \"ea_f1\": \"<string>\",\n    \"suntf9\": \"<string>\",\n    \"occaecat_b9\": \"<string>\",\n    \"est_51\": \"<string>\",\n    \"et_371\": \"<string>\",\n    \"ea_1cd\": \"<string>\",\n    \"do_6e7\": \"<string>\",\n    \"sunt_0\": \"<string>\",\n    \"doff8\": \"<string>\",\n    \"cillum_8\": \"<string>\",\n    \"culpa_abe\": \"<string>\",\n    \"consectetura\": \"<string>\",\n    \"irure_5\": \"<string>\",\n    \"reprehenderit_8\": \"<string>\",\n    \"do__4_\": \"<string>\",\n    \"sit11\": \"<string>\",\n    \"quisf0\": \"<string>\",\n    \"incididunt_fa0\": \"<string>\",\n    \"velitd2\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/events/ingest",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "events",
+                        "ingest"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"reportCount\": \"<integer>\",\n  \"eventIngestResults\": [\n    {\n      \"eventId\": \"<string>\",\n      \"status\": \"<string>\"\n    },\n    {\n      \"eventId\": \"<string>\",\n      \"status\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-06-05T15:01:18.000Z",
+                  "updatedAt": "2026-06-05T15:01:18.000Z",
+                  "uid": "35240-f3c15de2-45f2-4936-bd28-9fe496a95346"
+                },
+                {
+                  "id": "91138c61-66f5-4b8a-bd35-87548979a738",
+                  "name": "Bad request \u2014 invalid query parameters or request body",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"eventType\": \"CUSTOM_ANNOTATION\",\n  \"title\": \"<string>\",\n  \"timeout\": \"<integer>\",\n  \"entitySelector\": \"<string>\",\n  \"startTime\": \"<long>\",\n  \"endTime\": \"<long>\",\n  \"properties\": {\n    \"voluptate_4a1\": \"<string>\",\n    \"incididunt691\": \"<string>\",\n    \"ea_f1\": \"<string>\",\n    \"suntf9\": \"<string>\",\n    \"occaecat_b9\": \"<string>\",\n    \"est_51\": \"<string>\",\n    \"et_371\": \"<string>\",\n    \"ea_1cd\": \"<string>\",\n    \"do_6e7\": \"<string>\",\n    \"sunt_0\": \"<string>\",\n    \"doff8\": \"<string>\",\n    \"cillum_8\": \"<string>\",\n    \"culpa_abe\": \"<string>\",\n    \"consectetura\": \"<string>\",\n    \"irure_5\": \"<string>\",\n    \"reprehenderit_8\": \"<string>\",\n    \"do__4_\": \"<string>\",\n    \"sit11\": \"<string>\",\n    \"quisf0\": \"<string>\",\n    \"incididunt_fa0\": \"<string>\",\n    \"velitd2\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/events/ingest",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "events",
+                        "ingest"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:18.000Z",
+                  "updatedAt": "2026-06-05T15:01:18.000Z",
+                  "uid": "35240-91138c61-66f5-4b8a-bd35-87548979a738"
+                },
+                {
+                  "id": "58593245-fd99-4a73-ba55-7edd880167b5",
+                  "name": "Unauthorized \u2014 missing or invalid API token",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"eventType\": \"CUSTOM_ANNOTATION\",\n  \"title\": \"<string>\",\n  \"timeout\": \"<integer>\",\n  \"entitySelector\": \"<string>\",\n  \"startTime\": \"<long>\",\n  \"endTime\": \"<long>\",\n  \"properties\": {\n    \"voluptate_4a1\": \"<string>\",\n    \"incididunt691\": \"<string>\",\n    \"ea_f1\": \"<string>\",\n    \"suntf9\": \"<string>\",\n    \"occaecat_b9\": \"<string>\",\n    \"est_51\": \"<string>\",\n    \"et_371\": \"<string>\",\n    \"ea_1cd\": \"<string>\",\n    \"do_6e7\": \"<string>\",\n    \"sunt_0\": \"<string>\",\n    \"doff8\": \"<string>\",\n    \"cillum_8\": \"<string>\",\n    \"culpa_abe\": \"<string>\",\n    \"consectetura\": \"<string>\",\n    \"irure_5\": \"<string>\",\n    \"reprehenderit_8\": \"<string>\",\n    \"do__4_\": \"<string>\",\n    \"sit11\": \"<string>\",\n    \"quisf0\": \"<string>\",\n    \"incididunt_fa0\": \"<string>\",\n    \"velitd2\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/events/ingest",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "events",
+                        "ingest"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:18.000Z",
+                  "updatedAt": "2026-06-05T15:01:18.000Z",
+                  "uid": "35240-58593245-fd99-4a73-ba55-7edd880167b5"
+                },
+                {
+                  "id": "c3020910-89b0-40ee-938f-65880d0e1cc7",
+                  "name": "Forbidden \u2014 the API token lacks the required scope",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"eventType\": \"CUSTOM_ANNOTATION\",\n  \"title\": \"<string>\",\n  \"timeout\": \"<integer>\",\n  \"entitySelector\": \"<string>\",\n  \"startTime\": \"<long>\",\n  \"endTime\": \"<long>\",\n  \"properties\": {\n    \"voluptate_4a1\": \"<string>\",\n    \"incididunt691\": \"<string>\",\n    \"ea_f1\": \"<string>\",\n    \"suntf9\": \"<string>\",\n    \"occaecat_b9\": \"<string>\",\n    \"est_51\": \"<string>\",\n    \"et_371\": \"<string>\",\n    \"ea_1cd\": \"<string>\",\n    \"do_6e7\": \"<string>\",\n    \"sunt_0\": \"<string>\",\n    \"doff8\": \"<string>\",\n    \"cillum_8\": \"<string>\",\n    \"culpa_abe\": \"<string>\",\n    \"consectetura\": \"<string>\",\n    \"irure_5\": \"<string>\",\n    \"reprehenderit_8\": \"<string>\",\n    \"do__4_\": \"<string>\",\n    \"sit11\": \"<string>\",\n    \"quisf0\": \"<string>\",\n    \"incididunt_fa0\": \"<string>\",\n    \"velitd2\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/events/ingest",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "events",
+                        "ingest"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:18.000Z",
+                  "updatedAt": "2026-06-05T15:01:18.000Z",
+                  "uid": "35240-c3020910-89b0-40ee-938f-65880d0e1cc7"
+                }
+              ],
+              "createdAt": "2026-06-05T15:01:18.000Z",
+              "updatedAt": "2026-06-05T15:01:18.000Z",
+              "uid": "35240-6abee427-de50-47d0-b451-55aeda2e2371"
+            }
+          ],
+          "id": "78d41160-b81b-441b-96a6-ffe56096292d",
+          "createdAt": "2026-06-05T15:01:18.000Z",
+          "updatedAt": "2026-06-05T15:01:18.000Z",
+          "uid": "35240-78d41160-b81b-441b-96a6-ffe56096292d"
+        },
+        {
+          "name": "Dynatrace List Events",
+          "id": "deabb0eb-c356-4235-9152-531ca0290d1f",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/events?nextPageKey=<string>&pageSize=50&from=<string>&to=<string>&eventSelector=<string>&entitySelector=<string>&eventType=CUSTOM_DEPLOYMENT",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events"
+              ],
+              "query": [
+                {
+                  "description": "The cursor for the next page of results, obtained from the nextPageKey field of a previous response. When this parameter is set, all other query parameters except pageSize are ignored.",
+                  "key": "nextPageKey",
+                  "value": "<string>"
+                },
+                {
+                  "description": "The number of events to return per page. Default is 50, maximum is 1000.",
+                  "key": "pageSize",
+                  "value": "50"
+                },
+                {
+                  "description": "The start of the queried time range. Use a relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h.",
+                  "key": "from",
+                  "value": "<string>"
+                },
+                {
+                  "description": "The end of the queried time range. Use a relative expression (now), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now.",
+                  "key": "to",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Defines the scope of the query using the event selector syntax. For example, eventType(\"CUSTOM_DEPLOYMENT\") to filter by type, or title(\"My event\") to filter by title. Multiple conditions can be combined.",
+                  "key": "eventSelector",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filters events to those affecting entities matching this selector. Use the standard entity selector syntax, e.g., type(HOST),tag(prod).",
+                  "key": "entitySelector",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filters results to events of the specified type. For a full list of types, see the eventType enum in EventIngestPayload.",
+                  "key": "eventType",
+                  "value": "CUSTOM_DEPLOYMENT"
+                }
+              ]
+            },
+            "description": "Returns a list of events from the Dynatrace environment matching the specified filters. Results are paginated; use nextPageKey from the response to retrieve additional pages. Time range defaults to the last two hours if not specified."
+          },
+          "response": [
+            {
+              "id": "5a5715a4-99c1-4c5e-904b-6808105eb351",
+              "name": "A paginated list of events",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/events?nextPageKey=<string>&pageSize=50&from=<string>&to=<string>&eventSelector=<string>&entitySelector=<string>&eventType=CUSTOM_DEPLOYMENT",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "events"
+                  ],
+                  "query": [
+                    {
+                      "description": "The cursor for the next page of results, obtained from the nextPageKey field of a previous response. When this parameter is set, all other query parameters except pageSize are ignored.",
+                      "key": "nextPageKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The number of events to return per page. Default is 50, maximum is 1000.",
+                      "key": "pageSize",
+                      "value": "50"
+                    },
+                    {
+                      "description": "The start of the queried time range. Use a relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h.",
+                      "key": "from",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The end of the queried time range. Use a relative expression (now), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now.",
+                      "key": "to",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Defines the scope of the query using the event selector syntax. For example, eventType(\"CUSTOM_DEPLOYMENT\") to filter by type, or title(\"My event\") to filter by title. Multiple conditions can be combined.",
+                      "key": "eventSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters events to those affecting entities matching this selector. Use the standard entity selector syntax, e.g., type(HOST),tag(prod).",
+                      "key": "entitySelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters results to events of the specified type. For a full list of types, see the eventType enum in EventIngestPayload.",
+                      "key": "eventType",
+                      "value": "CUSTOM_DEPLOYMENT"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"nextPageKey\": \"<string>\",\n  \"totalCount\": \"<long>\",\n  \"pageSize\": \"<integer>\",\n  \"events\": [\n    {\n      \"eventId\": \"<string>\",\n      \"eventType\": \"<string>\",\n      \"title\": \"<string>\",\n      \"startTime\": \"<long>\",\n      \"endTime\": \"<long>\",\n      \"entityId\": {\n        \"entityId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"type\": \"<string>\"\n      },\n      \"properties\": {\n        \"nulla_a8\": \"<string>\",\n        \"qui98\": \"<string>\"\n      },\n      \"status\": \"CLOSED\"\n    },\n    {\n      \"eventId\": \"<string>\",\n      \"eventType\": \"<string>\",\n      \"title\": \"<string>\",\n      \"startTime\": \"<long>\",\n      \"endTime\": \"<long>\",\n      \"entityId\": {\n        \"entityId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"type\": \"<string>\"\n      },\n      \"properties\": {\n        \"sit_3b1\": \"<string>\"\n      },\n      \"status\": \"CLOSED\"\n    }\n  ]\n}",
+              "createdAt": "2026-06-05T15:01:18.000Z",
+              "updatedAt": "2026-06-05T15:01:18.000Z",
+              "uid": "35240-5a5715a4-99c1-4c5e-904b-6808105eb351"
+            },
+            {
+              "id": "8b5e13ec-5506-4b3d-8130-fee8e4c309d2",
+              "name": "Bad request \u2014 invalid query parameters or request body",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/events?nextPageKey=<string>&pageSize=50&from=<string>&to=<string>&eventSelector=<string>&entitySelector=<string>&eventType=CUSTOM_DEPLOYMENT",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "events"
+                  ],
+                  "query": [
+                    {
+                      "description": "The cursor for the next page of results, obtained from the nextPageKey field of a previous response. When this parameter is set, all other query parameters except pageSize are ignored.",
+                      "key": "nextPageKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The number of events to return per page. Default is 50, maximum is 1000.",
+                      "key": "pageSize",
+                      "value": "50"
+                    },
+                    {
+                      "description": "The start of the queried time range. Use a relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h.",
+                      "key": "from",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The end of the queried time range. Use a relative expression (now), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now.",
+                      "key": "to",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Defines the scope of the query using the event selector syntax. For example, eventType(\"CUSTOM_DEPLOYMENT\") to filter by type, or title(\"My event\") to filter by title. Multiple conditions can be combined.",
+                      "key": "eventSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters events to those affecting entities matching this selector. Use the standard entity selector syntax, e.g., type(HOST),tag(prod).",
+                      "key": "entitySelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters results to events of the specified type. For a full list of types, see the eventType enum in EventIngestPayload.",
+                      "key": "eventType",
+                      "value": "CUSTOM_DEPLOYMENT"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+              "createdAt": "2026-06-05T15:01:18.000Z",
+              "updatedAt": "2026-06-05T15:01:18.000Z",
+              "uid": "35240-8b5e13ec-5506-4b3d-8130-fee8e4c309d2"
+            },
+            {
+              "id": "b06d3fed-7c11-490d-b9b2-c69cc7d60cd8",
+              "name": "Unauthorized \u2014 missing or invalid API token",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/events?nextPageKey=<string>&pageSize=50&from=<string>&to=<string>&eventSelector=<string>&entitySelector=<string>&eventType=CUSTOM_DEPLOYMENT",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "events"
+                  ],
+                  "query": [
+                    {
+                      "description": "The cursor for the next page of results, obtained from the nextPageKey field of a previous response. When this parameter is set, all other query parameters except pageSize are ignored.",
+                      "key": "nextPageKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The number of events to return per page. Default is 50, maximum is 1000.",
+                      "key": "pageSize",
+                      "value": "50"
+                    },
+                    {
+                      "description": "The start of the queried time range. Use a relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h.",
+                      "key": "from",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The end of the queried time range. Use a relative expression (now), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now.",
+                      "key": "to",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Defines the scope of the query using the event selector syntax. For example, eventType(\"CUSTOM_DEPLOYMENT\") to filter by type, or title(\"My event\") to filter by title. Multiple conditions can be combined.",
+                      "key": "eventSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters events to those affecting entities matching this selector. Use the standard entity selector syntax, e.g., type(HOST),tag(prod).",
+                      "key": "entitySelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters results to events of the specified type. For a full list of types, see the eventType enum in EventIngestPayload.",
+                      "key": "eventType",
+                      "value": "CUSTOM_DEPLOYMENT"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+              "createdAt": "2026-06-05T15:01:18.000Z",
+              "updatedAt": "2026-06-05T15:01:18.000Z",
+              "uid": "35240-b06d3fed-7c11-490d-b9b2-c69cc7d60cd8"
+            },
+            {
+              "id": "6e7e534e-8187-4431-a78e-72b432716615",
+              "name": "Forbidden \u2014 the API token lacks the required scope",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/events?nextPageKey=<string>&pageSize=50&from=<string>&to=<string>&eventSelector=<string>&entitySelector=<string>&eventType=CUSTOM_DEPLOYMENT",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "events"
+                  ],
+                  "query": [
+                    {
+                      "description": "The cursor for the next page of results, obtained from the nextPageKey field of a previous response. When this parameter is set, all other query parameters except pageSize are ignored.",
+                      "key": "nextPageKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The number of events to return per page. Default is 50, maximum is 1000.",
+                      "key": "pageSize",
+                      "value": "50"
+                    },
+                    {
+                      "description": "The start of the queried time range. Use a relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h.",
+                      "key": "from",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The end of the queried time range. Use a relative expression (now), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now.",
+                      "key": "to",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Defines the scope of the query using the event selector syntax. For example, eventType(\"CUSTOM_DEPLOYMENT\") to filter by type, or title(\"My event\") to filter by title. Multiple conditions can be combined.",
+                      "key": "eventSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters events to those affecting entities matching this selector. Use the standard entity selector syntax, e.g., type(HOST),tag(prod).",
+                      "key": "entitySelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters results to events of the specified type. For a full list of types, see the eventType enum in EventIngestPayload.",
+                      "key": "eventType",
+                      "value": "CUSTOM_DEPLOYMENT"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+              "createdAt": "2026-06-05T15:01:18.000Z",
+              "updatedAt": "2026-06-05T15:01:18.000Z",
+              "uid": "35240-6e7e534e-8187-4431-a78e-72b432716615"
+            }
+          ],
+          "createdAt": "2026-06-05T15:01:18.000Z",
+          "updatedAt": "2026-06-05T15:01:18.000Z",
+          "uid": "35240-deabb0eb-c356-4235-9152-531ca0290d1f"
+        }
+      ],
+      "id": "110aaa83-1b2e-4e17-aa36-9fbd87ef5a31",
+      "createdAt": "2026-06-05T15:01:18.000Z",
+      "updatedAt": "2026-06-05T15:01:18.000Z",
+      "uid": "35240-110aaa83-1b2e-4e17-aa36-9fbd87ef5a31"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "environmentId",
+      "value": "mySampleEnv"
+    },
+    {
+      "key": "baseUrl",
+      "value": "https://{{environmentId}}.live.dynatrace.com/api/v2"
+    }
+  ]
+}

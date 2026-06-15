@@ -1,0 +1,1091 @@
+{
+  "item": [
+    {
+      "id": "4d9ede0f-345a-4ac5-9ca3-ae99baac79b9",
+      "name": "Events",
+      "description": {
+        "content": "Operations for querying and ingesting custom events",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d3259829-dd3f-474a-8f65-c575a569dc32",
+          "name": "Dynatrace List Events",
+          "request": {
+            "name": "Dynatrace List Events",
+            "description": {
+              "content": "Returns a list of events from the Dynatrace environment matching the specified filters. Results are paginated; use nextPageKey from the response to retrieve additional pages. Time range defaults to the last two hours if not specified.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "nextPageKey",
+                  "value": "<string>",
+                  "description": "The cursor for the next page of results, obtained from the nextPageKey field of a previous response. When this parameter is set, all other query parameters except pageSize are ignored."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "50",
+                  "description": "The number of events to return per page. Default is 50, maximum is 1000."
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<string>",
+                  "description": "The start of the queried time range. Use a relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h."
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<string>",
+                  "description": "The end of the queried time range. Use a relative expression (now), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now."
+                },
+                {
+                  "disabled": false,
+                  "key": "eventSelector",
+                  "value": "<string>",
+                  "description": "Defines the scope of the query using the event selector syntax. For example, eventType(\"CUSTOM_DEPLOYMENT\") to filter by type, or title(\"My event\") to filter by title. Multiple conditions can be combined."
+                },
+                {
+                  "disabled": false,
+                  "key": "entitySelector",
+                  "value": "<string>",
+                  "description": "Filters events to those affecting entities matching this selector. Use the standard entity selector syntax, e.g., type(HOST),tag(prod)."
+                },
+                {
+                  "disabled": false,
+                  "key": "eventType",
+                  "value": "<string>",
+                  "description": "Filters results to events of the specified type. For a full list of types, see the eventType enum in EventIngestPayload."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d3f04ad4-fc7c-4ae7-8952-e33916e44dc2",
+              "name": "A paginated list of events",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "eventSelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "entitySelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "eventType",
+                      "value": "AVAILABILITY_EVENT"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nextPageKey\": \"example-value\",\n  \"totalCount\": 500,\n  \"pageSize\": 500,\n  \"events\": [\n    {\n      \"eventId\": \"abc123\",\n      \"eventType\": \"STANDARD\",\n      \"title\": \"example-value\",\n      \"startTime\": 1718153645993,\n      \"endTime\": 1718153645993,\n      \"entityId\": {},\n      \"properties\": {},\n      \"status\": \"OPEN\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6ad82418-f373-4381-a4c2-6616d70e042b",
+              "name": "Bad request — invalid query parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "eventSelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "entitySelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "eventType",
+                      "value": "AVAILABILITY_EVENT"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8bb370a2-cbac-44b7-a75b-02dffd9b52eb",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "eventSelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "entitySelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "eventType",
+                      "value": "AVAILABILITY_EVENT"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8bae4374-0092-4384-95b6-c00182a33c51",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextPageKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "eventSelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "entitySelector",
+                      "value": "type(SERVICE)"
+                    },
+                    {
+                      "key": "eventType",
+                      "value": "AVAILABILITY_EVENT"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "26dbada9-e2ef-4472-a423-925a4442350b",
+          "name": "Dynatrace Get Event by Id",
+          "request": {
+            "name": "Dynatrace Get Event by Id",
+            "description": {
+              "content": "Returns the details of a specific event identified by its event ID. The event ID is obtained from the list events endpoint or from event notification callbacks.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events",
+                ":eventId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "eventId",
+                  "description": "(Required) The unique identifier of the event to retrieve."
+                },
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "836c7112-a441-40a0-b859-f25aaff21cf0",
+              "name": "The event details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":eventId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "eventId",
+                      "description": "(Required) The unique identifier of the event to retrieve."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"eventId\": \"abc123\",\n  \"eventType\": \"STANDARD\",\n  \"title\": \"example-value\",\n  \"startTime\": 1718153645993,\n  \"endTime\": 1718153645993,\n  \"entityId\": {\n    \"entityId\": {},\n    \"name\": {},\n    \"type\": {}\n  },\n  \"properties\": {},\n  \"status\": \"OPEN\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ee3a983-3e2b-4a10-a89c-dc69d8ce6ab8",
+              "name": "Bad request — invalid query parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":eventId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "eventId",
+                      "description": "(Required) The unique identifier of the event to retrieve."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "da45da0f-3852-4e42-a387-2c443ed45277",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":eventId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "eventId",
+                      "description": "(Required) The unique identifier of the event to retrieve."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "450492ee-075f-4dc4-a5b1-f0cc0fc46043",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":eventId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "eventId",
+                      "description": "(Required) The unique identifier of the event to retrieve."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "927c4bd4-9b63-4fd5-958b-a0763a850c9f",
+              "name": "Not found — the specified event does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":eventId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "eventId",
+                      "description": "(Required) The unique identifier of the event to retrieve."
+                    },
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6fae52af-a312-4623-8678-6fc99fe8be23",
+          "name": "Dynatrace Ingest a Custom Event",
+          "request": {
+            "name": "Dynatrace Ingest a Custom Event",
+            "description": {
+              "content": "Ingests a custom event into the Dynatrace environment. The event is associated with one or more entities specified by the entitySelector. Custom events are used to annotate the timeline with deployment information, configuration changes, or custom alerts. Events consume Davis Data Units (DDUs). The API token requires the events.ingest scope.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events",
+                "ingest"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventType\": \"<string>\",\n  \"title\": \"<string>\",\n  \"timeout\": \"<integer>\",\n  \"entitySelector\": \"<string>\",\n  \"startTime\": \"<long>\",\n  \"endTime\": \"<long>\",\n  \"properties\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\",\n    \"key_4\": \"<string>\",\n    \"key_5\": \"<string>\",\n    \"key_6\": \"<string>\",\n    \"key_7\": \"<string>\",\n    \"key_8\": \"<string>\",\n    \"key_9\": \"<string>\",\n    \"key_10\": \"<string>\",\n    \"key_11\": \"<string>\",\n    \"key_12\": \"<string>\",\n    \"key_13\": \"<string>\",\n    \"key_14\": \"<string>\",\n    \"key_15\": \"<string>\",\n    \"key_16\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f8a7a28b-3e1f-4e05-9e67-40d22ffdabcc",
+              "name": "The event was successfully ingested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "ingest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"eventType\": \"CUSTOM_DEPLOYMENT\",\n  \"title\": \"Production deployment v2.5.1\",\n  \"entitySelector\": \"type(SERVICE),tag(production)\",\n  \"startTime\": 1609459200000,\n  \"properties\": {\n    \"version\": \"v2.5.1\",\n    \"deployedBy\": \"CI/CD pipeline\",\n    \"remediationAction\": \"https://runbook.example.com/rollback\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"reportCount\": 500,\n  \"eventIngestResults\": [\n    {\n      \"eventId\": \"abc123\",\n      \"status\": \"ACTIVE\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c2238b8-aea9-41c5-8881-a1d31555f460",
+              "name": "Bad request — invalid query parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "ingest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"eventType\": \"CUSTOM_DEPLOYMENT\",\n  \"title\": \"Production deployment v2.5.1\",\n  \"entitySelector\": \"type(SERVICE),tag(production)\",\n  \"startTime\": 1609459200000,\n  \"properties\": {\n    \"version\": \"v2.5.1\",\n    \"deployedBy\": \"CI/CD pipeline\",\n    \"remediationAction\": \"https://runbook.example.com/rollback\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0e65e21a-97a7-4ca9-8d07-e3b25a8ef2c5",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "ingest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"eventType\": \"CUSTOM_DEPLOYMENT\",\n  \"title\": \"Production deployment v2.5.1\",\n  \"entitySelector\": \"type(SERVICE),tag(production)\",\n  \"startTime\": 1609459200000,\n  \"properties\": {\n    \"version\": \"v2.5.1\",\n    \"deployedBy\": \"CI/CD pipeline\",\n    \"remediationAction\": \"https://runbook.example.com/rollback\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7cd7aa63-8357-49e4-afa0-76e0217a8d36",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "ingest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"eventType\": \"CUSTOM_DEPLOYMENT\",\n  \"title\": \"Production deployment v2.5.1\",\n  \"entitySelector\": \"type(SERVICE),tag(production)\",\n  \"startTime\": 1609459200000,\n  \"properties\": {\n    \"version\": \"v2.5.1\",\n    \"deployedBy\": \"CI/CD pipeline\",\n    \"remediationAction\": \"https://runbook.example.com/rollback\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The unique identifier of your Dynatrace environment",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "mySampleEnv",
+      "key": "environmentId"
+    },
+    {
+      "type": "string",
+      "value": "https://{{environmentId}}.live.dynatrace.com/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ff23055e-5620-45c4-8a97-ecf487c27f35",
+    "name": "Dynatrace Events API v2",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Dynatrace Events API v2 enables you to push custom events into a Dynatrace environment and retrieve event data from monitored systems. It supports creating deployment events, custom annotations, configuration events, and performance events targeting specific entities. Events ingested via this API are subject to DDU (Davis Data Units) licensing and may trigger Dynatrace AI analysis.\n\nContact Support:\n Name: Dynatrace Support",
+      "type": "text/plain"
+    }
+  }
+}

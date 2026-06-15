@@ -1,0 +1,179 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dynatrace Metrics API v2",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metrics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Dynatrace List All Metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/metrics",
+            "params": [
+              {
+                "name": "nextPageKey",
+                "value": "example-value",
+                "type": "query",
+                "description": "The cursor for the next page of results. Obtained from the nextPageKey field of a previous response. When this parameter is set, all other query parameters are ignored."
+              },
+              {
+                "name": "pageSize",
+                "value": "500",
+                "type": "query",
+                "description": "The number of metric descriptors to return per page. Default is 50, maximum is 500."
+              },
+              {
+                "name": "metricSelector",
+                "value": "type(SERVICE)",
+                "type": "query",
+                "description": "Selects metrics for the response. Use the metric selector syntax to filter metrics by key, entity type, or other properties. For example, builtin:host.cpu.usage filters to only that metric."
+              },
+              {
+                "name": "fields",
+                "value": "example-value",
+                "type": "query",
+                "description": "Defines the list of metric properties included in the response. Use a comma-separated list of property names. To add a property, prefix it with a plus (+) sign, e.g., +defaultAggregation."
+              },
+              {
+                "name": "writtenSince",
+                "value": "example-value",
+                "type": "query",
+                "description": "Filters the resulted set of metrics to those that have been written after the specified time. Use the timeframe format: now-1h, now-1d, or an absolute timestamp."
+              },
+              {
+                "name": "metricDescriptors",
+                "value": "true",
+                "type": "query",
+                "description": "Whether to include metric descriptor details in the response."
+              }
+            ]
+          },
+          "docs": "Returns a list of all metrics available in the environment. You can filter the list by metric selector, fields to return, and a time range using the writtenSince parameter. Results are paginated; use nextPageKey to retrieve subsequent pages."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Get Metric Descriptor",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/metrics/:metricKey",
+            "params": [
+              {
+                "name": "metricKey",
+                "value": "",
+                "type": "path",
+                "description": "The key of the metric to operate on. For example, builtin:host.cpu.usage or custom.my.metric."
+              }
+            ]
+          },
+          "docs": "Returns the descriptor for the specified metric key. The descriptor includes metadata such as the display name, description, unit, supported aggregation types, and entity dimensions."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Delete Custom Metric",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/metrics/:metricKey",
+            "params": [
+              {
+                "name": "metricKey",
+                "value": "",
+                "type": "path",
+                "description": "The key of the metric to operate on. For example, builtin:host.cpu.usage or custom.my.metric."
+              }
+            ]
+          },
+          "docs": "Deletes the specified custom metric from the environment. Only custom metrics (those not prefixed with builtin:) can be deleted. Built-in metrics cannot be deleted."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Query Metric Data Points",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/metrics/query",
+            "params": [
+              {
+                "name": "metricSelector",
+                "value": "type(SERVICE)",
+                "type": "query",
+                "description": "Selects metrics for the query. Required. Supports transformations such as :avg, :max, :sum, :splitBy, :filter. For example, builtin:host.cpu.usage:avg:auto."
+              },
+              {
+                "name": "resolution",
+                "value": "example-value",
+                "type": "query",
+                "description": "The desired time resolution of the data points. Valid units are m (minutes), h (hours), d (days). For example, 5m, 1h. Use Inf for a single data point aggregated over the full time range."
+              },
+              {
+                "name": "from",
+                "value": "example-value",
+                "type": "query",
+                "description": "The start of the queried time range. Use one of: relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h."
+              },
+              {
+                "name": "to",
+                "value": "example-value",
+                "type": "query",
+                "description": "The end of the queried time range. Use one of: relative expression (now), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now."
+              },
+              {
+                "name": "entitySelector",
+                "value": "type(SERVICE)",
+                "type": "query",
+                "description": "Filters results to entities matching the selector. Use the entity selector syntax, e.g., type(HOST),tag(production). Only metrics with an entity dimension can be filtered this way."
+              },
+              {
+                "name": "mzSelector",
+                "value": "type(SERVICE)",
+                "type": "query",
+                "description": "Filters results to entities belonging to the specified management zone. Use the management zone selector syntax, e.g., mzName(MyZone)."
+              },
+              {
+                "name": "selectorInputMetrics",
+                "value": "true",
+                "type": "query",
+                "description": "When set to true, the response includes the input metrics used by the selector before transformations are applied."
+              }
+            ]
+          },
+          "docs": "Returns data points for the specified metrics. The metric selector determines which metrics and transformations to apply. Time range is specified with from and to parameters. Results can be scoped to specific entities using entitySelector or management zones using mzSelector. Data is returned at the specified resolution (e.g., 1h, 5m)."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Ingest Custom Metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/metrics/ingest"
+          },
+          "docs": "Ingests custom metric data points into the Dynatrace environment using the MINT (Metric INgest Text) line protocol. Each line represents one data point. Requires the metrics.ingest API token scope. Data is processed asynchronously and may take a short time to appear in queries."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

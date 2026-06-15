@@ -1,0 +1,1520 @@
+{
+  "item": [
+    {
+      "id": "70b1fc8e-6204-4316-b284-38a731353154",
+      "name": "Logs",
+      "description": {
+        "content": "Operations for ingesting, searching, aggregating, and exporting log records",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1685bacd-b2c7-454f-88a6-b67049d2c582",
+          "name": "Dynatrace Search Log Records",
+          "request": {
+            "name": "Dynatrace Search Log Records",
+            "description": {
+              "content": "Searches log records stored in Grail using a query expression. Results are returned in a paginated manner using a slice-based cursor. The query parameter accepts a DQL-based log search expression for filtering and transforming log data. Use nextSliceKey from the response to retrieve subsequent pages of results.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "logs",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "nextSliceKey",
+                  "value": "<string>",
+                  "description": "The cursor for the next page (slice) of results, obtained from the nextSliceKey field of a previous response. When this parameter is set, all other query parameters are ignored."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "1000",
+                  "description": "The maximum number of log records to return. Default is 1000, maximum is 5000."
+                },
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "The log search query in DQL syntax. For example, fetch logs | filter severity == \"ERROR\" | limit 100. If not specified, all logs within the time range are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<string>",
+                  "description": "The start of the queried time range. Use a relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h."
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<string>",
+                  "description": "The end of the queried time range. Default is now."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Defines the sort order for results. Use timestamp in descending order (-timestamp) for newest first, or ascending (+timestamp) for oldest first. Default is -timestamp."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to include in the log records. If not specified, all available fields are returned."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4361e81b-658c-4ba7-9da4-444ad979d0de",
+              "name": "A page of log records matching the search query",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "logs",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextSliceKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "500"
+                    },
+                    {
+                      "key": "query",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nextSliceKey\": \"example-value\",\n  \"results\": [\n    {\n      \"timestamp\": \"example-value\",\n      \"content\": \"example-value\",\n      \"severity\": \"HIGH\",\n      \"log.source\": \"example-value\",\n      \"dt.entity.host\": \"example-value\",\n      \"additionalFields\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c6d52f5-ccfa-44bf-a215-f8ffae3cb786",
+              "name": "Bad request — invalid query parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "logs",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextSliceKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "500"
+                    },
+                    {
+                      "key": "query",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c0ee182-859f-47ca-a0a1-827cc3139a01",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "logs",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextSliceKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "500"
+                    },
+                    {
+                      "key": "query",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e06604af-d8a6-417c-a4a8-03946d61b952",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "logs",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextSliceKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "500"
+                    },
+                    {
+                      "key": "query",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "46ad1443-9541-4e27-9441-77316ce1b609",
+          "name": "Dynatrace Ingest Log Records",
+          "request": {
+            "name": "Dynatrace Ingest Log Records",
+            "description": {
+              "content": "Ingests log records into the Dynatrace Grail data lakehouse. Accepts an array of log record objects. Each record must include at least a content field (the log message). Additional fields such as severity, timestamp, and entity associations can be included. Log records are processed asynchronously. Requires the logs.ingest API token scope.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "logs",
+                "ingest"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"content\": \"<string>\",\n    \"severity\": \"<string>\",\n    \"timestamp\": \"<string>\",\n    \"log.source\": \"<string>\",\n    \"dt.entity.host\": \"<string>\"\n  },\n  {\n    \"content\": \"<string>\",\n    \"severity\": \"<string>\",\n    \"timestamp\": \"<string>\",\n    \"log.source\": \"<string>\",\n    \"dt.entity.host\": \"<string>\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "da4d1ce9-a44f-473a-a96a-3b6608f6b1f1",
+              "name": "The log records were successfully accepted for ingestion",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "logs",
+                    "ingest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"content\": \"Application started successfully\",\n    \"severity\": \"INFO\",\n    \"timestamp\": \"2024-01-15T10:30:00.000Z\",\n    \"log.source\": \"my-application\",\n    \"dt.entity.host\": \"HOST-1234567890ABCDEF\"\n  },\n  {\n    \"content\": \"Database connection timeout after 30s\",\n    \"severity\": \"ERROR\",\n    \"timestamp\": \"2024-01-15T10:30:05.123Z\",\n    \"log.source\": \"my-application\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "28e8f487-f646-4aa0-8b45-f45b4eb38b85",
+              "name": "Bad request — invalid query parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "logs",
+                    "ingest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"content\": \"Application started successfully\",\n    \"severity\": \"INFO\",\n    \"timestamp\": \"2024-01-15T10:30:00.000Z\",\n    \"log.source\": \"my-application\",\n    \"dt.entity.host\": \"HOST-1234567890ABCDEF\"\n  },\n  {\n    \"content\": \"Database connection timeout after 30s\",\n    \"severity\": \"ERROR\",\n    \"timestamp\": \"2024-01-15T10:30:05.123Z\",\n    \"log.source\": \"my-application\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8d675636-4fc6-4a21-a248-8211e2c9035a",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "logs",
+                    "ingest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"content\": \"Application started successfully\",\n    \"severity\": \"INFO\",\n    \"timestamp\": \"2024-01-15T10:30:00.000Z\",\n    \"log.source\": \"my-application\",\n    \"dt.entity.host\": \"HOST-1234567890ABCDEF\"\n  },\n  {\n    \"content\": \"Database connection timeout after 30s\",\n    \"severity\": \"ERROR\",\n    \"timestamp\": \"2024-01-15T10:30:05.123Z\",\n    \"log.source\": \"my-application\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e7b4181f-5aad-4f88-a6a7-08fc4e33c350",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "logs",
+                    "ingest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"content\": \"Application started successfully\",\n    \"severity\": \"INFO\",\n    \"timestamp\": \"2024-01-15T10:30:00.000Z\",\n    \"log.source\": \"my-application\",\n    \"dt.entity.host\": \"HOST-1234567890ABCDEF\"\n  },\n  {\n    \"content\": \"Database connection timeout after 30s\",\n    \"severity\": \"ERROR\",\n    \"timestamp\": \"2024-01-15T10:30:05.123Z\",\n    \"log.source\": \"my-application\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f74b3db7-3d9a-4c77-9f7e-6c176ca83c03",
+          "name": "Dynatrace Aggregate Log Records",
+          "request": {
+            "name": "Dynatrace Aggregate Log Records",
+            "description": {
+              "content": "Returns aggregated log data grouped by specified fields. Useful for building dashboards and summaries such as error counts by service or log volume by severity. The query parameter specifies filtering conditions and the groupBy parameter specifies the dimensions to aggregate by.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "logs",
+                "aggregate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "The log query expression for filtering records before aggregation. Uses DQL-based syntax. For example, fetch logs | filter severity==\"ERROR\"."
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<string>",
+                  "description": "The start of the queried time range. Use a relative expression, ISO 8601, or Unix timestamp in milliseconds. Default is now-2h."
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<string>",
+                  "description": "The end of the queried time range. Default is now."
+                },
+                {
+                  "disabled": false,
+                  "key": "groupBy",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to group the aggregated results by. For example, severity,log.source to count log records by severity and source combination."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Additional fields to include in the aggregation response."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "07e76dda-f620-4ff6-ad44-efac4c34d468",
+              "name": "The aggregated log data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "logs",
+                    "aggregate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "groupBy",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"groupByFields\": {},\n      \"count\": 500\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bce2bfde-91d0-4779-8453-52041ed97e59",
+              "name": "Bad request — invalid query parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "logs",
+                    "aggregate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "groupBy",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a4d4dd15-2b00-4e99-8c54-335ac1aa6c2a",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "logs",
+                    "aggregate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "groupBy",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0e8122cf-26cf-4225-94f2-eaae48e20cf6",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "logs",
+                    "aggregate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "groupBy",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f8b8dde5-b946-45e1-bf1e-3d80ddd39b98",
+          "name": "Dynatrace Export Log Records",
+          "request": {
+            "name": "Dynatrace Export Log Records",
+            "description": {
+              "content": "Exports log records for bulk retrieval, suitable for integration with external SIEM, log management, or archiving systems. Results are paginated using a slice-based cursor. The export uses the same query syntax as the search endpoint but is optimized for large volume data retrieval.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "logs",
+                "export"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "nextSliceKey",
+                  "value": "<string>",
+                  "description": "The cursor for the next page of export results. When this parameter is set, all other query parameters are ignored."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "1000",
+                  "description": "The number of log records to return per page. Default is 1000, maximum is 10000."
+                },
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "The log export query expression for filtering records."
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<string>",
+                  "description": "The start of the queried time range."
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<string>",
+                  "description": "The end of the queried time range."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "The sort order for export results. Default is -timestamp."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Fields to include in the exported log records."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The unique identifier of your Dynatrace environment",
+                  "type": "any",
+                  "value": "{{environmentId}}",
+                  "key": "environmentId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "716d184d-7301-4257-8fea-f779393337b9",
+              "name": "A page of exported log records",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "logs",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextSliceKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    },
+                    {
+                      "key": "query",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nextSliceKey\": \"example-value\",\n  \"results\": [\n    {\n      \"timestamp\": \"example-value\",\n      \"content\": \"example-value\",\n      \"severity\": \"HIGH\",\n      \"log.source\": \"example-value\",\n      \"dt.entity.host\": \"example-value\",\n      \"additionalFields\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b020ddf2-b352-40a7-8d2b-4923cf9faa33",
+              "name": "Bad request — invalid query parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "logs",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextSliceKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    },
+                    {
+                      "key": "query",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec34c6e6-e92e-48cc-b92a-54c8291761b2",
+              "name": "Unauthorized — missing or invalid API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "logs",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextSliceKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    },
+                    {
+                      "key": "query",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8639b10c-2e81-4d58-aa2b-5a06260f1686",
+              "name": "Forbidden — the API token lacks the required scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "logs",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nextSliceKey",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    },
+                    {
+                      "key": "query",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "from",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "to",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "example-value"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "example-value"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The unique identifier of your Dynatrace environment",
+                      "type": "any",
+                      "value": "{{environmentId}}",
+                      "key": "environmentId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Example description.\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"example-value\",\n        \"message\": \"Example description.\",\n        \"parameterLocation\": \"example-value\",\n        \"location\": \"example-value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The unique identifier of your Dynatrace environment",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "mySampleEnv",
+      "key": "environmentId"
+    },
+    {
+      "type": "string",
+      "value": "https://{{environmentId}}.live.dynatrace.com/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1c5565cd-7680-4bbc-b84b-ae1f042e152d",
+    "name": "Dynatrace Log Monitoring API v2",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Dynatrace Log Monitoring API v2 enables ingestion, search, aggregation, and export of log records within a Dynatrace environment. Log data is stored in the Grail data lakehouse and can be searched using DQL-based log queries. The API supports streaming log records from external sources, querying logs with filtering and pagination, aggregating log data by fields, and bulk exporting logs for external processing.\n\nContact Support:\n Name: Dynatrace Support",
+      "type": "text/plain"
+    }
+  }
+}

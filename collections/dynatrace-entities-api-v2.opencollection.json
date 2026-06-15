@@ -1,0 +1,177 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dynatrace Entities API v2",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Entities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Dynatrace List Entities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/entities",
+            "params": [
+              {
+                "name": "nextPageKey",
+                "value": "example-value",
+                "type": "query",
+                "description": "The cursor for the next page of results, obtained from the nextPageKey field of a previous response. When this parameter is set, all other query parameters except pageSize are ignored."
+              },
+              {
+                "name": "pageSize",
+                "value": "500",
+                "type": "query",
+                "description": "The number of entities to return per page. Default is 50, maximum is 500."
+              },
+              {
+                "name": "entitySelector",
+                "value": "type(SERVICE)",
+                "type": "query",
+                "description": "Defines the scope of the query by specifying entity filter conditions. Required. Use the entity selector syntax, for example: type(SERVICE) to select all services, or type(HOST),tag(production) to select production hosts. Multiple conditions are ANDed together."
+              },
+              {
+                "name": "fields",
+                "value": "example-value",
+                "type": "query",
+                "description": "Defines additional fields to include in the entity response beyond the default set. Use a comma-separated list. For example, +properties,+tags,+toRelationships.runsOn to include entity properties, tags, and specific relationship types."
+              },
+              {
+                "name": "from",
+                "value": "example-value",
+                "type": "query",
+                "description": "The start of the time range for entity discovery. Entities seen within this range are returned. Use a relative expression (now-7d), ISO 8601, or Unix timestamp in milliseconds."
+              },
+              {
+                "name": "to",
+                "value": "example-value",
+                "type": "query",
+                "description": "The end of the time range for entity discovery. Default is now."
+              },
+              {
+                "name": "sort",
+                "value": "example-value",
+                "type": "query",
+                "description": "Defines the sort order of results. Use the field name prefixed with + (ascending) or - (descending). For example, +displayName or -lastSeenTms."
+              }
+            ]
+          },
+          "docs": "Returns a list of monitored entities matching the specified entity selector. The entity selector is required and must specify at least one condition, such as entity type. Results can be enriched with additional fields including properties, tags, management zones, and relationships. Results are paginated."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Get Entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/entities/:entityId",
+            "params": [
+              {
+                "name": "entityId",
+                "value": "abc123",
+                "type": "path",
+                "description": "The unique identifier of the entity to retrieve, in the format TYPE-HEXADECIMALID, e.g., SERVICE-1234567890ABCDEF."
+              },
+              {
+                "name": "fields",
+                "value": "example-value",
+                "type": "query",
+                "description": "Defines additional fields to include in the response. Use a comma-separated list prefixed with +, e.g., +properties,+tags."
+              },
+              {
+                "name": "from",
+                "value": "example-value",
+                "type": "query",
+                "description": "The start of the time range for properties and relationships. Defaults to now-3d."
+              },
+              {
+                "name": "to",
+                "value": "example-value",
+                "type": "query",
+                "description": "The end of the time range. Defaults to now."
+              }
+            ]
+          },
+          "docs": "Returns the details of a specific monitored entity by its entity ID. The entity ID format is TYPE-HEXADECIMALID, e.g., SERVICE-1234567890ABCDEF. You can request additional fields including properties, tags, relationships, and management zone assignments."
+        },
+        {
+          "info": {
+            "name": "Dynatrace List Entity Types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/entityTypes",
+            "params": [
+              {
+                "name": "nextPageKey",
+                "value": "example-value",
+                "type": "query",
+                "description": "Cursor for the next page of results."
+              },
+              {
+                "name": "pageSize",
+                "value": "500",
+                "type": "query",
+                "description": "The number of entity types to return per page."
+              }
+            ]
+          },
+          "docs": "Returns a list of all entity types available in the Dynatrace environment. Entity types describe the categories of monitored entities, such as SERVICE, HOST, PROCESS_GROUP, APPLICATION, etc. Results are paginated."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Get Entity Type Definition",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/entityTypes/:type",
+            "params": [
+              {
+                "name": "type",
+                "value": "STANDARD",
+                "type": "path",
+                "description": "The entity type identifier, e.g., SERVICE, HOST, PROCESS_GROUP, APPLICATION."
+              }
+            ]
+          },
+          "docs": "Returns the definition of a specific entity type, including its display name, description, available properties, and supported relationship types. This is useful for understanding what fields are available when querying entities of a given type."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Look up Entity by Name",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{environmentId}.live.dynatrace.com/api/v2/entities/lookup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Looks up a specific entity by its display name and type. This is useful when you know the human-readable name of an entity but need its Dynatrace entity ID for use in other API calls or selectors. Returns the matching entity or a 404 if not found."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1471 @@
+{
+  "info": {
+    "_postman_id": "e4f575f7-b928-479d-9755-6a3d39bb24e2",
+    "name": "Dynatrace Log Monitoring API v2",
+    "description": "The Dynatrace Log Monitoring API v2 enables ingestion, search, aggregation, and export of log records within a Dynatrace environment. Log data is stored in the Grail data lakehouse and can be searched using DQL-based log queries. The API supports streaming log records from external sources, querying logs with filtering and pagination, aggregating log data by fields, and bulk exporting logs for external processing.\n\nContact Support:\n Name: Dynatrace Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T15:01:03.000Z",
+    "updatedAt": "2026-06-05T15:01:03.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-e4f575f7-b928-479d-9755-6a3d39bb24e2"
+  },
+  "item": [
+    {
+      "name": "logs",
+      "item": [
+        {
+          "name": "search",
+          "item": [
+            {
+              "name": "Dynatrace Search Log Records",
+              "id": "ca860d20-7752-450a-bd39-7605ab71f8ba",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/logs/search?nextSliceKey=<string>&limit=1000&query=<string>&from=<string>&to=<string>&sort=<string>&fields=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "logs",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "description": "The cursor for the next page (slice) of results, obtained from the nextSliceKey field of a previous response. When this parameter is set, all other query parameters are ignored.",
+                      "key": "nextSliceKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The maximum number of log records to return. Default is 1000, maximum is 5000.",
+                      "key": "limit",
+                      "value": "1000"
+                    },
+                    {
+                      "description": "The log search query in DQL syntax. For example, fetch logs | filter severity == \"ERROR\" | limit 100. If not specified, all logs within the time range are returned.",
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The start of the queried time range. Use a relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h.",
+                      "key": "from",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The end of the queried time range. Default is now.",
+                      "key": "to",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Defines the sort order for results. Use timestamp in descending order (-timestamp) for newest first, or ascending (+timestamp) for oldest first. Default is -timestamp.",
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Comma-separated list of fields to include in the log records. If not specified, all available fields are returned.",
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "description": "Searches log records stored in Grail using a query expression. Results are returned in a paginated manner using a slice-based cursor. The query parameter accepts a DQL-based log search expression for filtering and transforming log data. Use nextSliceKey from the response to retrieve subsequent pages of results."
+              },
+              "response": [
+                {
+                  "id": "7f03582c-7771-4db2-9a1c-399256ac8ecb",
+                  "name": "A page of log records matching the search query",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/logs/search?nextSliceKey=<string>&limit=1000&query=<string>&from=<string>&to=<string>&sort=<string>&fields=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "logs",
+                        "search"
+                      ],
+                      "query": [
+                        {
+                          "description": "The cursor for the next page (slice) of results, obtained from the nextSliceKey field of a previous response. When this parameter is set, all other query parameters are ignored.",
+                          "key": "nextSliceKey",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The maximum number of log records to return. Default is 1000, maximum is 5000.",
+                          "key": "limit",
+                          "value": "1000"
+                        },
+                        {
+                          "description": "The log search query in DQL syntax. For example, fetch logs | filter severity == \"ERROR\" | limit 100. If not specified, all logs within the time range are returned.",
+                          "key": "query",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The start of the queried time range. Use a relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The end of the queried time range. Default is now.",
+                          "key": "to",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Defines the sort order for results. Use timestamp in descending order (-timestamp) for newest first, or ascending (+timestamp) for oldest first. Default is -timestamp.",
+                          "key": "sort",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Comma-separated list of fields to include in the log records. If not specified, all available fields are returned.",
+                          "key": "fields",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"nextSliceKey\": \"<string>\",\n  \"results\": [\n    {\n      \"timestamp\": \"<string>\",\n      \"content\": \"<string>\",\n      \"severity\": \"<string>\",\n      \"log.source\": \"<string>\",\n      \"dt.entity.host\": \"<string>\",\n      \"additionalFields\": {\n        \"sunt6\": 58908067\n      }\n    },\n    {\n      \"timestamp\": \"<string>\",\n      \"content\": \"<string>\",\n      \"severity\": \"<string>\",\n      \"log.source\": \"<string>\",\n      \"dt.entity.host\": \"<string>\",\n      \"additionalFields\": {\n        \"Duis_6b3\": 88592570,\n        \"eiusmod851\": 89727851.26597959,\n        \"minim3_\": false\n      }\n    }\n  ]\n}",
+                  "createdAt": "2026-06-05T15:01:04.000Z",
+                  "updatedAt": "2026-06-05T15:01:04.000Z",
+                  "uid": "35240-7f03582c-7771-4db2-9a1c-399256ac8ecb"
+                },
+                {
+                  "id": "1a79760d-0464-4919-883c-f7c3bf75ce16",
+                  "name": "Bad request \u2014 invalid query parameters or request body",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/logs/search?nextSliceKey=<string>&limit=1000&query=<string>&from=<string>&to=<string>&sort=<string>&fields=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "logs",
+                        "search"
+                      ],
+                      "query": [
+                        {
+                          "description": "The cursor for the next page (slice) of results, obtained from the nextSliceKey field of a previous response. When this parameter is set, all other query parameters are ignored.",
+                          "key": "nextSliceKey",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The maximum number of log records to return. Default is 1000, maximum is 5000.",
+                          "key": "limit",
+                          "value": "1000"
+                        },
+                        {
+                          "description": "The log search query in DQL syntax. For example, fetch logs | filter severity == \"ERROR\" | limit 100. If not specified, all logs within the time range are returned.",
+                          "key": "query",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The start of the queried time range. Use a relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The end of the queried time range. Default is now.",
+                          "key": "to",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Defines the sort order for results. Use timestamp in descending order (-timestamp) for newest first, or ascending (+timestamp) for oldest first. Default is -timestamp.",
+                          "key": "sort",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Comma-separated list of fields to include in the log records. If not specified, all available fields are returned.",
+                          "key": "fields",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:04.000Z",
+                  "updatedAt": "2026-06-05T15:01:04.000Z",
+                  "uid": "35240-1a79760d-0464-4919-883c-f7c3bf75ce16"
+                },
+                {
+                  "id": "c3aca885-ea41-459f-9599-cc0dd6434a90",
+                  "name": "Unauthorized \u2014 missing or invalid API token",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/logs/search?nextSliceKey=<string>&limit=1000&query=<string>&from=<string>&to=<string>&sort=<string>&fields=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "logs",
+                        "search"
+                      ],
+                      "query": [
+                        {
+                          "description": "The cursor for the next page (slice) of results, obtained from the nextSliceKey field of a previous response. When this parameter is set, all other query parameters are ignored.",
+                          "key": "nextSliceKey",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The maximum number of log records to return. Default is 1000, maximum is 5000.",
+                          "key": "limit",
+                          "value": "1000"
+                        },
+                        {
+                          "description": "The log search query in DQL syntax. For example, fetch logs | filter severity == \"ERROR\" | limit 100. If not specified, all logs within the time range are returned.",
+                          "key": "query",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The start of the queried time range. Use a relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The end of the queried time range. Default is now.",
+                          "key": "to",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Defines the sort order for results. Use timestamp in descending order (-timestamp) for newest first, or ascending (+timestamp) for oldest first. Default is -timestamp.",
+                          "key": "sort",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Comma-separated list of fields to include in the log records. If not specified, all available fields are returned.",
+                          "key": "fields",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:04.000Z",
+                  "updatedAt": "2026-06-05T15:01:04.000Z",
+                  "uid": "35240-c3aca885-ea41-459f-9599-cc0dd6434a90"
+                },
+                {
+                  "id": "f06e84a3-bae6-4a42-be70-d937f00eb87c",
+                  "name": "Forbidden \u2014 the API token lacks the required scope",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/logs/search?nextSliceKey=<string>&limit=1000&query=<string>&from=<string>&to=<string>&sort=<string>&fields=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "logs",
+                        "search"
+                      ],
+                      "query": [
+                        {
+                          "description": "The cursor for the next page (slice) of results, obtained from the nextSliceKey field of a previous response. When this parameter is set, all other query parameters are ignored.",
+                          "key": "nextSliceKey",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The maximum number of log records to return. Default is 1000, maximum is 5000.",
+                          "key": "limit",
+                          "value": "1000"
+                        },
+                        {
+                          "description": "The log search query in DQL syntax. For example, fetch logs | filter severity == \"ERROR\" | limit 100. If not specified, all logs within the time range are returned.",
+                          "key": "query",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The start of the queried time range. Use a relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The end of the queried time range. Default is now.",
+                          "key": "to",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Defines the sort order for results. Use timestamp in descending order (-timestamp) for newest first, or ascending (+timestamp) for oldest first. Default is -timestamp.",
+                          "key": "sort",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Comma-separated list of fields to include in the log records. If not specified, all available fields are returned.",
+                          "key": "fields",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:04.000Z",
+                  "updatedAt": "2026-06-05T15:01:04.000Z",
+                  "uid": "35240-f06e84a3-bae6-4a42-be70-d937f00eb87c"
+                }
+              ],
+              "createdAt": "2026-06-05T15:01:04.000Z",
+              "updatedAt": "2026-06-05T15:01:04.000Z",
+              "uid": "35240-ca860d20-7752-450a-bd39-7605ab71f8ba"
+            }
+          ],
+          "id": "099b44bb-8aef-4800-b28c-4e7a7120c463",
+          "createdAt": "2026-06-05T15:01:04.000Z",
+          "updatedAt": "2026-06-05T15:01:04.000Z",
+          "uid": "35240-099b44bb-8aef-4800-b28c-4e7a7120c463"
+        },
+        {
+          "name": "ingest",
+          "item": [
+            {
+              "name": "Dynatrace Ingest Log Records",
+              "id": "6bd4ff3c-93a2-41c5-a557-0ec721d10e41",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"content\": \"<string>\",\n    \"severity\": \"TRACE\",\n    \"timestamp\": \"<string>\",\n    \"log.source\": \"<string>\",\n    \"dt.entity.host\": \"<string>\"\n  },\n  {\n    \"content\": \"<string>\",\n    \"severity\": \"TRACE\",\n    \"timestamp\": \"<string>\",\n    \"log.source\": \"<string>\",\n    \"dt.entity.host\": \"<string>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/logs/ingest",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "logs",
+                    "ingest"
+                  ]
+                },
+                "description": "Ingests log records into the Dynatrace Grail data lakehouse. Accepts an array of log record objects. Each record must include at least a content field (the log message). Additional fields such as severity, timestamp, and entity associations can be included. Log records are processed asynchronously. Requires the logs.ingest API token scope."
+              },
+              "response": [
+                {
+                  "id": "c6aed403-88b9-427e-9aee-f6374f540af2",
+                  "name": "The log records were successfully accepted for ingestion",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n  {\n    \"content\": \"<string>\",\n    \"severity\": \"TRACE\",\n    \"timestamp\": \"<string>\",\n    \"log.source\": \"<string>\",\n    \"dt.entity.host\": \"<string>\"\n  },\n  {\n    \"content\": \"<string>\",\n    \"severity\": \"TRACE\",\n    \"timestamp\": \"<string>\",\n    \"log.source\": \"<string>\",\n    \"dt.entity.host\": \"<string>\"\n  }\n]",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/logs/ingest",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "logs",
+                        "ingest"
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:01:04.000Z",
+                  "updatedAt": "2026-06-05T15:01:04.000Z",
+                  "uid": "35240-c6aed403-88b9-427e-9aee-f6374f540af2"
+                },
+                {
+                  "id": "af0193da-1dbf-486b-aada-8d9ff5ad4f45",
+                  "name": "Bad request \u2014 invalid query parameters or request body",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n  {\n    \"content\": \"<string>\",\n    \"severity\": \"TRACE\",\n    \"timestamp\": \"<string>\",\n    \"log.source\": \"<string>\",\n    \"dt.entity.host\": \"<string>\"\n  },\n  {\n    \"content\": \"<string>\",\n    \"severity\": \"TRACE\",\n    \"timestamp\": \"<string>\",\n    \"log.source\": \"<string>\",\n    \"dt.entity.host\": \"<string>\"\n  }\n]",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/logs/ingest",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "logs",
+                        "ingest"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:04.000Z",
+                  "updatedAt": "2026-06-05T15:01:04.000Z",
+                  "uid": "35240-af0193da-1dbf-486b-aada-8d9ff5ad4f45"
+                },
+                {
+                  "id": "ea0363aa-891d-410e-a3dc-547da1916321",
+                  "name": "Unauthorized \u2014 missing or invalid API token",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n  {\n    \"content\": \"<string>\",\n    \"severity\": \"TRACE\",\n    \"timestamp\": \"<string>\",\n    \"log.source\": \"<string>\",\n    \"dt.entity.host\": \"<string>\"\n  },\n  {\n    \"content\": \"<string>\",\n    \"severity\": \"TRACE\",\n    \"timestamp\": \"<string>\",\n    \"log.source\": \"<string>\",\n    \"dt.entity.host\": \"<string>\"\n  }\n]",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/logs/ingest",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "logs",
+                        "ingest"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:04.000Z",
+                  "updatedAt": "2026-06-05T15:01:04.000Z",
+                  "uid": "35240-ea0363aa-891d-410e-a3dc-547da1916321"
+                },
+                {
+                  "id": "e019595c-3924-49cb-8885-618239d599b7",
+                  "name": "Forbidden \u2014 the API token lacks the required scope",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n  {\n    \"content\": \"<string>\",\n    \"severity\": \"TRACE\",\n    \"timestamp\": \"<string>\",\n    \"log.source\": \"<string>\",\n    \"dt.entity.host\": \"<string>\"\n  },\n  {\n    \"content\": \"<string>\",\n    \"severity\": \"TRACE\",\n    \"timestamp\": \"<string>\",\n    \"log.source\": \"<string>\",\n    \"dt.entity.host\": \"<string>\"\n  }\n]",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/logs/ingest",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "logs",
+                        "ingest"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:04.000Z",
+                  "updatedAt": "2026-06-05T15:01:04.000Z",
+                  "uid": "35240-e019595c-3924-49cb-8885-618239d599b7"
+                }
+              ],
+              "createdAt": "2026-06-05T15:01:04.000Z",
+              "updatedAt": "2026-06-05T15:01:04.000Z",
+              "uid": "35240-6bd4ff3c-93a2-41c5-a557-0ec721d10e41"
+            }
+          ],
+          "id": "8b10ce04-6461-4d96-9c9f-1a9304afdd80",
+          "createdAt": "2026-06-05T15:01:04.000Z",
+          "updatedAt": "2026-06-05T15:01:04.000Z",
+          "uid": "35240-8b10ce04-6461-4d96-9c9f-1a9304afdd80"
+        },
+        {
+          "name": "aggregate",
+          "item": [
+            {
+              "name": "Dynatrace Aggregate Log Records",
+              "id": "efaf1034-5983-48a1-b7d8-c4c8e2a5153a",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/logs/aggregate?query=<string>&from=<string>&to=<string>&groupBy=<string>&fields=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "logs",
+                    "aggregate"
+                  ],
+                  "query": [
+                    {
+                      "description": "The log query expression for filtering records before aggregation. Uses DQL-based syntax. For example, fetch logs | filter severity==\"ERROR\".",
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The start of the queried time range. Use a relative expression, ISO 8601, or Unix timestamp in milliseconds. Default is now-2h.",
+                      "key": "from",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The end of the queried time range. Default is now.",
+                      "key": "to",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Comma-separated list of fields to group the aggregated results by. For example, severity,log.source to count log records by severity and source combination.",
+                      "key": "groupBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Additional fields to include in the aggregation response.",
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "description": "Returns aggregated log data grouped by specified fields. Useful for building dashboards and summaries such as error counts by service or log volume by severity. The query parameter specifies filtering conditions and the groupBy parameter specifies the dimensions to aggregate by."
+              },
+              "response": [
+                {
+                  "id": "b1b5c2c6-1e22-4ee0-83ec-e07d8eed7273",
+                  "name": "The aggregated log data",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/logs/aggregate?query=<string>&from=<string>&to=<string>&groupBy=<string>&fields=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "logs",
+                        "aggregate"
+                      ],
+                      "query": [
+                        {
+                          "description": "The log query expression for filtering records before aggregation. Uses DQL-based syntax. For example, fetch logs | filter severity==\"ERROR\".",
+                          "key": "query",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The start of the queried time range. Use a relative expression, ISO 8601, or Unix timestamp in milliseconds. Default is now-2h.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The end of the queried time range. Default is now.",
+                          "key": "to",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Comma-separated list of fields to group the aggregated results by. For example, severity,log.source to count log records by severity and source combination.",
+                          "key": "groupBy",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Additional fields to include in the aggregation response.",
+                          "key": "fields",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"results\": [\n    {\n      \"groupByFields\": {\n        \"nisi_0\": \"<string>\"\n      },\n      \"count\": \"<long>\"\n    },\n    {\n      \"groupByFields\": {\n        \"officia_01\": \"<string>\",\n        \"inf9\": \"<string>\"\n      },\n      \"count\": \"<long>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-06-05T15:01:04.000Z",
+                  "updatedAt": "2026-06-05T15:01:04.000Z",
+                  "uid": "35240-b1b5c2c6-1e22-4ee0-83ec-e07d8eed7273"
+                },
+                {
+                  "id": "6ff30dd1-7c36-4609-8f86-5ead65912dc1",
+                  "name": "Bad request \u2014 invalid query parameters or request body",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/logs/aggregate?query=<string>&from=<string>&to=<string>&groupBy=<string>&fields=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "logs",
+                        "aggregate"
+                      ],
+                      "query": [
+                        {
+                          "description": "The log query expression for filtering records before aggregation. Uses DQL-based syntax. For example, fetch logs | filter severity==\"ERROR\".",
+                          "key": "query",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The start of the queried time range. Use a relative expression, ISO 8601, or Unix timestamp in milliseconds. Default is now-2h.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The end of the queried time range. Default is now.",
+                          "key": "to",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Comma-separated list of fields to group the aggregated results by. For example, severity,log.source to count log records by severity and source combination.",
+                          "key": "groupBy",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Additional fields to include in the aggregation response.",
+                          "key": "fields",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:04.000Z",
+                  "updatedAt": "2026-06-05T15:01:04.000Z",
+                  "uid": "35240-6ff30dd1-7c36-4609-8f86-5ead65912dc1"
+                },
+                {
+                  "id": "d66c0229-668f-430b-865c-fa649e23fba0",
+                  "name": "Unauthorized \u2014 missing or invalid API token",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/logs/aggregate?query=<string>&from=<string>&to=<string>&groupBy=<string>&fields=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "logs",
+                        "aggregate"
+                      ],
+                      "query": [
+                        {
+                          "description": "The log query expression for filtering records before aggregation. Uses DQL-based syntax. For example, fetch logs | filter severity==\"ERROR\".",
+                          "key": "query",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The start of the queried time range. Use a relative expression, ISO 8601, or Unix timestamp in milliseconds. Default is now-2h.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The end of the queried time range. Default is now.",
+                          "key": "to",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Comma-separated list of fields to group the aggregated results by. For example, severity,log.source to count log records by severity and source combination.",
+                          "key": "groupBy",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Additional fields to include in the aggregation response.",
+                          "key": "fields",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:04.000Z",
+                  "updatedAt": "2026-06-05T15:01:04.000Z",
+                  "uid": "35240-d66c0229-668f-430b-865c-fa649e23fba0"
+                },
+                {
+                  "id": "c0504bc8-76c5-4957-8965-6f931dbaac98",
+                  "name": "Forbidden \u2014 the API token lacks the required scope",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/logs/aggregate?query=<string>&from=<string>&to=<string>&groupBy=<string>&fields=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "logs",
+                        "aggregate"
+                      ],
+                      "query": [
+                        {
+                          "description": "The log query expression for filtering records before aggregation. Uses DQL-based syntax. For example, fetch logs | filter severity==\"ERROR\".",
+                          "key": "query",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The start of the queried time range. Use a relative expression, ISO 8601, or Unix timestamp in milliseconds. Default is now-2h.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The end of the queried time range. Default is now.",
+                          "key": "to",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Comma-separated list of fields to group the aggregated results by. For example, severity,log.source to count log records by severity and source combination.",
+                          "key": "groupBy",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Additional fields to include in the aggregation response.",
+                          "key": "fields",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:04.000Z",
+                  "updatedAt": "2026-06-05T15:01:04.000Z",
+                  "uid": "35240-c0504bc8-76c5-4957-8965-6f931dbaac98"
+                }
+              ],
+              "createdAt": "2026-06-05T15:01:04.000Z",
+              "updatedAt": "2026-06-05T15:01:04.000Z",
+              "uid": "35240-efaf1034-5983-48a1-b7d8-c4c8e2a5153a"
+            }
+          ],
+          "id": "75cee62e-b07e-4e9d-83e4-2b8c27cd5958",
+          "createdAt": "2026-06-05T15:01:04.000Z",
+          "updatedAt": "2026-06-05T15:01:04.000Z",
+          "uid": "35240-75cee62e-b07e-4e9d-83e4-2b8c27cd5958"
+        },
+        {
+          "name": "export",
+          "item": [
+            {
+              "name": "Dynatrace Export Log Records",
+              "id": "cf001eef-a1ca-4fc0-bdab-1b2bdf8aac85",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/logs/export?nextSliceKey=<string>&pageSize=1000&query=<string>&from=<string>&to=<string>&sort=<string>&fields=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "logs",
+                    "export"
+                  ],
+                  "query": [
+                    {
+                      "description": "The cursor for the next page of export results. When this parameter is set, all other query parameters are ignored.",
+                      "key": "nextSliceKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The number of log records to return per page. Default is 1000, maximum is 10000.",
+                      "key": "pageSize",
+                      "value": "1000"
+                    },
+                    {
+                      "description": "The log export query expression for filtering records.",
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The start of the queried time range.",
+                      "key": "from",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The end of the queried time range.",
+                      "key": "to",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The sort order for export results. Default is -timestamp.",
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Fields to include in the exported log records.",
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "description": "Exports log records for bulk retrieval, suitable for integration with external SIEM, log management, or archiving systems. Results are paginated using a slice-based cursor. The export uses the same query syntax as the search endpoint but is optimized for large volume data retrieval."
+              },
+              "response": [
+                {
+                  "id": "daac54d2-1952-45bd-8251-457fb4824a84",
+                  "name": "A page of exported log records",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/logs/export?nextSliceKey=<string>&pageSize=1000&query=<string>&from=<string>&to=<string>&sort=<string>&fields=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "logs",
+                        "export"
+                      ],
+                      "query": [
+                        {
+                          "description": "The cursor for the next page of export results. When this parameter is set, all other query parameters are ignored.",
+                          "key": "nextSliceKey",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The number of log records to return per page. Default is 1000, maximum is 10000.",
+                          "key": "pageSize",
+                          "value": "1000"
+                        },
+                        {
+                          "description": "The log export query expression for filtering records.",
+                          "key": "query",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The start of the queried time range.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The end of the queried time range.",
+                          "key": "to",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The sort order for export results. Default is -timestamp.",
+                          "key": "sort",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Fields to include in the exported log records.",
+                          "key": "fields",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"nextSliceKey\": \"<string>\",\n  \"results\": [\n    {\n      \"timestamp\": \"<string>\",\n      \"content\": \"<string>\",\n      \"severity\": \"<string>\",\n      \"log.source\": \"<string>\",\n      \"dt.entity.host\": \"<string>\",\n      \"additionalFields\": {\n        \"cupidatat9f\": false\n      }\n    },\n    {\n      \"timestamp\": \"<string>\",\n      \"content\": \"<string>\",\n      \"severity\": \"<string>\",\n      \"log.source\": \"<string>\",\n      \"dt.entity.host\": \"<string>\",\n      \"additionalFields\": {\n        \"aliquip3\": -63207088\n      }\n    }\n  ]\n}",
+                  "createdAt": "2026-06-05T15:01:04.000Z",
+                  "updatedAt": "2026-06-05T15:01:04.000Z",
+                  "uid": "35240-daac54d2-1952-45bd-8251-457fb4824a84"
+                },
+                {
+                  "id": "ee83197b-3737-4e5b-9080-399ed7fbedc1",
+                  "name": "Bad request \u2014 invalid query parameters or request body",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/logs/export?nextSliceKey=<string>&pageSize=1000&query=<string>&from=<string>&to=<string>&sort=<string>&fields=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "logs",
+                        "export"
+                      ],
+                      "query": [
+                        {
+                          "description": "The cursor for the next page of export results. When this parameter is set, all other query parameters are ignored.",
+                          "key": "nextSliceKey",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The number of log records to return per page. Default is 1000, maximum is 10000.",
+                          "key": "pageSize",
+                          "value": "1000"
+                        },
+                        {
+                          "description": "The log export query expression for filtering records.",
+                          "key": "query",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The start of the queried time range.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The end of the queried time range.",
+                          "key": "to",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The sort order for export results. Default is -timestamp.",
+                          "key": "sort",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Fields to include in the exported log records.",
+                          "key": "fields",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:04.000Z",
+                  "updatedAt": "2026-06-05T15:01:04.000Z",
+                  "uid": "35240-ee83197b-3737-4e5b-9080-399ed7fbedc1"
+                },
+                {
+                  "id": "d253cc68-677d-4599-a093-639642050a6c",
+                  "name": "Unauthorized \u2014 missing or invalid API token",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/logs/export?nextSliceKey=<string>&pageSize=1000&query=<string>&from=<string>&to=<string>&sort=<string>&fields=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "logs",
+                        "export"
+                      ],
+                      "query": [
+                        {
+                          "description": "The cursor for the next page of export results. When this parameter is set, all other query parameters are ignored.",
+                          "key": "nextSliceKey",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The number of log records to return per page. Default is 1000, maximum is 10000.",
+                          "key": "pageSize",
+                          "value": "1000"
+                        },
+                        {
+                          "description": "The log export query expression for filtering records.",
+                          "key": "query",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The start of the queried time range.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The end of the queried time range.",
+                          "key": "to",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The sort order for export results. Default is -timestamp.",
+                          "key": "sort",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Fields to include in the exported log records.",
+                          "key": "fields",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:04.000Z",
+                  "updatedAt": "2026-06-05T15:01:04.000Z",
+                  "uid": "35240-d253cc68-677d-4599-a093-639642050a6c"
+                },
+                {
+                  "id": "7ce88465-9645-4d60-a737-389b9ff6418f",
+                  "name": "Forbidden \u2014 the API token lacks the required scope",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/logs/export?nextSliceKey=<string>&pageSize=1000&query=<string>&from=<string>&to=<string>&sort=<string>&fields=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "logs",
+                        "export"
+                      ],
+                      "query": [
+                        {
+                          "description": "The cursor for the next page of export results. When this parameter is set, all other query parameters are ignored.",
+                          "key": "nextSliceKey",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The number of log records to return per page. Default is 1000, maximum is 10000.",
+                          "key": "pageSize",
+                          "value": "1000"
+                        },
+                        {
+                          "description": "The log export query expression for filtering records.",
+                          "key": "query",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The start of the queried time range.",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The end of the queried time range.",
+                          "key": "to",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The sort order for export results. Default is -timestamp.",
+                          "key": "sort",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Fields to include in the exported log records.",
+                          "key": "fields",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"constraintViolations\": [\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      },\n      {\n        \"path\": \"<string>\",\n        \"message\": \"<string>\",\n        \"parameterLocation\": \"<string>\",\n        \"location\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:01:04.000Z",
+                  "updatedAt": "2026-06-05T15:01:04.000Z",
+                  "uid": "35240-7ce88465-9645-4d60-a737-389b9ff6418f"
+                }
+              ],
+              "createdAt": "2026-06-05T15:01:04.000Z",
+              "updatedAt": "2026-06-05T15:01:04.000Z",
+              "uid": "35240-cf001eef-a1ca-4fc0-bdab-1b2bdf8aac85"
+            }
+          ],
+          "id": "fecd47a0-ec26-42fc-a9f0-e25f0d2f39ab",
+          "createdAt": "2026-06-05T15:01:04.000Z",
+          "updatedAt": "2026-06-05T15:01:04.000Z",
+          "uid": "35240-fecd47a0-ec26-42fc-a9f0-e25f0d2f39ab"
+        }
+      ],
+      "id": "7fb96ebd-a8ae-471b-8d48-aacdc79f23d8",
+      "createdAt": "2026-06-05T15:01:04.000Z",
+      "updatedAt": "2026-06-05T15:01:04.000Z",
+      "uid": "35240-7fb96ebd-a8ae-471b-8d48-aacdc79f23d8"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "environmentId",
+      "value": "mySampleEnv"
+    },
+    {
+      "key": "baseUrl",
+      "value": "https://{{environmentId}}.live.dynatrace.com/api/v2"
+    }
+  ]
+}

@@ -975,6 +975,11 @@ maintainers:
   email: kin@apievangelist.com
 specificationVersion: '0.19'
 common:
+- type: OAuthScopes
+  url: scopes/dynatrace-scopes.yml
+- name: Agent Skills
+  url: https://github.com/Dynatrace/dynatrace-for-ai
+  type: AgentSkills
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/dynatrace/overview
 - type: Arazzo

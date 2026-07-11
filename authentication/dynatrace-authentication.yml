@@ -1,0 +1,37 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/dynatrace-account-management-api-openapi.yml, openapi/dynatrace-entities-api-v2-openapi.yml,
+  openapi/dynatrace-events-api-v2-openapi.yml, openapi/dynatrace-log-monitoring-api-v2-openapi.yml,
+  openapi/dynatrace-metrics-api-v2-openapi.yml, openapi/dynatrace-problems-api-v2-openapi.yml
+summary:
+  types:
+  - apiKey
+  - oauth2
+  api_key_in:
+  - header
+  oauth2_flows:
+  - clientCredentials
+schemes:
+- name: oauth2
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://sso.dynatrace.com/sso/oauth2/token
+    scopes: 3
+  description: 'OAuth 2.0 authentication for the Account Management API. Use the client credentials
+    flow to obtain a bearer token. Required scopes vary by endpoint: account-idm-read for GET
+    operations, account-idm-write for POST/PUT/DELETE operations.'
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.yml
+- name: api-token
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: 'Dynatrace API token. Use the format: Api-Token {your-token} Required scopes:
+    entities.read'
+  sources:
+  - openapi/dynatrace-entities-api-v2-openapi.yml
+  - openapi/dynatrace-events-api-v2-openapi.yml
+  - openapi/dynatrace-log-monitoring-api-v2-openapi.yml
+  - openapi/dynatrace-metrics-api-v2-openapi.yml
+  - openapi/dynatrace-problems-api-v2-openapi.yml

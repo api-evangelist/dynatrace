@@ -975,6 +975,14 @@ maintainers:
   email: kin@apievangelist.com
 specificationVersion: '0.19'
 common:
+- type: TrustCenter
+  url: security/dynatrace-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/dynatrace-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/dynatrace-domain-security.yml
+- type: Authentication
+  url: authentication/dynatrace-authentication.yml
 - type: OAuthScopes
   url: scopes/dynatrace-scopes.yml
 - name: Agent Skills

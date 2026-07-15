@@ -975,6 +975,8 @@ maintainers:
   email: kin@apievangelist.com
 specificationVersion: '0.19'
 common:
+- type: AgenticAccess
+  url: agentic-access/dynatrace-agentic-access.yml
 - type: TrustCenter
   url: security/dynatrace-trust-center.yml
 - type: VulnerabilityDisclosure

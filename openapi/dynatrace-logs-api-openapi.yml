@@ -1,14 +1,8 @@
 openapi: 3.1.0
 info:
-  title: Dynatrace Log Monitoring API v2
-  version: 2.0.0
-  description: >-
-    The Dynatrace Log Monitoring API v2 enables ingestion, search, aggregation,
-    and export of log records within a Dynatrace environment. Log data is stored
-    in the Grail data lakehouse and can be searched using DQL-based log queries.
-    The API supports streaming log records from external sources, querying logs
-    with filtering and pagination, aggregating log data by fields, and bulk
-    exporting logs for external processing.
+  title: Dynatrace Account Management Entities Logs API
+  version: 1.0.0
+  description: The Dynatrace Account Management API allows you to manage your Dynatrace account including users, groups, permissions, and environments. It uses OAuth 2.0 authentication with account-level scopes. The API enables programmatic management of identity and access controls, including creating users, assigning users to groups, defining group permissions, and listing environments associated with the account. This is the primary API for automating IAM workflows in Dynatrace.
   contact:
     name: Dynatrace Support
     url: https://www.dynatrace.com/support/
@@ -16,54 +10,33 @@ info:
     name: Dynatrace Terms of Service
     url: https://www.dynatrace.com/company/trust-center/terms/
   x-last-validated: '2026-04-18'
-externalDocs:
-  description: Dynatrace Log Monitoring API v2 Documentation
-  url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/log-monitoring-v2
-
 servers:
-- url: https://{environmentId}.live.dynatrace.com/api/v2
-  description: Dynatrace SaaS environment
-  variables:
-    environmentId:
-      description: The unique identifier of your Dynatrace environment
-      default: mySampleEnv
-
+- url: https://api.dynatrace.com
+  description: Dynatrace Account Management API (global endpoint)
+security:
+- oauth2: []
 tags:
 - name: Logs
   description: Operations for ingesting, searching, aggregating, and exporting log records
-
-security:
-- api-token: []
-
 paths:
   /logs/search:
     get:
       operationId: searchLogs
       summary: Dynatrace Search Log Records
-      description: >-
-        Searches log records stored in Grail using a query expression. Results
-        are returned in a paginated manner using a slice-based cursor. The query
-        parameter accepts a DQL-based log search expression for filtering and
-        transforming log data. Use nextSliceKey from the response to retrieve
-        subsequent pages of results.
+      description: Searches log records stored in Grail using a query expression. Results are returned in a paginated manner using a slice-based cursor. The query parameter accepts a DQL-based log search expression for filtering and transforming log data. Use nextSliceKey from the response to retrieve subsequent pages of results.
       tags:
       - Logs
       parameters:
       - name: nextSliceKey
         in: query
-        description: >-
-          The cursor for the next page (slice) of results, obtained from the
-          nextSliceKey field of a previous response. When this parameter is
-          set, all other query parameters are ignored.
+        description: The cursor for the next page (slice) of results, obtained from the nextSliceKey field of a previous response. When this parameter is set, all other query parameters are ignored.
         required: false
         schema:
           type: string
         example: example-value
       - name: limit
         in: query
-        description: >-
-          The maximum number of log records to return. Default is 1000,
-          maximum is 5000.
+        description: The maximum number of log records to return. Default is 1000, maximum is 5000.
         required: false
         schema:
           type: integer
@@ -73,47 +46,35 @@ paths:
         example: 500
       - name: query
         in: query
-        description: >-
-          The log search query in DQL syntax. For example,
-          fetch logs | filter severity == "ERROR" | limit 100.
-          If not specified, all logs within the time range are returned.
+        description: The log search query in DQL syntax. For example, fetch logs | filter severity == "ERROR" | limit 100. If not specified, all logs within the time range are returned.
         required: false
         schema:
           type: string
         example: example-value
       - name: from
         in: query
-        description: >-
-          The start of the queried time range. Use a relative expression
-          (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds.
-          Default is now-2h.
+        description: The start of the queried time range. Use a relative expression (now-1h), ISO 8601 timestamp, or Unix timestamp in milliseconds. Default is now-2h.
         required: false
         schema:
           type: string
         example: example-value
       - name: to
         in: query
-        description: >-
-          The end of the queried time range. Default is now.
+        description: The end of the queried time range. Default is now.
         required: false
         schema:
           type: string
         example: example-value
       - name: sort
         in: query
-        description: >-
-          Defines the sort order for results. Use timestamp in descending
-          order (-timestamp) for newest first, or ascending (+timestamp)
-          for oldest first. Default is -timestamp.
+        description: Defines the sort order for results. Use timestamp in descending order (-timestamp) for newest first, or ascending (+timestamp) for oldest first. Default is -timestamp.
         required: false
         schema:
           type: string
         example: example-value
       - name: fields
         in: query
-        description: >-
-          Comma-separated list of fields to include in the log records.
-          If not specified, all available fields are returned.
+        description: Comma-separated list of fields to include in the log records. If not specified, all available fields are returned.
         required: false
         schema:
           type: string
@@ -131,20 +92,19 @@ paths:
                   x-microcks-default: true
                   value:
                     nextSliceKey: example-value
-                    results: &id002
+                    results:
                     - timestamp: example-value
                       content: example-value
                       severity: HIGH
                       log.source: example-value
                       dt.entity.host: example-value
-                      additionalFields: &id001 {}
+                      additionalFields: {}
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
-
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
@@ -152,12 +112,7 @@ paths:
     post:
       operationId: ingestLogs
       summary: Dynatrace Ingest Log Records
-      description: >-
-        Ingests log records into the Dynatrace Grail data lakehouse. Accepts an
-        array of log record objects. Each record must include at least a content
-        field (the log message). Additional fields such as severity, timestamp,
-        and entity associations can be included. Log records are processed
-        asynchronously. Requires the logs.ingest API token scope.
+      description: Ingests log records into the Dynatrace Grail data lakehouse. Accepts an array of log record objects. Each record must include at least a content field (the log message). Additional fields such as severity, timestamp, and entity associations can be included. Log records are processed asynchronously. Requires the logs.ingest API token scope.
       tags:
       - Logs
       requestBody:
@@ -171,14 +126,14 @@ paths:
               items:
                 $ref: '#/components/schemas/LogIngestRecord'
             example:
-            - content: "Application started successfully"
+            - content: Application started successfully
               severity: INFO
-              timestamp: "2024-01-15T10:30:00.000Z"
+              timestamp: '2024-01-15T10:30:00.000Z'
               log.source: my-application
               dt.entity.host: HOST-1234567890ABCDEF
-            - content: "Database connection timeout after 30s"
+            - content: Database connection timeout after 30s
               severity: ERROR
-              timestamp: "2024-01-15T10:30:05.123Z"
+              timestamp: '2024-01-15T10:30:05.123Z'
               log.source: my-application
       responses:
         '204':
@@ -189,7 +144,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
-
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
@@ -197,29 +151,20 @@ paths:
     get:
       operationId: aggregateLogs
       summary: Dynatrace Aggregate Log Records
-      description: >-
-        Returns aggregated log data grouped by specified fields. Useful for
-        building dashboards and summaries such as error counts by service or
-        log volume by severity. The query parameter specifies filtering
-        conditions and the groupBy parameter specifies the dimensions to
-        aggregate by.
+      description: Returns aggregated log data grouped by specified fields. Useful for building dashboards and summaries such as error counts by service or log volume by severity. The query parameter specifies filtering conditions and the groupBy parameter specifies the dimensions to aggregate by.
       tags:
       - Logs
       parameters:
       - name: query
         in: query
-        description: >-
-          The log query expression for filtering records before aggregation.
-          Uses DQL-based syntax. For example, fetch logs | filter severity=="ERROR".
+        description: The log query expression for filtering records before aggregation. Uses DQL-based syntax. For example, fetch logs | filter severity=="ERROR".
         required: false
         schema:
           type: string
         example: example-value
       - name: from
         in: query
-        description: >-
-          The start of the queried time range. Use a relative expression,
-          ISO 8601, or Unix timestamp in milliseconds. Default is now-2h.
+        description: The start of the queried time range. Use a relative expression, ISO 8601, or Unix timestamp in milliseconds. Default is now-2h.
         required: false
         schema:
           type: string
@@ -233,18 +178,14 @@ paths:
         example: example-value
       - name: groupBy
         in: query
-        description: >-
-          Comma-separated list of fields to group the aggregated results by.
-          For example, severity,log.source to count log records by severity
-          and source combination.
+        description: Comma-separated list of fields to group the aggregated results by. For example, severity,log.source to count log records by severity and source combination.
         required: false
         schema:
           type: string
         example: example-value
       - name: fields
         in: query
-        description: >-
-          Additional fields to include in the aggregation response.
+        description: Additional fields to include in the aggregation response.
         required: false
         schema:
           type: string
@@ -261,7 +202,7 @@ paths:
                   summary: Default aggregateLogs 200 response
                   x-microcks-default: true
                   value:
-                    results: &id003
+                    results:
                     - groupByFields: {}
                       count: 500
         '400':
@@ -270,7 +211,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
-
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
@@ -278,29 +218,20 @@ paths:
     get:
       operationId: exportLogs
       summary: Dynatrace Export Log Records
-      description: >-
-        Exports log records for bulk retrieval, suitable for integration with
-        external SIEM, log management, or archiving systems. Results are
-        paginated using a slice-based cursor. The export uses the same query
-        syntax as the search endpoint but is optimized for large volume
-        data retrieval.
+      description: Exports log records for bulk retrieval, suitable for integration with external SIEM, log management, or archiving systems. Results are paginated using a slice-based cursor. The export uses the same query syntax as the search endpoint but is optimized for large volume data retrieval.
       tags:
       - Logs
       parameters:
       - name: nextSliceKey
         in: query
-        description: >-
-          The cursor for the next page of export results. When this parameter
-          is set, all other query parameters are ignored.
+        description: The cursor for the next page of export results. When this parameter is set, all other query parameters are ignored.
         required: false
         schema:
           type: string
         example: example-value
       - name: pageSize
         in: query
-        description: >-
-          The number of log records to return per page. Default is 1000,
-          maximum is 10000.
+        description: The number of log records to return per page. Default is 1000, maximum is 10000.
         required: false
         schema:
           type: integer
@@ -310,8 +241,7 @@ paths:
         example: 500
       - name: query
         in: query
-        description: >-
-          The log export query expression for filtering records.
+        description: The log export query expression for filtering records.
         required: false
         schema:
           type: string
@@ -357,74 +287,57 @@ paths:
                   x-microcks-default: true
                   value:
                     nextSliceKey: example-value
-                    results: &id004
+                    results:
                     - timestamp: example-value
                       content: example-value
                       severity: HIGH
                       log.source: example-value
                       dt.entity.host: example-value
-                      additionalFields: *id001
+                      additionalFields: {}
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
-
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
 components:
-  securitySchemes:
-    api-token:
-      type: apiKey
-      in: header
-      name: Authorization
-      description: >-
-        Dynatrace API token. Use the format: Api-Token {your-token}
-        Required scopes: logs.read (for GET operations), logs.ingest (for POST /logs/ingest)
-
-  responses:
-    BadRequest:
-      description: Bad request — invalid query parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    Unauthorized:
-      description: Unauthorized — missing or invalid API token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    Forbidden:
-      description: Forbidden — the API token lacks the required scope
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-
   schemas:
+    ConstraintViolation:
+      type: object
+      description: Details of a single constraint violation in a request.
+      properties:
+        path:
+          type: string
+          description: The JSON path to the field that caused the violation.
+          example: example-value
+        message:
+          type: string
+          description: A description of the constraint violation.
+          example: Example description.
+        parameterLocation:
+          type: string
+          description: The location of the violating parameter (QUERY, PATH, BODY).
+          example: example-value
+        location:
+          type: string
+          description: The location detail for the violation.
+          example: example-value
     LogIngestRecord:
       type: object
-      description: >-
-        A single log record to ingest into the Dynatrace Grail data lakehouse.
-        The content field is required. Additional fields provide context for
-        routing, filtering, and entity association.
+      description: A single log record to ingest into the Dynatrace Grail data lakehouse. The content field is required. Additional fields provide context for routing, filtering, and entity association.
       required:
       - content
       properties:
         content:
           type: string
-          description: >-
-            The main log message or text. Required. This is the primary
-            searchable content of the log record.
+          description: The main log message or text. Required. This is the primary searchable content of the log record.
           example: example-value
         severity:
           type: string
-          description: >-
-            The severity level of the log record. Standard syslog severity
-            levels are supported.
+          description: The severity level of the log record. Standard syslog severity levels are supported.
           enum:
           - EMERGENCY
           - ALERT
@@ -438,31 +351,25 @@ components:
           example: EMERGENCY
         timestamp:
           type: string
-          description: >-
-            The timestamp of the log record. Accepts ISO 8601 format
-            (e.g., 2024-01-15T10:30:00.000Z) or Unix timestamp in
-            milliseconds. If not specified, the ingestion time is used.
+          description: The timestamp of the log record. Accepts ISO 8601 format (e.g., 2024-01-15T10:30:00.000Z) or Unix timestamp in milliseconds. If not specified, the ingestion time is used.
           example: example-value
         log.source:
           type: string
-          description: >-
-            A string identifier for the source of the log record, such as
-            an application name, component, or log file path.
+          description: A string identifier for the source of the log record, such as an application name, component, or log file path.
           example: example-value
         dt.entity.host:
           type: string
-          description: >-
-            The Dynatrace host entity ID to associate this log record with,
-            e.g., HOST-1234567890ABCDEF. This enables correlation between
-            logs and monitored infrastructure.
-
+          description: The Dynatrace host entity ID to associate this log record with, e.g., HOST-1234567890ABCDEF. This enables correlation between logs and monitored infrastructure.
           example: example-value
+    ErrorEnvelope:
+      type: object
+      description: Error response envelope returned when a request fails.
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
     LogRecord:
       type: object
-      description: >-
-        A log record retrieved from the Dynatrace Grail data lakehouse.
-        Contains the original log content plus enriched metadata added
-        by Dynatrace during ingestion and processing.
+      description: A log record retrieved from the Dynatrace Grail data lakehouse. Contains the original log content plus enriched metadata added by Dynatrace during ingestion and processing.
       properties:
         timestamp:
           type: string
@@ -486,52 +393,16 @@ components:
           example: example-value
         additionalFields:
           type: object
-          description: >-
-            Additional fields present in the log record beyond the standard
-            set. Content varies based on what was ingested and how OpenPipeline
-            processed the record.
+          description: Additional fields present in the log record beyond the standard set. Content varies based on what was ingested and how OpenPipeline processed the record.
           additionalProperties: true
-
-          example: *id001
-    LogRecordSearchResult:
-      type: object
-      description: The result of a log search query.
-      properties:
-        nextSliceKey:
-          type: string
-          description: >-
-            The cursor for the next page of results. Null if all results
-            have been returned.
-          nullable: true
-          example: example-value
-        results:
-          type: array
-          description: The list of log records matching the search query on this page.
-          items:
-            $ref: '#/components/schemas/LogRecord'
-
-          example: *id002
-    LogAggregateResult:
-      type: object
-      description: The result of a log aggregation query.
-      properties:
-        results:
-          type: array
-          description: >-
-            The aggregated log data grouped by the specified dimensions.
-          items:
-            $ref: '#/components/schemas/LogAggregateGroup'
-
-          example: *id003
+          example: {}
     LogAggregateGroup:
       type: object
       description: A single aggregation group result.
       properties:
         groupByFields:
           type: object
-          description: >-
-            The field values that define this aggregation group. Keys are the
-            groupBy field names, values are the field values for this group.
+          description: The field values that define this aggregation group. Keys are the groupBy field names, values are the field values for this group.
           additionalProperties:
             type: string
           example: {}
@@ -539,8 +410,40 @@ components:
           type: integer
           format: int64
           description: The number of log records in this aggregation group.
-
           example: 500
+    LogRecordSearchResult:
+      type: object
+      description: The result of a log search query.
+      properties:
+        nextSliceKey:
+          type: string
+          description: The cursor for the next page of results. Null if all results have been returned.
+          nullable: true
+          example: example-value
+        results:
+          type: array
+          description: The list of log records matching the search query on this page.
+          items:
+            $ref: '#/components/schemas/LogRecord'
+          example:
+          - timestamp: example-value
+            content: example-value
+            severity: HIGH
+            log.source: example-value
+            dt.entity.host: example-value
+            additionalFields: {}
+    LogAggregateResult:
+      type: object
+      description: The result of a log aggregation query.
+      properties:
+        results:
+          type: array
+          description: The aggregated log data grouped by the specified dimensions.
+          items:
+            $ref: '#/components/schemas/LogAggregateGroup'
+          example:
+          - groupByFields: {}
+            count: 500
     LogExportResult:
       type: object
       description: The result of a log export operation, containing a page of records.
@@ -555,15 +458,13 @@ components:
           description: The list of exported log records on this page.
           items:
             $ref: '#/components/schemas/LogRecord'
-
-          example: *id004
-    ErrorEnvelope:
-      type: object
-      description: Error response envelope returned when a request fails.
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-
+          example:
+          - timestamp: example-value
+            content: example-value
+            severity: HIGH
+            log.source: example-value
+            dt.entity.host: example-value
+            additionalFields: {}
     Error:
       type: object
       description: Details of an API error.
@@ -581,29 +482,41 @@ components:
           description: A list of constraint violations for validation errors (HTTP 400).
           items:
             $ref: '#/components/schemas/ConstraintViolation'
-
           example:
           - path: example-value
             message: Example description.
             parameterLocation: example-value
             location: example-value
-    ConstraintViolation:
-      type: object
-      description: Details of a single constraint violation in a request.
-      properties:
-        path:
-          type: string
-          description: The JSON path to the field that caused the violation.
-          example: example-value
-        message:
-          type: string
-          description: A description of the constraint violation.
-          example: Example description.
-        parameterLocation:
-          type: string
-          description: The location of the violating parameter (QUERY, PATH, BODY).
-          example: example-value
-        location:
-          type: string
-          description: The location detail for the violation.
-          example: example-value
+  responses:
+    Forbidden:
+      description: Forbidden — the API token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized — missing or invalid API token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    BadRequest:
+      description: Bad request — invalid query parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: 'OAuth 2.0 authentication for the Account Management API. Use the client credentials flow to obtain a bearer token. Required scopes vary by endpoint: account-idm-read for GET operations, account-idm-write for POST/PUT/DELETE operations.'
+      flows:
+        clientCredentials:
+          tokenUrl: https://sso.dynatrace.com/sso/oauth2/token
+          scopes:
+            account-idm-read: Read access to account identity and management data
+            account-idm-write: Write access to manage users, groups, and permissions
+            account-env-read: Read access to environment information
+externalDocs:
+  description: Dynatrace Account Management API Documentation
+  url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api

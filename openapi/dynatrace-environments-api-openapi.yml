@@ -1,0 +1,178 @@
+openapi: 3.1.0
+info:
+  title: Dynatrace Account Management Entities Environments API
+  version: 1.0.0
+  description: The Dynatrace Account Management API allows you to manage your Dynatrace account including users, groups, permissions, and environments. It uses OAuth 2.0 authentication with account-level scopes. The API enables programmatic management of identity and access controls, including creating users, assigning users to groups, defining group permissions, and listing environments associated with the account. This is the primary API for automating IAM workflows in Dynatrace.
+  contact:
+    name: Dynatrace Support
+    url: https://www.dynatrace.com/support/
+  license:
+    name: Dynatrace Terms of Service
+    url: https://www.dynatrace.com/company/trust-center/terms/
+  x-last-validated: '2026-04-18'
+servers:
+- url: https://api.dynatrace.com
+  description: Dynatrace Account Management API (global endpoint)
+security:
+- oauth2: []
+tags:
+- name: Environments
+  description: Operations for listing environments in the account
+paths:
+  /env/v1/accounts/{accountUuid}/environments:
+    get:
+      operationId: listEnvironments
+      summary: Dynatrace List Environments
+      description: Returns a list of all Dynatrace environments associated with the specified account. Each environment record includes the environment ID, name, and URL. This information is useful for enumerating environments before making environment-level API calls.
+      tags:
+      - Environments
+      parameters:
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
+      - name: nextPageKey
+        in: query
+        description: Cursor for the next page of results.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: pageSize
+        in: query
+        description: The number of environments to return per page.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 1000
+          default: 100
+        example: 500
+      responses:
+        '200':
+          description: A list of environments in the account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentCollection'
+              examples:
+                ListEnvironments200Example:
+                  summary: Default listEnvironments 200 response
+                  x-microcks-default: true
+                  value:
+                    nextPageKey: example-value
+                    totalCount: 500
+                    environments:
+                    - id: abc123
+                      name: Production Service
+                      status: ACTIVE
+                      trial: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  responses:
+    Forbidden:
+      description: Forbidden — the token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized — missing or invalid OAuth token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  schemas:
+    EnvironmentCollection:
+      type: object
+      description: A paginated collection of environments.
+      properties:
+        nextPageKey:
+          type: string
+          description: Cursor for the next page of results.
+          nullable: true
+          example: example-value
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of environments in the account.
+          example: 500
+        environments:
+          type: array
+          description: The list of environments on this page.
+          items:
+            $ref: '#/components/schemas/Environment'
+          example:
+          - id: abc123
+            name: Production Service
+            status: ACTIVE
+            trial: true
+    ErrorEnvelope:
+      type: object
+      description: Error response envelope returned when a request fails.
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    Environment:
+      type: object
+      description: Represents a Dynatrace environment (tenant) associated with the account.
+      properties:
+        id:
+          type: string
+          description: The unique environment identifier (tenant ID).
+          example: abc123
+        name:
+          type: string
+          description: The display name of the environment.
+          example: Production Service
+        status:
+          type: string
+          description: The current status of the environment.
+          enum:
+          - ACTIVE
+          - SUSPENDED
+          - TRIAL
+          example: ACTIVE
+        trial:
+          type: boolean
+          description: Whether the environment is a trial environment.
+          example: true
+    Error:
+      type: object
+      description: Details of an API error.
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+          example: 500
+        message:
+          type: string
+          description: A human-readable description of the error.
+          example: Example description.
+  parameters:
+    accountUuid:
+      name: accountUuid
+      in: path
+      description: The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API.
+      required: true
+      schema:
+        type: string
+        format: uuid
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: 'OAuth 2.0 authentication for the Account Management API. Use the client credentials flow to obtain a bearer token. Required scopes vary by endpoint: account-idm-read for GET operations, account-idm-write for POST/PUT/DELETE operations.'
+      flows:
+        clientCredentials:
+          tokenUrl: https://sso.dynatrace.com/sso/oauth2/token
+          scopes:
+            account-idm-read: Read access to account identity and management data
+            account-idm-write: Write access to manage users, groups, and permissions
+            account-env-read: Read access to environment information
+externalDocs:
+  description: Dynatrace Account Management API Documentation
+  url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api

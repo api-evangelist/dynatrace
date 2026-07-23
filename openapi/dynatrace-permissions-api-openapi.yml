@@ -1,0 +1,148 @@
+openapi: 3.1.0
+info:
+  title: Dynatrace Account Management Entities Permissions API
+  version: 1.0.0
+  description: The Dynatrace Account Management API allows you to manage your Dynatrace account including users, groups, permissions, and environments. It uses OAuth 2.0 authentication with account-level scopes. The API enables programmatic management of identity and access controls, including creating users, assigning users to groups, defining group permissions, and listing environments associated with the account. This is the primary API for automating IAM workflows in Dynatrace.
+  contact:
+    name: Dynatrace Support
+    url: https://www.dynatrace.com/support/
+  license:
+    name: Dynatrace Terms of Service
+    url: https://www.dynatrace.com/company/trust-center/terms/
+  x-last-validated: '2026-04-18'
+servers:
+- url: https://api.dynatrace.com
+  description: Dynatrace Account Management API (global endpoint)
+security:
+- oauth2: []
+tags:
+- name: Permissions
+  description: Operations for querying account-level permissions
+paths:
+  /iam/v1/accounts/{accountUuid}/permissions:
+    get:
+      operationId: listPermissions
+      summary: Dynatrace List Permissions for Account
+      description: Returns a list of all permissions defined for the account. Permissions control what actions groups and users can perform within Dynatrace environments and at the account level. Results include both environment-scoped and account-scoped permissions.
+      tags:
+      - Permissions
+      parameters:
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
+      responses:
+        '200':
+          description: A list of permissions for the account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionCollection'
+              examples:
+                ListPermissions200Example:
+                  summary: Default listPermissions 200 response
+                  x-microcks-default: true
+                  value:
+                    permissions:
+                    - permissionName: Production Service
+                      scope: example-value
+                      scopeType: ACCOUNT
+                      groupId: abc123
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  responses:
+    Forbidden:
+      description: Forbidden — the token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized — missing or invalid OAuth token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  schemas:
+    PermissionCollection:
+      type: object
+      description: A collection of permission assignments for the account.
+      properties:
+        permissions:
+          type: array
+          description: The list of all permissions in the account.
+          items:
+            $ref: '#/components/schemas/Permission'
+          example:
+          - permissionName: Production Service
+            scope: example-value
+            scopeType: ACCOUNT
+            groupId: abc123
+    Permission:
+      type: object
+      description: Represents a permission assignment granting a group access to a Dynatrace environment or account-level capability.
+      properties:
+        permissionName:
+          type: string
+          description: The name of the permission, e.g., tenant-viewer, tenant-operator, tenant-admin, account-company-info.
+          example: Production Service
+        scope:
+          type: string
+          description: The scope identifier the permission applies to. For environment permissions, this is the environment ID. For account permissions, this is the account UUID.
+          example: example-value
+        scopeType:
+          type: string
+          description: The type of scope. ACCOUNT for account-level permissions, TENANT for environment-level permissions.
+          enum:
+          - ACCOUNT
+          - TENANT
+          example: ACCOUNT
+        groupId:
+          type: string
+          description: The ID of the group this permission is assigned to.
+          example: abc123
+    ErrorEnvelope:
+      type: object
+      description: Error response envelope returned when a request fails.
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    Error:
+      type: object
+      description: Details of an API error.
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+          example: 500
+        message:
+          type: string
+          description: A human-readable description of the error.
+          example: Example description.
+  parameters:
+    accountUuid:
+      name: accountUuid
+      in: path
+      description: The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API.
+      required: true
+      schema:
+        type: string
+        format: uuid
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: 'OAuth 2.0 authentication for the Account Management API. Use the client credentials flow to obtain a bearer token. Required scopes vary by endpoint: account-idm-read for GET operations, account-idm-write for POST/PUT/DELETE operations.'
+      flows:
+        clientCredentials:
+          tokenUrl: https://sso.dynatrace.com/sso/oauth2/token
+          scopes:
+            account-idm-read: Read access to account identity and management data
+            account-idm-write: Write access to manage users, groups, and permissions
+            account-env-read: Read access to environment information
+externalDocs:
+  description: Dynatrace Account Management API Documentation
+  url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api

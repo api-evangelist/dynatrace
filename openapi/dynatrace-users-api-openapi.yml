@@ -1,0 +1,416 @@
+openapi: 3.1.0
+info:
+  title: Dynatrace Account Management Entities Users API
+  version: 1.0.0
+  description: The Dynatrace Account Management API allows you to manage your Dynatrace account including users, groups, permissions, and environments. It uses OAuth 2.0 authentication with account-level scopes. The API enables programmatic management of identity and access controls, including creating users, assigning users to groups, defining group permissions, and listing environments associated with the account. This is the primary API for automating IAM workflows in Dynatrace.
+  contact:
+    name: Dynatrace Support
+    url: https://www.dynatrace.com/support/
+  license:
+    name: Dynatrace Terms of Service
+    url: https://www.dynatrace.com/company/trust-center/terms/
+  x-last-validated: '2026-04-18'
+servers:
+- url: https://api.dynatrace.com
+  description: Dynatrace Account Management API (global endpoint)
+security:
+- oauth2: []
+tags:
+- name: Users
+  description: Operations for managing account users
+paths:
+  /iam/v1/accounts/{accountUuid}/users:
+    get:
+      operationId: listUsers
+      summary: Dynatrace List Users
+      description: Returns a list of all users in the specified Dynatrace account. User records include basic profile information and group memberships. Results are paginated.
+      tags:
+      - Users
+      parameters:
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
+      - name: nextPageKey
+        in: query
+        description: Cursor for the next page of results.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: pageSize
+        in: query
+        description: The number of users to return per page.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 1000
+          default: 100
+        example: 500
+      responses:
+        '200':
+          description: A paginated list of users in the account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCollection'
+              examples:
+                ListUsers200Example:
+                  summary: Default listUsers 200 response
+                  x-microcks-default: true
+                  value:
+                    nextPageKey: example-value
+                    totalCount: 500
+                    items:
+                    - uid: abc123
+                      email: admin@example.com
+                      firstName: Production Service
+                      lastName: Production Service
+                      groups:
+                      - example-value
+                      userStatus: ACTIVE
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createUser
+      summary: Dynatrace Create User
+      description: Creates a new user in the Dynatrace account and sends an invitation email. The user's email address serves as their login identifier. Groups can be assigned at creation time to grant appropriate environment access and permissions.
+      tags:
+      - Users
+      parameters:
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
+      requestBody:
+        description: The user to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateRequest'
+            example:
+              email: jane.doe@example.com
+              firstName: Jane
+              lastName: Doe
+              groups:
+              - groupId-1234-abcd
+      responses:
+        '200':
+          description: The user was successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                CreateUser200Example:
+                  summary: Default createUser 200 response
+                  x-microcks-default: true
+                  value:
+                    uid: abc123
+                    email: admin@example.com
+                    firstName: Production Service
+                    lastName: Production Service
+                    groups:
+                    - example-value
+                    userStatus: ACTIVE
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /iam/v1/accounts/{accountUuid}/users/{userId}:
+    get:
+      operationId: getUser
+      summary: Dynatrace Get User
+      description: Returns the details of a specific user in the account, identified by their user ID (typically the email address or a UUID).
+      tags:
+      - Users
+      parameters:
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
+      - $ref: '#/components/parameters/userId'
+        example: example
+      responses:
+        '200':
+          description: The user details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                GetUser200Example:
+                  summary: Default getUser 200 response
+                  x-microcks-default: true
+                  value:
+                    uid: abc123
+                    email: admin@example.com
+                    firstName: Production Service
+                    lastName: Production Service
+                    groups:
+                    - example-value
+                    userStatus: ACTIVE
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: updateUser
+      summary: Dynatrace Update User
+      description: Updates the profile information and group memberships for an existing user. The entire user record is replaced with the provided data. To add a user to new groups without removing existing memberships, first retrieve the current group list and include it in the update.
+      tags:
+      - Users
+      parameters:
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
+      - $ref: '#/components/parameters/userId'
+        example: example
+      requestBody:
+        description: The updated user data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateRequest'
+            examples:
+              UpdateUserRequestExample:
+                summary: Default updateUser request
+                x-microcks-default: true
+                value:
+                  email: admin@example.com
+                  firstName: Production Service
+                  lastName: Production Service
+                  groups:
+                  - example-value
+      responses:
+        '200':
+          description: The user was successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                UpdateUser200Example:
+                  summary: Default updateUser 200 response
+                  x-microcks-default: true
+                  value:
+                    uid: abc123
+                    email: admin@example.com
+                    firstName: Production Service
+                    lastName: Production Service
+                    groups:
+                    - example-value
+                    userStatus: ACTIVE
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteUser
+      summary: Dynatrace Delete User
+      description: Permanently removes the specified user from the Dynatrace account. This action cannot be undone. The user immediately loses access to all Dynatrace environments and resources.
+      tags:
+      - Users
+      parameters:
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
+      - $ref: '#/components/parameters/userId'
+        example: example
+      responses:
+        '204':
+          description: The user was successfully deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  responses:
+    Forbidden:
+      description: Forbidden — the token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized — missing or invalid OAuth token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    BadRequest:
+      description: Bad request — invalid request body or parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    NotFound:
+      description: Not found — the specified user, group, or resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  parameters:
+    userId:
+      name: userId
+      in: path
+      description: The unique identifier of the user. Typically the user's email address or a UUID assigned by the system.
+      required: true
+      schema:
+        type: string
+    accountUuid:
+      name: accountUuid
+      in: path
+      description: The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API.
+      required: true
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    ErrorEnvelope:
+      type: object
+      description: Error response envelope returned when a request fails.
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    UserCollection:
+      type: object
+      description: A paginated collection of users.
+      properties:
+        nextPageKey:
+          type: string
+          description: Cursor for the next page of results.
+          nullable: true
+          example: example-value
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of users in the account.
+          example: 500
+        items:
+          type: array
+          description: The list of users on this page.
+          items:
+            $ref: '#/components/schemas/User'
+          example:
+          - uid: abc123
+            email: admin@example.com
+            firstName: Production Service
+            lastName: Production Service
+            groups:
+            - example-value
+            userStatus: ACTIVE
+    UserCreateRequest:
+      type: object
+      description: Request body for creating or updating a user.
+      required:
+      - email
+      - firstName
+      - lastName
+      properties:
+        email:
+          type: string
+          format: email
+          description: The email address of the user. Used as the login identifier.
+          example: admin@example.com
+        firstName:
+          type: string
+          description: The first name of the user.
+          example: Production Service
+        lastName:
+          type: string
+          description: The last name of the user.
+          example: Production Service
+        groups:
+          type: array
+          description: The list of group IDs to assign the user to. The user gains all permissions associated with these groups.
+          items:
+            type: string
+          example:
+          - example-value
+    User:
+      type: object
+      description: Represents a user in the Dynatrace account.
+      properties:
+        uid:
+          type: string
+          description: The unique identifier of the user.
+          example: abc123
+        email:
+          type: string
+          format: email
+          description: The email address of the user, used as their login identifier.
+          example: admin@example.com
+        firstName:
+          type: string
+          description: The first name of the user.
+          example: Production Service
+        lastName:
+          type: string
+          description: The last name of the user.
+          example: Production Service
+        groups:
+          type: array
+          description: The list of group IDs that the user belongs to.
+          items:
+            type: string
+          example:
+          - example-value
+        userStatus:
+          type: string
+          description: The current status of the user account.
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - PENDING_INVITE
+          example: ACTIVE
+    Error:
+      type: object
+      description: Details of an API error.
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+          example: 500
+        message:
+          type: string
+          description: A human-readable description of the error.
+          example: Example description.
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: 'OAuth 2.0 authentication for the Account Management API. Use the client credentials flow to obtain a bearer token. Required scopes vary by endpoint: account-idm-read for GET operations, account-idm-write for POST/PUT/DELETE operations.'
+      flows:
+        clientCredentials:
+          tokenUrl: https://sso.dynatrace.com/sso/oauth2/token
+          scopes:
+            account-idm-read: Read access to account identity and management data
+            account-idm-write: Write access to manage users, groups, and permissions
+            account-env-read: Read access to environment information
+externalDocs:
+  description: Dynatrace Account Management API Documentation
+  url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api

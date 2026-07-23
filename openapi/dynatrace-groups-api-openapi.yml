@@ -1,0 +1,385 @@
+openapi: 3.1.0
+info:
+  title: Dynatrace Account Management Entities Groups API
+  version: 1.0.0
+  description: The Dynatrace Account Management API allows you to manage your Dynatrace account including users, groups, permissions, and environments. It uses OAuth 2.0 authentication with account-level scopes. The API enables programmatic management of identity and access controls, including creating users, assigning users to groups, defining group permissions, and listing environments associated with the account. This is the primary API for automating IAM workflows in Dynatrace.
+  contact:
+    name: Dynatrace Support
+    url: https://www.dynatrace.com/support/
+  license:
+    name: Dynatrace Terms of Service
+    url: https://www.dynatrace.com/company/trust-center/terms/
+  x-last-validated: '2026-04-18'
+servers:
+- url: https://api.dynatrace.com
+  description: Dynatrace Account Management API (global endpoint)
+security:
+- oauth2: []
+tags:
+- name: Groups
+  description: Operations for managing user groups and group membership
+paths:
+  /iam/v1/accounts/{accountUuid}/groups:
+    get:
+      operationId: listGroups
+      summary: Dynatrace List Groups
+      description: Returns a list of all user groups defined in the account. Groups are the primary mechanism for assigning permissions and environment access to sets of users. Results are paginated.
+      tags:
+      - Groups
+      parameters:
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
+      - name: nextPageKey
+        in: query
+        description: Cursor for the next page of results.
+        required: false
+        schema:
+          type: string
+        example: example-value
+      - name: pageSize
+        in: query
+        description: The number of groups to return per page.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 1000
+          default: 100
+        example: 500
+      responses:
+        '200':
+          description: A paginated list of user groups in the account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupCollection'
+              examples:
+                ListGroups200Example:
+                  summary: Default listGroups 200 response
+                  x-microcks-default: true
+                  value:
+                    nextPageKey: example-value
+                    totalCount: 500
+                    items:
+                    - groupId: abc123
+                      name: Production Service
+                      description: Example description.
+                      owner: example-value
+                      createdAt: '2025-03-15T14:30:00Z'
+                      updatedAt: '2025-03-15T14:30:00Z'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createGroup
+      summary: Dynatrace Create Group
+      description: Creates a new user group in the account. After creating the group, users can be assigned to it and permissions can be granted to the group for specific environments or account-level functions.
+      tags:
+      - Groups
+      parameters:
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
+      requestBody:
+        description: The group to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupCreateRequest'
+            example:
+              name: Platform Engineering
+              description: Group for the platform engineering team
+      responses:
+        '200':
+          description: The group was successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+              examples:
+                CreateGroup200Example:
+                  summary: Default createGroup 200 response
+                  x-microcks-default: true
+                  value:
+                    groupId: abc123
+                    name: Production Service
+                    description: Example description.
+                    owner: example-value
+                    createdAt: '2025-03-15T14:30:00Z'
+                    updatedAt: '2025-03-15T14:30:00Z'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /iam/v1/accounts/{accountUuid}/groups/{groupId}:
+    get:
+      operationId: getGroup
+      summary: Dynatrace Get Group
+      description: Returns the details of a specific group, including its name, description, and assigned permissions.
+      tags:
+      - Groups
+      parameters:
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
+      - $ref: '#/components/parameters/groupId'
+        example: example
+      responses:
+        '200':
+          description: The group details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+              examples:
+                GetGroup200Example:
+                  summary: Default getGroup 200 response
+                  x-microcks-default: true
+                  value:
+                    groupId: abc123
+                    name: Production Service
+                    description: Example description.
+                    owner: example-value
+                    createdAt: '2025-03-15T14:30:00Z'
+                    updatedAt: '2025-03-15T14:30:00Z'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: updateGroup
+      summary: Dynatrace Update Group
+      description: Updates the name and description of an existing group. Group permissions are managed separately via the permissions endpoints.
+      tags:
+      - Groups
+      parameters:
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
+      - $ref: '#/components/parameters/groupId'
+        example: example
+      requestBody:
+        description: The updated group data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupCreateRequest'
+            examples:
+              UpdateGroupRequestExample:
+                summary: Default updateGroup request
+                x-microcks-default: true
+                value:
+                  name: Production Service
+                  description: Example description.
+      responses:
+        '200':
+          description: The group was successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+              examples:
+                UpdateGroup200Example:
+                  summary: Default updateGroup 200 response
+                  x-microcks-default: true
+                  value:
+                    groupId: abc123
+                    name: Production Service
+                    description: Example description.
+                    owner: example-value
+                    createdAt: '2025-03-15T14:30:00Z'
+                    updatedAt: '2025-03-15T14:30:00Z'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteGroup
+      summary: Dynatrace Delete Group
+      description: Permanently deletes the specified group from the account. All users who were members of this group lose any permissions that were granted exclusively through this group.
+      tags:
+      - Groups
+      parameters:
+      - $ref: '#/components/parameters/accountUuid'
+        example: example
+      - $ref: '#/components/parameters/groupId'
+        example: example
+      responses:
+        '204':
+          description: The group was successfully deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  responses:
+    Forbidden:
+      description: Forbidden — the token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized — missing or invalid OAuth token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    BadRequest:
+      description: Bad request — invalid request body or parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    NotFound:
+      description: Not found — the specified user, group, or resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  schemas:
+    Group:
+      type: object
+      description: Represents a user group in the Dynatrace account.
+      properties:
+        groupId:
+          type: string
+          description: The unique identifier of the group.
+          example: abc123
+        name:
+          type: string
+          description: The display name of the group.
+          example: Production Service
+        description:
+          type: string
+          description: An optional description of the group's purpose or scope.
+          example: Example description.
+        owner:
+          type: string
+          description: The identifier of the group owner. LOCAL indicates the group is managed within Dynatrace; SSO indicates it is synced from an identity provider.
+          example: example-value
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time when the group was created.
+          example: '2025-03-15T14:30:00Z'
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time when the group was last updated.
+          example: '2025-03-15T14:30:00Z'
+    ErrorEnvelope:
+      type: object
+      description: Error response envelope returned when a request fails.
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    GroupCreateRequest:
+      type: object
+      description: Request body for creating or updating a group.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: The display name of the group.
+          example: Production Service
+        description:
+          type: string
+          description: An optional description of the group's purpose or access scope.
+          example: Example description.
+    GroupCollection:
+      type: object
+      description: A paginated collection of groups.
+      properties:
+        nextPageKey:
+          type: string
+          description: Cursor for the next page of results.
+          nullable: true
+          example: example-value
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of groups in the account.
+          example: 500
+        items:
+          type: array
+          description: The list of groups on this page.
+          items:
+            $ref: '#/components/schemas/Group'
+          example:
+          - groupId: abc123
+            name: Production Service
+            description: Example description.
+            owner: example-value
+            createdAt: '2025-03-15T14:30:00Z'
+            updatedAt: '2025-03-15T14:30:00Z'
+    Error:
+      type: object
+      description: Details of an API error.
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+          example: 500
+        message:
+          type: string
+          description: A human-readable description of the error.
+          example: Example description.
+  parameters:
+    groupId:
+      name: groupId
+      in: path
+      description: The unique identifier of the group.
+      required: true
+      schema:
+        type: string
+    accountUuid:
+      name: accountUuid
+      in: path
+      description: The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API.
+      required: true
+      schema:
+        type: string
+        format: uuid
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: 'OAuth 2.0 authentication for the Account Management API. Use the client credentials flow to obtain a bearer token. Required scopes vary by endpoint: account-idm-read for GET operations, account-idm-write for POST/PUT/DELETE operations.'
+      flows:
+        clientCredentials:
+          tokenUrl: https://sso.dynatrace.com/sso/oauth2/token
+          scopes:
+            account-idm-read: Read access to account identity and management data
+            account-idm-write: Write access to manage users, groups, and permissions
+            account-env-read: Read access to environment information
+externalDocs:
+  description: Dynatrace Account Management API Documentation
+  url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api

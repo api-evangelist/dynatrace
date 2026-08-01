@@ -1,0 +1,30 @@
+{
+  "provider": "dynatrace",
+  "sources": [
+    "dynatrace-entities-api-openapi.yml",
+    "dynatrace-environments-api-openapi.yml",
+    "dynatrace-events-api-openapi.yml",
+    "dynatrace-groups-api-openapi.yml",
+    "dynatrace-logs-api-openapi.yml",
+    "dynatrace-metrics-api-openapi.yml",
+    "dynatrace-permissions-api-openapi.yml",
+    "dynatrace-problems-api-openapi.yml",
+    "dynatrace-users-api-openapi.yml"
+  ],
+  "outputs": [
+    "dynatrace-entities-api-openapi.yml",
+    "dynatrace-environments-api-openapi.yml",
+    "dynatrace-events-api-openapi.yml",
+    "dynatrace-groups-api-openapi.yml",
+    "dynatrace-logs-api-openapi.yml",
+    "dynatrace-metrics-api-openapi.yml",
+    "dynatrace-permissions-api-openapi.yml",
+    "dynatrace-problems-api-openapi.yml",
+    "dynatrace-users-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

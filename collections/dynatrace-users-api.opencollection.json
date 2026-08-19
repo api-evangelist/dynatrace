@@ -1,0 +1,162 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dynatrace Account Management Entities Users API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "https://sso.dynatrace.com/sso/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Dynatrace List Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dynatrace.com/iam/v1/accounts/:accountUuid/users",
+            "params": [
+              {
+                "name": "accountUuid",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+              },
+              {
+                "name": "nextPageKey",
+                "value": "example-value",
+                "type": "query",
+                "description": "Cursor for the next page of results."
+              },
+              {
+                "name": "pageSize",
+                "value": "500",
+                "type": "query",
+                "description": "The number of users to return per page."
+              }
+            ]
+          },
+          "docs": "Returns a list of all users in the specified Dynatrace account. User records include basic profile information and group memberships. Results are paginated."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Create User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dynatrace.com/iam/v1/accounts/:accountUuid/users",
+            "params": [
+              {
+                "name": "accountUuid",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new user in the Dynatrace account and sends an invitation email. The user's email address serves as their login identifier. Groups can be assigned at creation time to grant appropriate environment access and permissions."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Get User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dynatrace.com/iam/v1/accounts/:accountUuid/users/:userId",
+            "params": [
+              {
+                "name": "accountUuid",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user. Typically the user's email address or a UUID assigned by the system."
+              }
+            ]
+          },
+          "docs": "Returns the details of a specific user in the account, identified by their user ID (typically the email address or a UUID)."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Update User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.dynatrace.com/iam/v1/accounts/:accountUuid/users/:userId",
+            "params": [
+              {
+                "name": "accountUuid",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user. Typically the user's email address or a UUID assigned by the system."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the profile information and group memberships for an existing user. The entire user record is replaced with the provided data. To add a user to new groups without removing existing memberships, first retrieve the current group list and include it in the update."
+        },
+        {
+          "info": {
+            "name": "Dynatrace Delete User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.dynatrace.com/iam/v1/accounts/:accountUuid/users/:userId",
+            "params": [
+              {
+                "name": "accountUuid",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user. Typically the user's email address or a UUID assigned by the system."
+              }
+            ]
+          },
+          "docs": "Permanently removes the specified user from the Dynatrace account. This action cannot be undone. The user immediately loses access to all Dynatrace environments and resources."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dynatrace Account Management Entities Permissions API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "https://sso.dynatrace.com/sso/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Permissions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Dynatrace List Permissions for Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dynatrace.com/iam/v1/accounts/:accountUuid/permissions",
+            "params": [
+              {
+                "name": "accountUuid",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+              }
+            ]
+          },
+          "docs": "Returns a list of all permissions defined for the account. Permissions control what actions groups and users can perform within Dynatrace environments and at the account level. Results include both environment-scoped and account-scoped permissions."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

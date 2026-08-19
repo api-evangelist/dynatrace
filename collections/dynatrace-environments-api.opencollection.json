@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dynatrace Account Management Entities Environments API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "https://sso.dynatrace.com/sso/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Environments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Dynatrace List Environments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dynatrace.com/env/v1/accounts/:accountUuid/environments",
+            "params": [
+              {
+                "name": "accountUuid",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API."
+              },
+              {
+                "name": "nextPageKey",
+                "value": "example-value",
+                "type": "query",
+                "description": "Cursor for the next page of results."
+              },
+              {
+                "name": "pageSize",
+                "value": "500",
+                "type": "query",
+                "description": "The number of environments to return per page."
+              }
+            ]
+          },
+          "docs": "Returns a list of all Dynatrace environments associated with the specified account. Each environment record includes the environment ID, name, and URL. This information is useful for enumerating environments before making environment-level API calls."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

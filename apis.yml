@@ -74,6 +74,11 @@ apis:
   name: Dynatrace OpenPipeline API
   tags:
   - Data Ingestion
+  - Data Pipeline
+  - Observability
+  - Platform
+  tags_raw:
+  - Data Ingestion
   - Data Pipelines
   - Observability
   - Platform
@@ -136,6 +141,11 @@ apis:
 - aid: dynatrace:dynatrace-extensions-api-v2
   name: Dynatrace Extensions API 2.0
   tags:
+  - Extensions
+  - Integration
+  - Monitoring
+  - Observability
+  tags_raw:
   - Extensions
   - Integrations
   - Monitoring
@@ -265,6 +275,11 @@ apis:
 - aid: dynatrace:dynatrace-deployment-api
   name: Dynatrace Deployment API
   tags:
+  - ActiveGate
+  - Deployment
+  - Installations
+  - OneAgent
+  tags_raw:
   - ActiveGate
   - Deployment
   - Installation
@@ -459,6 +474,12 @@ apis:
   tags:
   - Causal Analysis
   - Davis AI
+  - Machine-Learning
+  - Platform
+  - Predictive Analytics
+  tags_raw:
+  - Causal Analysis
+  - Davis AI
   - Machine Learning
   - Platform
   - Predictive Analytics
@@ -480,6 +501,12 @@ apis:
 - aid: dynatrace:dynatrace-hub-api
   name: Dynatrace Hub API
   tags:
+  - Application
+  - Catalog
+  - Extensions
+  - Hub
+  - Platform
+  tags_raw:
   - Apps
   - Catalog
   - Extensions
@@ -1267,6 +1294,8 @@ apis:
   humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api
   baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
@@ -1629,6 +1658,8 @@ apis:
   humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api
   baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
   tags:
+  - Group
+  tags_raw:
   - Groups
   properties:
   - type: OpenAPI
@@ -3439,6 +3470,8 @@ apis:
   humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api
   baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI

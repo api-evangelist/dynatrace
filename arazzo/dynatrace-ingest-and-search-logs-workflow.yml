@@ -11,7 +11,7 @@ info:
   version: 1.0.0
 sourceDescriptions:
 - name: logsApi
-  url: ../openapi/dynatrace-log-monitoring-api-v2-openapi.yml
+  url: ../openapi/dynatrace-logs-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: ingest-and-search-logs

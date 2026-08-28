@@ -12,7 +12,7 @@ info:
   version: 1.0.0
 sourceDescriptions:
 - name: metricsApi
-  url: ../openapi/dynatrace-metrics-api-v2-openapi.yml
+  url: ../openapi/dynatrace-metrics-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: ingest-and-verify-metric

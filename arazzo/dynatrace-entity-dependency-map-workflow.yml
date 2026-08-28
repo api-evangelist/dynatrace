@@ -12,7 +12,7 @@ info:
   version: 1.0.0
 sourceDescriptions:
 - name: entitiesApi
-  url: ../openapi/dynatrace-entities-api-v2-openapi.yml
+  url: ../openapi/dynatrace-entities-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: entity-dependency-map

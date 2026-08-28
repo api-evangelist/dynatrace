@@ -11,11 +11,11 @@ info:
     underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: logsApi
-  url: ../openapi/dynatrace-log-monitoring-api-v2-openapi.yml
-  type: openapi
 - name: eventsApi
-  url: ../openapi/dynatrace-events-api-v2-openapi.yml
+  url: ../openapi/dynatrace-events-api-openapi.yml
+  type: openapi
+- name: logsApi
+  url: ../openapi/dynatrace-logs-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: error-log-investigation

@@ -11,8 +11,11 @@ info:
     description.
   version: 1.0.0
 sourceDescriptions:
-- name: accountManagementApi
-  url: ../openapi/dynatrace-account-management-api-openapi.yml
+- name: groupsApi
+  url: ../openapi/dynatrace-groups-api-openapi.yml
+  type: openapi
+- name: usersApi
+  url: ../openapi/dynatrace-users-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: onboard-account-user

@@ -3841,6 +3841,19 @@ tags:
 - Intelligence
 - Observability
 type: Index
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: true
+  callable_host: true
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  - pricing
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
@@ -3867,6 +3880,9 @@ maintainers:
   email: kin@apievangelist.com
 specificationVersion: '0.23'
 common:
+- type: CapabilityMap
+  url: capabilities/dynatrace-capability-edges.yml
+  name: Dynatrace Business Capability Map
 - type: AgenticAccess
   url: agentic-access/dynatrace-agentic-access.yml
 - type: TrustCenter

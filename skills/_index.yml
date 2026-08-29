@@ -1,0 +1,87 @@
+generated: '2026-08-29'
+method: searched
+source: https://github.com/Dynatrace/dynatrace-for-ai
+provider: Dynatrace
+providerId: dynatrace
+description: >-
+  Dynatrace is one of the small number of API providers that publishes its own Agent Skills.
+  The Dynatrace-for-AI repository ships 17 Apache-2.0 skills in the agentskills.io format, vendored
+  into this repo at skills/dynatrace-for-ai/. They are deliberately KNOWLEDGE-ONLY — the repo's own
+  llms.txt states "Skills are knowledge-only" and directs the reader to pair them with dtctl or the
+  Dynatrace MCP server to actually execute anything. Every one of them teaches DQL against Grail;
+  none of them teaches the REST API. The three skills API Evangelist generated below fill that gap
+  and are grounded in operationIds verified against the specs in openapi/.
+
+published_skills:
+  method: searched
+  source: https://github.com/Dynatrace/dynatrace-for-ai
+  license: Apache-2.0
+  format: Agent Skills (https://agentskills.io)
+  path: skills/dynatrace-for-ai/skills/
+  count: 17
+  execution_model: knowledge-only — pair with dtctl or the Dynatrace MCP server to run queries
+  companions:
+    - https://github.com/dynatrace-oss/dtctl
+    - https://docs.dynatrace.com/docs/dynatrace-intelligence/dynatrace-mcp
+  also_ships:
+    prompts: skills/dynatrace-for-ai/prompts/ — dt-troubleshoot-problem, dt-health-check, dt-performance-regression, dt-incident-response, dt-investigate-error, dt-daily-standup
+    plugins: skills/dynatrace-for-ai/plugins/
+  skills:
+    - name: dt-dql-essentials
+      summary: Core DQL syntax, pitfalls and query patterns — fetch commands, data models, field namespaces, time alignment, entity patterns, metric discovery, Smartscape topology navigation.
+    - name: dt-alerting
+      summary: End-to-end alerting lifecycle — anomaly detector selection (static threshold, adaptive baseline, seasonal baseline), alert event storage in Grail, problem grouping and denoising, workflow notification routing.
+    - name: dt-app-dashboards
+      summary: Create, modify and analyze Dynatrace dashboard JSON — tiles, layouts, DQL queries, variables, visualizations.
+    - name: dt-app-notebooks
+      summary: Create, modify and analyze Dynatrace notebook JSON — sections, DQL queries, visualizations.
+    - name: dt-js-runtime
+      summary: Server-side JS runtime — function contract, runtime limits, Web APIs, Node modules, fetch with the credential vault, the @dynatrace-sdk/* catalog.
+    - name: dt-migration
+      summary: Migrate classic and Gen2 entity-based DQL to Smartscape equivalents across three query scenarios.
+    - name: dt-obs-problems
+      summary: Davis problem analysis — root cause identification, impact assessment, blast radius, correlation with other telemetry.
+    - name: dt-obs-logs
+      summary: Log querying, filtering, pattern analysis and error-rate calculation.
+    - name: dt-obs-hosts
+      summary: Host and process metrics — CPU, memory, disk, network, containers, process-level telemetry.
+    - name: dt-obs-services
+      summary: Service performance with RED metrics plus runtime telemetry for Java, .NET, Node.js, Python, PHP and Go.
+    - name: dt-obs-tracing
+      summary: Distributed traces, spans, service dependencies and request-flow analysis.
+    - name: dt-obs-frontends
+      summary: Real User Monitoring — Core Web Vitals, sessions, page performance, mobile crashes, frontend errors, trace correlation.
+    - name: dt-obs-kubernetes
+      summary: Kubernetes cluster, pod, node and workload monitoring — OOMKills, restarts, scheduling, security posture.
+    - name: dt-obs-aws
+      summary: AWS resource monitoring — EC2, RDS, Lambda, ECS/EKS, VPC, load balancers, S3, DynamoDB, SQS/SNS, cost optimization.
+    - name: dt-obs-azure
+      summary: Azure resources — VMs, VMSS, SQL Database, Storage, AKS, App Service, Functions, VNet, Event Hubs, Container Apps, Key Vault.
+    - name: dt-obs-gcp
+      summary: GCP resources — Compute Engine, GKE, Cloud Run, Pub/Sub, VPC, DNS, IAM, Secret Manager.
+    - name: dt-obs-predictive-analytics
+      summary: Time series forecasting, capacity saturation planning, trend and anomaly detection.
+
+generated_skills:
+  method: generated
+  source: openapi/*.yml (every operationId below was verified against the spec that declares it)
+  rationale: >-
+    Dynatrace's own skills cover the DQL/Grail read plane. These cover the REST control plane the
+    vendor skills do not touch, and carry the conventions an agent gets wrong on this API — the
+    dual user-and-token permission model, the nextPageKey cursor that voids every other query
+    parameter, the absence of idempotency on ingest, and the irreversibility of ingested telemetry.
+  skills:
+    - file: dynatrace-triage-problem.md
+      name: dynatrace-triage-problem
+      api: Dynatrace Problems API v2
+      operations: [listProblems, getProblem, listProblemComments, createProblemComment, closeProblem]
+    - file: dynatrace-ingest-telemetry.md
+      name: dynatrace-ingest-telemetry
+      api: Dynatrace Logs, Events and Metrics APIs v2
+      operations: [ingestLogs, ingestEvent, ingestCustomMetrics, searchLogs, queryMetricData]
+    - file: dynatrace-manage-account-access.md
+      name: dynatrace-manage-account-access
+      api: Dynatrace Account Management API
+      operations: [listUsers, createUser, getUser, deleteUser, listGroups, createGroup, updateGroup, deleteGroup, listPermissions, listEnvironments]
+
+skill_count: 20

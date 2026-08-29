@@ -6,8 +6,22 @@ providerId: dynatrace
 created: '2026-05-04'
 # Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
 # bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-05'
+# UPGRADED 2026-08-29: every list price below was re-read against the live pricing page
+# and matched exactly (Foundation $7/host, Infrastructure $29/host, Full-Stack $58 per
+# 8 GiB host, Kubernetes $1.40/pod, Code Monitoring $3.60/container, Logs ingest $0.20/GiB,
+# retain $0.0007/GiB-day pay-per-query or $0.02/GiB-day bundled, query $0.0035/GiB-scanned).
+# method raised generated -> searched on that verification.
+method: searched
+verified: '2026-08-29'
+verified_source: https://www.dynatrace.com/pricing/
+verified_http_status: 200
+modified: '2026-08-29'
+plan_count: 12
+commitment_model: >-
+  Dynatrace prices on a single ANNUAL PLATFORM COMMITMENT rather than per-capability tiers. Every
+  capability is unlocked on day one and draws down from the commitment at rate-card pricing, with
+  no overage premium. The entries below are rate-card unit prices, not subscription tiers a buyer
+  picks between — which is why plan_count here counts priced capabilities, not purchasable plans.
 reconciled: true
 tags:
   - Observability

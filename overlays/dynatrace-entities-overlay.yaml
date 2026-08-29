@@ -1,0 +1,46 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enrichment overlay — Dynatrace API v2 Entities API
+  version: 1.0.0
+extends: dynatrace-entities-api-openapi.yml
+x-generated: '2026-08-29'
+x-method: generated
+x-source: openapi/dynatrace-entities-api-openapi.yml
+x-note: Non-destructive OpenAPI Overlay 1.0.0 carrying the cross-cutting semantics API Evangelist harvested from
+  Dynatrace documentation that the published contract does not state. It is never applied to the original spec in
+  this repo.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-conventions: conventions/dynatrace-conventions.yml
+    x-apievangelist-errors: errors/dynatrace-problem-types.yml
+    x-apievangelist-lifecycle: lifecycle/dynatrace-lifecycle.yml
+    x-apievangelist-rate-limits: rate-limits/dynatrace-rate-limits.yml
+    x-apievangelist-authentication: authentication/dynatrace-authentication.yml
+- target: $.info
+  update:
+    x-idempotency:
+      supported: false
+      note: Dynatrace publishes no idempotency key. Retrying an ingest POST duplicates the datapoint.
+    x-reversibility:
+      grade: documented
+      note: Configuration and identity writes have a DELETE reversal; ingested telemetry is irreversible. No reversal
+        window is published.
+- target: $.paths.*.*.responses
+  update:
+    '429':
+      description: Too many requests. The environment thread pool and its queue are full, or the request timed out
+        in the queue after 10 seconds. Documented on https://docs.dynatrace.com/docs/dynatrace-api/basics/access-limit
+        but not declared on any operation in the published contract.
+  x-apievangelist-rationale: Adds the exhaustion status the docs guarantee but the contract omits.
+- target: $.info
+  update:
+    x-apievangelist-error-envelope:
+      note: The Environment API v2 declares 4xx status codes with no response body schema. The error shape is undocumented
+        in this contract.
+      source: errors/dynatrace-problem-types.yml
+- target: $.info
+  update:
+    x-apievangelist-docs: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/entity-v2
+    x-apievangelist-permission-model: Dynatrace requires BOTH the user identity and the token to carry a permission
+      scope. Granting the scope to the token alone returns 403.

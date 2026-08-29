@@ -1,0 +1,1243 @@
+generated: '2026-08-29'
+method: derived
+source: openapi/*.yml and openapi/dynatrace-account-management-api-openapi.json ($ref graph and id-suffixed
+  reference fields)
+provider: Dynatrace
+providerId: dynatrace
+description: 'Entity-relationship graph derived from the $ref links and id-reference fields in the captured
+  Dynatrace OpenAPI set. Two largely disjoint object worlds sit under one brand: the OBSERVED world of
+  the Environment API v2 (Entity, EntityType, Event, Problem, MetricSeries, LogRecord) and the ADMINISTRATIVE
+  world of the Account Management API (Account, User, Group, Policy, Binding, Subscription, PlatformToken).
+  The only structural bridge between them is the environment: an Account Management Environment names
+  the tenant whose Environment API serves the observed objects.'
+entity_count: 170
+relationship_count: 82
+entities:
+- name: Error
+  properties: 3
+  sources:
+  - openapi/dynatrace-entities-api-openapi.yml
+  - openapi/dynatrace-environments-api-openapi.yml
+  - openapi/dynatrace-events-api-openapi.yml
+  - openapi/dynatrace-groups-api-openapi.yml
+  - openapi/dynatrace-logs-api-openapi.yml
+  - openapi/dynatrace-metrics-api-openapi.yml
+  - openapi/dynatrace-permissions-api-openapi.yml
+  - openapi/dynatrace-problems-api-openapi.yml
+  - openapi/dynatrace-users-api-openapi.yml
+- name: ManagementZone
+  properties: 2
+  sources:
+  - openapi/dynatrace-entities-api-openapi.yml
+  - openapi/dynatrace-problems-api-openapi.yml
+- name: EntityType
+  properties: 6
+  sources:
+  - openapi/dynatrace-entities-api-openapi.yml
+- name: EntityLookupRequest
+  properties: 2
+  sources:
+  - openapi/dynatrace-entities-api-openapi.yml
+- name: EntityCollection
+  properties: 4
+  sources:
+  - openapi/dynatrace-entities-api-openapi.yml
+- name: Entity
+  properties: 10
+  sources:
+  - openapi/dynatrace-entities-api-openapi.yml
+- name: ConstraintViolation
+  properties: 4
+  sources:
+  - openapi/dynatrace-entities-api-openapi.yml
+  - openapi/dynatrace-events-api-openapi.yml
+  - openapi/dynatrace-logs-api-openapi.yml
+  - openapi/dynatrace-metrics-api-openapi.yml
+  - openapi/dynatrace-problems-api-openapi.yml
+- name: ErrorEnvelope
+  properties: 1
+  sources:
+  - openapi/dynatrace-entities-api-openapi.yml
+  - openapi/dynatrace-environments-api-openapi.yml
+  - openapi/dynatrace-events-api-openapi.yml
+  - openapi/dynatrace-groups-api-openapi.yml
+  - openapi/dynatrace-logs-api-openapi.yml
+  - openapi/dynatrace-metrics-api-openapi.yml
+  - openapi/dynatrace-permissions-api-openapi.yml
+  - openapi/dynatrace-problems-api-openapi.yml
+  - openapi/dynatrace-users-api-openapi.yml
+- name: EntityTypeCollection
+  properties: 3
+  sources:
+  - openapi/dynatrace-entities-api-openapi.yml
+- name: EntityTypeProperty
+  properties: 3
+  sources:
+  - openapi/dynatrace-entities-api-openapi.yml
+- name: EntityTypeRelationship
+  properties: 2
+  sources:
+  - openapi/dynatrace-entities-api-openapi.yml
+- name: EntityTag
+  properties: 4
+  sources:
+  - openapi/dynatrace-entities-api-openapi.yml
+- name: EnvironmentCollection
+  properties: 3
+  sources:
+  - openapi/dynatrace-environments-api-openapi.yml
+- name: Environment
+  properties: 4
+  sources:
+  - openapi/dynatrace-environments-api-openapi.yml
+- name: EventIngestResultItem
+  properties: 2
+  sources:
+  - openapi/dynatrace-events-api-openapi.yml
+- name: Event
+  properties: 8
+  sources:
+  - openapi/dynatrace-events-api-openapi.yml
+- name: EventIngestPayload
+  properties: 7
+  sources:
+  - openapi/dynatrace-events-api-openapi.yml
+- name: EventIngestResult
+  properties: 2
+  sources:
+  - openapi/dynatrace-events-api-openapi.yml
+- name: EntityStub
+  properties: 3
+  sources:
+  - openapi/dynatrace-events-api-openapi.yml
+  - openapi/dynatrace-problems-api-openapi.yml
+- name: EventCollection
+  properties: 4
+  sources:
+  - openapi/dynatrace-events-api-openapi.yml
+- name: GroupCreateRequest
+  properties: 2
+  sources:
+  - openapi/dynatrace-groups-api-openapi.yml
+- name: GroupCollection
+  properties: 3
+  sources:
+  - openapi/dynatrace-groups-api-openapi.yml
+- name: Group
+  properties: 6
+  sources:
+  - openapi/dynatrace-groups-api-openapi.yml
+- name: LogRecordSearchResult
+  properties: 2
+  sources:
+  - openapi/dynatrace-logs-api-openapi.yml
+- name: LogExportResult
+  properties: 2
+  sources:
+  - openapi/dynatrace-logs-api-openapi.yml
+- name: LogAggregateGroup
+  properties: 2
+  sources:
+  - openapi/dynatrace-logs-api-openapi.yml
+- name: LogRecord
+  properties: 6
+  sources:
+  - openapi/dynatrace-logs-api-openapi.yml
+- name: LogIngestRecord
+  properties: 5
+  sources:
+  - openapi/dynatrace-logs-api-openapi.yml
+- name: LogAggregateResult
+  properties: 1
+  sources:
+  - openapi/dynatrace-logs-api-openapi.yml
+- name: MetricData
+  properties: 4
+  sources:
+  - openapi/dynatrace-metrics-api-openapi.yml
+- name: MetricDefaultAggregation
+  properties: 2
+  sources:
+  - openapi/dynatrace-metrics-api-openapi.yml
+- name: MetricSeriesCollection
+  properties: 2
+  sources:
+  - openapi/dynatrace-metrics-api-openapi.yml
+- name: MetricDescriptor
+  properties: 12
+  sources:
+  - openapi/dynatrace-metrics-api-openapi.yml
+- name: MetricDimensionDefinition
+  properties: 4
+  sources:
+  - openapi/dynatrace-metrics-api-openapi.yml
+- name: MetricSeries
+  properties: 4
+  sources:
+  - openapi/dynatrace-metrics-api-openapi.yml
+- name: MetricDescriptorCollection
+  properties: 4
+  sources:
+  - openapi/dynatrace-metrics-api-openapi.yml
+- name: PermissionCollection
+  properties: 1
+  sources:
+  - openapi/dynatrace-permissions-api-openapi.yml
+- name: Permission
+  properties: 4
+  sources:
+  - openapi/dynatrace-permissions-api-openapi.yml
+- name: Comment
+  properties: 5
+  sources:
+  - openapi/dynatrace-problems-api-openapi.yml
+- name: CommentRequestBody
+  properties: 2
+  sources:
+  - openapi/dynatrace-problems-api-openapi.yml
+- name: CommentCollection
+  properties: 3
+  sources:
+  - openapi/dynatrace-problems-api-openapi.yml
+- name: ProblemCloseRequest
+  properties: 1
+  sources:
+  - openapi/dynatrace-problems-api-openapi.yml
+- name: ProblemCloseResult
+  properties: 2
+  sources:
+  - openapi/dynatrace-problems-api-openapi.yml
+- name: ProblemCollection
+  properties: 4
+  sources:
+  - openapi/dynatrace-problems-api-openapi.yml
+- name: AlertingProfileStub
+  properties: 2
+  sources:
+  - openapi/dynatrace-problems-api-openapi.yml
+- name: Problem
+  properties: 12
+  sources:
+  - openapi/dynatrace-problems-api-openapi.yml
+- name: User
+  properties: 6
+  sources:
+  - openapi/dynatrace-users-api-openapi.yml
+- name: UserCollection
+  properties: 3
+  sources:
+  - openapi/dynatrace-users-api-openapi.yml
+- name: UserCreateRequest
+  properties: 4
+  sources:
+  - openapi/dynatrace-users-api-openapi.yml
+- name: AccountLimitsDto
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: AccountLimitsPage
+  properties: 4
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: UserLoginMetaDataDto
+  properties: 6
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: UsersDto
+  properties: 7
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: UserListDto
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: AccountGroupDto
+  properties: 8
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: GroupUserDto
+  properties: 7
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: UserEmailDto
+  properties: 1
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: GetGroupDto
+  properties: 7
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: GroupListDto
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: UserDto
+  properties: 6
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: GroupUserListDto
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: InsertGroupDto
+  properties: 4
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: PutGroupDto
+  properties: 4
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: PermissionsDto
+  properties: 5
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: PermissionsGroupDto
+  properties: 8
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: CreateOrUpdateLevelPolicyRequestDto
+  properties: 4
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: ValidationDto
+  properties: 1
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: ErrorDto
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: Condition
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: EffectivePolicy
+  properties: 5
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: EffectiveBinding
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: EffectivePolicyWithBinding
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: EffectivePermissionEffects
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: EffectivePermission
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: EffectivePermissions
+  properties: 1
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: PolicyOverview
+  properties: 5
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: PolicyOverviewDtoList
+  properties: 1
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: PolicyDto
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: PolicyDtoList
+  properties: 1
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: Statement
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: LevelPolicyDto
+  properties: 6
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: PolicyUuidsWithoutMetadataDto
+  properties: 1
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: PolicyUuidsDto
+  properties: 1
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: Binding
+  properties: 5
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: LevelPolicyBindingDto
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: LevelPolicyBindingDtoList
+  properties: 4
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: AppendLevelPolicyBindingsRequestDto
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: AppendLevelPolicyBindingForGroupDto
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: Map
+  properties: 0
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: PolicyBoundaryOverview
+  properties: 7
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: PolicyBoundaryDtoList
+  properties: 4
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: PolicyBoundaryDto
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: LimitEntry
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: LevelLimitsDto
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: ServiceUserDto
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: ExternalServiceUserWithGroupUuidDto
+  properties: 7
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: ExternalServiceUserDto
+  properties: 6
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: ExternalServiceUsersPageDto
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: PlatformTokenMetadataDto
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: PlatformTokenDto
+  properties: 10
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: PlatformTokenPageDto
+  properties: 4
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: PlatformTokenExpirationDateDto
+  properties: 1
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: PlatformTokenStatusUpdateDto
+  properties: 1
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: GeneratePlatformTokenForm
+  properties: 6
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: PlatformTokenSecret
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: RestWifTrustPolicyListItem
+  properties: 7
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: RestWifTrustPolicyList
+  properties: 4
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: RestWifTrustPolicyForm
+  properties: 5
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: RestWifClaimMapping
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: RestWifServiceUserMapping
+  properties: 8
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: RestWifTrustPolicy
+  properties: 11
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: RestWifTrustPolicyPatchForm
+  properties: 1
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: RestWifServiceUserMappingListItem
+  properties: 7
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: RestWifServiceUserMappingList
+  properties: 4
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: RestWifClaimMappingForm
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: RestWifServiceUserMappingForm
+  properties: 4
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: RestWifServiceUserMappingPatchForm
+  properties: 1
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: TenantResourceDto
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: ManagementZoneResourceDto
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: EnvironmentResourceDto
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: EnvironmentDto
+  properties: 4
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: EnvironmentListDto
+  properties: 1
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: ClusterDto
+  properties: 1
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: ClusterListDto
+  properties: 1
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: AllowlistItem
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: IpConfigDto
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: SubscriptionSummaryDto
+  properties: 7
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: SubscriptionListDto
+  properties: 1
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: Forecast
+  properties: 7
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: SubscriptionAccountDto
+  properties: 1
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: SubscriptionBudgetDto
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: SubscriptionCurrentPeriodDto
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: SubscriptionPeriodDto
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: SubscriptionCapabilityDto
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: SubscriptionDto
+  properties: 12
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: SubscriptionUsageDto
+  properties: 6
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: SubscriptionEnvironmentUsageV2Dto
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: SubscriptionEnvironmentUsageListV2Dto
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: SubscriptionUsageListDto
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: SubscriptionCostBookingDto
+  properties: 5
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: SubscriptionCostListDto
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: SubscriptionCapabilityCostDto
+  properties: 6
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: SubscriptionEnvironmentCostV2Dto
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: SubscriptionEnvironmentCostListV2Dto
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: SubscriptionCapabilityCostReceivedDto
+  properties: 7
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: SubscriptionEnvironmentCostV3Dto
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: SubscriptionEnvironmentCostListV3Dto
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: SubscriptionEnvironmentUsageV3Dto
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: SubscriptionEnvironmentUsageListV3Dto
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: RateCardCapabilitiesDto
+  properties: 8
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: RateCardSummaryDto
+  properties: 5
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: FieldValueDto
+  properties: 1
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: PaginatedFieldValueDto
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: FieldValuesRequestDto
+  properties: 1
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: AuditDto
+  properties: 23
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: AuditWarningDto
+  properties: 1
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: AuditsByAccountDto
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: ErrorResponseDto
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: TimeZoneDto
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: RegionDto
+  properties: 1
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: PermissionDto
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: EnvironmentCostBreakdownDto
+  properties: 4
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: PaginatedEnvironmentBreakdownDto
+  properties: 4
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: SubscriptionRelatedEventDataDto
+  properties: 4
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: ByokEventDto
+  properties: 2
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: NotificationQueryParamsDto
+  properties: 9
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: NotificationDto
+  properties: 7
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: NotificationListDto
+  properties: 3
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: EventApiModel
+  properties: 0
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+- name: NotificationV2ListDto
+  properties: 4
+  sources:
+  - openapi/dynatrace-account-management-api-openapi.json
+relationships:
+- from: Error
+  type: has_many
+  to: ConstraintViolation
+  via: constraintViolations
+  source: openapi/dynatrace-entities-api-openapi.yml
+- from: EntityType
+  type: has_many
+  to: EntityTypeProperty
+  via: properties
+  source: openapi/dynatrace-entities-api-openapi.yml
+- from: EntityType
+  type: has_many
+  to: EntityTypeRelationship
+  via: fromRelationships
+  source: openapi/dynatrace-entities-api-openapi.yml
+- from: EntityType
+  type: has_many
+  to: EntityTypeRelationship
+  via: toRelationships
+  source: openapi/dynatrace-entities-api-openapi.yml
+- from: EntityCollection
+  type: has_many
+  to: Entity
+  via: entities
+  source: openapi/dynatrace-entities-api-openapi.yml
+- from: Entity
+  type: has_many
+  to: EntityTag
+  via: tags
+  source: openapi/dynatrace-entities-api-openapi.yml
+- from: Entity
+  type: has_many
+  to: ManagementZone
+  via: managementZones
+  source: openapi/dynatrace-entities-api-openapi.yml
+- from: ErrorEnvelope
+  type: has_one
+  to: Error
+  via: error
+  source: openapi/dynatrace-entities-api-openapi.yml
+- from: EntityTypeCollection
+  type: has_many
+  to: EntityType
+  via: types
+  source: openapi/dynatrace-entities-api-openapi.yml
+- from: EnvironmentCollection
+  type: has_many
+  to: Environment
+  via: environments
+  source: openapi/dynatrace-environments-api-openapi.yml
+- from: Event
+  type: has_one
+  to: EntityStub
+  via: entityId
+  source: openapi/dynatrace-events-api-openapi.yml
+- from: EventIngestResult
+  type: has_many
+  to: EventIngestResultItem
+  via: eventIngestResults
+  source: openapi/dynatrace-events-api-openapi.yml
+- from: EventCollection
+  type: has_many
+  to: Event
+  via: events
+  source: openapi/dynatrace-events-api-openapi.yml
+- from: GroupCollection
+  type: has_many
+  to: Group
+  via: items
+  source: openapi/dynatrace-groups-api-openapi.yml
+- from: LogRecordSearchResult
+  type: has_many
+  to: LogRecord
+  via: results
+  source: openapi/dynatrace-logs-api-openapi.yml
+- from: LogExportResult
+  type: has_many
+  to: LogRecord
+  via: results
+  source: openapi/dynatrace-logs-api-openapi.yml
+- from: LogAggregateResult
+  type: has_many
+  to: LogAggregateGroup
+  via: results
+  source: openapi/dynatrace-logs-api-openapi.yml
+- from: MetricData
+  type: has_many
+  to: MetricSeriesCollection
+  via: result
+  source: openapi/dynatrace-metrics-api-openapi.yml
+- from: MetricSeriesCollection
+  type: has_many
+  to: MetricSeries
+  via: data
+  source: openapi/dynatrace-metrics-api-openapi.yml
+- from: MetricDescriptor
+  type: has_many
+  to: MetricDimensionDefinition
+  via: dimensionDefinitions
+  source: openapi/dynatrace-metrics-api-openapi.yml
+- from: MetricDescriptor
+  type: has_one
+  to: MetricDefaultAggregation
+  via: defaultAggregation
+  source: openapi/dynatrace-metrics-api-openapi.yml
+- from: MetricDescriptorCollection
+  type: has_many
+  to: MetricDescriptor
+  via: metrics
+  source: openapi/dynatrace-metrics-api-openapi.yml
+- from: PermissionCollection
+  type: has_many
+  to: Permission
+  via: permissions
+  source: openapi/dynatrace-permissions-api-openapi.yml
+- from: CommentCollection
+  type: has_many
+  to: Comment
+  via: comments
+  source: openapi/dynatrace-problems-api-openapi.yml
+- from: ProblemCollection
+  type: has_many
+  to: Problem
+  via: problems
+  source: openapi/dynatrace-problems-api-openapi.yml
+- from: Problem
+  type: has_many
+  to: EntityStub
+  via: affectedEntities
+  source: openapi/dynatrace-problems-api-openapi.yml
+- from: Problem
+  type: has_many
+  to: EntityStub
+  via: impactedEntities
+  source: openapi/dynatrace-problems-api-openapi.yml
+- from: Problem
+  type: has_many
+  to: ManagementZone
+  via: managementZones
+  source: openapi/dynatrace-problems-api-openapi.yml
+- from: Problem
+  type: has_many
+  to: AlertingProfileStub
+  via: problemFilters
+  source: openapi/dynatrace-problems-api-openapi.yml
+- from: UserCollection
+  type: has_many
+  to: User
+  via: items
+  source: openapi/dynatrace-users-api-openapi.yml
+- from: AccountLimitsPage
+  type: has_many
+  to: AccountLimitsDto
+  via: results
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: UserListDto
+  type: has_many
+  to: UsersDto
+  via: items
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: GroupUserDto
+  type: has_many
+  to: AccountGroupDto
+  via: groups
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: GroupListDto
+  type: has_many
+  to: GetGroupDto
+  via: items
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: GroupUserListDto
+  type: has_many
+  to: UserDto
+  via: items
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: PermissionsGroupDto
+  type: has_many
+  to: PermissionsDto
+  via: permissions
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: EffectivePermissionEffects
+  type: has_many
+  to: Condition
+  via: conditions
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: EffectivePermissionEffects
+  type: has_many
+  to: EffectivePolicyWithBinding
+  via: effectivePolicies
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: EffectivePermission
+  type: has_many
+  to: EffectivePermissionEffects
+  via: effects
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: EffectivePermissions
+  type: has_many
+  to: EffectivePermission
+  via: effectivePermissions
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: PolicyOverviewDtoList
+  type: has_many
+  to: PolicyOverview
+  via: policyOverviewList
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: PolicyDtoList
+  type: has_many
+  to: PolicyDto
+  via: policies
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: Statement
+  type: has_many
+  to: Condition
+  via: conditions
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: LevelPolicyDto
+  type: has_many
+  to: Statement
+  via: statements
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: LevelPolicyBindingDto
+  type: has_many
+  to: Binding
+  via: policyBindings
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: LevelPolicyBindingDtoList
+  type: has_many
+  to: LevelPolicyBindingDto
+  via: content
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: PolicyBoundaryOverview
+  type: has_many
+  to: Condition
+  via: boundaryConditions
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: PolicyBoundaryDtoList
+  type: has_many
+  to: PolicyBoundaryOverview
+  via: content
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: ExternalServiceUsersPageDto
+  type: has_many
+  to: ExternalServiceUserDto
+  via: results
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: PlatformTokenDto
+  type: has_one
+  to: PlatformTokenMetadataDto
+  via: metadata
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: PlatformTokenPageDto
+  type: has_many
+  to: PlatformTokenDto
+  via: results
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: RestWifTrustPolicyList
+  type: has_many
+  to: RestWifTrustPolicyListItem
+  via: results
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: RestWifServiceUserMapping
+  type: has_many
+  to: RestWifClaimMapping
+  via: claimMappings
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: RestWifTrustPolicy
+  type: has_many
+  to: RestWifServiceUserMapping
+  via: serviceUserMappings
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: RestWifServiceUserMappingList
+  type: has_many
+  to: RestWifServiceUserMappingListItem
+  via: results
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: RestWifServiceUserMappingForm
+  type: has_many
+  to: RestWifClaimMappingForm
+  via: claimMappings
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: EnvironmentResourceDto
+  type: has_many
+  to: TenantResourceDto
+  via: tenantResources
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: EnvironmentResourceDto
+  type: has_many
+  to: ManagementZoneResourceDto
+  via: managementZoneResources
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: EnvironmentListDto
+  type: has_many
+  to: EnvironmentDto
+  via: data
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: ClusterListDto
+  type: has_many
+  to: ClusterDto
+  via: data
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: IpConfigDto
+  type: has_many
+  to: AllowlistItem
+  via: allowlist
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: SubscriptionListDto
+  type: has_many
+  to: SubscriptionSummaryDto
+  via: data
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: SubscriptionDto
+  type: has_many
+  to: SubscriptionPeriodDto
+  via: periods
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: SubscriptionDto
+  type: has_many
+  to: SubscriptionCapabilityDto
+  via: capabilities
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: SubscriptionEnvironmentUsageV2Dto
+  type: has_many
+  to: SubscriptionUsageDto
+  via: usage
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: SubscriptionEnvironmentUsageListV2Dto
+  type: has_many
+  to: SubscriptionEnvironmentUsageV2Dto
+  via: data
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: SubscriptionUsageListDto
+  type: has_many
+  to: SubscriptionUsageDto
+  via: data
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: SubscriptionCostListDto
+  type: has_many
+  to: SubscriptionCostBookingDto
+  via: data
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: SubscriptionEnvironmentCostV2Dto
+  type: has_many
+  to: SubscriptionCapabilityCostDto
+  via: cost
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: SubscriptionEnvironmentCostListV2Dto
+  type: has_many
+  to: SubscriptionEnvironmentCostV2Dto
+  via: data
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: SubscriptionEnvironmentCostV3Dto
+  type: has_many
+  to: SubscriptionCapabilityCostReceivedDto
+  via: cost
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: SubscriptionEnvironmentCostListV3Dto
+  type: has_many
+  to: SubscriptionEnvironmentCostV3Dto
+  via: data
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: SubscriptionEnvironmentUsageV3Dto
+  type: has_many
+  to: SubscriptionUsageDto
+  via: usage
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: SubscriptionEnvironmentUsageListV3Dto
+  type: has_many
+  to: SubscriptionEnvironmentUsageV3Dto
+  via: data
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: RateCardSummaryDto
+  type: has_many
+  to: RateCardCapabilitiesDto
+  via: capabilities
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: PaginatedFieldValueDto
+  type: has_many
+  to: FieldValueDto
+  via: records
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: FieldValuesRequestDto
+  type: has_many
+  to: FieldValueDto
+  via: values
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: AuditsByAccountDto
+  type: has_many
+  to: AuditDto
+  via: audits
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: AuditsByAccountDto
+  type: has_many
+  to: AuditWarningDto
+  via: warnings
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: PaginatedEnvironmentBreakdownDto
+  type: has_many
+  to: EnvironmentCostBreakdownDto
+  via: records
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: NotificationListDto
+  type: has_many
+  to: NotificationDto
+  via: records
+  source: openapi/dynatrace-account-management-api-openapi.json
+- from: NotificationV2ListDto
+  type: has_many
+  to: EventApiModel
+  via: records
+  source: openapi/dynatrace-account-management-api-openapi.json
+id_reference_fields:
+- field: accountUuid
+  used_by:
+  - AuditDto
+  - NotificationDto
+  - PlatformTokenDto
+- field: capabilityKey
+  used_by:
+  - SubscriptionCapabilityCostDto
+  - SubscriptionCapabilityCostReceivedDto
+  - SubscriptionUsageDto
+- field: clusterId
+  used_by:
+  - ClusterDto
+  - SubscriptionEnvironmentCostV3Dto
+  - SubscriptionEnvironmentUsageV3Dto
+- field: entityId
+  used_by:
+  - Entity
+  - EntityStub
+  - Event
+- field: environmentId
+  used_by:
+  - PaginatedEnvironmentBreakdownDto
+  - RestWifServiceUserMapping
+  - RestWifServiceUserMappingForm
+  - RestWifServiceUserMappingListItem
+  - SubscriptionEnvironmentCostV2Dto
+  - SubscriptionEnvironmentCostV3Dto
+  - SubscriptionEnvironmentUsageV2Dto
+  - SubscriptionEnvironmentUsageV3Dto
+- field: environmentUuid
+  used_by:
+  - AuditDto
+  - ByokEventDto
+- field: eventId
+  used_by:
+  - AuditDto
+  - Event
+  - EventIngestResultItem
+- field: groupId
+  used_by:
+  - Group
+  - Permission
+- field: groupUuid
+  used_by:
+  - EffectiveBinding
+  - ExternalServiceUserWithGroupUuidDto
+- field: levelId
+  used_by:
+  - EffectiveBinding
+  - EffectivePolicy
+  - LevelPolicyBindingDto
+  - PolicyBoundaryOverview
+  - PolicyOverview
+- field: metricId
+  used_by:
+  - MetricDescriptor
+  - MetricSeriesCollection
+- field: nextPageKey
+  used_by:
+  - CommentCollection
+  - EntityCollection
+  - EntityTypeCollection
+  - EnvironmentCollection
+  - EventCollection
+  - ExternalServiceUsersPageDto
+  - GroupCollection
+  - MetricData
+  - MetricDescriptorCollection
+  - NotificationV2ListDto
+  - PaginatedEnvironmentBreakdownDto
+  - ProblemCollection
+  - SubscriptionEnvironmentCostListV3Dto
+  - SubscriptionEnvironmentUsageListV3Dto
+  - UserCollection
+- field: nextSliceKey
+  used_by:
+  - LogExportResult
+  - LogRecordSearchResult
+- field: problemId
+  used_by:
+  - Problem
+  - ProblemCloseResult
+- field: serviceUserUuid
+  used_by:
+  - RestWifServiceUserMapping
+  - RestWifServiceUserMappingForm
+  - RestWifServiceUserMappingListItem
+- field: tokenId
+  used_by:
+  - PlatformTokenDto
+  - PlatformTokenSecret
+- field: userUuid
+  used_by:
+  - GeneratePlatformTokenForm
+  - PlatformTokenDto
+identifier_conventions:
+- field: entityId
+  shape: TYPE-HEX, e.g. HOST-0000000000000000
+  note: Dynatrace entity IDs carry their entity type as a prefix, so the type is readable from the ID
+    without a lookup.
+- field: problemId
+  note: Opaque Davis problem identifier used by getProblem, closeProblem and the problem comment thread.
+- field: account-uuid
+  shape: UUID
+  note: Root scoping path parameter for every Account Management operation.
+- field: group-uuid
+  shape: UUID
+- field: policy-uuid
+  shape: UUID
+- field: nextPageKey
+  note: Opaque pagination cursor, not an entity identifier — see conventions/dynatrace-conventions.yml.
+render: json-ld/ contexts and vocabulary/dynatrace-vocabulary.yaml carry the vocabulary view of the same
+  objects.

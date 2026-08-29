@@ -1,0 +1,86 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  https://github.com/Dynatrace/dynatrace-configuration-as-code, https://github.com/dynatrace-oss/dtctl,
+  https://www.npmjs.com/package/dt-app, https://pypi.org/project/dt-cli/, and version metadata read
+  from proxy.golang.org, registry.npmjs.org and pypi.org on 2026-08-29
+provider: Dynatrace
+providerId: dynatrace
+description: >-
+  Dynatrace ships four distinct first-party command-line tools, each for a different job. There is
+  no single "dynatrace" binary — which matters for an agent, because the right tool depends on
+  whether the task is configuration deployment, platform operation, app development or extension
+  packaging.
+
+tools:
+  - name: monaco
+    full_name: Dynatrace Configuration as Code
+    repository: https://github.com/Dynatrace/dynatrace-configuration-as-code
+    module: github.com/Dynatrace/dynatrace-configuration-as-code/v2
+    language: Go
+    version: v2.29.1
+    published: '2026-08-18'
+    official: true
+    purpose: Deploy and manage Dynatrace configuration as versioned code across environments.
+    install:
+      - GitHub release binaries (Linux, macOS, Windows)
+      - 'go install github.com/Dynatrace/dynatrace-configuration-as-code/v2@latest'
+    command_groups:
+      - deploy — apply a configuration project to one or more environments
+      - download — pull existing configuration out of an environment into a project
+      - delete — remove configured objects listed in a delete file
+      - convert — migrate v1 projects to the v2 format
+      - generate — produce configuration from existing sources
+    note: The CLI pointer already in apis.yml resolves to this repository.
+  - name: dtctl
+    repository: https://github.com/dynatrace-oss/dtctl
+    module: github.com/dynatrace-oss/dtctl
+    language: Go
+    version: v0.38.0
+    published: '2026-08-14'
+    official: true
+    purpose: >-
+      General-purpose Dynatrace platform CLI. Dynatrace's own MCP migration guide names dtctl as
+      the recommended companion to the remote MCP server for local agent workflows and for the
+      management tasks the remote server does not expose as tools.
+    install:
+      - GitHub release binaries
+      - 'go install github.com/dynatrace-oss/dtctl@latest'
+    org: dynatrace-oss
+  - name: dt-app
+    full_name: Dynatrace App Toolkit
+    registry: npm
+    package: dt-app
+    url: https://www.npmjs.com/package/dt-app
+    language: TypeScript
+    version: 1.15.0
+    published: '2026-08-07'
+    official: true
+    purpose: Scaffold, run, build and deploy Dynatrace Apps on AppEngine.
+    install:
+      - 'npm install -g dt-app'
+      - 'npx dt-app <command>'
+    command_groups:
+      - create — scaffold a new app
+      - dev — run the app locally against a Dynatrace environment
+      - build — produce a deployable bundle
+      - deploy — publish the app to an environment
+      - generate — add functions, pages and other app pieces
+  - name: dt-cli
+    registry: pypi
+    package: dt-cli
+    url: https://pypi.org/project/dt-cli/
+    language: Python
+    version: 1.6.21
+    published: '2024-11-13'
+    official: true
+    purpose: Build, sign and validate Dynatrace Extensions 2.0 packages.
+    install:
+      - 'pip install dt-cli'
+    maintainer_email: vagiz.duseev@dynatrace.com
+    note: >-
+      Last released 2024-11-13. For newer extension work Dynatrace's Python extension tooling has
+      moved to dt-extensions-sdk (see packages/dynatrace-packages.yml).
+
+cli_count: 4
+see_also: packages/dynatrace-packages.yml

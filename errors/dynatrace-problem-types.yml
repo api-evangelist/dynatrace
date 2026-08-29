@@ -1,0 +1,108 @@
+generated: '2026-08-29'
+method: derived
+source: >-
+  openapi/dynatrace-account-management-api-openapi.json, openapi/*.yml, and
+  https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-response-codes
+provider: Dynatrace
+providerId: dynatrace
+format: vendor-json
+rfc9457: false
+description: >-
+  Dynatrace does not use RFC 9457 application/problem+json. It returns two distinct vendor JSON
+  error envelopes depending on which API family answered, and the classic Environment API v2 specs
+  in this repo declare 4xx status codes with NO response body schema at all — so an agent calling
+  the Environment API cannot learn the error shape from the contract, only from the docs.
+
+envelopes:
+  - name: ErrorResponseDto
+    used_by: Account Management API (api.dynatrace.com)
+    content_type: application/json
+    shape:
+      error: boolean — always true for error responses
+      message: string — a short description of the error
+      payload: object|null — optional additional error details
+    required: [error, message]
+    example: '{"error": true, "message": "An unknown error occurred.", "payload": null}'
+    note: >-
+      This is the same envelope api.dynatrace.com returns for an unknown path, which is how the
+      /.well-known/* probes in well-known/dynatrace-well-known.yml were confirmed as real 404s
+      rather than an SPA catch-all.
+  - name: ErrorDto
+    used_by: Account Management API — IAM policy and binding endpoints
+    content_type: application/json
+    shape:
+      code: number — the code of the error
+      message: string — a short description of the error
+      errorsMap: object<string,string> — per-field validation messages
+    required: [code, message, errorsMap]
+    note: The errorsMap carries field-level validation detail on 400 and 422 responses.
+
+status_codes:
+  - code: 400
+    title: Bad request
+    meaning: The request has failed. The body of the response provides additional details.
+    occurrences: 67
+    remediation: Read message and errorsMap for the failing field.
+  - code: 401
+    title: Unauthorized
+    meaning: Token authentication has failed.
+    occurrences: 59
+    remediation: Check the token is valid and carries the scopes named in the operation description.
+  - code: 403
+    title: Forbidden
+    meaning: The token is valid but lacks the required scope, or the user lacks the permission.
+    occurrences: 59
+    remediation: >-
+      Dynatrace requires BOTH the user and the token to hold a permission scope; granting the token
+      alone is the common cause of a 403.
+  - code: 404
+    title: Not found
+    meaning: The requested resource is not found in your environment.
+    occurrences: 58
+  - code: 410
+    title: Gone — endpoint removed
+    meaning: This endpoint has been removed. Several responses name the replacement operation directly.
+    occurrences: 9
+    remediation: >-
+      Migrate to the named successor. Observed on the group permissions endpoints, the policy
+      validation endpoints, the v2 subscription usage/cost endpoints (use getEnvironmentUsageV3 /
+      getEnvironmentCostV3) and the v1 notifications endpoint (use listNotificationsV2).
+    note: >-
+      A machine-readable 410 that names its successor in the response description is unusually good
+      deprecation hygiene and is the strongest lifecycle signal in the contract.
+  - code: 422
+    title: Unprocessable entity
+    meaning: Validation failed on the submitted policy or binding document.
+    occurrences: 9
+    envelope: ErrorDto
+  - code: 429
+    title: Too many requests
+    meaning: You have reached the limit of API usage.
+    occurrences: 0
+    note: >-
+      Documented in the response-codes and access-limit pages but NOT declared on any operation in
+      the captured specs — an agent reading only the contract would never expect a 429. See
+      rate-limits/dynatrace-rate-limits.yml.
+    docs: https://docs.dynatrace.com/docs/dynatrace-api/basics/access-limit
+  - code: 500
+    title: Internal server error
+    occurrences: 22
+  - code: 504
+    title: Gateway timeout
+    meaning: The upstream query exceeded the allowed time or scan limits.
+    occurrences: 1
+    envelope: ErrorResponseDto
+    example: '{"error": true, "message": "Query timeout. Retry executing the query at a later time."}'
+    remediation: Narrow the query window or filter, then retry.
+
+gaps:
+  - >-
+    The Environment API v2 specs declare 400/401/403/404 with no content schema, so the error body
+    is undocumented in the contract for the entire tenant-facing API surface.
+  - >-
+    429 is documented in prose but declared on zero operations, and no Retry-After or RateLimit-*
+    header is declared anywhere in the contract.
+
+docs:
+  - https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-response-codes
+  - https://docs.dynatrace.com/docs/dynatrace-api/basics/access-limit

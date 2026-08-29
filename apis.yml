@@ -126,12 +126,12 @@ apis:
   - Observability
   - Settings
   humanURL: >-
-    https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/settings-v2
+    https://docs.dynatrace.com/docs/dynatrace-api/environment-api/settings
   baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
   image: https://www.dynatrace.com/logo.png
   properties:
   - url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/settings-v2
+      https://docs.dynatrace.com/docs/dynatrace-api/environment-api/settings
     type: Documentation
   description: >-
     The Dynatrace Settings API 2.0 is the modern, schema-driven configuration API for managing Dynatrace
@@ -151,12 +151,12 @@ apis:
   - Monitoring
   - Observability
   humanURL: >-
-    https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/extensions-v2
+    https://docs.dynatrace.com/docs/dynatrace-api/environment-api/extensions-20
   baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
   image: https://www.dynatrace.com/logo.png
   properties:
   - url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/extensions-v2
+      https://docs.dynatrace.com/docs/dynatrace-api/environment-api/extensions-20
     type: Documentation
   - url: https://docs.dynatrace.com/docs/ingest-from/extensions/manage-extensions
     type: APIReference
@@ -172,11 +172,11 @@ apis:
   - Grail
   - Observability
   - Query
-  humanURL: https://docs.dynatrace.com/docs/platform/grail/dynatrace-query-language/api
+  humanURL: https://docs.dynatrace.com/docs/platform/grail/dynatrace-query-language
   baseURL: https://mySampleEnv.live.dynatrace.com/platform
   image: https://www.dynatrace.com/logo.png
   properties:
-  - url: https://docs.dynatrace.com/docs/platform/grail/dynatrace-query-language/api
+  - url: https://docs.dynatrace.com/docs/platform/grail/dynatrace-query-language
     type: Documentation
   - url: https://docs.dynatrace.com/docs/platform/grail/dynatrace-query-language
     type: APIReference
@@ -744,9 +744,6 @@ apis:
   - type: Documentation
     url: >-
       https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
-  - type: ReleaseNotes
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides/events-v1-to-v2
   - type: JSONSchema
     url: json-schema/events-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -792,9 +789,6 @@ apis:
   - type: Documentation
     url: >-
       https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
-  - type: ReleaseNotes
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides/problems-v1-to-v2
   - type: AsyncAPI
     url: asyncapi/dynatrace-problems-asyncapi.yml
   - type: JSONSchema
@@ -930,7 +924,7 @@ apis:
   name: Dynatrace Environments API
   description: Operations for listing environments in the account
   humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api
-  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  baseURL: https://api.dynatrace.com
   tags:
   - Environments
   properties:
@@ -1106,9 +1100,6 @@ apis:
   - type: Documentation
     url: >-
       https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
-  - type: ReleaseNotes
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides/events-v1-to-v2
   - type: JSONSchema
     url: json-schema/events-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -1154,9 +1145,6 @@ apis:
   - type: Documentation
     url: >-
       https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
-  - type: ReleaseNotes
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides/problems-v1-to-v2
   - type: AsyncAPI
     url: asyncapi/dynatrace-problems-asyncapi.yml
   - type: JSONSchema
@@ -1470,9 +1458,6 @@ apis:
   - type: Documentation
     url: >-
       https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
-  - type: ReleaseNotes
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides/events-v1-to-v2
   - type: JSONSchema
     url: json-schema/events-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -1518,9 +1503,6 @@ apis:
   - type: Documentation
     url: >-
       https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
-  - type: ReleaseNotes
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides/problems-v1-to-v2
   - type: AsyncAPI
     url: asyncapi/dynatrace-problems-asyncapi.yml
   - type: JSONSchema
@@ -1656,7 +1638,7 @@ apis:
   name: Dynatrace Groups API
   description: Operations for managing user groups and group membership
   humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api
-  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  baseURL: https://api.dynatrace.com
   tags:
   - Group
   tags_raw:
@@ -1834,9 +1816,6 @@ apis:
   - type: Documentation
     url: >-
       https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
-  - type: ReleaseNotes
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides/events-v1-to-v2
   - type: JSONSchema
     url: json-schema/events-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -1882,9 +1861,6 @@ apis:
   - type: Documentation
     url: >-
       https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
-  - type: ReleaseNotes
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides/problems-v1-to-v2
   - type: AsyncAPI
     url: asyncapi/dynatrace-problems-asyncapi.yml
   - type: JSONSchema
@@ -2196,9 +2172,6 @@ apis:
   - type: Documentation
     url: >-
       https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
-  - type: ReleaseNotes
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides/events-v1-to-v2
   - type: JSONSchema
     url: json-schema/events-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -2244,9 +2217,6 @@ apis:
   - type: Documentation
     url: >-
       https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
-  - type: ReleaseNotes
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides/problems-v1-to-v2
   - type: AsyncAPI
     url: asyncapi/dynatrace-problems-asyncapi.yml
   - type: JSONSchema
@@ -2558,9 +2528,6 @@ apis:
   - type: Documentation
     url: >-
       https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
-  - type: ReleaseNotes
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides/events-v1-to-v2
   - type: JSONSchema
     url: json-schema/events-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -2606,9 +2573,6 @@ apis:
   - type: Documentation
     url: >-
       https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
-  - type: ReleaseNotes
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides/problems-v1-to-v2
   - type: AsyncAPI
     url: asyncapi/dynatrace-problems-asyncapi.yml
   - type: JSONSchema
@@ -2744,7 +2708,7 @@ apis:
   name: Dynatrace Permissions API
   description: Operations for querying account-level permissions
   humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api
-  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  baseURL: https://api.dynatrace.com
   tags:
   - Permissions
   properties:
@@ -2920,9 +2884,6 @@ apis:
   - type: Documentation
     url: >-
       https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
-  - type: ReleaseNotes
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides/events-v1-to-v2
   - type: JSONSchema
     url: json-schema/events-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -2968,9 +2929,6 @@ apis:
   - type: Documentation
     url: >-
       https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
-  - type: ReleaseNotes
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides/problems-v1-to-v2
   - type: AsyncAPI
     url: asyncapi/dynatrace-problems-asyncapi.yml
   - type: JSONSchema
@@ -3282,9 +3240,6 @@ apis:
   - type: Documentation
     url: >-
       https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
-  - type: ReleaseNotes
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides/events-v1-to-v2
   - type: JSONSchema
     url: json-schema/events-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -3330,9 +3285,6 @@ apis:
   - type: Documentation
     url: >-
       https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
-  - type: ReleaseNotes
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides/problems-v1-to-v2
   - type: AsyncAPI
     url: asyncapi/dynatrace-problems-asyncapi.yml
   - type: JSONSchema
@@ -3468,7 +3420,7 @@ apis:
   name: Dynatrace Users API
   description: Operations for managing account users
   humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api
-  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  baseURL: https://api.dynatrace.com
   tags:
   - User
   tags_raw:
@@ -3646,9 +3598,6 @@ apis:
   - type: Documentation
     url: >-
       https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
-  - type: ReleaseNotes
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides/events-v1-to-v2
   - type: JSONSchema
     url: json-schema/events-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -3694,9 +3643,6 @@ apis:
   - type: Documentation
     url: >-
       https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
-  - type: ReleaseNotes
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides/problems-v1-to-v2
   - type: AsyncAPI
     url: asyncapi/dynatrace-problems-asyncapi.yml
   - type: JSONSchema
@@ -3870,7 +3816,7 @@ accessModel:
 image: https://www.dynatrace.com/logo.png
 access: 3rd-Party
 created: '2025-01-08'
-modified: '2026-04-18'
+modified: '2026-08-29'
 position: Consumer
 description: Dynatrace is a software intelligence platform that provides application
   performance monitoring, artificial intelligence for operations, cloud infrastructure
@@ -3879,7 +3825,14 @@ maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 specificationVersion: '0.23'
+x-enrichment:
+  date: '2026-08-29'
+  status: enriched
+  artifacts_added: 30
+  pass: local-v1
 common:
+- type: Website
+  url: https://www.dynatrace.com/
 - type: CapabilityMap
   url: capabilities/dynatrace-capability-edges.yml
   name: Dynatrace Business Capability Map
@@ -3959,7 +3912,7 @@ common:
   type: APIReference
 - url: https://docs.dynatrace.com/docs/whats-new/dynatrace-api
   type: ChangeLog
-- url: https://www.dynatrace.com/company/trust-center/terms/
+- url: https://www.dynatrace.com/company/trust-center/terms-of-use/
   type: TermsOfService
 - url: https://www.dynatrace.com/company/trust-center/privacy/
   type: PrivacyPolicy
@@ -4162,3 +4115,94 @@ common:
   url: json-ld/dynatrace-problems-webhook-header-context.jsonld
 - type: JSONLD
   url: json-ld/dynatrace-problems-webhook-notification-config-context.jsonld
+- type: OpenAPI
+  url: openapi/dynatrace-account-management-api-openapi.json
+  name: Dynatrace Account Management API (full spec, harvested from https://api.dynatrace.com/openapi.json — 57 paths, 96 operations)
+- type: Packages
+  url: packages/dynatrace-packages.yml
+- type: SDKs
+  url: packages/dynatrace-packages.yml
+  name: First-party SDK inventory with registry versions and release dates
+- type: WellKnown
+  url: well-known/dynatrace-well-known.yml
+- type: SecurityTxt
+  url: well-known/dynatrace-security.txt
+- type: OpenIDConnect
+  url: well-known/dynatrace-openid-configuration.json
+  name: OIDC discovery for https://sso.dynatrace.com
+- type: MCPServer
+  url: mcp/dynatrace-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/dynatrace-tool-crosswalk.yml
+- type: LLMsTxt
+  url: llms/dynatrace-llms.txt
+- type: Conformance
+  url: conformance/dynatrace-conformance.yml
+- type: Compliance
+  url: security/dynatrace-trust-center.yml
+  name: SOC 2, ISO 27001/27017/27018, PCI DSS, HIPAA, FedRAMP, GDPR, CSA STAR
+- type: ErrorCatalog
+  url: errors/dynatrace-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/dynatrace-lifecycle.yml
+- type: Deprecation
+  url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides
+  name: Dynatrace API deprecation and migration guides
+- type: Conventions
+  url: conventions/dynatrace-conventions.yml
+- type: ChangeLog
+  url: changelog/dynatrace-changelog.yml
+- type: CLI
+  url: cli/dynatrace-cli.yml
+  name: monaco, dtctl, dt-app and dt-cli
+- type: Components
+  url: components/dynatrace-components.yml
+  name: Strato design system
+- type: DataModel
+  url: data-model/dynatrace-data-model.yml
+- type: Plans
+  url: plans/dynatrace-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/dynatrace-rate-limits.yml
+- type: FinOps
+  url: finops/dynatrace-finops.yml
+- type: Webhooks
+  url: asyncapi/dynatrace-problems-asyncapi.yml
+  name: Dynatrace problem notification webhooks
+- type: AgentSkill
+  url: skills/_index.yml
+  name: 17 Dynatrace-published Agent Skills plus 3 REST-grounded skills
+- type: AgentSkill
+  url: skills/dynatrace-triage-problem.md
+- type: AgentSkill
+  url: skills/dynatrace-ingest-telemetry.md
+- type: AgentSkill
+  url: skills/dynatrace-manage-account-access.md
+- type: Marketplace
+  url: https://www.dynatrace.com/hub/detail/dynatrace-mcp-server/
+  name: Dynatrace Remote MCP Server on Dynatrace Hub
+- type: Overlay
+  url: overlays/dynatrace-entities-overlay.yaml
+- type: Overlay
+  url: overlays/dynatrace-environments-overlay.yaml
+- type: Overlay
+  url: overlays/dynatrace-events-overlay.yaml
+- type: Overlay
+  url: overlays/dynatrace-groups-overlay.yaml
+- type: Overlay
+  url: overlays/dynatrace-logs-overlay.yaml
+- type: Overlay
+  url: overlays/dynatrace-metrics-overlay.yaml
+- type: Overlay
+  url: overlays/dynatrace-permissions-overlay.yaml
+- type: Overlay
+  url: overlays/dynatrace-problems-overlay.yaml
+- type: Overlay
+  url: overlays/dynatrace-users-overlay.yaml
+- type: SignUp
+  url: https://www.dynatrace.com/signup/
+- type: Postman
+  url: https://www.postman.com/kinlaneapi/dynatrace/overview
+  name: Community Postman workspace maintained by API Evangelist, not by Dynatrace
+- type: Trial
+  url: https://www.dynatrace.com/trial/

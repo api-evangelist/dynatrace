@@ -1,0 +1,139 @@
+generated: '2026-08-29'
+method: searched
+source: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides
+provider: Dynatrace
+providerId: dynatrace
+description: >-
+  Dynatrace versions its APIs against the platform's sprint release train (SaaS 1.xxx / Managed
+  1.xxx) rather than by a date or a semver string in the URL. Deprecations are announced by naming
+  the release a capability was deprecated IN and the release or calendar date it reaches end of
+  life IN, published as a single table with a migration guide per entry. Removed endpoints answer
+  HTTP 410 and name their successor operation in the response description.
+
+versioning:
+  scheme: platform-sprint-release
+  pattern: 'SaaS 1.<sprint>, Managed 1.<sprint>'
+  current_release: '1.335'
+  current_release_source: https://docs.dynatrace.com/docs/whats-new/dynatrace-api
+  api_path_versioning: >-
+    Major API generations are carried in the path (/api/v1, /api/v2, /api/config/v1, /platform/...),
+    and a generation transition (v1 to v2) is treated as a deprecation with its own migration guide.
+  docs: https://docs.dynatrace.com/docs/dynatrace-api/basics
+
+deprecation_policy:
+  published: true
+  url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides
+  statement: >-
+    "The following APIs have been deprecated. For backward compatibility, the endpoints remain
+    functional until further notice, but we recommend that you use the new options instead."
+  guarantees:
+    - Deprecated endpoints remain functional after deprecation is announced.
+    - Each deprecation names the replacement API and links a migration guide.
+    - Each deprecation records both a "deprecated in version" and an "end of life in version" (or a calendar date).
+  sunset_header: false
+  deprecation_header: false
+  header_note: >-
+    No RFC 8594 Sunset header and no Deprecation header is documented or declared in any captured
+    spec. Deprecation is discoverable from the docs table and from a 410 response, not from a
+    response header — so a running agent learns about it only after the endpoint is already gone.
+
+deprecations:
+  - api: Log Monitoring API v2 — search, export and aggregate endpoints
+    replacement: Logs on Grail API
+    deprecated_in: SaaS 1.331
+    end_of_life: End of 2027
+  - api: Extensions API v2
+    replacement: Extensions Platform API v2
+    deprecated_in: SaaS 1.342
+    end_of_life: 'SaaS: End of 2027'
+  - api: Timeseries API v1
+    replacement: Metrics API v2
+    deprecated_in: SaaS 1.305 / Managed 1.316
+    end_of_life: End of 2025
+  - api: Log Monitoring API v1
+    replacement: Grail Query API (Log Management and Analytics) or Log Monitoring API (Log Monitoring Classic)
+    deprecated_in: SaaS 1.280 / Managed 1.284
+    end_of_life: SaaS 1.325 / Managed 1.326
+    note: For Calculated metrics — Log Monitoring, use the Settings API with schemaId builtin:logmonitoring.schemaless-log-metric.
+  - api: Security context API
+    replacement: Management zones API
+    deprecated_in: SaaS 1.316 / Managed 1.316
+    end_of_life: 'Managed: 1.322'
+  - api: Monitored entities API v2 — Security context
+    replacement: Management zones API
+    deprecated_in: SaaS 1.316 / Managed 1.316
+    end_of_life: 'Managed: 1.322'
+  - api: Grail security context for monitored entities API
+    replacement: Management zones API
+    deprecated_in: Managed 1.316
+    end_of_life: 'Managed: 1.322'
+  - api: Log security context API
+    replacement: Management zones API
+    deprecated_in: Managed 1.316
+    end_of_life: 'Managed: 1.322'
+  - api: Business event security context API
+    replacement: Management zones API
+    deprecated_in: Managed 1.316
+    end_of_life: 'Managed: 1.322'
+  - api: OpenPipeline API — PUT and GET a configuration
+    replacement: Settings API with builtin:openpipeline.<configuration.scope>.{routing,pipelines,ingest-sources} schemas
+    deprecated_in: SaaS 1.327
+    end_of_life: '2026-06-29'
+    note: Migrated to the Settings 2.0 framework rather than replaced by a new endpoint.
+
+removed_operations:
+  source: openapi/dynatrace-account-management-api-openapi.json
+  method: derived
+  note: Operations whose contract declares a 410 "This endpoint has been removed" response.
+  operations:
+    - PermissionsController_getGroupPermissions
+    - PermissionsController_addGroupPermissions
+    - PermissionsController_overwriteGroupPermissions
+    - PermissionsController_removeGroupPermissions
+    - validateNewLevelPolicy
+    - validateLevelPolicy
+    - getEnvironmentUsage
+    - getEnvironmentCost
+    - listNotifications
+  named_successors:
+    getEnvironmentUsage: getEnvironmentUsageV3
+    getEnvironmentCost: getEnvironmentCostV3
+    listNotifications: listNotificationsV2
+
+release_stages:
+  - name: Preview
+    note: Earliest public stage; observed on the MCP Troubleshooting Agent.
+  - name: Early Access
+    note: Observed on the MCP Grail Query, DQL Explanation and Help agents.
+  - name: Public
+    note: Generally available.
+release_stages_docs: https://docs.dynatrace.com/docs/dynatrace-api/basics
+
+status_page:
+  url: https://status.dynatrace.com/
+  alternate: https://dynatrace.status.io/
+  provider: status.io
+  verified: '2026-08-29'
+  http_status: 200
+
+changelog:
+  url: https://docs.dynatrace.com/docs/whats-new/dynatrace-api
+  cadence: per platform sprint release
+  see: changelog/dynatrace-changelog.yml
+
+sla:
+  published: false
+  note: >-
+    No public API SLA page was found. Availability commitments are contractual and reached through
+    the Dynatrace Trust Center and the customer agreement, not published as a developer-facing SLA.
+  checked: https://www.dynatrace.com/company/trust-center/
+
+x-evidence:
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides
+    status: 200
+  - url: https://docs.dynatrace.com/docs/whats-new/dynatrace-api
+    status: 200
+  - url: https://status.dynatrace.com/
+    status: 200
+  - url: https://docs.dynatrace.com/docs/dynatrace-api/basics
+    status: 200

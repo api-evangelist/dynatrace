@@ -1,0 +1,245 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  registry.npmjs.org, pypi.org, search.maven.org, api.nuget.org, proxy.golang.org (all queried
+  unauthenticated on 2026-08-29), plus https://developer.dynatrace.com/develop/sdks/ and the
+  Dynatrace / dynatrace-oss GitHub organizations
+provider: Dynatrace
+providerId: dynatrace
+description: >-
+  First-party Dynatrace client libraries, app-development SDKs and distributed binaries. Dynatrace
+  runs two clearly separated SDK generations. The @dynatrace-sdk/* npm scope is the CURRENT
+  AppEngine/platform generation and is actively released (most packages shipped within the last
+  month). The OneAgent SDK family — Java, .NET, Node.js, Python, C — is the LEGACY in-process
+  instrumentation generation and is effectively frozen: the .NET package last shipped in 2021 and
+  the Java and Node.js packages in 2023, which is the clearest published decay signal in this
+  provider's package estate.
+
+currency_summary:
+  active_generation: '@dynatrace-sdk/* (AppEngine platform clients) — 9 packages, newest releases 2026-08'
+  frozen_generation: OneAgent SDK (Java/.NET/Node.js/Python/C) — newest release 2026-01 (Python), oldest 2021-12 (.NET)
+  deprecated: '@dynatrace-oss/dynatrace-mcp-server 2.1.2 (2026-07-20) is the final release; see mcp/dynatrace-mcp.yml'
+
+packages:
+  # --- Platform / AppEngine SDK generation (current) ---
+  - name: '@dynatrace-sdk/client-classic-environment-v2'
+    registry: npm
+    url: https://www.npmjs.com/package/@dynatrace-sdk/client-classic-environment-v2
+    language: TypeScript
+    official: true
+    version: 8.0.0
+    published: '2026-08-03'
+    description: Client for the Dynatrace Environment API v2.
+  - name: '@dynatrace-sdk/client-classic-environment-v1'
+    registry: npm
+    url: https://www.npmjs.com/package/@dynatrace-sdk/client-classic-environment-v1
+    language: TypeScript
+    official: true
+    version: 2.1.1
+    published: '2025-09-17'
+    description: Client for the Dynatrace Classic Environment API v1.
+  - name: '@dynatrace-sdk/client-query'
+    registry: npm
+    url: https://www.npmjs.com/package/@dynatrace-sdk/client-query
+    language: TypeScript
+    official: true
+    version: 1.27.0
+    published: '2026-08-24'
+    description: Fetches records stored in Grail (DQL query client).
+  - name: '@dynatrace-sdk/client-document'
+    registry: npm
+    url: https://www.npmjs.com/package/@dynatrace-sdk/client-document
+    language: TypeScript
+    official: true
+    version: 1.33.0
+    published: '2026-08-19'
+    description: Create and manage documents (Dashboards, Notebooks) and their access.
+  - name: '@dynatrace-sdk/client-automation'
+    registry: npm
+    url: https://www.npmjs.com/package/@dynatrace-sdk/client-automation
+    language: TypeScript
+    official: true
+    version: 8.4.0
+    published: '2026-07-28'
+    description: Automation API client for workflows and triggers.
+  - name: '@dynatrace-sdk/client-platform-management-service'
+    registry: npm
+    url: https://www.npmjs.com/package/@dynatrace-sdk/client-platform-management-service
+    language: TypeScript
+    official: true
+    version: 1.8.1
+    published: '2026-08-03'
+    description: Platform Management Service client.
+  - name: '@dynatrace-sdk/client-app-engine-registry'
+    registry: npm
+    url: https://www.npmjs.com/package/@dynatrace-sdk/client-app-engine-registry
+    language: TypeScript
+    official: true
+    version: 3.3.1
+    published: '2026-03-23'
+    description: Manage Dynatrace AppEngine apps.
+  - name: '@dynatrace-sdk/client-davis-analyzers'
+    registry: npm
+    url: https://www.npmjs.com/package/@dynatrace-sdk/client-davis-analyzers
+    language: TypeScript
+    official: true
+    version: 1.10.0
+    published: '2026-04-29'
+    description: Davis AI predictive and causal analyzers client — the REST-side counterpart of the Davis MCP tools.
+  - name: '@dynatrace-sdk/navigation'
+    registry: npm
+    url: https://www.npmjs.com/package/@dynatrace-sdk/navigation
+    language: TypeScript
+    official: true
+    version: 2.3.1
+    published: '2026-08-13'
+    description: Navigate within AppEngine and send intents between apps.
+  - name: '@dynatrace-sdk/units'
+    registry: npm
+    url: https://www.npmjs.com/package/@dynatrace-sdk/units
+    language: TypeScript
+    official: true
+    version: 1.5.0
+    published: '2026-02-12'
+    description: Convert and format units and numerical values.
+
+  # --- App toolkit / CLI distributed via a registry ---
+  - name: dt-app
+    registry: npm
+    url: https://www.npmjs.com/package/dt-app
+    language: TypeScript
+    official: true
+    version: 1.15.0
+    published: '2026-08-07'
+    description: Dynatrace App Toolkit CLI — scaffold, develop and deploy Dynatrace Apps. See cli/dynatrace-cli.yml.
+  - name: dt-cli
+    registry: pypi
+    url: https://pypi.org/project/dt-cli/
+    language: Python
+    official: true
+    version: 1.6.21
+    published: '2024-11-13'
+    description: Dynatrace CLI for building and signing extensions. Maintained by a Dynatrace employee (vagiz.duseev@dynatrace.com) in the dynatrace-oss org.
+    note: Last release 2024-11-13 — no release in over 20 months.
+  - name: dt-extensions-sdk
+    registry: pypi
+    url: https://pypi.org/project/dt-extensions-sdk/
+    language: Python
+    official: true
+    version: 1.10.1
+    published: '2026-08-18'
+    description: Python SDK for building Dynatrace Extensions 2.0.
+    note: Published from the dynatrace-extensions GitHub org; author email is a personal address, so first-party status is asserted from the org, not the maintainer identity.
+
+  # --- MCP server (deprecated) ---
+  - name: '@dynatrace-oss/dynatrace-mcp-server'
+    registry: npm
+    url: https://www.npmjs.com/package/@dynatrace-oss/dynatrace-mcp-server
+    language: TypeScript
+    official: true
+    version: 2.1.2
+    published: '2026-07-20'
+    deprecated: true
+    description: '[DEPRECATED] Local stdio MCP server for Dynatrace. 2.1.2 is the final release; migrate to the remote MCP server.'
+
+  # --- UI component libraries ---
+  - name: '@dynatrace/strato-components'
+    registry: npm
+    url: https://www.npmjs.com/package/@dynatrace/strato-components
+    language: TypeScript
+    official: true
+    version: 3.12.1
+    published: '2026-08-28'
+    description: Strato React component library — the building blocks for Dynatrace app UIs. See components/dynatrace-components.yml.
+  - name: '@dynatrace/strato-components-preview'
+    registry: npm
+    url: https://www.npmjs.com/package/@dynatrace/strato-components-preview
+    language: TypeScript
+    official: true
+    version: 3.4.1
+    published: '2026-06-03'
+    description: Preview channel of the Strato component library.
+
+  # --- OneAgent SDK generation (legacy / frozen) ---
+  - name: '@dynatrace/oneagent-sdk'
+    registry: npm
+    url: https://www.npmjs.com/package/@dynatrace/oneagent-sdk
+    language: JavaScript
+    official: true
+    version: 1.5.0
+    published: '2023-02-23'
+    repository: https://github.com/Dynatrace/OneAgent-SDK-for-NodeJs
+    description: Node.js SDK for Dynatrace OneAgent.
+    note: No release since 2023-02-23.
+  - name: com.dynatrace.oneagent.sdk.java:oneagent-sdk
+    registry: maven
+    url: https://central.sonatype.com/artifact/com.dynatrace.oneagent.sdk.java/oneagent-sdk
+    language: Java
+    official: true
+    version: 1.9.0
+    published: '2023-03-27'
+    repository: https://github.com/Dynatrace/OneAgent-SDK-for-Java
+    description: Java SDK for Dynatrace OneAgent.
+    note: No release since 2023-03-27.
+  - name: Dynatrace.OneAgent.Sdk
+    registry: nuget
+    url: https://www.nuget.org/packages/Dynatrace.OneAgent.Sdk
+    language: .NET
+    official: true
+    version: 1.8.0
+    published: '2021-12-13'
+    repository: https://github.com/Dynatrace/OneAgent-SDK-for-dotnet
+    description: .NET SDK for instrumenting applications with Dynatrace OneAgent.
+    note: No release since 2021-12-13 — the oldest first-party package in the estate.
+  - name: oneagent-sdk
+    registry: pypi
+    url: https://pypi.org/project/oneagent-sdk/
+    language: Python
+    official: true
+    version: 1.5.2.20260107.153442
+    published: '2026-01-07'
+    repository: https://github.com/Dynatrace/OneAgent-SDK-for-Python
+    description: Dynatrace OneAgent SDK for Python.
+  - name: OneAgent-SDK-for-C
+    registry: github
+    url: https://github.com/Dynatrace/OneAgent-SDK-for-C
+    language: C/C++
+    official: true
+    version: null
+    published: null
+    note: >-
+      Distributed as GitHub release archives, not through a package registry (no Conan/vcpkg listing
+      found), so there is no metadata endpoint to read a version and date from. Checked, nothing to record.
+
+  # --- Infrastructure binaries (no language-package registry) ---
+  - name: github.com/Dynatrace/dynatrace-configuration-as-code/v2
+    registry: go
+    url: https://github.com/Dynatrace/dynatrace-configuration-as-code
+    language: Go
+    official: true
+    version: v2.29.1
+    published: '2026-08-18'
+    description: Monaco — Dynatrace configuration-as-code CLI. Also distributed as GitHub release binaries.
+  - name: github.com/dynatrace-oss/dtctl
+    registry: go
+    url: https://github.com/dynatrace-oss/dtctl
+    language: Go
+    official: true
+    version: v0.38.0
+    published: '2026-08-14'
+    description: dtctl — the CLI Dynatrace now recommends alongside the remote MCP server for local agent workflows.
+  - name: github.com/Dynatrace/Dynatrace-Operator
+    registry: go
+    url: https://github.com/Dynatrace/dynatrace-operator
+    language: Go
+    official: true
+    version: v1.10.2
+    published: '2026-07-29'
+    description: Dynatrace Operator for Kubernetes/OpenShift. Primarily consumed as a Helm chart and container image, not as a Go module.
+
+package_count: 24
+official_count: 24
+registries: [npm, pypi, maven, nuget, go, github]
+docs:
+  - https://developer.dynatrace.com/develop/sdks/
+  - https://developer.dynatrace.com/develop/sdks/client-classic-environment-v2/

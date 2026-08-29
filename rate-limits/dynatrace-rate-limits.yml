@@ -4,72 +4,124 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Dynatrace
 providerId: dynatrace
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-05'
-reconciled: false
+modified: '2026-08-29'
+generated: '2026-08-29'
+method: searched
+source: https://docs.dynatrace.com/docs/dynatrace-api/basics/access-limit
+reconciled: true
 tags:
   - Rate Limiting
   - Observability
   - APM
-description: Dynatrace API rate limits are enforced per environment and per access token. The platform
-  does not publish a single rate-limit page; limits vary by API (Environment, Configuration, Account
-  Management, OpenPipeline, Davis AI, DQL/Grail Query). Throttled callers receive HTTP 429 with Retry-After.
-  Quota for ingest is governed by your subscription (DDU/DPS/host quota), not by raw HTTP request rate.
-notes: Dynatrace does not publish per-API rate-limit numbers in a single canonical page. Limits surface
-  in the per-API reference and in cluster sizing guides; consumers should rely on Retry-After signaling
-  rather than fixed thresholds.
+description: >-
+  Dynatrace throttles the API by CAPACITY, not by a published request-per-second quota. Every
+  environment has a limited thread pool with a queue; you hit the limit when both the pool and its
+  queue are full, or when a request times out waiting in the queue after 10 seconds. Exhaustion
+  returns HTTP 429. What Dynatrace DOES publish precisely is payload ceilings per API, and a
+  charging model in which reads are free on fair use while defining and pushing custom metrics is
+  billed per metric per month.
+notes: >-
+  Corrected 2026-08-29. The prior version of this artifact was written by the 2026-05-04 bulk sweep
+  with method:generated and asserted X-RateLimit-Limit / X-RateLimit-Remaining / X-RateLimit-Reset
+  and Retry-After response headers, a 503 status, and a "sandbox vs production" limit tier. A
+  direct read of the Dynatrace access-limit page and a scan of every captured OpenAPI found NONE
+  of those — no rate-limit header of any kind is documented or declared, 503 appears nowhere, and
+  Dynatrace publishes no sandbox. Those claims are removed rather than carried forward.
 sources:
-  - https://docs.dynatrace.com/docs/manage/account-management/api
-  - https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api
-headers:
-  retryAfter: Retry-After
-  rateLimit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
+  - https://docs.dynatrace.com/docs/dynatrace-api/basics/access-limit
+  - https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-response-codes
+
+headers: {}
+headers_note: >-
+  No X-RateLimit-*, RateLimit-* or Retry-After response header is documented on the access-limit
+  page, and none is declared on any operation in the captured OpenAPI set. An agent receiving a 429
+  from Dynatrace gets a status code and nothing else — no budget, no reset time, no retry hint — so
+  it must back off exponentially with jitter on its own judgement.
+
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
+  throttledMeaning: >-
+    Too many requests. The environment's request thread pool AND its queue are full, or the request
+    timed out in the queue (10-second timeout).
+
 limits:
-  - name: Environment API (per-tenant)
-    scope: tenant
-    metric: varies
-    limit: see Dynatrace API reference per endpoint
-  - name: Configuration API (per-tenant)
-    scope: tenant
-    metric: varies
-    limit: see Configuration API reference
-  - name: Account Management API
-    scope: account
-    metric: varies
-    limit: see Account Management API reference
-  - name: Metrics ingest
-    scope: tenant
-    metric: data_points_per_minute
-    limit: governed by DDU/DPS quota
-    notes: Throughput governed by your subscription consumption units rather than HTTP rate.
-  - name: Logs ingest
-    scope: tenant
-    metric: GiB_per_minute
-    limit: governed by Log Management entitlement
-  - name: DQL/Grail query
-    scope: tenant
-    metric: concurrent_queries
-    limit: see Grail concurrency guidance
+  - name: Environment request throttling (thread pool + queue)
+    scope: environment
+    metric: concurrent_requests
+    limit: 'capacity-based — not a published numeric quota'
+    timeFrame: instantaneous
+    queue_timeout_seconds: 10
+    status_on_exhaustion: 429
+    notes: >-
+      Deliberately designed so many cheap requests pass while expensive ones are the ones that
+      queue. Cost per request, not request count, is what exhausts the limit.
+  - name: Default payload size
+    scope: request
+    metric: bytes
+    limit: 1048576
+    limit_human: 1 MB
+    timeFrame: request
+  - name: Log Monitoring API payload
+    scope: request
+    metric: bytes
+    limit: 10485760
+    limit_human: 10 MB
+    timeFrame: request
+  - name: Ingestion API payload (upper tier)
+    scope: request
+    metric: bytes
+    limit: 8388608
+    limit_human: 8 MB
+    timeFrame: request
+    notes: Ingestion endpoints cap at 8 MB, 4 MB or 2 MB depending on the endpoint.
+  - name: Extensions API upload
+    scope: request
+    metric: bytes
+    limit: 52428800
+    limit_human: 50 MB ZIP
+    timeFrame: request
+  - name: Plugins API upload
+    scope: request
+    metric: bytes
+    limit: 52428800
+    limit_human: 50 MB ZIP
+    timeFrame: request
+  - name: Mobile Symbolication API upload
+    scope: request
+    metric: bytes
+    limit: 104857600
+    limit_human: 100 MiB compressed / 500 MiB uncompressed
+    timeFrame: request
+  - name: Custom metric charging
+    scope: environment
+    metric: custom_metrics_per_month
+    limit: 'billed per metric per month — governed by DPS or the classic DDU model, not by HTTP rate'
+    timeFrame: month
+    notes: >-
+      Read access to the Dynatrace API is free of charge on a fair-use model. Defining and pushing
+      NEW custom metrics is charged.
+
+limit_count: 8
+
 policies:
-  - name: Retry on 429
-    description: Honor the Retry-After header on 429 responses; back off exponentially with jitter.
-  - name: Token-scope limits
-    description: API tokens carry permission scopes that may impose tighter limits than the tenant default;
-      refresh or rotate tokens via the Access Tokens API.
-  - name: Subscription-driven quotas
-    description: Ingest throughput (metrics, logs, traces) is bounded by Davis Data Units (DDU), Dynatrace
-      Platform Subscription (DPS) units, or host capacity, not raw HTTP rate.
-  - name: Sandbox vs production
-    description: Sandbox environments share lower limits than production tenants; do not load-test against
-      sandbox.
+  - name: Back off blindly on 429
+    description: >-
+      There is no Retry-After header to honour. Retry with exponential backoff and jitter, and
+      widen the interval rather than the batch — the throttle is capacity-based, so a smaller,
+      cheaper request is more likely to pass than a delayed large one.
+  - name: Split expensive queries
+    description: >-
+      Because the queue admits many cheap requests and few expensive ones, narrowing a selector or
+      shortening a query window is a more effective remedy than reducing request frequency.
+  - name: Retries are not safe on ingest
+    description: >-
+      Dynatrace publishes no idempotency key. A retry after a 429 on ingestLogs, ingestEvent or
+      ingestCustomMetrics duplicates the datapoint. See conventions/dynatrace-conventions.yml.
+  - name: Subscription-driven quotas are separate from HTTP throttling
+    description: >-
+      Ingest volume is bounded by the Dynatrace Platform Subscription or the classic DDU/host
+      entitlement. That is a licence limit, not an HTTP rate limit, and it does not surface as 429.
+
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

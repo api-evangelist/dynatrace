@@ -1,0 +1,161 @@
+generated: '2026-08-29'
+method: derived
+source: mcp/dynatrace-mcp.yml, openapi/*.yml, openapi/dynatrace-account-management-api-openapi.json, graphql/dynatrace-schema.graphql
+provider: Dynatrace
+providerId: dynatrace
+description: >-
+  Binds each tool published by the remote Dynatrace MCP server to the REST operationId(s) in this
+  repo's OpenAPI set that expose the same capability. The headline finding is that Dynatrace's MCP
+  surface and its REST surface are NOT projections of one another: the MCP server is built almost
+  entirely on Grail/DQL and Davis AI, which the classic Environment API v2 does not expose as REST
+  operations at all, while the Account Management API's 96 IAM/subscription operations have no MCP
+  tool. Only the problems, entities and (indirectly) logs/events families overlap.
+
+surfaces:
+  openapi:
+    files:
+      - openapi/dynatrace-entities-api-openapi.yml
+      - openapi/dynatrace-environments-api-openapi.yml
+      - openapi/dynatrace-events-api-openapi.yml
+      - openapi/dynatrace-groups-api-openapi.yml
+      - openapi/dynatrace-logs-api-openapi.yml
+      - openapi/dynatrace-metrics-api-openapi.yml
+      - openapi/dynatrace-permissions-api-openapi.yml
+      - openapi/dynatrace-problems-api-openapi.yml
+      - openapi/dynatrace-users-api-openapi.yml
+      - openapi/dynatrace-account-management-api-openapi.json
+    gated: false
+    note: >-
+      The Account Management spec is served publicly and anonymously at
+      https://api.dynatrace.com/openapi.json (96 operations). The Environment API v2 specs are
+      per-tenant (https://{environmentId}.live.dynatrace.com/api/v2) and require an API token to call.
+  graphql:
+    endpoint: graphql/dynatrace-schema.graphql
+    gated: true
+    note: >-
+      Dynatrace's GraphQL surface is documented in graphql/dynatrace-graphql.md; live introspection
+      is tenant- and token-gated, so no field-level binding is asserted here.
+  mcp:
+    url: https://{environment-name}.apps.dynatrace.com/platform-reserved/mcp-gateway/v0.1/servers/dynatrace-mcp/mcp
+    gated: true
+    note: >-
+      Tenant-templated and Platform-Token gated. tools/list could not be introspected anonymously,
+      so tool inputSchemas are unknown and every binding below is by documented name and semantics,
+      never by a compared schema. Confidence is set accordingly.
+
+crosswalk:
+  - tool: Root Cause Agent
+    category: problems
+    rest: [listProblems]
+    binding: semantic
+    confidence: high
+    note: >-
+      Both return an overview list of problems in the environment filterable by open/closed state.
+      REST GET /api/v2/problems takes problemSelector/entitySelector; the tool takes a natural-language
+      filter, so parameters are not equivalent.
+  - tool: Root Cause Details Agent
+    category: problems
+    rest: [getProblem]
+    binding: semantic
+    confidence: high
+    note: Both return the details of one Davis problem by identifier.
+  - tool: Smartscape Agent
+    category: entities
+    rest: [getEntity, lookupEntity, listEntities]
+    binding: semantic
+    confidence: high
+    note: >-
+      The tool resolves an entity name from an ID and an ID from a name — the two directions the
+      Monitored entities API v2 covers with GET /entities/{entityId} and the entity selector on
+      GET /entities.
+  - tool: Kubernetes Agent
+    category: events
+    rest: [listEvents]
+    binding: partial
+    confidence: medium
+    note: >-
+      The tool returns Kubernetes cluster events read from Grail (storage:events:read). The Events
+      API v2 lists Dynatrace events over the classic event store; overlapping subject, different
+      backing store, so this is not a wrapper of listEvents.
+  - tool: Log Pattern Agent
+    category: logs
+    rest: [searchLogs, aggregateLogs]
+    binding: partial
+    confidence: medium
+    note: >-
+      The tool runs a DQL query over Grail logs and analyzes the returned lines. The nearest REST
+      equivalents are the Log Monitoring API v2 search/aggregate endpoints — which Dynatrace has
+      DEPRECATED as of SaaS 1.331 in favour of the Logs on Grail API, i.e. the same store the tool reads.
+  - tool: Data Analysis Agent
+    category: query
+    rest: []
+    binding: none
+    confidence: high
+    note: >-
+      Executes arbitrary DQL against Grail. No operation in this repo's OpenAPI set accepts a DQL
+      statement; the Grail Query API is not among the captured specs. Listed here rather than in
+      mcp_only because it is the tool most REST consumers would expect to have an equivalent.
+
+mcp_only:
+  - tool: Grail Query Agent
+    reason: Davis Copilot natural-language-to-DQL generation; no REST operation generates a query.
+  - tool: DQL Explanation Agent
+    reason: Davis Copilot DQL-to-natural-language; no REST equivalent.
+  - tool: Help Agent
+    reason: Davis Copilot conversational product Q&A; no REST equivalent.
+  - tool: Forecasting Agent
+    reason: Davis AI analyzer (timeseries forecast); exposed via the Davis AI platform service, not via Environment API v2 REST.
+  - tool: Changepoint Agent
+    reason: Davis AI analyzer (novelty/changepoint detection); no REST operation captured.
+  - tool: Static Threshold Analysis Agent
+    reason: Davis AI analyzer; no REST operation captured.
+  - tool: Seasonal Baseline Agent
+    reason: Davis AI analyzer; no REST operation captured.
+  - tool: Auto-adaptive Threshold Analysis Agent
+    reason: Davis AI analyzer; no REST operation captured.
+  - tool: Document Agent
+    reason: Finds Dashboards and Notebooks via the Document API; that API is listed in apis.yml but has no captured OpenAPI in this repo.
+  - tool: Troubleshooting Agent
+    reason: Davis Copilot document search over shared troubleshooting guides; no REST equivalent.
+  - tool: Security Posture Agent
+    reason: Reads Security Posture Management findings from Grail security events; no captured REST operation.
+  - tool: Runtime Vulnerability Agent
+    reason: Reads Runtime Vulnerability Analytics findings from Grail; the Application Security API is listed in apis.yml but has no captured OpenAPI.
+  - tool: Security Event Details Agent
+    reason: Reads a single Grail security/scan event; no captured REST operation.
+  - tool: Security Summary Agent
+    reason: DQL overview of ingested and detected security events; no captured REST operation.
+
+rest_only:
+  - operations: [closeProblem, listProblemComments, createProblemComment, getProblemComment, updateProblemComment, deleteProblemComment]
+    reason: >-
+      The entire problem WRITE surface — closing a problem and the comment thread on it — has no MCP
+      tool. The MCP server is read-only over problems.
+  - operations: [ingestEvent, ingestLogs, ingestCustomMetrics]
+    reason: All three ingest (write) paths are REST-only; no MCP tool writes data into Dynatrace.
+  - operations: [exportLogs]
+    reason: Bulk log export for SIEM has no MCP tool.
+  - operations: [listMetrics, getMetricDescriptor, queryMetricData, deleteCustomMetric]
+    reason: The Metrics API v2 has no MCP tool; metric access via MCP goes through DQL instead.
+  - operations: [listEntityTypes, getEntityType]
+    reason: Entity-type discovery is REST-only.
+  - operations: [listUsers, createUser, getUser, updateUser, deleteUser, listGroups, createGroup, getGroup, updateGroup, deleteGroup, listPermissions, listEnvironments]
+    reason: Account Management IAM has no MCP tool.
+  - operations: [getLimitsForAccount, generatePlatformToken, deletePlatformToken, updatePlatformTokenStatus, updatePlatformTokenExpirationDate, createWifTrustPolicy, updateWifTrustPolicy, deleteWifTrustPolicy, SubscriptionsController_listSubscriptions, SubscriptionsController_getForecast, getEnvironmentCost, getEnvironmentUsage, AuditsController_listAuditsByAccount]
+    reason: >-
+      Platform tokens, Workload Identity Federation, subscription/cost/usage reporting and account
+      audit logs are all Account Management REST operations with no MCP counterpart. Notably the
+      Platform Token that AUTHENTICATES the MCP server is itself minted only over REST.
+
+coverage:
+  mcp_tools_total: 20
+  mcp_tools_bound_to_rest: 5
+  mcp_tools_mcp_only: 14
+  mcp_tools_unbound_no_rest_equivalent: 1
+  rest_operations_total: 133
+  rest_operations_with_a_tool: 6
+  rest_operations_rest_only: 127
+  overlap_note: >-
+    5 of 20 MCP tools map onto a REST operation and 6 of 133 REST operations have an MCP tool.
+    The two surfaces share roughly 4% of the REST estate. Dynatrace's agent surface is a Grail/Davis
+    read plane; its REST estate is the configuration, ingest and IAM control plane.

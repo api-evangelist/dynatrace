@@ -1,0 +1,51 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  https://developer.dynatrace.com/reference/design-system/, registry.npmjs.org metadata for the
+  @dynatrace/strato-* and @dynatrace-sdk/* scopes, read 2026-08-29
+provider: Dynatrace
+providerId: dynatrace
+description: >-
+  Dynatrace's client-side component surface is Strato — the React design system that AppEngine apps
+  are built from — plus the AppEngine runtime SDKs those components sit on. These are components
+  for building INSIDE the Dynatrace platform UI, not embeddable widgets for dropping Dynatrace into
+  a third-party page, which is an important distinction for anyone shopping for an embed.
+
+families:
+  - name: Strato Design System
+    kind: react-component-library
+    docs: https://developer.dynatrace.com/reference/design-system/
+    packages:
+      - name: '@dynatrace/strato-components'
+        registry: npm
+        version: 3.12.1
+        published: '2026-08-28'
+        description: The stable Strato React components — the building blocks for Dynatrace app UIs.
+      - name: '@dynatrace/strato-components-preview'
+        registry: npm
+        version: 3.4.1
+        published: '2026-06-03'
+        description: Preview channel; components not yet promoted to the stable library.
+    note: Strato components render inside a Dynatrace App shell and expect the AppEngine runtime.
+  - name: AppEngine runtime SDKs
+    kind: client-runtime
+    packages:
+      - name: '@dynatrace-sdk/navigation'
+        registry: npm
+        version: 2.3.1
+        published: '2026-08-13'
+        description: In-app navigation and cross-app intents.
+      - name: '@dynatrace-sdk/units'
+        registry: npm
+        version: 1.5.0
+        published: '2026-02-12'
+        description: Unit conversion and numeric formatting used by chart and table components.
+    note: Loader/runtime libraries rather than visual components.
+
+embeddable_outside_dynatrace: false
+embeddable_note: >-
+  No public embeddable dashboard widget, iframe embed contract or drop-in script tag was found.
+  Sharing a Dynatrace view outside the platform goes through the Document API and dashboard
+  sharing, not through a client-side embed component.
+
+component_families: 2

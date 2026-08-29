@@ -1,0 +1,214 @@
+generated: '2026-08-29'
+method: searched
+source: https://docs.dynatrace.com/docs/dynatrace-intelligence/dynatrace-mcp
+provider: Dynatrace
+providerId: dynatrace
+name: Dynatrace MCP Server
+status: published
+description: >-
+  Dynatrace ships an officially supported REMOTE Model Context Protocol server named
+  `dynatrace-mcp`, hosted inside each customer's own Dynatrace SaaS environment and reached
+  over Streamable HTTP at a per-tenant URL. It fronts Grail (DQL), Davis AI analyzers, Davis
+  Copilot, problems, Kubernetes events, security findings, Smartscape entities and documents
+  as MCP tools. A separate community-supported LOCAL stdio server
+  (`@dynatrace-oss/dynatrace-mcp-server`) was deprecated at version 2.1.2 on 2026-07-20 and
+  Dynatrace now directs local-development users to the Dynatrace-for-AI skills repo plus the
+  `dtctl` CLI, and agent-to-agent/remote users to the hosted server.
+
+deployment:
+  mode: both
+  endpoint: https://{environment-name}.apps.dynatrace.com/platform-reserved/mcp-gateway/v0.1/servers/dynatrace-mcp/mcp
+  install: npx -y @dynatrace-oss/dynatrace-mcp-server
+  package: https://www.npmjs.com/package/@dynatrace-oss/dynatrace-mcp-server
+  auth: oauth
+  verified: searched
+  notes:
+    - >-
+      The remote endpoint is templated on the customer's own tenant (`{environment-name}`),
+      exactly as Dynatrace's own baseURLs are — there is no single shared multi-tenant host,
+      so it cannot be probed anonymously and tools/list could not be introspected live.
+    - >-
+      Remote transport is Streamable HTTP. Every request needs a bearer token in the
+      Authorization header, from a Platform Token (recommended) or a confidential OAuth
+      client using the authorization-code flow. Dynatrace documents that MCP does not
+      support using an OAuth client directly for the token.
+    - >-
+      The local stdio package is DEPRECATED — 2.1.2 (2026-07-20) was the final release, it is
+      explicitly "not officially supported by Dynatrace", and the repository README directs
+      migration to the remote server. It is recorded here because it is still published and
+      installable, not because it is the recommended surface.
+
+transports:
+  - name: streamable-http
+    scope: remote
+    endpoint: https://{environment-name}.apps.dynatrace.com/platform-reserved/mcp-gateway/v0.1/servers/dynatrace-mcp/mcp
+  - name: stdio
+    scope: local
+    command: npx -y @dynatrace-oss/dynatrace-mcp-server
+    deprecated: true
+
+authentication:
+  methods:
+    - type: platform-token
+      header: 'Authorization: Bearer <platform-token>'
+      recommended: true
+      docs: https://docs.dynatrace.com/docs/manage/identity-access-management/access-tokens-and-oauth-clients/platform-tokens
+    - type: oauth2
+      flow: authorization_code
+      client: confidential
+      note: Tokens minted from an OAuth client are short-lived; Dynatrace recommends Platform tokens instead.
+  gateway_scopes:
+    - mcp-gateway:servers:read
+    - mcp-gateway:servers:invoke
+  oauth_client_extra_scope: ai:operator:execute
+  note: >-
+    Both the USER and the TOKEN must carry each scope — a token scope alone is not sufficient,
+    which is Dynatrace's stated permission model for the MCP gateway.
+
+tools:
+  - name: Grail Query Agent
+    state: Early Access
+    description: Generates a DQL query from a natural-language prompt. Does not execute the query.
+    scopes: [davis-copilot:nl2dql:execute]
+  - name: DQL Explanation Agent
+    state: Early Access
+    description: Provides a natural-language explanation of a DQL query.
+    scopes: [davis-copilot:dql2nl:execute]
+  - name: Help Agent
+    state: Early Access
+    description: Answers general Dynatrace product questions via Davis Copilot conversations.
+    scopes: [davis-copilot:conversations:execute]
+  - name: Data Analysis Agent
+    state: Public
+    description: Executes any valid DQL query and returns the raw result. Grail responses are capped at 1000 records.
+    scopes: [storage:buckets:read]
+    scope_note: Additional storage:* scopes widen which data the query may read; the tool respects the granted scopes and reads nothing outside them.
+  - name: Root Cause Agent
+    state: Public
+    description: Returns an overview list of all problems in the environment, filterable to active or closed.
+    scopes: [storage:buckets:read, storage:events:read]
+  - name: Root Cause Details Agent
+    state: Public
+    description: Returns the details of one specific Davis problem.
+    scopes: [storage:buckets:read, storage:events:read]
+  - name: Kubernetes Agent
+    state: Public
+    description: Returns events for Kubernetes clusters, all clusters or specific ones.
+    scopes: [storage:buckets:read, storage:events:read]
+  - name: Forecasting Agent
+    state: Public
+    description: Predicts future timeseries values with a statistical forecasting model.
+    scopes: [storage:buckets:read, davis:analyzers:read, davis:analyzers:execute]
+  - name: Changepoint Agent
+    state: Public
+    description: Analyzes timeseries data to find events, outliers and significant trends.
+    scopes: [storage:buckets:read, davis:analyzers:read, davis:analyzers:execute]
+  - name: Document Agent
+    state: Public
+    description: Finds user-accessible Dashboards and Notebooks by name.
+    scopes: [document:documents:read]
+  - name: Troubleshooting Agent
+    state: Preview
+    description: Finds globally shared troubleshooting-guide Dashboards and Notebooks from a problem description. Requires "Enable document suggestion" in Settings.
+    scopes: [davis-copilot:document-search:execute]
+  - name: Smartscape Agent
+    state: Public
+    description: Resolves an entity name from its ID and an ID from its name.
+    scopes: [storage:entities:read]
+  - name: Static Threshold Analysis Agent
+    state: Public
+    description: Detects anomalies using fixed thresholds that a metric should not violate.
+    scopes: [storage:buckets:read, davis:analyzers:read, davis:analyzers:execute]
+  - name: Seasonal Baseline Agent
+    state: Public
+    description: Detects anomalies against a learned seasonal baseline.
+    scopes: [storage:buckets:read, davis:analyzers:read, davis:analyzers:execute]
+  - name: Auto-adaptive Threshold Analysis Agent
+    state: Public
+    description: Detects anomalies by learning a single threshold from the data distribution that separates outliers from normal observations.
+    scopes: [storage:buckets:read, davis:analyzers:read, davis:analyzers:execute]
+  - name: Security Posture Agent
+    state: Public
+    description: Returns compliance findings and misconfigurations from the last Dynatrace Security Posture Management run.
+    scopes: [storage:buckets:read, storage:security.events:read]
+  - name: Runtime Vulnerability Agent
+    state: Public
+    description: Returns all open (muted and non-muted) vulnerabilities from the last Runtime Vulnerability Analytics report.
+    scopes: [storage:buckets:read, storage:security.events:read]
+  - name: Security Event Details Agent
+    state: Public
+    description: Returns the latest security event or scan event details for a finding ID, scan ID or title.
+    scopes: [storage:buckets:read, storage:security.events:read]
+  - name: Security Summary Agent
+    state: Public
+    description: Runs a DQL query returning an overview of ingested external security events and Dynatrace detection findings.
+    scopes: [storage:buckets:read, storage:security.events:read]
+  - name: Log Pattern Agent
+    state: Public
+    description: Finds common patterns across log lines by running a DQL query and analyzing individual lines.
+    scopes: [storage:buckets:read, storage:logs:read, davis:analyzers:read, davis:analyzers:execute]
+
+tool_count: 20
+tools_source: https://docs.dynatrace.com/docs/dynatrace-intelligence/dynatrace-mcp
+tools_note: >-
+  Tool names and states are transcribed verbatim from the "Server and server tools" table in
+  the Dynatrace MCP documentation. Input schemas are NOT recorded: the endpoint is
+  tenant-templated and token-gated, so a live tools/list introspection could not be run
+  anonymously. Obtaining the real inputSchema per tool requires an authenticated
+  introspection against a customer environment.
+
+deprecated_local_server:
+  package: '@dynatrace-oss/dynatrace-mcp-server'
+  registry: npm
+  version: 2.1.2
+  published: '2026-07-20'
+  repository: https://github.com/dynatrace-oss/dynatrace-mcp
+  license: MIT
+  status: deprecated
+  final_release: true
+  support: community (GitHub Issues) — "not officially supported by Dynatrace"
+  migration_guide: https://github.com/dynatrace-oss/dynatrace-mcp/blob/main/docs/remote-mcp-migration.md
+  successors:
+    - use_case: local development (VS Code, IntelliJ, Claude Code, Cursor)
+      recommended: https://github.com/Dynatrace/dynatrace-for-ai + https://github.com/dynatrace-oss/dtctl
+    - use_case: agent-to-agent / remote
+      recommended: https://www.dynatrace.com/hub/detail/dynatrace-mcp-server/
+  local_only_tools:
+    - verify_dql
+    - reset_grail_budget
+    - list_exceptions
+    - get_environment_info
+    - list_davis_analyzers
+    - send_slack_message
+    - send_email
+    - send_event
+    - create_dynatrace_notebook
+  local_only_note: >-
+    Recorded from the migration guide's tool-comparison table as of its stated 2026-04-13
+    legend date. These capabilities have no remote equivalent, which is why Dynatrace
+    documents keeping the local server alongside the remote one or substituting dtctl.
+
+listings:
+  - https://www.dynatrace.com/hub/detail/dynatrace-mcp-server/
+  - https://www.npmjs.com/package/@dynatrace-oss/dynatrace-mcp-server
+
+docs:
+  - https://docs.dynatrace.com/docs/dynatrace-intelligence/dynatrace-mcp
+  - https://github.com/dynatrace-oss/dynatrace-mcp/blob/main/docs/remote-mcp-migration.md
+
+x-evidence:
+  - url: https://docs.dynatrace.com/docs/dynatrace-intelligence/dynatrace-mcp
+    status: 200
+    fetched: '2026-08-29'
+  - url: https://raw.githubusercontent.com/dynatrace-oss/dynatrace-mcp/main/README.md
+    status: 200
+    fetched: '2026-08-29'
+  - url: https://raw.githubusercontent.com/dynatrace-oss/dynatrace-mcp/main/docs/remote-mcp-migration.md
+    status: 200
+    fetched: '2026-08-29'
+  - url: https://registry.npmjs.org/@dynatrace-oss/dynatrace-mcp-server
+    status: 200
+    fetched: '2026-08-29'
+  - url: https://www.dynatrace.com/hub/detail/dynatrace-mcp-server/
+    status: 200
+    fetched: '2026-08-29'

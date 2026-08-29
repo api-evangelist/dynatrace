@@ -1,0 +1,232 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  https://docs.dynatrace.com/docs/dynatrace-api/basics (authentication, response codes, access
+  limit) plus derivation from openapi/*.yml and
+  openapi/dynatrace-account-management-api-openapi.json
+provider: Dynatrace
+providerId: dynatrace
+description: >-
+  Cross-cutting runtime semantics for the Dynatrace API estate. Dynatrace runs three families with
+  materially different conventions: the tenant-scoped Environment API v2 on
+  {environmentId}.live.dynatrace.com, the tenant-scoped platform services on
+  {environmentId}.apps.dynatrace.com/platform, and the global Account Management API on
+  api.dynatrace.com. Auth, error shape and even the base host differ between them, so an agent
+  cannot treat "the Dynatrace API" as one contract.
+
+auth:
+  styles:
+    - name: API token
+      applies_to: Environment API v1/v2, Configuration API
+      transport: 'Authorization: Api-Token <token>'
+      format: '<prefix>.<24-char public portion>.<64-char secret portion>'
+      prefixes:
+        dt0s01: API token
+        dt0s02: OAuth2 client created through Account Management, for Dynatrace Apps and the Account Management API
+        dt0s03: OAuth2 client for internal and external services and integrations
+        dt0s04: Chat and identity linking
+        dt0s06: OAuth2 refresh token
+      scoping: >-
+        Fine-grained per-token scopes; each operation's description names the scopes it requires
+        (for example entities.read). See scopes/dynatrace-scopes.yml.
+      identifier_safety: >-
+        prefix + public portion together form a token identifier that Dynatrace states is safe to
+        display in a UI and to log. The secret portion must be treated as a password and rotated
+        immediately if leaked. This is a genuinely useful property for agent logging.
+    - name: OAuth 2.0 client credentials
+      applies_to: Account Management API (api.dynatrace.com)
+      token_url: https://sso.dynatrace.com/sso/oauth2/token
+      transport: 'Authorization: Bearer <jwt>'
+    - name: Platform token
+      applies_to: Platform services and the remote MCP gateway
+      transport: 'Authorization: Bearer <platform-token>'
+  dual_permission_model: >-
+    Dynatrace requires BOTH the user identity and the token to carry a permission for it to take
+    effect. Granting the scope to the token alone produces a 403. This is the single most common
+    integration failure and it has no analogue in most API key models.
+  discovery: https://sso.dynatrace.com/.well-known/openid-configuration
+  see: authentication/dynatrace-authentication.yml
+
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    Dynatrace publishes no idempotency key. The string "idempoten" appears zero times across the
+    captured OpenAPI set and zero times in the 182KB www.dynatrace.com/llms.txt. Safe retry rests
+    entirely on HTTP method semantics: PUT and DELETE are naturally idempotent, and the ingest
+    POSTs (ingestLogs, ingestEvent, ingestCustomMetrics) are NOT — a retried ingest writes the
+    datapoint twice. An agent retrying an ingest after a 429 or a network timeout must assume
+    duplication.
+  affected_write_operations:
+    - ingestLogs
+    - ingestEvent
+    - ingestCustomMetrics
+    - createProblemComment
+    - createUser
+    - createGroup
+
+pagination:
+  style: opaque-cursor
+  request_params:
+    - name: nextPageKey
+      in: query
+      description: >-
+        Cursor for the next page, taken from the nextPageKey field of the previous response. When
+        this parameter is set, ALL other query parameters except pageSize are ignored — a trap for
+        an agent that re-sends its filters alongside the cursor.
+    - name: pageSize
+      in: query
+      description: Page size; observed default 500 on the Problems API.
+  response_fields:
+    - nextPageKey
+    - totalCount
+    - pageSize
+  termination: nextPageKey is absent or null on the last page.
+  applies_to:
+    - Entities API v2
+    - Events API v2
+    - Metrics API v2
+    - Problems API v2
+    - Account Management users/groups/environments
+  note: Cursor expiry is not documented in the captured specs.
+
+field_selection:
+  style: selector-language
+  mechanism: >-
+    Dynatrace uses purpose-built selector languages instead of generic sparse-fieldset or expand
+    parameters — entitySelector, problemSelector, metricSelector, eventSelector — plus a `fields`
+    parameter on several v2 endpoints to opt into optional response properties.
+  note: Selectors are a query language, not a field mask; they filter WHICH records return, and `fields` controls which properties come back.
+
+query_language:
+  name: DQL (Dynatrace Query Language)
+  applies_to: Grail-backed data (logs, events, spans, bizevents, entities, metrics)
+  docs: https://docs.dynatrace.com/docs/platform/grail/dynatrace-query-language
+  note: >-
+    DQL is the primary read path for the platform generation and is what the MCP Data Analysis
+    Agent executes. It is not exposed by any operation in the captured OpenAPI set.
+
+versioning:
+  see: lifecycle/dynatrace-lifecycle.yml
+  summary: Platform sprint releases (SaaS 1.xxx); major generations in the URL path (/api/v1, /api/v2, /platform).
+
+errors:
+  envelope: vendor JSON — {error, message, payload} or {code, message, errorsMap}
+  rfc9457: false
+  see: errors/dynatrace-problem-types.yml
+
+rate_limit_signaling:
+  status_on_exhaustion: 429
+  headers_published: false
+  note: >-
+    Dynatrace documents throttling by a per-environment thread pool and queue with a 10-second
+    queue timeout, returning 429 when both are full. No X-RateLimit-*, RateLimit-* or Retry-After
+    header is documented on the access-limit page or declared in any captured spec, so an agent
+    has no runtime budget signal and can only back off blindly on a 429.
+  see: rate-limits/dynatrace-rate-limits.yml
+
+request_id_tracing:
+  header: null
+  note: >-
+    No correlation/request-id response header is documented or declared in the captured specs.
+    Dynatrace's own distributed-tracing headers (x-dynatrace, traceparent) are what OneAgent
+    injects into MONITORED traffic; they are not an API-support correlation id for calls made
+    against the Dynatrace API itself.
+
+payload_limits:
+  default: 1 MB
+  exceptions:
+    Mobile Symbolication API: 100 MiB compressed upload, 500 MiB uncompressed
+    Extensions API: 50 MB ZIP
+    Plugins API: 50 MB ZIP
+    Log Monitoring API: 10 MB per request
+    Ingestion API: 8 MB, 4 MB or 2 MB depending on the ingest endpoint
+  source: https://docs.dynatrace.com/docs/dynatrace-api/basics/access-limit
+
+reversibility:
+  grade: documented
+  summary: >-
+    Dynatrace's write surface is largely additive-and-deletable: created configuration objects,
+    users, groups, policies, tokens and problem comments all have a DELETE that reverses the
+    create. What is NOT reversible is ingested telemetry — a log, event, metric datapoint or
+    business event, once accepted, has no delete operation and is governed by bucket retention
+    instead. No published document states a time window for any reversal, so this grades as
+    `documented`, not `verified`, and no window is asserted here.
+  operations:
+    - write: createProblemComment
+      reversal: deleteProblemComment
+      window: null
+      window_documented: false
+      note: A comment can also be edited in place with updateProblemComment.
+    - write: closeProblem
+      reversal: null
+      window: null
+      window_documented: false
+      note: >-
+        Closing a Davis problem has no documented re-open operation in the captured contract. Treat
+        closeProblem as a one-way action.
+    - write: createUser
+      reversal: deleteUser
+      window: null
+      window_documented: false
+    - write: createGroup
+      reversal: deleteGroup
+      window: null
+      window_documented: false
+    - write: createLevelPolicy
+      reversal: deleteLevelPolicy
+      window: null
+      window_documented: false
+    - write: appendLevelPolicyBindings
+      reversal: deleteLevelPolicyBindings
+      window: null
+      window_documented: false
+    - write: generatePlatformToken
+      reversal: deletePlatformToken
+      window: null
+      window_documented: false
+      note: updatePlatformTokenStatus can also disable a token without deleting it.
+    - write: createWifTrustPolicy
+      reversal: deleteWifTrustPolicy
+      window: null
+      window_documented: false
+    - write: ingestCustomMetrics
+      reversal: deleteCustomMetric
+      window: null
+      window_documented: false
+      note: >-
+        deleteCustomMetric removes the METRIC and its data, not a single mis-sent datapoint. There
+        is no per-datapoint reversal.
+    - write: ingestLogs
+      reversal: null
+      window: null
+      window_documented: false
+      note: Irreversible. Ingested logs are governed by Grail bucket retention, not by a delete operation.
+    - write: ingestEvent
+      reversal: null
+      window: null
+      window_documented: false
+      note: Irreversible.
+  irreversible_surfaces:
+    - Log ingest
+    - Event ingest
+    - Business event ingest
+    - Metric datapoint ingest
+  caution: >-
+    No reversal window is stated in any Dynatrace document reviewed for this artifact, so none is
+    recorded. Do not infer one from retention settings — retention governs when data ages out, not
+    whether an action can be taken back.
+
+dry_run_mode:
+  supported: partial
+  note: >-
+    The Account Management API shipped explicit policy-validation endpoints
+    (validateLevelPolicy, validateNewLevelPolicy) that let a caller check a policy document before
+    applying it. Both now return 410 — the endpoints have been removed — so the one true dry-run
+    affordance in the estate has been withdrawn and no replacement is named in the contract.
+
+docs:
+  - https://docs.dynatrace.com/docs/dynatrace-api/basics
+  - https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication
+  - https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-response-codes
+  - https://docs.dynatrace.com/docs/dynatrace-api/basics/access-limit

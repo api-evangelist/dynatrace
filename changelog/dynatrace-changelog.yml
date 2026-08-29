@@ -1,0 +1,101 @@
+generated: '2026-08-29'
+method: searched
+source: https://docs.dynatrace.com/docs/whats-new/dynatrace-api
+provider: Dynatrace
+providerId: dynatrace
+name: Dynatrace API changelog
+url: https://docs.dynatrace.com/docs/whats-new/dynatrace-api
+description: >-
+  Dynatrace publishes a dated "What's new — Dynatrace API" page that carries one changelog entry per
+  platform sprint release. Entries are versioned on the SaaS release train (1.xxx), not on the API
+  path version, so a single changelog covers every API family at once. The page also carries a
+  per-page "what changed on this page" history, and an RSS feed was added to the page.
+
+scheme: platform-sprint-release
+version_pattern: '1.<sprint>'
+current_version: '1.335'
+cadence: per sprint release (roughly every two weeks)
+rss: true
+rss_note: >-
+  The page's own history records "Make the RSS feed available on this page". A feed URL was probed
+  at https://docs.dynatrace.com/rss/whats-new/dynatrace-api.xml and returned HTTP 200 with the
+  docs site's Next.js HTML shell rather than XML, so the machine-readable feed location could not
+  be confirmed from outside the rendered page.
+
+entries:
+  - version: '1.335'
+    type: release
+    title: Dynatrace API changelog version 1.335
+  - version: '1.334'
+    type: release
+    title: Dynatrace API changelog version 1.334
+  - version: '1.333'
+    type: release
+    title: Dynatrace API changelog version 1.333
+  - version: '1.332'
+    type: release
+    title: Dynatrace API changelog version 1.332
+  - version: '1.331'
+    type: release
+    title: Dynatrace API changelog version 1.331
+    breaking: true
+    highlights:
+      - >-
+        Log Monitoring API v2 search, export and aggregate endpoints deprecated in favour of the
+        Logs on Grail API, end of life at the end of 2027.
+  - version: '1.330'
+    type: release
+    title: Dynatrace API changelog version 1.330
+  - version: '1.329'
+    type: release
+    title: Dynatrace API changelog version 1.329
+  - version: '1.328'
+    type: release
+    title: Dynatrace API changelog version 1.328
+  - version: '1.327'
+    type: release
+    title: Dynatrace API changelog version 1.327
+    breaking: true
+    highlights:
+      - >-
+        OpenPipeline API PUT/GET configuration endpoints migrated to the Settings 2.0 framework,
+        end of life 2026-06-29.
+  - version: '1.326'
+    type: release
+    title: Dynatrace API changelog version 1.326
+  - version: '1.325'
+    type: release
+    title: Dynatrace API changelog version 1.325
+    breaking: true
+    highlights:
+      - Log Monitoring API v1 reached end of life on SaaS 1.325 / Managed 1.326.
+  - version: '1.324'
+    type: release
+    title: Dynatrace API changelog version 1.324
+  - version: '1.323'
+    type: release
+    title: Dynatrace API changelog version 1.323
+  - version: '1.322'
+    type: release
+    title: Dynatrace API changelog version 1.322
+
+entries_note: >-
+  The index page lists only the release title per entry; the substance lives on a per-release
+  child page. Only the breaking changes cross-confirmed against the deprecation and migration
+  guides table are annotated above — the rest are recorded as titles rather than being summarized
+  from content this pass did not read.
+
+entry_count: 14
+window: releases 1.322 through 1.335 (most recent 14 sprint releases listed on the index)
+
+related:
+  deprecations: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides
+  lifecycle: lifecycle/dynatrace-lifecycle.yml
+
+x-evidence:
+  - url: https://docs.dynatrace.com/docs/whats-new/dynatrace-api
+    status: 200
+    fetched: '2026-08-29'
+  - url: https://docs.dynatrace.com/rss/whats-new/dynatrace-api.xml
+    status: 200
+    note: returned an HTML shell, not a feed

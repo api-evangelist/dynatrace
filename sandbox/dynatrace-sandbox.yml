@@ -1,0 +1,61 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  https://www.dynatrace.com/trial/, https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication,
+  https://docs.dynatrace.com/docs/dynatrace-api/basics/access-limit
+provider: Dynatrace
+providerId: dynatrace
+description: >-
+  Dynatrace publishes NO test-mode API. There is no sandbox host, no test-vs-live key prefix pair,
+  and no fixture or simulation tooling. What it offers instead is a time-boxed free trial that
+  provisions a REAL tenant — so every call an agent makes during evaluation runs against
+  production infrastructure and consumes real licence units. This is a meaningful difference from
+  a payments-style sandbox and should not be recorded as one.
+
+sandbox_available: false
+test_mode: false
+test_host: null
+test_key_prefix: null
+live_key_prefix_note: >-
+  Dynatrace token prefixes (dt0s01 API token, dt0s02/dt0s03 OAuth clients, dt0s04 chat and
+  identity linking, dt0s06 refresh token) distinguish token TYPE, not test versus live. There is
+  no test-mode counterpart to any of them.
+
+evaluation_path:
+  name: Dynatrace free trial
+  url: https://www.dynatrace.com/trial/
+  status: 200
+  kind: real tenant, time-boxed
+  note: >-
+    A trial tenant is a production environment with a full API surface. Ingest during a trial is
+    real ingest.
+
+cost_awareness:
+  note: >-
+    Read access to the Dynatrace API is documented as free of charge on a fair-use model, but
+    DEFINING and PUSHING new custom metrics is charged per metric per month, and DQL queries
+    against Grail consume licence units. An agent exploring this API can therefore incur cost
+    without writing any configuration — the Dynatrace MCP README carries the same warning about
+    example prompts leading to billable DQL.
+  source: https://docs.dynatrace.com/docs/dynatrace-api/basics/access-limit
+
+safe_exploration:
+  - Read operations (listEntities, listProblems, listEvents, listMetrics) are the fair-use free path.
+  - >-
+    The local MCP server shipped a reset_grail_budget tool specifically to cap Grail spend during
+    agent exploration; that tool has no remote equivalent, so budget control on the remote MCP
+    server is a Dynatrace-side setting rather than a callable guard.
+
+fixtures: []
+test_values: []
+test_values_note: >-
+  No published magic identifiers, test cards, test tokens or simulator values exist for this API.
+  Nothing is invented here.
+
+x-evidence:
+  - url: https://www.dynatrace.com/trial/
+    status: 200
+  - url: https://docs.dynatrace.com/docs/dynatrace-api/basics/access-limit
+    status: 200
+  - url: https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication
+    status: 200

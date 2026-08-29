@@ -1,0 +1,53 @@
+generated: '2026-08-29'
+method: probed
+source: live GET probes of /.well-known/* on every Dynatrace host named in apis.yml baseURLs and OpenAPI servers[]
+description: >-
+  Well-known document probe for Dynatrace. Dynatrace serves a real RFC 9116 security.txt from
+  www.dynatrace.com and a full OpenID Connect discovery document from its identity host
+  sso.dynatrace.com (the issuer named in every OAuth 2.0 clientCredentials tokenUrl in the
+  Account Management OpenAPI). The API host api.dynatrace.com answers /.well-known/* with a
+  JSON 404 envelope; docs.dynatrace.com is a Next.js single-page docs app that answers 200
+  with an HTML shell for any unknown path, so its 200s are recorded as misses, not documents.
+notes:
+  - api.dynatrace.com returns HTTP 404 with body {"error":true,"message":"Cannot get requested resource."} for every /.well-known/ path probed.
+  - docs.dynatrace.com returns HTTP 200 with a 28KB Next.js HTML shell for unknown paths; treated as a miss per the SPA catch-all rule.
+  - No /.well-known/api-catalog, /.well-known/oauth-authorization-server, /.well-known/oauth-protected-resource or /.well-known/ai-plugin.json is served on any probed host.
+hosts:
+  - host: www.dynatrace.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        file: dynatrace-security.txt
+        note: RFC 9116 security.txt with Contact, Policy, Preferred-Languages, Hiring and Expires 2030-12-31.
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: sso.dynatrace.com
+    documents:
+      - path: /.well-known/openid-configuration
+        status: 200
+        file: dynatrace-openid-configuration.json
+        note: >-
+          OpenID Connect discovery for issuer https://sso.dynatrace.com:443. Advertises
+          authorization_code, refresh_token, client_credentials and RFC 8693 token-exchange
+          grants, PKCE S256, ES256/RS256 id_token signing, and an introspection endpoint.
+  - host: api.dynatrace.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+  - host: docs.dynatrace.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        note: HTML SPA shell, not a security.txt document — recorded as a miss.

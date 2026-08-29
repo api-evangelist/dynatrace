@@ -1,0 +1,171 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  https://docs.dynatrace.com/docs/ingest-from/opentelemetry/getting-started/otlp-export,
+  https://sso.dynatrace.com/.well-known/openid-configuration,
+  https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication,
+  https://www.dynatrace.com/company/trust-center/, and derivation from the captured OpenAPI set
+provider: Dynatrace
+providerId: dynatrace
+description: >-
+  Cross-cutting and domain standards Dynatrace's contracts and identity surface actually declare.
+  The headline is the domain standard: Dynatrace serves NATIVE OpenTelemetry Protocol ingest
+  endpoints at the standard OTLP signal paths, which means an OpenTelemetry-instrumented estate
+  points at Dynatrace by changing an endpoint variable rather than by writing a connector.
+
+conformance:
+  - id: opentelemetry-otlp
+    name: OpenTelemetry Protocol (OTLP)
+    domain: observability
+    conforms: true
+    domain_standard: true
+    evidence:
+      location: >-
+        Dynatrace SaaS OTLP base URL https://{your-environment-id}.live.dynatrace.com/api/v2/otlp,
+        with the standard OpenTelemetry signal paths appended: /v1/traces, /v1/metrics, /v1/logs.
+      quote: >-
+        "Dynatrace provides native OTLP endpoints" and "The ingest paths used by Dynatrace for the
+        individual signal types follow the standard OpenTelemetry paths."
+      url: https://docs.dynatrace.com/docs/ingest-from/opentelemetry/getting-started/otlp-export
+      status: 200
+    deviations:
+      - >-
+        gRPC transport is NOT supported. Dynatrace's own change history records "Clarified that
+        gRPC is not supported", so OTLP/HTTP is the only accepted transport — an OTLP exporter
+        configured for gRPC will not reach Dynatrace.
+      - >-
+        API authentication is required for SaaS and ActiveGate exports, which the base OTLP
+        specification does not itself mandate.
+    additional_surfaces:
+      - Environment ActiveGate: https://{your-activegate-domain}:9999/e/{your-environment-id}/api/v2/otlp
+      - Dynatrace Collector — an OpenTelemetry Collector distribution for batching and transforming before forward
+    note: >-
+      OTLP is the observability market's interchange standard. A buyer already emitting OTLP
+      integrates with no bespoke connector; one who is not needs a vendor agent. That is exactly
+      the distinction domain_standard_conformance is meant to draw.
+
+  - id: oidc
+    name: OpenID Connect Discovery 1.0
+    conforms: true
+    evidence:
+      location: https://sso.dynatrace.com/.well-known/openid-configuration
+      status: 200
+      details: >-
+        Full discovery document. issuer https://sso.dynatrace.com:443, authorization, token,
+        userinfo, end_session, introspection and jwks_uri endpoints all published.
+      file: well-known/dynatrace-openid-configuration.json
+
+  - id: oauth2
+    name: OAuth 2.0
+    conforms: true
+    evidence:
+      location: >-
+        securitySchemes.oauth2 with a clientCredentials flow and tokenUrl
+        https://sso.dynatrace.com/sso/oauth2/token in the Account Management OpenAPI; the
+        discovery document additionally advertises authorization_code and refresh_token.
+      url: https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication
+    grants: [authorization_code, refresh_token, client_credentials]
+
+  - id: rfc7636-pkce
+    name: PKCE (RFC 7636)
+    conforms: true
+    evidence:
+      location: 'code_challenge_methods_supported: ["S256"] in the OIDC discovery document'
+      file: well-known/dynatrace-openid-configuration.json
+
+  - id: rfc8693-token-exchange
+    name: OAuth 2.0 Token Exchange (RFC 8693)
+    conforms: true
+    evidence:
+      location: 'grant_types_supported includes urn:ietf:params:oauth:grant-type:token-exchange'
+      file: well-known/dynatrace-openid-configuration.json
+
+  - id: rfc9116-security-txt
+    name: security.txt (RFC 9116)
+    conforms: true
+    evidence:
+      location: https://www.dynatrace.com/.well-known/security.txt
+      status: 200
+      details: Contact, Policy, Preferred-Languages, Hiring and Expires fields present; Expires 2030-12-31.
+      file: well-known/dynatrace-security.txt
+
+  - id: mcp
+    name: Model Context Protocol
+    conforms: true
+    evidence:
+      location: >-
+        Officially supported remote MCP server over Streamable HTTP at
+        {environment}.apps.dynatrace.com/platform-reserved/mcp-gateway/v0.1/servers/dynatrace-mcp/mcp
+      url: https://docs.dynatrace.com/docs/dynatrace-intelligence/dynatrace-mcp
+      status: 200
+    see: mcp/dynatrace-mcp.yml
+
+  - id: rfc9457
+    name: Problem Details for HTTP APIs (RFC 9457)
+    conforms: false
+    evidence:
+      location: >-
+        No operation in the captured OpenAPI set returns application/problem+json. Dynatrace uses
+        two vendor JSON envelopes instead.
+    see: errors/dynatrace-problem-types.yml
+
+  - id: rfc8594-sunset
+    name: Sunset header (RFC 8594)
+    conforms: false
+    evidence:
+      location: >-
+        No Sunset or Deprecation response header is documented or declared. Deprecation is
+        published as a docs table and surfaced at runtime only as a 410.
+    see: lifecycle/dynatrace-lifecycle.yml
+
+  - id: idempotency-key
+    name: Idempotency-Key
+    conforms: false
+    evidence:
+      location: Zero occurrences of "idempoten" across the captured specs and the published llms.txt.
+    see: conventions/dynatrace-conventions.yml
+
+  - id: rfc9331-ratelimit-headers
+    name: RateLimit header fields
+    conforms: false
+    evidence:
+      location: >-
+        429 is documented as the exhaustion status, but no RateLimit-*, X-RateLimit-* or
+        Retry-After header is documented or declared.
+    see: rate-limits/dynatrace-rate-limits.yml
+
+  - id: scim
+    name: SCIM 2.0
+    conforms: unknown
+    evidence:
+      location: >-
+        The Dynatrace API authentication page states a dt0s01 token "allows the user to make
+        changes within the Dynatrace account through SCIM", but no SCIM schema URN
+        (urn:ietf:params:scim:schemas:*) or /scim/v2 resource path appears in the captured
+        Account Management OpenAPI, and the two SCIM documentation paths probed returned 404.
+      probed:
+        - url: https://docs.dynatrace.com/docs/manage/identity-access-management/user-and-group-management/scim
+          status: 404
+        - url: https://docs.dynatrace.com/docs/manage/account-management/identity-federation/scim
+          status: 404
+    note: >-
+      Recorded as unknown rather than false — the provider references SCIM in its own auth docs,
+      but nothing machine-readable was found to confirm it, and a conformance is not asserted on a
+      prose mention. This is a good candidate for a provenance question back to Dynatrace.
+
+  - id: pagination
+    name: Cursor pagination
+    conforms: true
+    evidence:
+      location: nextPageKey + pageSize query parameters and nextPageKey/totalCount/pageSize response fields across the Entities, Events, Metrics, Problems and Account Management collections.
+    see: conventions/dynatrace-conventions.yml
+
+compliance:
+  certifications: [SOC 2, ISO 27001, ISO 27017, ISO 27018, PCI DSS, HIPAA, FedRAMP, GDPR, CSA STAR]
+  source: https://trust.dynatrace.com/
+  see: security/dynatrace-trust-center.yml
+
+conformance_count: 13
+conforms_true: 8
+conforms_false: 4
+conforms_unknown: 1

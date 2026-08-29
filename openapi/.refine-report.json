@@ -1,30 +1,45 @@
 {
   "provider": "dynatrace",
   "sources": [
-    "dynatrace-entities-api-openapi.yml",
-    "dynatrace-environments-api-openapi.yml",
-    "dynatrace-events-api-openapi.yml",
-    "dynatrace-groups-api-openapi.yml",
-    "dynatrace-logs-api-openapi.yml",
-    "dynatrace-metrics-api-openapi.yml",
-    "dynatrace-permissions-api-openapi.yml",
-    "dynatrace-problems-api-openapi.yml",
-    "dynatrace-users-api-openapi.yml"
+    "_original/dynatrace-account-management-api-openapi.yml",
+    "_original/dynatrace-entities-api-v2-openapi.yml",
+    "_original/dynatrace-events-api-v2-openapi.yml",
+    "_original/dynatrace-log-monitoring-api-v2-openapi.yml",
+    "_original/dynatrace-metrics-api-v2-openapi.yml",
+    "_original/dynatrace-problems-api-v2-openapi.yml"
   ],
   "outputs": [
-    "dynatrace-entities-api-openapi.yml",
     "dynatrace-environments-api-openapi.yml",
-    "dynatrace-events-api-openapi.yml",
     "dynatrace-groups-api-openapi.yml",
+    "dynatrace-permissions-api-openapi.yml",
+    "dynatrace-users-api-openapi.yml",
+    "dynatrace-entities-api-openapi.yml",
+    "dynatrace-events-api-openapi.yml",
     "dynatrace-logs-api-openapi.yml",
     "dynatrace-metrics-api-openapi.yml",
-    "dynatrace-permissions-api-openapi.yml",
-    "dynatrace-problems-api-openapi.yml",
-    "dynatrace-users-api-openapi.yml"
+    "dynatrace-problems-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (6 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "dynatrace-account-management-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "dynatrace-entities-api-v2-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "dynatrace-events-api-v2-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "dynatrace-log-monitoring-api-v2-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "dynatrace-metrics-api-v2-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "dynatrace-problems-api-v2-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0"
+  ],
+  "skipped": [
+    "dynatrace-entities-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dynatrace-environments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dynatrace-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dynatrace-groups-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dynatrace-logs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dynatrace-metrics-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dynatrace-permissions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dynatrace-problems-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dynatrace-users-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

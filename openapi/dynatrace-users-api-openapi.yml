@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Dynatrace Account Management Entities Users API
+  title: Dynatrace Account Management Users API
   version: 1.0.0
   description: The Dynatrace Account Management API allows you to manage your Dynatrace account including users, groups, permissions, and environments. It uses OAuth 2.0 authentication with account-level scopes. The API enables programmatic management of identity and access controls, including creating users, assigning users to groups, defining group permissions, and listing environments associated with the account. This is the primary API for automating IAM workflows in Dynatrace.
   contact:
@@ -249,109 +249,7 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  responses:
-    Forbidden:
-      description: Forbidden — the token lacks the required scope
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    Unauthorized:
-      description: Unauthorized — missing or invalid OAuth token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    BadRequest:
-      description: Bad request — invalid request body or parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    NotFound:
-      description: Not found — the specified user, group, or resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-  parameters:
-    userId:
-      name: userId
-      in: path
-      description: The unique identifier of the user. Typically the user's email address or a UUID assigned by the system.
-      required: true
-      schema:
-        type: string
-    accountUuid:
-      name: accountUuid
-      in: path
-      description: The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API.
-      required: true
-      schema:
-        type: string
-        format: uuid
   schemas:
-    ErrorEnvelope:
-      type: object
-      description: Error response envelope returned when a request fails.
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-    UserCollection:
-      type: object
-      description: A paginated collection of users.
-      properties:
-        nextPageKey:
-          type: string
-          description: Cursor for the next page of results.
-          nullable: true
-          example: example-value
-        totalCount:
-          type: integer
-          format: int64
-          description: The total number of users in the account.
-          example: 500
-        items:
-          type: array
-          description: The list of users on this page.
-          items:
-            $ref: '#/components/schemas/User'
-          example:
-          - uid: abc123
-            email: admin@example.com
-            firstName: Production Service
-            lastName: Production Service
-            groups:
-            - example-value
-            userStatus: ACTIVE
-    UserCreateRequest:
-      type: object
-      description: Request body for creating or updating a user.
-      required:
-      - email
-      - firstName
-      - lastName
-      properties:
-        email:
-          type: string
-          format: email
-          description: The email address of the user. Used as the login identifier.
-          example: admin@example.com
-        firstName:
-          type: string
-          description: The first name of the user.
-          example: Production Service
-        lastName:
-          type: string
-          description: The last name of the user.
-          example: Production Service
-        groups:
-          type: array
-          description: The list of group IDs to assign the user to. The user gains all permissions associated with these groups.
-          items:
-            type: string
-          example:
-          - example-value
     User:
       type: object
       description: Represents a user in the Dynatrace account.
@@ -400,6 +298,108 @@ components:
           type: string
           description: A human-readable description of the error.
           example: Example description.
+    UserCollection:
+      type: object
+      description: A paginated collection of users.
+      properties:
+        nextPageKey:
+          type: string
+          description: Cursor for the next page of results.
+          nullable: true
+          example: example-value
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of users in the account.
+          example: 500
+        items:
+          type: array
+          description: The list of users on this page.
+          items:
+            $ref: '#/components/schemas/User'
+          example:
+          - uid: abc123
+            email: admin@example.com
+            firstName: Production Service
+            lastName: Production Service
+            groups:
+            - example-value
+            userStatus: ACTIVE
+    ErrorEnvelope:
+      type: object
+      description: Error response envelope returned when a request fails.
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    UserCreateRequest:
+      type: object
+      description: Request body for creating or updating a user.
+      required:
+      - email
+      - firstName
+      - lastName
+      properties:
+        email:
+          type: string
+          format: email
+          description: The email address of the user. Used as the login identifier.
+          example: admin@example.com
+        firstName:
+          type: string
+          description: The first name of the user.
+          example: Production Service
+        lastName:
+          type: string
+          description: The last name of the user.
+          example: Production Service
+        groups:
+          type: array
+          description: The list of group IDs to assign the user to. The user gains all permissions associated with these groups.
+          items:
+            type: string
+          example:
+          - example-value
+  responses:
+    NotFound:
+      description: Not found — the specified user, group, or resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    BadRequest:
+      description: Bad request — invalid request body or parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Forbidden:
+      description: Forbidden — the token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized — missing or invalid OAuth token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  parameters:
+    accountUuid:
+      name: accountUuid
+      in: path
+      description: The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API.
+      required: true
+      schema:
+        type: string
+        format: uuid
+    userId:
+      name: userId
+      in: path
+      description: The unique identifier of the user. Typically the user's email address or a UUID assigned by the system.
+      required: true
+      schema:
+        type: string
   securitySchemes:
     oauth2:
       type: oauth2

@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Dynatrace Account Management Entities Groups API
+  title: Dynatrace Account Management Groups API
   version: 1.0.0
   description: The Dynatrace Account Management API allows you to manage your Dynatrace account including users, groups, permissions, and environments. It uses OAuth 2.0 authentication with account-level scopes. The API enables programmatic management of identity and access controls, including creating users, assigning users to groups, defining group permissions, and listing environments associated with the account. This is the primary API for automating IAM workflows in Dynatrace.
   contact:
@@ -240,18 +240,6 @@ paths:
         dispatcher: FALLBACK
 components:
   responses:
-    Forbidden:
-      description: Forbidden — the token lacks the required scope
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    Unauthorized:
-      description: Unauthorized — missing or invalid OAuth token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
     BadRequest:
       description: Bad request — invalid request body or parameters
       content:
@@ -264,7 +252,77 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorEnvelope'
+    Forbidden:
+      description: Forbidden — the token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized — missing or invalid OAuth token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
   schemas:
+    Error:
+      type: object
+      description: Details of an API error.
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+          example: 500
+        message:
+          type: string
+          description: A human-readable description of the error.
+          example: Example description.
+    GroupCreateRequest:
+      type: object
+      description: Request body for creating or updating a group.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: The display name of the group.
+          example: Production Service
+        description:
+          type: string
+          description: An optional description of the group's purpose or access scope.
+          example: Example description.
+    ErrorEnvelope:
+      type: object
+      description: Error response envelope returned when a request fails.
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    GroupCollection:
+      type: object
+      description: A paginated collection of groups.
+      properties:
+        nextPageKey:
+          type: string
+          description: Cursor for the next page of results.
+          nullable: true
+          example: example-value
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of groups in the account.
+          example: 500
+        items:
+          type: array
+          description: The list of groups on this page.
+          items:
+            $ref: '#/components/schemas/Group'
+          example:
+          - groupId: abc123
+            name: Production Service
+            description: Example description.
+            owner: example-value
+            createdAt: '2025-03-15T14:30:00Z'
+            updatedAt: '2025-03-15T14:30:00Z'
     Group:
       type: object
       description: Represents a user group in the Dynatrace account.
@@ -295,72 +353,7 @@ components:
           format: date-time
           description: The date and time when the group was last updated.
           example: '2025-03-15T14:30:00Z'
-    ErrorEnvelope:
-      type: object
-      description: Error response envelope returned when a request fails.
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-    GroupCreateRequest:
-      type: object
-      description: Request body for creating or updating a group.
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: The display name of the group.
-          example: Production Service
-        description:
-          type: string
-          description: An optional description of the group's purpose or access scope.
-          example: Example description.
-    GroupCollection:
-      type: object
-      description: A paginated collection of groups.
-      properties:
-        nextPageKey:
-          type: string
-          description: Cursor for the next page of results.
-          nullable: true
-          example: example-value
-        totalCount:
-          type: integer
-          format: int64
-          description: The total number of groups in the account.
-          example: 500
-        items:
-          type: array
-          description: The list of groups on this page.
-          items:
-            $ref: '#/components/schemas/Group'
-          example:
-          - groupId: abc123
-            name: Production Service
-            description: Example description.
-            owner: example-value
-            createdAt: '2025-03-15T14:30:00Z'
-            updatedAt: '2025-03-15T14:30:00Z'
-    Error:
-      type: object
-      description: Details of an API error.
-      properties:
-        code:
-          type: integer
-          description: The HTTP status code of the error.
-          example: 500
-        message:
-          type: string
-          description: A human-readable description of the error.
-          example: Example description.
   parameters:
-    groupId:
-      name: groupId
-      in: path
-      description: The unique identifier of the group.
-      required: true
-      schema:
-        type: string
     accountUuid:
       name: accountUuid
       in: path
@@ -369,6 +362,13 @@ components:
       schema:
         type: string
         format: uuid
+    groupId:
+      name: groupId
+      in: path
+      description: The unique identifier of the group.
+      required: true
+      schema:
+        type: string
   securitySchemes:
     oauth2:
       type: oauth2

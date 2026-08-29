@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Dynatrace Account Management Entities Environments API
+  title: Dynatrace Account Management Environments API
   version: 1.0.0
   description: The Dynatrace Account Management API allows you to manage your Dynatrace account including users, groups, permissions, and environments. It uses OAuth 2.0 authentication with account-level scopes. The API enables programmatic management of identity and access controls, including creating users, assigning users to groups, defining group permissions, and listing environments associated with the account. This is the primary API for automating IAM workflows in Dynatrace.
   contact:
@@ -73,20 +73,19 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  responses:
-    Forbidden:
-      description: Forbidden — the token lacks the required scope
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    Unauthorized:
-      description: Unauthorized — missing or invalid OAuth token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
   schemas:
+    Error:
+      type: object
+      description: Details of an API error.
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+          example: 500
+        message:
+          type: string
+          description: A human-readable description of the error.
+          example: Example description.
     EnvironmentCollection:
       type: object
       description: A paginated collection of environments.
@@ -141,18 +140,6 @@ components:
           type: boolean
           description: Whether the environment is a trial environment.
           example: true
-    Error:
-      type: object
-      description: Details of an API error.
-      properties:
-        code:
-          type: integer
-          description: The HTTP status code of the error.
-          example: 500
-        message:
-          type: string
-          description: A human-readable description of the error.
-          example: Example description.
   parameters:
     accountUuid:
       name: accountUuid
@@ -162,6 +149,19 @@ components:
       schema:
         type: string
         format: uuid
+  responses:
+    Forbidden:
+      description: Forbidden — the token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized — missing or invalid OAuth token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
   securitySchemes:
     oauth2:
       type: oauth2

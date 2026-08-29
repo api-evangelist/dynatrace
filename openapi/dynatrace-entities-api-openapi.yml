@@ -1,8 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Dynatrace Account Management Entities API
-  version: 1.0.0
-  description: The Dynatrace Account Management API allows you to manage your Dynatrace account including users, groups, permissions, and environments. It uses OAuth 2.0 authentication with account-level scopes. The API enables programmatic management of identity and access controls, including creating users, assigning users to groups, defining group permissions, and listing environments associated with the account. This is the primary API for automating IAM workflows in Dynatrace.
+  title: Dynatrace API v2 Entities API
+  version: 2.0.0
+  description: The Dynatrace Entities API v2 enables querying of monitored entities such as services, hosts, processes, process groups, and applications within a Dynatrace environment. It supports filtering entities by type, tags, management zones, and time range. Entity responses include topology relationships, properties, tags, and management zone assignments for dependency mapping and infrastructure analysis.
   contact:
     name: Dynatrace Support
     url: https://www.dynatrace.com/support/
@@ -11,10 +11,14 @@ info:
     url: https://www.dynatrace.com/company/trust-center/terms/
   x-last-validated: '2026-04-18'
 servers:
-- url: https://api.dynatrace.com
-  description: Dynatrace Account Management API (global endpoint)
+- url: https://{environmentId}.live.dynatrace.com/api/v2
+  description: Dynatrace SaaS environment
+  variables:
+    environmentId:
+      description: The unique identifier of your Dynatrace environment
+      default: mySampleEnv
 security:
-- oauth2: []
+- api-token: []
 tags:
 - name: Entities
   description: Operations for querying monitored entities and entity types
@@ -369,42 +373,66 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  responses:
+    BadRequest:
+      description: Bad request — invalid query parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    NotFound:
+      description: Not found — the specified entity or entity type does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Forbidden:
+      description: Forbidden — the API token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized — missing or invalid API token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
   schemas:
-    ConstraintViolation:
+    Error:
       type: object
-      description: Details of a single constraint violation in a request.
+      description: Details of an API error.
       properties:
-        path:
-          type: string
-          description: The JSON path to the field that caused the violation.
-          example: example-value
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+          example: 500
         message:
           type: string
-          description: A description of the constraint violation.
+          description: A human-readable description of the error.
           example: Example description.
-        parameterLocation:
-          type: string
-          description: The location of the violating parameter (QUERY, PATH, BODY).
-          example: example-value
-        location:
-          type: string
-          description: The location detail for the violation.
-          example: example-value
-    EntityTypeRelationship:
+        constraintViolations:
+          type: array
+          description: A list of constraint violations for validation errors (HTTP 400).
+          items:
+            $ref: '#/components/schemas/ConstraintViolation'
+          example:
+          - path: example-value
+            message: Example description.
+            parameterLocation: example-value
+            location: example-value
+    ManagementZone:
       type: object
-      description: Describes a relationship type for an entity type.
+      description: A management zone reference.
       properties:
         id:
           type: string
-          description: The relationship type identifier, e.g., runsOn.
+          description: The unique identifier of the management zone.
           example: abc123
-        toTypes:
-          type: array
-          description: The entity types that can participate in this relationship.
-          items:
-            type: string
-          example:
-          - STANDARD
+        name:
+          type: string
+          description: The display name of the management zone.
+          example: Production Service
     EntityType:
       type: object
       description: Defines an entity type including its display name, available properties, and supported relationship types.
@@ -448,6 +476,61 @@ components:
           - id: abc123
             toTypes:
             - {}
+    EntityLookupRequest:
+      type: object
+      description: Request body for looking up an entity by name and type.
+      required:
+      - name
+      - type
+      properties:
+        name:
+          type: string
+          description: The display name of the entity to look up.
+          example: Production Service
+        type:
+          type: string
+          description: The entity type to search within, e.g., SERVICE, HOST.
+          example: STANDARD
+    EntityCollection:
+      type: object
+      description: A paginated collection of monitored entities.
+      properties:
+        nextPageKey:
+          type: string
+          description: Cursor for the next page of results. Null if no more pages.
+          nullable: true
+          example: example-value
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of entities matching the query.
+          example: 500
+        pageSize:
+          type: integer
+          description: The number of results returned on this page.
+          example: 500
+        entities:
+          type: array
+          description: The list of entities on this page.
+          items:
+            $ref: '#/components/schemas/Entity'
+          example:
+          - entityId: abc123
+            displayName: Production Service
+            type: STANDARD
+            firstSeenTms: 500
+            lastSeenTms: 500
+            properties: {}
+            tags:
+            - context: example-value
+              key: example-value
+              value: example-value
+              stringRepresentation: example-value
+            managementZones:
+            - id: abc123
+              name: Production Service
+            toRelationships: {}
+            fromRelationships: {}
     Entity:
       type: object
       description: Represents a monitored entity in Dynatrace. Entities are the components of your monitored environment such as services, hosts, processes, and applications. Each entity has a unique ID, a type, properties, tags, and relationships to other entities.
@@ -513,34 +596,26 @@ components:
             items:
               type: string
           example: {}
-    EntityTypeProperty:
+    ConstraintViolation:
       type: object
-      description: Describes a single property of an entity type.
+      description: Details of a single constraint violation in a request.
       properties:
-        id:
+        path:
           type: string
-          description: The property key identifier.
-          example: abc123
-        displayName:
+          description: The JSON path to the field that caused the violation.
+          example: example-value
+        message:
           type: string
-          description: The human-readable display name of the property.
-          example: Production Service
-        type:
+          description: A description of the constraint violation.
+          example: Example description.
+        parameterLocation:
           type: string
-          description: The data type of the property value.
-          example: STANDARD
-    ManagementZone:
-      type: object
-      description: A management zone reference.
-      properties:
-        id:
+          description: The location of the violating parameter (QUERY, PATH, BODY).
+          example: example-value
+        location:
           type: string
-          description: The unique identifier of the management zone.
-          example: abc123
-        name:
-          type: string
-          description: The display name of the management zone.
-          example: Production Service
+          description: The location detail for the violation.
+          example: example-value
     ErrorEnvelope:
       type: object
       description: Error response envelope returned when a request fails.
@@ -582,61 +657,37 @@ components:
             - id: abc123
               toTypes:
               - {}
-    EntityLookupRequest:
+    EntityTypeProperty:
       type: object
-      description: Request body for looking up an entity by name and type.
-      required:
-      - name
-      - type
+      description: Describes a single property of an entity type.
       properties:
-        name:
+        id:
           type: string
-          description: The display name of the entity to look up.
+          description: The property key identifier.
+          example: abc123
+        displayName:
+          type: string
+          description: The human-readable display name of the property.
           example: Production Service
         type:
           type: string
-          description: The entity type to search within, e.g., SERVICE, HOST.
+          description: The data type of the property value.
           example: STANDARD
-    EntityCollection:
+    EntityTypeRelationship:
       type: object
-      description: A paginated collection of monitored entities.
+      description: Describes a relationship type for an entity type.
       properties:
-        nextPageKey:
+        id:
           type: string
-          description: Cursor for the next page of results. Null if no more pages.
-          nullable: true
-          example: example-value
-        totalCount:
-          type: integer
-          format: int64
-          description: The total number of entities matching the query.
-          example: 500
-        pageSize:
-          type: integer
-          description: The number of results returned on this page.
-          example: 500
-        entities:
+          description: The relationship type identifier, e.g., runsOn.
+          example: abc123
+        toTypes:
           type: array
-          description: The list of entities on this page.
+          description: The entity types that can participate in this relationship.
           items:
-            $ref: '#/components/schemas/Entity'
+            type: string
           example:
-          - entityId: abc123
-            displayName: Production Service
-            type: STANDARD
-            firstSeenTms: 500
-            lastSeenTms: 500
-            properties: {}
-            tags:
-            - context: example-value
-              key: example-value
-              value: example-value
-              stringRepresentation: example-value
-            managementZones:
-            - id: abc123
-              name: Production Service
-            toRelationships: {}
-            fromRelationships: {}
+          - STANDARD
     EntityTag:
       type: object
       description: A tag applied to a monitored entity.
@@ -658,64 +709,12 @@ components:
           type: string
           description: The full string representation of the tag as displayed in the Dynatrace UI, e.g., [KUBERNETES]app:my-service.
           example: example-value
-    Error:
-      type: object
-      description: Details of an API error.
-      properties:
-        code:
-          type: integer
-          description: The HTTP status code of the error.
-          example: 500
-        message:
-          type: string
-          description: A human-readable description of the error.
-          example: Example description.
-        constraintViolations:
-          type: array
-          description: A list of constraint violations for validation errors (HTTP 400).
-          items:
-            $ref: '#/components/schemas/ConstraintViolation'
-          example:
-          - path: example-value
-            message: Example description.
-            parameterLocation: example-value
-            location: example-value
-  responses:
-    Unauthorized:
-      description: Unauthorized — missing or invalid API token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    BadRequest:
-      description: Bad request — invalid query parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    Forbidden:
-      description: Forbidden — the API token lacks the required scope
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    NotFound:
-      description: Not found — the specified entity or entity type does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
   securitySchemes:
-    oauth2:
-      type: oauth2
-      description: 'OAuth 2.0 authentication for the Account Management API. Use the client credentials flow to obtain a bearer token. Required scopes vary by endpoint: account-idm-read for GET operations, account-idm-write for POST/PUT/DELETE operations.'
-      flows:
-        clientCredentials:
-          tokenUrl: https://sso.dynatrace.com/sso/oauth2/token
-          scopes:
-            account-idm-read: Read access to account identity and management data
-            account-idm-write: Write access to manage users, groups, and permissions
-            account-env-read: Read access to environment information
+    api-token:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Dynatrace API token. Use the format: Api-Token {your-token} Required scopes: entities.read'
 externalDocs:
-  description: Dynatrace Account Management API Documentation
-  url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api
+  description: Dynatrace Entities API v2 Documentation
+  url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/entity-v2

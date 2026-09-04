@@ -3817,7 +3817,7 @@ image: https://www.dynatrace.com/logo.png
 access: 3rd-Party
 created: '2025-01-08'
 modified: '2026-08-29'
-position: Consumer
+position: Consuming
 description: Dynatrace is a software intelligence platform that provides application
   performance monitoring, artificial intelligence for operations, cloud infrastructure
   monitoring, and digital experience management.

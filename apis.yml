@@ -125,13 +125,11 @@ apis:
   - Management
   - Observability
   - Settings
-  humanURL: >-
-    https://docs.dynatrace.com/docs/dynatrace-api/environment-api/settings
+  humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/settings
   baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
   image: https://www.dynatrace.com/logo.png
   properties:
-  - url: >-
-      https://docs.dynatrace.com/docs/dynatrace-api/environment-api/settings
+  - url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/settings
     type: Documentation
   description: >-
     The Dynatrace Settings API 2.0 is the modern, schema-driven configuration API for managing Dynatrace
@@ -150,13 +148,11 @@ apis:
   - Integrations
   - Monitoring
   - Observability
-  humanURL: >-
-    https://docs.dynatrace.com/docs/dynatrace-api/environment-api/extensions-20
+  humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/extensions-20
   baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
   image: https://www.dynatrace.com/logo.png
   properties:
-  - url: >-
-      https://docs.dynatrace.com/docs/dynatrace-api/environment-api/extensions-20
+  - url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/extensions-20
     type: Documentation
   - url: https://docs.dynatrace.com/docs/ingest-from/extensions/manage-extensions
     type: APIReference
@@ -214,6 +210,10 @@ apis:
 - aid: dynatrace:dynatrace-slo-api
   name: Dynatrace Service-Level Objectives API
   tags:
+  - Observability
+  - Reliability
+  - SLO
+  tags_raw:
   - Observability
   - Reliability
   - Service Level Objectives
@@ -3774,6 +3774,146 @@ apis:
     url: examples/entities-api-v2-entity-type-relationship-example.json
   - type: Examples
     url: examples/entities-api-v2-management-zone-example.json
+- aid: dynatrace:dynatrace-account-audits-api
+  name: Dynatrace Account Audits API
+  description: Access account-level audit logs.
+  humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  tags:
+  - Account Audits
+  properties:
+  - type: OpenAPI
+    url: openapi/dynatrace-account-audits-api-openapi.yml
+- aid: dynatrace:dynatrace-account-limits-api
+  name: Dynatrace Account limits API
+  description: Retrieve the limits configured for an account.
+  humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  tags:
+  - Account limits
+  properties:
+  - type: OpenAPI
+    url: openapi/dynatrace-account-limits-api-openapi.yml
+- aid: dynatrace:dynatrace-account-settings-api
+  name: Dynatrace Account Settings API
+  description: Manage account settings such as cost-center and product field values.
+  humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  tags:
+  - Account Settings
+  properties:
+  - type: OpenAPI
+    url: openapi/dynatrace-account-settings-api-openapi.yml
+- aid: dynatrace:dynatrace-dynatrace-platform-subscription-api
+  name: Dynatrace Dynatrace Platform Subscription API
+  description: View platform subscriptions and their usage, cost, forecast, and rate-card data.
+  humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  tags:
+  - Dynatrace Platform Subscription
+  properties:
+  - type: OpenAPI
+    url: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml
+- aid: dynatrace:dynatrace-environment-management-api
+  name: Dynatrace Environment management API
+  description: List environments and clusters and manage their IP allowlist configuration.
+  humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  tags:
+  - Environment management
+  properties:
+  - type: OpenAPI
+    url: openapi/dynatrace-environment-management-api-openapi.yml
+- aid: dynatrace:dynatrace-group-management-api
+  name: Dynatrace Group management API
+  description: Create and manage user groups and their members.
+  humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  tags:
+  - Group management
+  properties:
+  - type: OpenAPI
+    url: openapi/dynatrace-group-management-api-openapi.yml
+- aid: dynatrace:dynatrace-notifications-api
+  name: Dynatrace Notifications API
+  description: Manage notifications for an account.
+  humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  tags:
+  - Notifications
+  properties:
+  - type: OpenAPI
+    url: openapi/dynatrace-notifications-api-openapi.yml
+- aid: dynatrace:dynatrace-permission-management-api
+  name: Dynatrace Permission management API
+  description: Manage group permissions (deprecated; use policy management instead).
+  humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  tags:
+  - Permission management
+  properties:
+  - type: OpenAPI
+    url: openapi/dynatrace-permission-management-api-openapi.yml
+- aid: dynatrace:dynatrace-platform-tokens-api
+  name: Dynatrace Platform tokens API
+  description: Manage platform tokens for account users.
+  humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  tags:
+  - Platform tokens
+  properties:
+  - type: OpenAPI
+    url: openapi/dynatrace-platform-tokens-api-openapi.yml
+- aid: dynatrace:dynatrace-policy-management-api
+  name: Dynatrace Policy management API
+  description: Manage IAM policies, policy bindings, and permission boundaries.
+  humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  tags:
+  - Policy management
+  properties:
+  - type: OpenAPI
+    url: openapi/dynatrace-policy-management-api-openapi.yml
+- aid: dynatrace:dynatrace-reference-data-api
+  name: Dynatrace Reference data API
+  description: Look up reference data such as time zones, regions, and available permissions.
+  humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  tags:
+  - Reference data
+  properties:
+  - type: OpenAPI
+    url: openapi/dynatrace-reference-data-api-openapi.yml
+- aid: dynatrace:dynatrace-service-user-management-api
+  name: Dynatrace Service user management API
+  description: Manage service users within an account.
+  humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  tags:
+  - Service user management
+  properties:
+  - type: OpenAPI
+    url: openapi/dynatrace-service-user-management-api-openapi.yml
+- aid: dynatrace:dynatrace-user-management-api
+  name: Dynatrace User management API
+  description: Manage users in an account and their group memberships.
+  humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  tags:
+  - User management
+  properties:
+  - type: OpenAPI
+    url: openapi/dynatrace-user-management-api-openapi.yml
+- aid: dynatrace:dynatrace-workload-identity-federation-api
+  name: Dynatrace Workload Identity Federation API
+  description: Manage workload identity federation trust policies and their service-user mappings.
+  humanURL: https://docs.dynatrace.com/docs/dynatrace-api/environment-api
+  baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
+  tags:
+  - Workload Identity Federation
+  properties:
+  - type: OpenAPI
+    url: openapi/dynatrace-workload-identity-federation-api-openapi.yml
 name: Dynatrace
 tags:
 - AI Operations

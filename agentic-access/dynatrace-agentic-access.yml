@@ -1,24 +1,33 @@
-generated: '2026-07-15'
+generated: '2026-09-16'
 method: generated
-source: openapi/dynatrace-account-management-api-openapi.yml, openapi/dynatrace-entities-api-v2-openapi.yml,
-  openapi/dynatrace-events-api-v2-openapi.yml, openapi/dynatrace-log-monitoring-api-v2-openapi.yml,
-  openapi/dynatrace-metrics-api-v2-openapi.yml, openapi/dynatrace-problems-api-v2-openapi.yml
+source: openapi/dynatrace-account-audits-api-openapi.yml, openapi/dynatrace-account-limits-api-openapi.yml,
+  openapi/dynatrace-account-settings-api-openapi.yml, openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml,
+  openapi/dynatrace-entities-api-openapi.yml, openapi/dynatrace-environment-management-api-openapi.yml,
+  openapi/dynatrace-environments-api-openapi.yml, openapi/dynatrace-events-api-openapi.yml,
+  openapi/dynatrace-group-management-api-openapi.yml, openapi/dynatrace-groups-api-openapi.yml,
+  openapi/dynatrace-logs-api-openapi.yml, openapi/dynatrace-metrics-api-openapi.yml, openapi/dynatrace-notifications-api-openapi.yml,
+  openapi/dynatrace-permission-management-api-openapi.yml, openapi/dynatrace-permissions-api-openapi.yml,
+  openapi/dynatrace-platform-tokens-api-openapi.yml, openapi/dynatrace-policy-management-api-openapi.yml,
+  openapi/dynatrace-problems-api-openapi.yml, openapi/dynatrace-reference-data-api-openapi.yml,
+  openapi/dynatrace-service-user-management-api-openapi.yml, openapi/dynatrace-user-management-api-openapi.yml,
+  openapi/dynatrace-users-api-openapi.yml, openapi/dynatrace-workload-identity-federation-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
-  operations: 37
+  operations: 133
   by_action_class:
-    connected: 22
-    acting: 15
+    connected: 69
+    acting: 64
   by_consequence:
-    read: 22
-    write: 15
-  human_in_the_loop_required: 0
+    read: 69
+    safety-critical: 21
+    write: 43
+  human_in_the_loop_required: 21
 operations:
-- path: /iam/v1/accounts/{accountUuid}/users
+- path: /audit/v1/accounts/{account-uuid}
   method: get
-  operationId: listUsers
+  operationId: AuditsController_listAuditsByAccount
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -26,67 +35,77 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /iam/v1/accounts/{accountUuid}/users
+- path: /iam/v1/accounts/{account-uuid}/limits
+  method: get
+  operationId: getLimitsForAccount
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/accounts/{account-uuid}/settings/costcenters
+  method: get
+  operationId: AccountsController_listCostcenterCostAllocationValues
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/accounts/{account-uuid}/settings/costcenters
   method: post
-  operationId: createUser
+  operationId: AccountsController_createCostcenterCostAllocationValues
   x-agentic-access:
     action-class: acting
-    consequence: write
+    consequence: safety-critical
     subject: required
     audience: null
     token:
-      max-ttl: 900
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
     escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
+      human-in-the-loop: required
     audit: required
-- path: /iam/v1/accounts/{accountUuid}/users/{userId}
-  method: get
-  operationId: getUser
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /iam/v1/accounts/{accountUuid}/users/{userId}
+- path: /v1/accounts/{account-uuid}/settings/costcenters
   method: put
-  operationId: updateUser
+  operationId: AccountsController_replaceCostcenterCostAllocationValues
   x-agentic-access:
     action-class: acting
-    consequence: write
+    consequence: safety-critical
     subject: required
     audience: null
     token:
-      max-ttl: 900
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
     escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
+      human-in-the-loop: required
     audit: required
-- path: /iam/v1/accounts/{accountUuid}/users/{userId}
+- path: /v1/accounts/{account-uuid}/settings/costcenters/{key}
   method: delete
-  operationId: deleteUser
+  operationId: AccountsController_deleteCostcenterCostAllocationValue
   x-agentic-access:
     action-class: acting
-    consequence: write
+    consequence: safety-critical
     subject: required
     audience: null
     token:
-      max-ttl: 900
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
     escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
+      human-in-the-loop: required
     audit: required
-- path: /iam/v1/accounts/{accountUuid}/groups
+- path: /v1/accounts/{account-uuid}/settings/products
   method: get
-  operationId: listGroups
+  operationId: AccountsController_listProductCostAllocationValues
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -94,67 +113,57 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /iam/v1/accounts/{accountUuid}/groups
+- path: /v1/accounts/{account-uuid}/settings/products
   method: post
-  operationId: createGroup
+  operationId: AccountsController_createProductCostAllocationValues
   x-agentic-access:
     action-class: acting
-    consequence: write
+    consequence: safety-critical
     subject: required
     audience: null
     token:
-      max-ttl: 900
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
     escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
+      human-in-the-loop: required
     audit: required
-- path: /iam/v1/accounts/{accountUuid}/groups/{groupId}
-  method: get
-  operationId: getGroup
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /iam/v1/accounts/{accountUuid}/groups/{groupId}
+- path: /v1/accounts/{account-uuid}/settings/products
   method: put
-  operationId: updateGroup
+  operationId: AccountsController_replaceProductCostAllocationValues
   x-agentic-access:
     action-class: acting
-    consequence: write
+    consequence: safety-critical
     subject: required
     audience: null
     token:
-      max-ttl: 900
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
     escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
+      human-in-the-loop: required
     audit: required
-- path: /iam/v1/accounts/{accountUuid}/groups/{groupId}
+- path: /v1/accounts/{account-uuid}/settings/products/{key}
   method: delete
-  operationId: deleteGroup
+  operationId: AccountsController_deleteProductCostAllocationValue
   x-agentic-access:
     action-class: acting
-    consequence: write
+    consequence: safety-critical
     subject: required
     audience: null
     token:
-      max-ttl: 900
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
     escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
+      human-in-the-loop: required
     audit: required
-- path: /iam/v1/accounts/{accountUuid}/permissions
+- path: /sub/v2/accounts/{account-uuid}/subscriptions
   method: get
-  operationId: listPermissions
+  operationId: SubscriptionsController_listSubscriptions
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -162,9 +171,99 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /env/v1/accounts/{accountUuid}/environments
+- path: /sub/v2/accounts/{account-uuid}/subscriptions/forecast
   method: get
-  operationId: listEnvironments
+  operationId: SubscriptionsController_getForecast
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /sub/v2/accounts/{account-uuid}/subscriptions/{subscription-uuid}
+  method: get
+  operationId: SubscriptionsController_getSubscription
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /sub/v2/accounts/{account-uuid}/subscriptions/{subscription-uuid}/environments/usage
+  method: get
+  operationId: getEnvironmentUsage
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /sub/v2/accounts/{account-uuid}/subscriptions/{subscription-uuid}/usage
+  method: get
+  operationId: SubscriptionsController_getTotalSubscriptionUsage
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /sub/v2/accounts/{account-uuid}/subscriptions/{subscription-uuid}/cost
+  method: get
+  operationId: SubscriptionsController_getTotalSubscriptionCost
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /sub/v2/accounts/{account-uuid}/subscriptions/{subscription-uuid}/environments/cost
+  method: get
+  operationId: getEnvironmentCost
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /sub/v3/accounts/{account-uuid}/subscriptions/{subscription-uuid}/environments/cost
+  method: get
+  operationId: getEnvironmentCostV3
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /sub/v3/accounts/{account-uuid}/subscriptions/{subscription-uuid}/environments/usage
+  method: get
+  operationId: getEnvironmentUsageV3
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /sub/v1/accounts/{account-uuid}/rate-cards
+  method: get
+  operationId: SubscriptionsController_listRateCards
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/subscriptions/{subscription-uuid}/cost-allocation
+  method: get
+  operationId: InsightsController_getCostAllocationBreakdownPage
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -228,6 +327,72 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /env/v1/accounts/{account-uuid}/environments
+  method: get
+  operationId: EnvironmentResourcesController_getEnvironmentResources
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /env/v2/accounts/{account-uuid}/environments
+  method: get
+  operationId: EnvironmentResourcesController_getEnvironments
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /env/v2/accounts/{account-uuid}/clusters
+  method: get
+  operationId: EnvironmentResourcesController_getClusters
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /env/v1/accounts/{account-uuid}/environments/{environment-uuid}/ip-allowlist
+  method: get
+  operationId: EnvironmentResourcesController_getConfig
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /env/v1/accounts/{account-uuid}/environments/{environment-uuid}/ip-allowlist
+  method: put
+  operationId: EnvironmentResourcesController_setConfig
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /env/v1/accounts/{accountUuid}/environments
+  method: get
+  operationId: listEnvironments
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /events
   method: get
   operationId: listEvents
@@ -251,6 +416,142 @@ operations:
 - path: /events/ingest
   method: post
   operationId: ingestEvent
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/accounts/{account-uuid}/groups
+  method: get
+  operationId: GroupsController_getGroups
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/accounts/{account-uuid}/groups
+  method: post
+  operationId: GroupsController_createGroups
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /iam/v1/accounts/{account-uuid}/groups/{group-uuid}/users
+  method: get
+  operationId: GroupsController_getUsersForGroup
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/accounts/{account-uuid}/groups/{group-uuid}
+  method: put
+  operationId: GroupsController_editGroup
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /iam/v1/accounts/{account-uuid}/groups/{group-uuid}
+  method: delete
+  operationId: GroupsController_deleteGroup
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /iam/v1/accounts/{accountUuid}/groups
+  method: get
+  operationId: listGroups
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/accounts/{accountUuid}/groups
+  method: post
+  operationId: createGroup
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/accounts/{accountUuid}/groups/{groupId}
+  method: get
+  operationId: getGroup
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/accounts/{accountUuid}/groups/{groupId}
+  method: put
+  operationId: updateGroup
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/accounts/{accountUuid}/groups/{groupId}
+  method: delete
+  operationId: deleteGroup
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -372,6 +673,534 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /v1/accounts/{account-uuid}/notifications
+  method: post
+  operationId: listNotifications
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/accounts/{account-uuid}/notifications
+  method: get
+  operationId: listNotificationsV2
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/accounts/{account-uuid}/groups/{group-uuid}/permissions
+  method: get
+  operationId: PermissionsController_getGroupPermissions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/accounts/{account-uuid}/groups/{group-uuid}/permissions
+  method: post
+  operationId: PermissionsController_addGroupPermissions
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /iam/v1/accounts/{account-uuid}/groups/{group-uuid}/permissions
+  method: put
+  operationId: PermissionsController_overwriteGroupPermissions
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /iam/v1/accounts/{account-uuid}/groups/{group-uuid}/permissions
+  method: delete
+  operationId: PermissionsController_removeGroupPermissions
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /iam/v1/accounts/{accountUuid}/permissions
+  method: get
+  operationId: listPermissions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/accounts/{account-uuid}/platform-tokens
+  method: get
+  operationId: getPlatformTokensForAccount
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/accounts/{account-uuid}/platform-tokens
+  method: post
+  operationId: generatePlatformToken
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/accounts/{account-uuid}/platform-tokens/{platform-token-id}
+  method: delete
+  operationId: deletePlatformToken
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/accounts/{account-uuid}/platform-tokens/{platform-token-id}/expiration-date
+  method: put
+  operationId: updatePlatformTokenExpirationDate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/accounts/{account-uuid}/platform-tokens/{platform-token-id}/status
+  method: put
+  operationId: updatePlatformTokenStatus
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/repo/{level-type}/{level-id}/policies/validation
+  method: post
+  operationId: validateNewLevelPolicy
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/repo/{level-type}/{level-id}/policies/validation/{policy-uuid}
+  method: post
+  operationId: validateLevelPolicy
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/resolution/{level-type}/{level-id}/effectivepermissions
+  method: get
+  operationId: getEffectivePermissions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/repo/{level-type}/{level-id}/policies/aggregate
+  method: get
+  operationId: getPolicyOverviewList
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/repo/{level-type}/{level-id}/policies
+  method: get
+  operationId: getLevelPolicies
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/repo/{level-type}/{level-id}/policies
+  method: post
+  operationId: createLevelPolicy
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/repo/{level-type}/{level-id}/policies/{policy-uuid}
+  method: get
+  operationId: getLevelPolicy
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/repo/{level-type}/{level-id}/policies/{policy-uuid}
+  method: put
+  operationId: updateLevelPolicy
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/repo/{level-type}/{level-id}/policies/{policy-uuid}
+  method: delete
+  operationId: deleteLevelPolicy
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/repo/{level-type}/{level-id}/bindings/groups/{group-uuid}
+  method: get
+  operationId: getPolicyUuidsBindings
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/repo/{level-type}/{level-id}/bindings/groups/{group-uuid}
+  method: put
+  operationId: updatePolicyBindingsToGroup
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/repo/{level-type}/{level-id}/bindings
+  method: get
+  operationId: getAllLevelPoliciesBindings
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/repo/{level-type}/{level-id}/bindings
+  method: delete
+  operationId: deleteLevelPolicyBindings
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/repo/{level-type}/{level-id}/bindings/{policy-uuid}
+  method: get
+  operationId: getLevelPolicyBindings
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/repo/{level-type}/{level-id}/bindings/{policy-uuid}
+  method: post
+  operationId: appendLevelPolicyBindings
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/repo/{level-type}/{level-id}/bindings/{policy-uuid}
+  method: delete
+  operationId: deleteLevelPolicyBindingsForPolicy
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/repo/{level-type}/{level-id}/bindings/descendants/{policy-uuid}
+  method: get
+  operationId: getLevelDescendantsPolicyBindings
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/repo/{level-type}/{level-id}/bindings/{policy-uuid}/{group-uuid}
+  method: get
+  operationId: getLevelPolicyBindingsForGroup
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/repo/{level-type}/{level-id}/bindings/{policy-uuid}/{group-uuid}
+  method: post
+  operationId: appendParticularGroupBinding
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/repo/{level-type}/{level-id}/bindings/{policy-uuid}/{group-uuid}
+  method: put
+  operationId: updateLevelPolicyBindingForPolicyAndGroup
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/repo/{level-type}/{level-id}/bindings/{policy-uuid}/{group-uuid}
+  method: delete
+  operationId: deleteLevelPolicyBindingsForPolicyAndGroup
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/repo/account/{account-id}/boundaries
+  method: get
+  operationId: getPolicyBoundaries
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/repo/account/{account-id}/boundaries
+  method: post
+  operationId: postPolicyBoundary
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/repo/account/{account-id}/boundaries/{policy-boundary-uuid}
+  method: get
+  operationId: getPolicyBoundary
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/repo/account/{account-id}/boundaries/{policy-boundary-uuid}
+  method: put
+  operationId: putPolicyBoundary
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/repo/account/{account-id}/boundaries/{policy-boundary-uuid}
+  method: delete
+  operationId: deletePolicyBoundary
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/repo/{level-type}/{level-id}/limits
+  method: get
+  operationId: getLimitsForLevel
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /problems
   method: get
   operationId: listProblems
@@ -463,6 +1292,440 @@ operations:
 - path: /problems/{problemId}/comments/{commentId}
   method: delete
   operationId: deleteProblemComment
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /ref/v1/time-zones
+  method: get
+  operationId: ReferenceDataController_
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /ref/v1/regions
+  method: get
+  operationId: ReferenceDataController_
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /ref/v1/account/permissions
+  method: get
+  operationId: ReferenceDataController_getPermissions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/accounts/{account-uuid}/service-users
+  method: post
+  operationId: ServiceUsersController_createServiceUserForAccount
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /iam/v1/accounts/{account-uuid}/service-users
+  method: get
+  operationId: ServiceUsersController_getServiceUsersFromAccount
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/accounts/{account-uuid}/service-users/{user-uuid}
+  method: put
+  operationId: ServiceUsersController_updateServiceUserForAccount
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /iam/v1/accounts/{account-uuid}/service-users/{user-uuid}
+  method: get
+  operationId: ServiceUsersController_getServiceUser
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/accounts/{account-uuid}/service-users/{user-uuid}
+  method: delete
+  operationId: ServiceUsersController_deleteUser
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /iam/v1/accounts/{account-uuid}/users
+  method: get
+  operationId: UsersController_getUsers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/accounts/{account-uuid}/users
+  method: post
+  operationId: UsersController_createUserForAccount
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /iam/v1/accounts/{account-uuid}/users/{email}
+  method: get
+  operationId: UsersController_getUserGroups
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/accounts/{account-uuid}/users/{email}
+  method: post
+  operationId: UsersController_addUserToGroups
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /iam/v1/accounts/{account-uuid}/users/{email}
+  method: delete
+  operationId: UsersController_removeUserFromAccount
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /iam/v1/accounts/{account-uuid}/users/{email}/groups
+  method: put
+  operationId: UsersController_replaceUserGroups
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /iam/v1/accounts/{account-uuid}/users/{email}/groups
+  method: delete
+  operationId: UsersController_removeUserFromGroups
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /iam/v1/accounts/{accountUuid}/users
+  method: get
+  operationId: listUsers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/accounts/{accountUuid}/users
+  method: post
+  operationId: createUser
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/accounts/{accountUuid}/users/{userId}
+  method: get
+  operationId: getUser
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/accounts/{accountUuid}/users/{userId}
+  method: put
+  operationId: updateUser
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/accounts/{accountUuid}/users/{userId}
+  method: delete
+  operationId: deleteUser
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/accounts/{account-uuid}/wif/trust-policies
+  method: get
+  operationId: listWifTrustPolicies
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/accounts/{account-uuid}/wif/trust-policies
+  method: post
+  operationId: createWifTrustPolicy
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/accounts/{account-uuid}/wif/trust-policies/{trust-policy-uuid}
+  method: get
+  operationId: getWifTrustPolicy
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/accounts/{account-uuid}/wif/trust-policies/{trust-policy-uuid}
+  method: put
+  operationId: updateWifTrustPolicy
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/accounts/{account-uuid}/wif/trust-policies/{trust-policy-uuid}
+  method: delete
+  operationId: deleteWifTrustPolicy
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/accounts/{account-uuid}/wif/trust-policies/{trust-policy-uuid}
+  method: patch
+  operationId: patchWifTrustPolicyStatus
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/accounts/{account-uuid}/wif/trust-policies/{trust-policy-uuid}/mappings
+  method: get
+  operationId: listWifServiceUserMappings
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/accounts/{account-uuid}/wif/trust-policies/{trust-policy-uuid}/mappings
+  method: post
+  operationId: createWifServiceUserMapping
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/accounts/{account-uuid}/wif/trust-policies/{trust-policy-uuid}/mappings/{mapping-uuid}
+  method: get
+  operationId: getWifServiceUserMapping
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iam/v1/accounts/{account-uuid}/wif/trust-policies/{trust-policy-uuid}/mappings/{mapping-uuid}
+  method: put
+  operationId: updateWifServiceUserMapping
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/accounts/{account-uuid}/wif/trust-policies/{trust-policy-uuid}/mappings/{mapping-uuid}
+  method: delete
+  operationId: deleteWifServiceUserMapping
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iam/v1/accounts/{account-uuid}/wif/trust-policies/{trust-policy-uuid}/mappings/{mapping-uuid}
+  method: patch
+  operationId: patchWifServiceUserMappingStatus
   x-agentic-access:
     action-class: acting
     consequence: write

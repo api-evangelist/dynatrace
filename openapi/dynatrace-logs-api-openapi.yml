@@ -308,69 +308,7 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  responses:
-    BadRequest:
-      description: Bad request — invalid query parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    Forbidden:
-      description: Forbidden — the API token lacks the required scope
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    Unauthorized:
-      description: Unauthorized — missing or invalid API token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
   schemas:
-    Error:
-      type: object
-      description: Details of an API error.
-      properties:
-        code:
-          type: integer
-          description: The HTTP status code of the error.
-          example: 500
-        message:
-          type: string
-          description: A human-readable description of the error.
-          example: Example description.
-        constraintViolations:
-          type: array
-          description: A list of constraint violations for validation errors (HTTP 400).
-          items:
-            $ref: '#/components/schemas/ConstraintViolation'
-          example:
-          - path: example-value
-            message: Example description.
-            parameterLocation: example-value
-            location: example-value
-    LogRecordSearchResult:
-      type: object
-      description: The result of a log search query.
-      properties:
-        nextSliceKey:
-          type: string
-          description: The cursor for the next page of results. Null if all results have been returned.
-          nullable: true
-          example: example-value
-        results:
-          type: array
-          description: The list of log records matching the search query on this page.
-          items:
-            $ref: '#/components/schemas/LogRecord'
-          example:
-          - timestamp: example-value
-            content: example-value
-            severity: HIGH
-            log.source: example-value
-            dt.entity.host: example-value
-            additionalFields: {}
     LogExportResult:
       type: object
       description: The result of a log export operation, containing a page of records.
@@ -407,6 +345,87 @@ components:
           format: int64
           description: The number of log records in this aggregation group.
           example: 500
+    ErrorEnvelope:
+      type: object
+      description: Error response envelope returned when a request fails.
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    LogAggregateResult:
+      type: object
+      description: The result of a log aggregation query.
+      properties:
+        results:
+          type: array
+          description: The aggregated log data grouped by the specified dimensions.
+          items:
+            $ref: '#/components/schemas/LogAggregateGroup'
+          example:
+          - groupByFields: {}
+            count: 500
+    LogRecordSearchResult:
+      type: object
+      description: The result of a log search query.
+      properties:
+        nextSliceKey:
+          type: string
+          description: The cursor for the next page of results. Null if all results have been returned.
+          nullable: true
+          example: example-value
+        results:
+          type: array
+          description: The list of log records matching the search query on this page.
+          items:
+            $ref: '#/components/schemas/LogRecord'
+          example:
+          - timestamp: example-value
+            content: example-value
+            severity: HIGH
+            log.source: example-value
+            dt.entity.host: example-value
+            additionalFields: {}
+    ConstraintViolation:
+      type: object
+      description: Details of a single constraint violation in a request.
+      properties:
+        path:
+          type: string
+          description: The JSON path to the field that caused the violation.
+          example: example-value
+        message:
+          type: string
+          description: A description of the constraint violation.
+          example: Example description.
+        parameterLocation:
+          type: string
+          description: The location of the violating parameter (QUERY, PATH, BODY).
+          example: example-value
+        location:
+          type: string
+          description: The location detail for the violation.
+          example: example-value
+    Error:
+      type: object
+      description: Details of an API error.
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+          example: 500
+        message:
+          type: string
+          description: A human-readable description of the error.
+          example: Example description.
+        constraintViolations:
+          type: array
+          description: A list of constraint violations for validation errors (HTTP 400).
+          items:
+            $ref: '#/components/schemas/ConstraintViolation'
+          example:
+          - path: example-value
+            message: Example description.
+            parameterLocation: example-value
+            location: example-value
     LogRecord:
       type: object
       description: A log record retrieved from the Dynatrace Grail data lakehouse. Contains the original log content plus enriched metadata added by Dynatrace during ingestion and processing.
@@ -436,32 +455,6 @@ components:
           description: Additional fields present in the log record beyond the standard set. Content varies based on what was ingested and how OpenPipeline processed the record.
           additionalProperties: true
           example: {}
-    ConstraintViolation:
-      type: object
-      description: Details of a single constraint violation in a request.
-      properties:
-        path:
-          type: string
-          description: The JSON path to the field that caused the violation.
-          example: example-value
-        message:
-          type: string
-          description: A description of the constraint violation.
-          example: Example description.
-        parameterLocation:
-          type: string
-          description: The location of the violating parameter (QUERY, PATH, BODY).
-          example: example-value
-        location:
-          type: string
-          description: The location detail for the violation.
-          example: example-value
-    ErrorEnvelope:
-      type: object
-      description: Error response envelope returned when a request fails.
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
     LogIngestRecord:
       type: object
       description: A single log record to ingest into the Dynatrace Grail data lakehouse. The content field is required. Additional fields provide context for routing, filtering, and entity association.
@@ -498,18 +491,25 @@ components:
           type: string
           description: The Dynatrace host entity ID to associate this log record with, e.g., HOST-1234567890ABCDEF. This enables correlation between logs and monitored infrastructure.
           example: example-value
-    LogAggregateResult:
-      type: object
-      description: The result of a log aggregation query.
-      properties:
-        results:
-          type: array
-          description: The aggregated log data grouped by the specified dimensions.
-          items:
-            $ref: '#/components/schemas/LogAggregateGroup'
-          example:
-          - groupByFields: {}
-            count: 500
+  responses:
+    BadRequest:
+      description: Bad request — invalid query parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized — missing or invalid API token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Forbidden:
+      description: Forbidden — the API token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
   securitySchemes:
     api-token:
       type: apiKey

@@ -472,6 +472,64 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    ManagementZone:
+      type: object
+      description: A management zone reference.
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the management zone.
+          example: abc123
+        name:
+          type: string
+          description: The display name of the management zone.
+          example: Production Service
+    CommentRequestBody:
+      type: object
+      description: The request body for creating or updating a problem comment.
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          description: The text content of the comment.
+          example: Example description.
+        context:
+          type: string
+          description: An optional context reference for the comment, such as a ticket ID, a link to a runbook, or a category label.
+          example: example-value
+    ProblemCloseResult:
+      type: object
+      description: The result returned after closing a problem.
+      properties:
+        problemId:
+          type: string
+          description: The ID of the closed problem.
+          example: abc123
+        closing:
+          type: boolean
+          description: Whether the problem is in the process of closing. The problem may take a short time to fully transition to RESOLVED status.
+          example: true
+    AlertingProfileStub:
+      type: object
+      description: A reference to an alerting profile (problem filter).
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the alerting profile.
+          example: abc123
+        name:
+          type: string
+          description: The display name of the alerting profile.
+          example: Production Service
+    ProblemCloseRequest:
+      type: object
+      description: Request body for closing a problem.
+      properties:
+        message:
+          type: string
+          description: An optional message explaining why the problem is being closed. This is stored as a closing comment on the problem.
+          example: Example description.
     Comment:
       type: object
       description: A single comment attached to a problem.
@@ -497,93 +555,48 @@ components:
           type: string
           description: Optional context reference attached to the comment.
           example: example-value
-    CommentRequestBody:
-      type: object
-      description: The request body for creating or updating a problem comment.
-      required:
-      - message
-      properties:
-        message:
-          type: string
-          description: The text content of the comment.
-          example: Example description.
-        context:
-          type: string
-          description: An optional context reference for the comment, such as a ticket ID, a link to a runbook, or a category label.
-          example: example-value
-    CommentCollection:
-      type: object
-      description: A paginated collection of problem comments.
-      properties:
-        nextPageKey:
-          type: string
-          description: Cursor for the next page of results.
-          nullable: true
-          example: example-value
-        totalCount:
-          type: integer
-          format: int64
-          description: The total number of comments.
-          example: 500
-        comments:
-          type: array
-          description: The list of comments on this page.
-          items:
-            $ref: '#/components/schemas/Comment'
-          example:
-          - id: abc123
-            createdAtTimestamp: 1718153645993
-            authorName: Production Service
-            content: example-value
-            context: example-value
-    ProblemCloseRequest:
-      type: object
-      description: Request body for closing a problem.
-      properties:
-        message:
-          type: string
-          description: An optional message explaining why the problem is being closed. This is stored as a closing comment on the problem.
-          example: Example description.
-    ProblemCloseResult:
-      type: object
-      description: The result returned after closing a problem.
-      properties:
-        problemId:
-          type: string
-          description: The ID of the closed problem.
-          example: abc123
-        closing:
-          type: boolean
-          description: Whether the problem is in the process of closing. The problem may take a short time to fully transition to RESOLVED status.
-          example: true
-    Error:
-      type: object
-      description: Details of an API error.
-      properties:
-        code:
-          type: integer
-          description: The HTTP status code of the error.
-          example: 500
-        message:
-          type: string
-          description: A human-readable description of the error.
-          example: Example description.
-        constraintViolations:
-          type: array
-          description: A list of constraint violations for validation errors (HTTP 400).
-          items:
-            $ref: '#/components/schemas/ConstraintViolation'
-          example:
-          - path: example-value
-            message: Example description.
-            parameterLocation: example-value
-            location: example-value
     ErrorEnvelope:
       type: object
       description: Error response envelope returned when a request fails.
       properties:
         error:
           $ref: '#/components/schemas/Error'
+    EntityStub:
+      type: object
+      description: A lightweight reference to a monitored entity.
+      properties:
+        entityId:
+          type: string
+          description: The unique identifier of the entity, e.g., SERVICE-1234567890ABCDEF.
+          example: abc123
+        name:
+          type: string
+          description: The display name of the entity.
+          example: Production Service
+        type:
+          type: string
+          description: The type of the entity, e.g., SERVICE, HOST, PROCESS_GROUP, APPLICATION.
+          example: STANDARD
+    ConstraintViolation:
+      type: object
+      description: Details of a single constraint violation in a request.
+      properties:
+        path:
+          type: string
+          description: The JSON path to the field that caused the violation.
+          example: example-value
+        message:
+          type: string
+          description: A description of the constraint violation.
+          example: Example description.
+        parameterLocation:
+          type: string
+          description: The location of the violating parameter (QUERY, PATH, BODY).
+          example: example-value
+        location:
+          type: string
+          description: The location detail for the violation.
+          example: example-value
     ProblemCollection:
       type: object
       description: A paginated collection of problems.
@@ -630,50 +643,6 @@ components:
             problemFilters:
             - id: abc123
               name: Production Service
-    ConstraintViolation:
-      type: object
-      description: Details of a single constraint violation in a request.
-      properties:
-        path:
-          type: string
-          description: The JSON path to the field that caused the violation.
-          example: example-value
-        message:
-          type: string
-          description: A description of the constraint violation.
-          example: Example description.
-        parameterLocation:
-          type: string
-          description: The location of the violating parameter (QUERY, PATH, BODY).
-          example: example-value
-        location:
-          type: string
-          description: The location detail for the violation.
-          example: example-value
-    AlertingProfileStub:
-      type: object
-      description: A reference to an alerting profile (problem filter).
-      properties:
-        id:
-          type: string
-          description: The unique identifier of the alerting profile.
-          example: abc123
-        name:
-          type: string
-          description: The display name of the alerting profile.
-          example: Production Service
-    ManagementZone:
-      type: object
-      description: A management zone reference.
-      properties:
-        id:
-          type: string
-          description: The unique identifier of the management zone.
-          example: abc123
-        name:
-          type: string
-          description: The display name of the management zone.
-          example: Production Service
     Problem:
       type: object
       description: Represents a Dynatrace-detected problem, which is an aggregated set of related events indicating a service degradation. Problems are detected and correlated by the Davis AI engine.
@@ -757,25 +726,71 @@ components:
           example:
           - id: abc123
             name: Production Service
-    EntityStub:
+    Error:
       type: object
-      description: A lightweight reference to a monitored entity.
+      description: Details of an API error.
       properties:
-        entityId:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+          example: 500
+        message:
           type: string
-          description: The unique identifier of the entity, e.g., SERVICE-1234567890ABCDEF.
-          example: abc123
-        name:
+          description: A human-readable description of the error.
+          example: Example description.
+        constraintViolations:
+          type: array
+          description: A list of constraint violations for validation errors (HTTP 400).
+          items:
+            $ref: '#/components/schemas/ConstraintViolation'
+          example:
+          - path: example-value
+            message: Example description.
+            parameterLocation: example-value
+            location: example-value
+    CommentCollection:
+      type: object
+      description: A paginated collection of problem comments.
+      properties:
+        nextPageKey:
           type: string
-          description: The display name of the entity.
-          example: Production Service
-        type:
-          type: string
-          description: The type of the entity, e.g., SERVICE, HOST, PROCESS_GROUP, APPLICATION.
-          example: STANDARD
+          description: Cursor for the next page of results.
+          nullable: true
+          example: example-value
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of comments.
+          example: 500
+        comments:
+          type: array
+          description: The list of comments on this page.
+          items:
+            $ref: '#/components/schemas/Comment'
+          example:
+          - id: abc123
+            createdAtTimestamp: 1718153645993
+            authorName: Production Service
+            content: example-value
+            context: example-value
+  parameters:
+    commentId:
+      name: commentId
+      in: path
+      description: The unique identifier of the comment.
+      required: true
+      schema:
+        type: string
+    problemId:
+      name: problemId
+      in: path
+      description: The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks.
+      required: true
+      schema:
+        type: string
   responses:
-    Forbidden:
-      description: Forbidden — the API token lacks the required scope
+    Unauthorized:
+      description: Unauthorized — missing or invalid API token
       content:
         application/json:
           schema:
@@ -786,33 +801,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorEnvelope'
+    Forbidden:
+      description: Forbidden — the API token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
     BadRequest:
       description: Bad request — invalid query parameters or request body
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorEnvelope'
-    Unauthorized:
-      description: Unauthorized — missing or invalid API token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-  parameters:
-    problemId:
-      name: problemId
-      in: path
-      description: The unique identifier of the problem. Obtained from the list problems endpoint or from problem notification callbacks.
-      required: true
-      schema:
-        type: string
-    commentId:
-      name: commentId
-      in: path
-      description: The unique identifier of the comment.
-      required: true
-      schema:
-        type: string
   securitySchemes:
     api-token:
       type: apiKey

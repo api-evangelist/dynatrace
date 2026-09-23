@@ -1,0 +1,348 @@
+openapi: 3.2.0
+info:
+  title: Dynatrace Account Management Permission management API
+  description: The enterprise management API for Dynatrace SaaS enables automation of operational tasks related to user access and environment lifecycle management.
+  version: '1.0'
+  contact: {}
+servers: []
+tags:
+- name: Permission management
+  description: Manage group permissions (deprecated; use policy management instead).
+paths:
+  /iam/v1/accounts/{account-uuid}/groups/{group-uuid}/permissions:
+    get:
+      deprecated: true
+      description: 'Deprecated since Mon, 15 Jun 2026 00:00:00 GMT. This endpoint will be removed on Mon, 11 Jan 2027 00:00:00 GMT.
+
+
+        Consider upgrading your role-based permissions to IAM policies by following this guide. Learn how to manage policies. This deprecation and removal warning applies only to environment/tenant-scoped role-based permissions. For account-scoped permissions (account-viewer, account-company-info, account-user-management), this endpoint remains supported beyond the stated removal date and should continue to be used.'
+      operationId: PermissionsController_getGroupPermissions
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: group-uuid
+        required: true
+        in: path
+        description: The UUID of the required user group.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success. The response contains permissions of the user group.
+          headers:
+            Deprecation:
+              description: The date from which this endpoint is deprecated.
+              schema:
+                type: string
+                example: Mon, 15 Jun 2026 00:00:00 GMT
+            Sunset:
+              description: The date after which this endpoint will return 410 Gone.
+              schema:
+                type: string
+                example: Mon, 11 Jan 2027 00:00:00 GMT
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionsGroupDto'
+        '410':
+          description: This endpoint has been removed.
+      security:
+      - bearer: []
+      summary: Lists all permissions of a user group
+      tags:
+      - Permission management
+      x-required-permissions:
+      - account-user-management
+      x-token-scopes:
+      - account-idm-read
+    post:
+      deprecated: true
+      description: 'Deprecated since Mon, 15 Jun 2026 00:00:00 GMT. This endpoint will be removed on Mon, 11 Jan 2027 00:00:00 GMT.
+
+
+        Consider upgrading your role-based permissions to IAM policies by following this guide. Learn how to manage policies. This deprecation and removal warning applies only to environment/tenant-scoped role-based permissions. For account-scoped permissions (account-viewer, account-company-info, account-user-management), this endpoint remains supported beyond the stated removal date and should continue to be used.'
+      operationId: PermissionsController_addGroupPermissions
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: group-uuid
+        required: true
+        in: path
+        description: The UUID of the required user group.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: "The body of the request. Contains a list of permissions to be assigned to the group. \n\nExisting permissions remain unaffected."
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PermissionsDto'
+      responses:
+        '200':
+          headers:
+            Deprecation:
+              description: The date from which this endpoint is deprecated.
+              schema:
+                type: string
+                example: Mon, 15 Jun 2026 00:00:00 GMT
+            Sunset:
+              description: The date after which this endpoint will return 410 Gone.
+              schema:
+                type: string
+                example: Mon, 11 Jan 2027 00:00:00 GMT
+        '201':
+          description: Success. Permissions have been assigned to the user group. Response doesn't have a body.
+        '410':
+          description: This endpoint has been removed.
+      security:
+      - bearer: []
+      summary: Assigns permissions to a user group. Existing permissions remain unaffected
+      tags:
+      - Permission management
+      x-required-permissions:
+      - account-user-management
+      x-token-scopes:
+      - account-idm-write
+    put:
+      deprecated: true
+      description: 'Deprecated since Mon, 15 Jun 2026 00:00:00 GMT. This endpoint will be removed on Mon, 11 Jan 2027 00:00:00 GMT.
+
+
+        Consider upgrading your role-based permissions to IAM policies by following this guide. Learn how to manage policies. This deprecation and removal warning applies only to environment/tenant-scoped role-based permissions. For account-scoped permissions (account-viewer, account-company-info, account-user-management), this endpoint remains supported beyond the stated removal date and should continue to be used.'
+      operationId: PermissionsController_overwriteGroupPermissions
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: group-uuid
+        required: true
+        in: path
+        description: The UUID of the required user group.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: "The body of the request. Contains a list of permissions to be assigned to the group. \n\n Existing permissions are overwritten."
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PermissionsDto'
+      responses:
+        '200':
+          description: Success. User group's permissions have been set. Response doesn't have a body.
+          headers:
+            Deprecation:
+              description: The date from which this endpoint is deprecated.
+              schema:
+                type: string
+                example: Mon, 15 Jun 2026 00:00:00 GMT
+            Sunset:
+              description: The date after which this endpoint will return 410 Gone.
+              schema:
+                type: string
+                example: Mon, 11 Jan 2027 00:00:00 GMT
+        '410':
+          description: This endpoint has been removed.
+      security:
+      - bearer: []
+      summary: Sets permissions of a user group. Existing permissions are overwritten
+      tags:
+      - Permission management
+      x-required-permissions:
+      - account-user-management
+      x-token-scopes:
+      - account-idm-write
+    delete:
+      deprecated: true
+      description: 'Deprecated since Mon, 15 Jun 2026 00:00:00 GMT. This endpoint will be removed on Mon, 11 Jan 2027 00:00:00 GMT.
+
+
+        Consider upgrading your role-based permissions to IAM policies by following this guide. Learn how to manage policies. This deprecation and removal warning applies only to environment/tenant-scoped role-based permissions. For account-scoped permissions (account-viewer, account-company-info, account-user-management), this endpoint remains supported beyond the stated removal date and should continue to be used.'
+      operationId: PermissionsController_removeGroupPermissions
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: group-uuid
+        required: true
+        in: path
+        description: The UUID of the required user group.
+        schema:
+          type: string
+      - name: scope
+        required: true
+        in: query
+        description: "The scope of the permission to be deleted. Depending on the type of the scope, specify one of the following: \n\n * `account`: The UUID of the account. \n* `tenant`: The ID of the environment. \n* `management-zone`: The ID of the management zone from an environment in `{environment-id}:{management-zone-id}` format."
+        schema:
+          type: string
+      - name: permission-name
+        required: true
+        in: query
+        description: The name of the permission to be deleted.
+        schema:
+          enum:
+          - account-company-info
+          - account-user-management
+          - account-viewer
+          - account-saml-flexible-federation
+          - tenant-viewer
+          - tenant-manage-settings
+          - tenant-agent-install
+          - tenant-logviewer
+          - tenant-view-sensitive-request-data
+          - tenant-configure-request-capture-data
+          - tenant-replay-sessions-with-masking
+          - tenant-replay-sessions-without-masking
+          - tenant-manage-security-problems
+          - tenant-view-security-problems
+          - tenant-manage-support-tickets
+          type: string
+      - name: scope-type
+        required: true
+        in: query
+        description: The scope type of the permission to be deleted.
+        schema:
+          enum:
+          - account
+          - tenant
+          - management-zone
+          type: string
+      responses:
+        '200':
+          description: Success. The permission has been deleted from the group.
+          headers:
+            Deprecation:
+              description: The date from which this endpoint is deprecated.
+              schema:
+                type: string
+                example: Mon, 15 Jun 2026 00:00:00 GMT
+            Sunset:
+              description: The date after which this endpoint will return 410 Gone.
+              schema:
+                type: string
+                example: Mon, 11 Jan 2027 00:00:00 GMT
+        '410':
+          description: This endpoint has been removed.
+      security:
+      - bearer: []
+      summary: Removes a permission from a user group
+      tags:
+      - Permission management
+      x-required-permissions:
+      - account-user-management
+      x-token-scopes:
+      - account-idm-write
+components:
+  schemas:
+    PermissionsDto:
+      type: object
+      properties:
+        permissionName:
+          type: string
+          description: The name of the permission.
+          enum:
+          - account-company-info
+          - account-user-management
+          - account-viewer
+          - account-saml-flexible-federation
+          - tenant-viewer
+          - tenant-manage-settings
+          - tenant-agent-install
+          - tenant-logviewer
+          - tenant-view-sensitive-request-data
+          - tenant-configure-request-capture-data
+          - tenant-replay-sessions-with-masking
+          - tenant-replay-sessions-without-masking
+          - tenant-manage-security-problems
+          - tenant-view-security-problems
+          - tenant-manage-support-tickets
+        scope:
+          type: string
+          description: "The scope of the permission. Depending on the scope type, it is defined by: \n\n* `account`: The UUID of the account. \n* `tenant`: The ID of the environment. \n* `management-zone`: The ID of the management zone from an environment in `{environment-id}:{management-zone-id}` format."
+        scopeType:
+          type: string
+          description: The type of the permission scope.
+          enum:
+          - account
+          - tenant
+          - management-zone
+        createdAt:
+          type: string
+          description: The date and time of the permission creation in `2021-05-01T15:11:00Z` format.
+        updatedAt:
+          type: string
+          description: The date and time of the most recent permission modification in `2021-05-01T15:11:00Z` format.
+      required:
+      - permissionName
+      - scope
+      - scopeType
+    PermissionsGroupDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: The UUID of the user group.
+        name:
+          type: string
+          description: The name of the user group.
+        description:
+          type: string
+          description: A short description of the user group.
+        federatedAttributeValues:
+          description: A list of values associating this group with the corresponding claim from an identity provider.
+          type: array
+          items:
+            type: string
+        owner:
+          type: string
+          enum:
+          - LOCAL
+          - SCIM
+          - SAML
+          - DCS
+          - ALL_USERS
+          description: The type of the group. `LOCAL`, `SCIM`, `SAML` and `DCS` corresponds to the identity provider from which the group originates. `ALL_USERS` is a special case of `LOCAL` group. It means that group is always assigned to all users in the account.
+        createdAt:
+          type: string
+          description: The date and time of the group creation in `2021-05-01T15:11:00Z` format.
+        updatedAt:
+          type: string
+          description: The date and time of the most recent group modification in `2021-05-01T15:11:00Z` format.
+        permissions:
+          description: A list of permissions assigned to the group.
+          type: array
+          items:
+            $ref: '#/components/schemas/PermissionsDto'
+      required:
+      - name
+      - owner
+      - createdAt
+      - updatedAt
+      - permissions
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+externalDocs:
+  description: OpenAPI specification
+  url: /openapi.json

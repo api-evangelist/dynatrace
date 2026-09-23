@@ -1,0 +1,1318 @@
+openapi: 3.2.0
+info:
+  title: Dynatrace Account Management Dynatrace Platform… Dynatrace…
+  description: The enterprise management API for Dynatrace SaaS enables automation of operational tasks related to user access and environment lifecycle management.
+  version: '1.0'
+  contact: {}
+servers: []
+tags:
+- name: Dynatrace Platform Subscription
+  description: View platform subscriptions and their usage, cost, forecast, and rate-card data.
+paths:
+  /sub/v2/accounts/{account-uuid}/subscriptions:
+    get:
+      operationId: SubscriptionsController_listSubscriptions
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success. The response contains a list of the account's subscriptions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionListDto'
+        '400':
+          description: Failed. The request was unacceptable, often due to missing a required parameter
+        '401':
+          description: Failed. The bearer token is incorrect/expired or the requested account information does not match the bearer token
+        '403':
+          description: Access denied
+        '404':
+          description: Failed. The requested resource was not found
+        '500':
+          description: Failed. Something went wrong in Account Management API
+      security:
+      - bearer: []
+      summary: Lists all subscriptions of an account
+      tags:
+      - Dynatrace Platform Subscription
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-uac-read
+  /sub/v2/accounts/{account-uuid}/subscriptions/forecast:
+    get:
+      operationId: SubscriptionsController_getForecast
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success. The response contains the forecast of the subscription's usage.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forecast'
+        '400':
+          description: Failed. The request was unacceptable, often due to missing a required parameter
+        '401':
+          description: Failed. The bearer token is incorrect/expired or the requested account information does not match the bearer token
+        '403':
+          description: Access denied
+        '404':
+          description: Failed. The requested resource was not found
+        '500':
+          description: Failed. Something went wrong in Account Management API
+      security:
+      - bearer: []
+      summary: Gets a forecast of the subscription usage by the end of the annual commitment…
+      tags:
+      - Dynatrace Platform Subscription
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-uac-read
+  /sub/v2/accounts/{account-uuid}/subscriptions/{subscription-uuid}:
+    get:
+      operationId: SubscriptionsController_getSubscription
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: subscription-uuid
+        required: true
+        in: path
+        description: "The UUID of the requested subscription. \n\nFetch the list of subscriptions via the [GET all subscriptions](https://dt-url.net/jq03jvq) request."
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success. The response contains the details of the subscription.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionDto'
+        '400':
+          description: Failed. The request was unacceptable, often due to missing a required parameter
+        '401':
+          description: Failed. The bearer token is incorrect/expired or the requested account information does not match the bearer token
+        '403':
+          description: Access denied
+        '404':
+          description: Failed. The requested resource was not found
+        '500':
+          description: Failed. Something went wrong in Account Management API
+      security:
+      - bearer: []
+      summary: Get a subscription
+      tags:
+      - Dynatrace Platform Subscription
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-uac-read
+  /sub/v2/accounts/{account-uuid}/subscriptions/{subscription-uuid}/environments/usage:
+    get:
+      deprecated: true
+      description: 'Deprecated since Mon, 15 Jun 2026 00:00:00 GMT. Use the new version instead. This endpoint will be removed on Mon, 11 Jan 2027 00:00:00 GMT.
+
+
+        This endpoint is SaaS only.'
+      operationId: getEnvironmentUsage
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required SaaS account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: subscription-uuid
+        required: true
+        in: path
+        description: "The UUID of the requested subscription. \n\nFetch the list of subscriptions via the [GET all subscriptions](https://dt-url.net/jq03jvq) request."
+        schema:
+          type: string
+      - name: startTime
+        required: true
+        in: query
+        description: The start of the requested timeframe in `2021-05-01T15:11:00Z` format.
+        schema:
+          type: string
+          format: date-time
+      - name: endTime
+        required: true
+        in: query
+        description: The end of the requested timeframe in `2021-05-01T15:11:00Z` format.
+        schema:
+          type: string
+          format: date-time
+      - name: environmentIds
+        required: false
+        in: query
+        description: A list of environments for which you want to read the usage data. To specify several environments, separate them with a comma (`,`).
+        schema:
+          type: array
+          items:
+            type: string
+      - name: capabilityKeys
+        required: false
+        in: query
+        description: "A list of capabilities for which you want to read the usage data. To specify several capabilities, separate them with a comma (`,`). \n\nTo obtain capability keys, use the [GET subscriptions](https://dt-url.net/qd43uld) call and look for the **capabilities** field of the response."
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: Success. The response contains the usage data of the subscription, split by environment.
+          headers:
+            Deprecation:
+              description: The date from which this endpoint is deprecated.
+              schema:
+                type: string
+                example: Mon, 15 Jun 2026 00:00:00 GMT
+            Sunset:
+              description: The date after which this endpoint will return 410 Gone.
+              schema:
+                type: string
+                example: Mon, 11 Jan 2027 00:00:00 GMT
+            Link:
+              description: Link to the successor endpoint.
+              schema:
+                type: string
+                example: </sub/v3/accounts/{accountUuid}/subscriptions/{subscriptionUuid}/environment-usage>; rel="successor-version"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionEnvironmentUsageListV2Dto'
+        '400':
+          description: Failed. The request was unacceptable, often due to missing a required parameter
+        '401':
+          description: Failed. The bearer token is incorrect/expired or the requested account information does not match the bearer token
+        '403':
+          description: Access denied
+        '404':
+          description: Failed. The requested resource was not found
+        '410':
+          description: This endpoint has been removed. Use the [new version](#/Dynatrace%20Platform%20Subscription/getEnvironmentUsageV3) instead.
+        '500':
+          description: Failed. Something went wrong in Account Management API
+      security:
+      - bearer: []
+      summary: Gets the account usage of a SaaS subscription per environment
+      tags:
+      - Dynatrace Platform Subscription
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-uac-read
+  /sub/v2/accounts/{account-uuid}/subscriptions/{subscription-uuid}/usage:
+    get:
+      operationId: SubscriptionsController_getTotalSubscriptionUsage
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: subscription-uuid
+        required: true
+        in: path
+        description: "The UUID of the requested subscription. \n\nFetch the list of subscriptions via the [GET all subscriptions](https://dt-url.net/jq03jvq) request."
+        schema:
+          type: string
+      - name: environmentIds
+        required: false
+        in: query
+        description: A list of environments for which you want to read the usage data. To specify several environments, separate them with a comma (`,`).
+        schema:
+          type: array
+          items:
+            type: string
+      - name: capabilityKeys
+        required: false
+        in: query
+        description: "A list of capabilities for which you want to read the usage data. To specify several capabilities, separate them with a comma (`,`). \n\nTo obtain capability keys, use the [GET subscriptions](https://dt-url.net/qd43uld) call and look for the **capabilities** field of the response."
+        schema:
+          type: array
+          items:
+            type: string
+      - name: clusterIds
+        required: false
+        in: query
+        description: "A list of Managed clusters for which you want to read the usage data. \n\n Not applicable to SaaS environments."
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: Success. The response contains the usage data of the subscription, split by date.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionUsageListDto'
+        '400':
+          description: Failed. The request was unacceptable, often due to missing a required parameter
+        '401':
+          description: Failed. The bearer token is incorrect/expired or the requested account information does not match the bearer token
+        '403':
+          description: Access denied
+        '404':
+          description: Failed. The requested resource was not found
+        '500':
+          description: Failed. Something went wrong in Account Management API
+      security:
+      - bearer: []
+      summary: Gets usage data of a subscription by date
+      tags:
+      - Dynatrace Platform Subscription
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-uac-read
+  /sub/v2/accounts/{account-uuid}/subscriptions/{subscription-uuid}/cost:
+    get:
+      operationId: SubscriptionsController_getTotalSubscriptionCost
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: subscription-uuid
+        required: true
+        in: path
+        description: "The UUID of the requested subscription. \n\nFetch the list of subscriptions via the [GET all subscriptions](https://dt-url.net/jq03jvq) request."
+        schema:
+          type: string
+      - name: environmentIds
+        required: false
+        in: query
+        description: A list of environments for which you want to read the usage data. To specify several environments, separate them with a comma (`,`).
+        schema:
+          type: array
+          items:
+            type: string
+      - name: capabilityKeys
+        required: false
+        in: query
+        description: "A list of capabilities for which you want to read the usage data. To specify several capabilities, separate them with a comma (`,`). \n\nTo obtain capability keys, use the [GET subscriptions](https://dt-url.net/qd43uld) call and look for the **capabilities** field of the response."
+        schema:
+          type: array
+          items:
+            type: string
+      - name: clusterIds
+        required: false
+        in: query
+        description: "A list of Managed clusters for which you want to read the usage data. \n\n Not applicable to SaaS environments."
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: Success. The response contains the costs of the subscription, split by date.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionCostListDto'
+        '400':
+          description: Failed. The request was unacceptable, often due to missing a required parameter
+        '401':
+          description: Failed. The bearer token is incorrect/expired or the requested account information does not match the bearer token
+        '403':
+          description: Access denied
+        '404':
+          description: Failed. The requested resource was not found
+        '500':
+          description: Failed. Something went wrong in Account Management API
+      security:
+      - bearer: []
+      summary: Gets aggregated cost data of a subscription by date
+      tags:
+      - Dynatrace Platform Subscription
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-uac-read
+  /sub/v2/accounts/{account-uuid}/subscriptions/{subscription-uuid}/environments/cost:
+    get:
+      deprecated: true
+      description: 'Deprecated since Mon, 15 Jun 2026 00:00:00 GMT. Use the new version instead. This endpoint will be removed on Mon, 11 Jan 2027 00:00:00 GMT.
+
+
+        This endpoint is SaaS only.'
+      operationId: getEnvironmentCost
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required SaaS account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: subscription-uuid
+        required: true
+        in: path
+        description: "The UUID of the requested subscription. \n\nFetch the list of subscriptions via the [GET all subscriptions](https://dt-url.net/jq03jvq) request."
+        schema:
+          type: string
+      - name: startTime
+        required: true
+        in: query
+        description: The start time of the query in `2021-05-01T15:11:00Z` format.
+        schema:
+          type: string
+          format: date-time
+      - name: endTime
+        required: true
+        in: query
+        description: The end time of the query in `2021-05-01T15:11:00Z` format.
+        schema:
+          type: string
+          format: date-time
+      - name: environmentIds
+        required: false
+        in: query
+        description: A list of environments for which you want to read the usage data. To specify several environments, separate them with a comma (`,`).
+        schema:
+          type: array
+          items:
+            type: string
+      - name: capabilityKeys
+        required: false
+        in: query
+        description: "A list of capabilities for which you want to read the usage data. To specify several capabilities, separate them with a comma (`,`). \n\nTo obtain capability keys, use the [GET subscriptions](https://dt-url.net/qd43uld) call and look for the **capabilities** field of the response."
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: ''
+          headers:
+            Deprecation:
+              description: The date from which this endpoint is deprecated.
+              schema:
+                type: string
+                example: Mon, 15 Jun 2026 00:00:00 GMT
+            Sunset:
+              description: The date after which this endpoint will return 410 Gone.
+              schema:
+                type: string
+                example: Mon, 11 Jan 2027 00:00:00 GMT
+            Link:
+              description: Link to the successor endpoint.
+              schema:
+                type: string
+                example: </sub/v3/accounts/{accountUuid}/subscriptions/{subscriptionUuid}/environment-cost>; rel="successor-version"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionEnvironmentCostListV2Dto'
+        '400':
+          description: Failed. The request was unacceptable, often due to missing a required parameter
+        '401':
+          description: Failed. The bearer token is incorrect/expired or the requested account information does not match the bearer token
+        '403':
+          description: Access denied
+        '404':
+          description: Failed. The requested resource was not found
+        '410':
+          description: This endpoint has been removed. Use the [new version](#/Dynatrace%20Platform%20Subscription/getEnvironmentCostV3) instead.
+        '500':
+          description: Failed. Something went wrong in Account Management API
+      security:
+      - bearer: []
+      summary: Gets the account costs of a SaaS subscription per environment
+      tags:
+      - Dynatrace Platform Subscription
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-uac-read
+  /sub/v3/accounts/{account-uuid}/subscriptions/{subscription-uuid}/environments/cost:
+    get:
+      operationId: getEnvironmentCostV3
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: subscription-uuid
+        required: true
+        in: path
+        description: "The UUID of the requested subscription. \n\nFetch the list of subscriptions via the [GET all subscriptions](https://dt-url.net/jq03jvq) request."
+        schema:
+          type: string
+      - name: startTime
+        required: true
+        in: query
+        description: The start time of the query in `2021-05-01T15:11:00Z` format. Timeframe limits (startTime, endTime) are both required, unless a "page-key" is provided instead.
+        schema:
+          type: string
+          format: date-time
+      - name: endTime
+        required: true
+        in: query
+        description: The end time of the query in `2021-05-01T15:11:00Z` format. Timeframe limits (startTime, endTime) are both required, unless a "page-key" is provided instead.
+        schema:
+          type: string
+          format: date-time
+      - name: environmentIds
+        required: false
+        in: query
+        description: A list of environments for which you want to read the usage data. To specify several environments, separate them with a comma (`,`).
+        schema:
+          type: array
+          items:
+            type: string
+      - name: capabilityKeys
+        required: false
+        in: query
+        description: "A list of capabilities for which you want to read the usage data. To specify several capabilities, separate them with a comma (`,`). \n\nTo obtain capability keys, use the [GET subscriptions](https://dt-url.net/qd43uld) call and look for the **capabilities** field of the response."
+        schema:
+          type: array
+          items:
+            type: string
+      - name: clusterIds
+        required: false
+        in: query
+        description: "A list of Managed clusters for which you want to read the usage data. \n\n Not applicable to SaaS environments."
+        schema:
+          type: array
+          items:
+            type: string
+      - name: page-key
+        required: false
+        in: query
+        description: The cursor for the next page of results. You can find it in the **nextPageKey** field of the previous response.
+        schema:
+          type: string
+      - name: page-size
+        required: false
+        in: query
+        description: Defines the requested number of entries for the next page.
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Success. The response contains the costs of the subscription, split by environment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionEnvironmentCostListV3Dto'
+        '400':
+          description: Failed. The request was unacceptable, often due to missing a required parameter
+        '401':
+          description: Failed. The bearer token is incorrect/expired or the requested account information does not match the bearer token
+        '403':
+          description: Access denied
+        '404':
+          description: Failed. The requested resource was not found
+        '500':
+          description: Failed. Something went wrong in Account Management API
+      security:
+      - bearer: []
+      summary: Gets cost data of a subscription by environment
+      tags:
+      - Dynatrace Platform Subscription
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-uac-read
+  /sub/v3/accounts/{account-uuid}/subscriptions/{subscription-uuid}/environments/usage:
+    get:
+      operationId: getEnvironmentUsageV3
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: subscription-uuid
+        required: true
+        in: path
+        description: "The UUID of the requested subscription. \n\nFetch the list of subscriptions via the [GET all subscriptions](https://dt-url.net/jq03jvq) request."
+        schema:
+          type: string
+      - name: startTime
+        required: true
+        in: query
+        description: The start time of the query in `2021-05-01T15:11:00Z` format. Timeframe limits (startTime, endTime) are both required, unless a "page-key" is provided instead.
+        schema:
+          type: string
+          format: date-time
+      - name: endTime
+        required: true
+        in: query
+        description: The end time of the query in `2021-05-01T15:11:00Z` format. Timeframe limits (startTime, endTime) are both required, unless a "page-key" is provided instead.
+        schema:
+          type: string
+          format: date-time
+      - name: environmentIds
+        required: false
+        in: query
+        description: A list of environments for which you want to read the usage data. To specify several environments, separate them with a comma (`,`).
+        schema:
+          type: array
+          items:
+            type: string
+      - name: capabilityKeys
+        required: false
+        in: query
+        description: "A list of capabilities for which you want to read the usage data. To specify several capabilities, separate them with a comma (`,`). \n\nTo obtain capability keys, use the [GET subscriptions](https://dt-url.net/qd43uld) call and look for the **capabilities** field of the response."
+        schema:
+          type: array
+          items:
+            type: string
+      - name: clusterIds
+        required: false
+        in: query
+        description: "A list of Managed clusters for which you want to read the usage data. \n\n Not applicable to SaaS environments."
+        schema:
+          type: array
+          items:
+            type: string
+      - name: page-key
+        required: false
+        in: query
+        description: The cursor for the next page of results. You can find it in the **nextPageKey** field of the previous response.
+        schema:
+          type: string
+      - name: page-size
+        required: false
+        in: query
+        description: Defines the requested number of entries for the next page.
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionEnvironmentUsageListV3Dto'
+        '400':
+          description: Failed. The request was unacceptable, often due to missing a required parameter
+        '401':
+          description: Failed. The bearer token is incorrect/expired or the requested account information does not match the bearer token
+        '403':
+          description: Access denied
+        '404':
+          description: Failed. The requested resource was not found
+        '500':
+          description: Failed. Something went wrong in Account Management API
+      security:
+      - bearer: []
+      summary: Gets usage data of a subsctiption by environment
+      tags:
+      - Dynatrace Platform Subscription
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-uac-read
+  /sub/v1/accounts/{account-uuid}/rate-cards:
+    get:
+      operationId: SubscriptionsController_listRateCards
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success. The response contains a list of the account's rate-cards.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RateCardSummaryDto'
+        '400':
+          description: Failed. The request was unacceptable, often due to missing a required parameter
+        '401':
+          description: Failed. The bearer token is incorrect/expired or the requested account information does not match the bearer token
+        '403':
+          description: Access denied
+        '404':
+          description: Failed. The requested resource was not found
+        '500':
+          description: Failed. Something went wrong in Account Management API
+      security:
+      - bearer: []
+      summary: Lists all rate cards of an account
+      tags:
+      - Dynatrace Platform Subscription
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-uac-read
+  /v1/subscriptions/{subscription-uuid}/cost-allocation:
+    get:
+      operationId: InsightsController_getCostAllocationBreakdownPage
+      parameters:
+      - name: subscription-uuid
+        required: false
+        in: path
+        description: "The UUID of the requested subscription. \n\nFetch the list of subscriptions via the [GET all subscriptions](https://dt-url.net/jq03jvq) request. (required)"
+        schema:
+          type: string
+      - name: field
+        required: false
+        in: query
+        description: 'Field by which costs and usage should be split. Allowed values: `COSTCENTER`, `PRODUCT` (required unless page-key is provided)'
+        schema:
+          type: string
+      - name: environment-id
+        required: false
+        in: query
+        description: The identifier of an environment. (required unless page-key is provided)
+        schema:
+          type: string
+      - name: from
+        required: false
+        in: query
+        description: The start of the requested timeframe in `2021-05-01` format.
+        schema:
+          type: string
+      - name: to
+        required: false
+        in: query
+        description: The end of the requested timeframe in `2021-05-01` format.
+        schema:
+          type: string
+      - name: page-size
+        required: false
+        in: query
+        description: Defines the requested number of entries for the next page.
+        schema:
+          type: number
+      - name: page-key
+        required: false
+        in: query
+        description: A base64 encoded key to retrieve a specific page. If this query parameter is set, no other query parameters can be set.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success. The response contains a page of the requested chargeback breakdown.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEnvironmentBreakdownDto'
+        '400':
+          description: The request was unacceptable, often due to missing a required parameter
+        '401':
+          description: No valid session provided
+        '403':
+          description: Access denied
+        '500':
+          description: Something went wrong on Account Management's end
+      security:
+      - bearer: []
+      summary: Get usage data by cost allocation field
+      tags:
+      - Dynatrace Platform Subscription
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-uac-read
+components:
+  schemas:
+    SubscriptionPeriodDto:
+      type: object
+      properties:
+        startTime:
+          type: string
+          description: The subscription period start time in `2021-05-01T15:11:00Z` format.
+        endTime:
+          type: string
+          description: The subscription period end time in `2021-05-01T15:11:00Z` format.
+      required:
+      - startTime
+      - endTime
+    RateCardSummaryDto:
+      type: object
+      properties:
+        quoteNumber:
+          type: string
+          description: The quote number for a rate-card
+        startTime:
+          type: string
+          description: The start date of the rate-card in `2021-05-01T15:11:00Z` format.
+        endTime:
+          type: string
+          description: The end date of the rate-card in `2021-05-01T15:11:00Z` format.
+        currencyCode:
+          type: string
+          description: The currency code of a rate-card
+        capabilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/RateCardCapabilitiesDto'
+      required:
+      - quoteNumber
+      - startTime
+      - endTime
+      - currencyCode
+      - capabilities
+    SubscriptionListDto:
+      type: object
+      properties:
+        data:
+          description: A list of subscriptions of the account.
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionSummaryDto'
+      required:
+      - data
+    SubscriptionCostListDto:
+      type: object
+      properties:
+        data:
+          description: Cost data of the subscription.
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionCostBookingDto'
+        lastModifiedTime:
+          type: string
+          description: The time the subscription data was last modified in `2021-05-01T15:11:00Z` format.
+      required:
+      - data
+      - lastModifiedTime
+    SubscriptionEnvironmentUsageListV2Dto:
+      type: object
+      properties:
+        data:
+          description: Usage data of the subscription.
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionEnvironmentUsageV2Dto'
+        lastModifiedTime:
+          type: string
+          description: The time the subscription data was last modified in `2021-05-01T15:11:00Z` format.
+      required:
+      - data
+      - lastModifiedTime
+    SubscriptionUsageListDto:
+      type: object
+      properties:
+        data:
+          description: Usage data of the subscription.
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionUsageDto'
+        lastModifiedTime:
+          type: string
+          description: The time the subscription data was last modified in `2021-05-01T15:11:00Z` format.
+      required:
+      - data
+      - lastModifiedTime
+    SubscriptionSummaryDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: The UUID of the Dynatrace Platform Subscription.
+        type:
+          type: string
+          description: The type of the Dynatrace Platform Subscription.
+        subType:
+          type: string
+          description: The sub-type of the Dynatrace Platform Subscription.
+        name:
+          type: string
+          description: The display name of the Dynatrace Platform Subscription.
+        status:
+          type: string
+          description: The status of the Dynatrace Platform Subscription.
+        startTime:
+          type: string
+          description: The start date of the subscription in `2021-05-01` format.
+        endTime:
+          type: string
+          description: The end date of the subscription in `2021-05-01` format.
+      required:
+      - uuid
+      - type
+      - subType
+      - name
+      - status
+      - startTime
+      - endTime
+    SubscriptionAccountDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: The UUID of the account.
+      required:
+      - uuid
+    PaginatedEnvironmentBreakdownDto:
+      type: object
+      properties:
+        environmentId:
+          type: string
+          description: Identifier of the environment
+        field:
+          type: string
+          description: Field used to generate the breakdown. Can be `COSTCENTER` or `PRODUCT`
+        records:
+          description: List of individual breakdown entries.
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvironmentCostBreakdownDto'
+        nextPageKey:
+          type: string
+          description: Key to request the next page.
+      required:
+      - environmentId
+      - field
+      - records
+      - nextPageKey
+    SubscriptionEnvironmentUsageV2Dto:
+      type: object
+      properties:
+        environmentId:
+          type: string
+          description: The UUID of the environment
+        usage:
+          description: A list of subscription usage for the environment.
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionUsageDto'
+      required:
+      - environmentId
+      - usage
+    SubscriptionCurrentPeriodDto:
+      type: object
+      properties:
+        startTime:
+          type: string
+          description: The current period start date in `2021-05-01` format.
+        endTime:
+          type: string
+          description: The current period end date in `2021-05-01` format.
+        daysRemaining:
+          type: number
+          description: Remaining days in the current period.
+      required:
+      - startTime
+      - endTime
+      - daysRemaining
+    SubscriptionEnvironmentCostListV2Dto:
+      type: object
+      properties:
+        data:
+          description: Cost data of the subscription.
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionEnvironmentCostV2Dto'
+        lastModifiedTime:
+          type: string
+          description: The time the subscription data was last modified in `2021-05-01T15:11:00Z` format.
+      required:
+      - data
+      - lastModifiedTime
+    SubscriptionBudgetDto:
+      type: object
+      properties:
+        total:
+          type: number
+          description: The total budget of the subscription.
+        used:
+          type: number
+          description: The used budget of the subscription.
+        currencyCode:
+          type: string
+          description: The currency of the subscription.
+      required:
+      - total
+      - used
+      - currencyCode
+    SubscriptionDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: The UUID of the Dynatrace Platform Subscription.
+        type:
+          type: string
+          description: The type of the Dynatrace Platform Subscription.
+        subType:
+          type: string
+          description: The sub-type of the Dynatrace Platform Subscription.
+        name:
+          type: string
+          description: The display name of the Dynatrace Platform Subscription.
+        status:
+          type: string
+          description: The status of the Dynatrace Platform Subscription.
+        startTime:
+          type: string
+          description: The start date of the subscription in `2021-05-01` format.
+        endTime:
+          type: string
+          description: The end date of the subscription in `2021-05-01` format.
+        account:
+          description: The account associated with the subscription.
+          allOf:
+          - $ref: '#/components/schemas/SubscriptionAccountDto'
+        budget:
+          description: The budget associated with the subscription.
+          allOf:
+          - $ref: '#/components/schemas/SubscriptionBudgetDto'
+        currentPeriod:
+          description: The current period associated with the subscription.
+          allOf:
+          - $ref: '#/components/schemas/SubscriptionCurrentPeriodDto'
+        periods:
+          description: A list of subscription periods.
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionPeriodDto'
+        capabilities:
+          description: A list of subscription capabilities.
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionCapabilityDto'
+      required:
+      - uuid
+      - type
+      - subType
+      - name
+      - status
+      - startTime
+      - endTime
+      - account
+      - budget
+      - currentPeriod
+      - periods
+      - capabilities
+    SubscriptionEnvironmentUsageListV3Dto:
+      type: object
+      properties:
+        data:
+          description: Subscription usage data
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionEnvironmentUsageV3Dto'
+        lastModifiedTime:
+          type: string
+          description: The time the subscription data was last modified in `2021-05-01T15:11:00Z` format.
+        nextPageKey:
+          type: string
+          description: The next page key for pagination if next page exists
+      required:
+      - data
+      - lastModifiedTime
+      - nextPageKey
+    SubscriptionEnvironmentCostV3Dto:
+      type: object
+      properties:
+        clusterId:
+          type: string
+          description: The UUID of the Managed cluster
+        environmentId:
+          type: string
+          description: The UUID of the environment.
+        cost:
+          description: Subscription costs for the environment.
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionCapabilityCostReceivedDto'
+      required:
+      - clusterId
+      - environmentId
+      - cost
+    SubscriptionEnvironmentCostListV3Dto:
+      type: object
+      properties:
+        data:
+          description: Subscription cost data
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionEnvironmentCostV3Dto'
+        lastModifiedTime:
+          type: string
+          description: The time the subscription data was last modified in `2021-05-01T15:11:00Z` format.
+        nextPageKey:
+          type: string
+          description: The next page key for pagination if next page exists
+      required:
+      - data
+      - lastModifiedTime
+      - nextPageKey
+    Forecast:
+      type: object
+      properties:
+        forecastMedian:
+          type: number
+          description: The median forecasted usage.
+        forecastLower:
+          type: number
+          description: The lower bound of forecasted usage.
+        forecastUpper:
+          type: number
+          description: The upper bound of forecasted usage.
+        budget:
+          type: number
+          description: The budget quota used in the forecast.
+        forecastBudgetPct:
+          type: number
+          description: The forecasted usage of the budget, in percent.
+        forecastBudgetDate:
+          format: date-time
+          type: string
+          description: The date when the forecasted usage consumes all the budget quota.
+        forecastCreatedAt:
+          format: date-time
+          type: string
+          description: The date when the forecast was created.
+      required:
+      - forecastMedian
+      - forecastLower
+      - forecastUpper
+      - budget
+      - forecastBudgetPct
+      - forecastBudgetDate
+      - forecastCreatedAt
+    SubscriptionCapabilityCostDto:
+      type: object
+      properties:
+        startTime:
+          type: string
+          description: The start time for the capability cost in `2021-05-01T15:11:00Z` format.
+        endTime:
+          type: string
+          description: The end time for the capability cost in `2021-05-01T15:11:00Z` format.
+        value:
+          type: number
+          description: The total cost for all the capabilities.
+        currencyCode:
+          type: string
+          description: The currency of the cost.
+        capabilityKey:
+          type: string
+          description: The key of the subscription capability.
+        capabilityName:
+          type: string
+          description: The display name of the subscription capability.
+      required:
+      - startTime
+      - endTime
+      - value
+      - currencyCode
+      - capabilityKey
+      - capabilityName
+    EnvironmentCostBreakdownDto:
+      type: object
+      properties:
+        date:
+          type: string
+          description: Date of Costs
+        capability:
+          type: string
+          description: Capability
+        key:
+          type: string
+          description: Key
+        costs:
+          type: number
+          description: Quantity of costs
+      required:
+      - date
+      - capability
+      - key
+      - costs
+    SubscriptionCapabilityDto:
+      type: object
+      properties:
+        key:
+          type: string
+          description: The key of the subscription capability.
+        name:
+          type: string
+          description: The display name of the subscription capability.
+      required:
+      - key
+      - name
+    SubscriptionUsageDto:
+      type: object
+      properties:
+        capabilityKey:
+          type: string
+          description: The key of the subscription capability.
+        capabilityName:
+          type: string
+          description: The display name of the subscription capability.
+        startTime:
+          type: string
+          description: The start time of the capability usage in `2021-05-01T15:11:00Z` format.
+        endTime:
+          type: string
+          description: The end time of the capability usage in `2021-05-01T15:11:00Z` format.
+        value:
+          type: number
+          description: The subscription usage by the capability.
+        unitMeasure:
+          type: string
+          description: The unit of the capability usage.
+      required:
+      - capabilityKey
+      - capabilityName
+      - startTime
+      - endTime
+      - value
+      - unitMeasure
+    RateCardCapabilitiesDto:
+      type: object
+      properties:
+        key:
+          type: string
+          description: The capability key
+        name:
+          type: string
+          description: The capability name
+        quotedPrice:
+          type: string
+          description: The quoted price for the capability
+        quotedUnitOfMeasure:
+          type: string
+          description: The quoted unit of measure for the capability
+        price:
+          type: string
+          description: The price for the capability
+        startTime:
+          type: string
+          description: The start date of the capability in `2021-05-01T15:11:00Z` format.
+        endTime:
+          type: string
+          description: The end date of the capability in `2021-05-01T15:11:00Z` format.
+        deploymentType:
+          type: string
+          description: The deployment type
+      required:
+      - key
+      - name
+      - quotedPrice
+      - quotedUnitOfMeasure
+      - price
+      - startTime
+      - endTime
+    SubscriptionEnvironmentUsageV3Dto:
+      type: object
+      properties:
+        clusterId:
+          type: string
+          description: The UUID of the Managed cluster.
+        environmentId:
+          type: string
+          description: The UUID of the environment.
+        usage:
+          description: Subscription usage information for the environment.
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionUsageDto'
+      required:
+      - clusterId
+      - environmentId
+      - usage
+    SubscriptionEnvironmentCostV2Dto:
+      type: object
+      properties:
+        environmentId:
+          type: string
+          description: The UUID of the environment
+        cost:
+          description: A list of subscription cost for the environment.
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionCapabilityCostDto'
+      required:
+      - environmentId
+      - cost
+    SubscriptionCostBookingDto:
+      type: object
+      properties:
+        startTime:
+          type: string
+          description: The start time for the capability cost in `2021-05-01T15:11:00Z` format.
+        endTime:
+          type: string
+          description: The end time for the capability cost in `2021-05-01T15:11:00Z` format.
+        value:
+          type: number
+          description: The total cost for all the capabilities.
+        currencyCode:
+          type: string
+          description: The currency of the cost.
+        lastBookingDate:
+          type: string
+          description: The last booking date for the capability cost
+      required:
+      - startTime
+      - endTime
+      - value
+      - currencyCode
+      - lastBookingDate
+    SubscriptionCapabilityCostReceivedDto:
+      type: object
+      properties:
+        startTime:
+          type: string
+          description: The start time for the capability cost in `2021-05-01T15:11:00Z` format.
+        endTime:
+          type: string
+          description: The end time for the capability cost in `2021-05-01T15:11:00Z` format.
+        value:
+          type: number
+          description: The total cost for all the capabilities.
+        currencyCode:
+          type: string
+          description: The currency of the cost.
+        capabilityKey:
+          type: string
+          description: The key of the subscription capability.
+        capabilityName:
+          type: string
+          description: The display name of the subscription capability.
+        bookingDate:
+          type: string
+          description: The booking date of the subscription capability in `2021-05-01T15:11:00Z` format.
+      required:
+      - startTime
+      - endTime
+      - value
+      - currencyCode
+      - capabilityKey
+      - capabilityName
+      - bookingDate
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+externalDocs:
+  description: OpenAPI specification
+  url: /openapi.json

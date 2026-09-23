@@ -1,0 +1,357 @@
+openapi: 3.2.0
+info:
+  title: Dynatrace Account Management Account Settings API
+  description: The enterprise management API for Dynatrace SaaS enables automation of operational tasks related to user access and environment lifecycle management.
+  version: '1.0'
+  contact: {}
+servers: []
+tags:
+- name: Account Settings
+  description: Manage account settings such as cost-center and product field values.
+paths:
+  /v1/accounts/{account-uuid}/settings/costcenters:
+    get:
+      operationId: AccountsController_listCostcenterCostAllocationValues
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: The number of the requested page. Can be increased as long as **hasNextPage** is true in the response.
+        schema:
+          type: number
+      - name: page-size
+        required: false
+        in: query
+        description: Defines the requested number of entries for the next page.
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Success. The response contains a page of allowed cost-allocation values for the costcenter field.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedFieldValueDto'
+        '400':
+          description: The request was unacceptable, often due to missing a required parameter
+        '401':
+          description: No valid session provided
+        '403':
+          description: Access denied
+        '500':
+          description: Something went wrong on Account Management's end
+      security:
+      - bearer: []
+      summary: Lists all possible values for the costcenter field
+      tags:
+      - Account Settings
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-uac-read
+    post:
+      operationId: AccountsController_createCostcenterCostAllocationValues
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FieldValuesRequestDto'
+      responses:
+        '204':
+          description: The response doesn't have a body. The values were added to the field.
+        '400':
+          description: The existing and provided values combined should not contain duplicate keys.
+        '401':
+          description: No valid session provided
+        '403':
+          description: Access denied
+        '500':
+          description: Something went wrong on Account Management's end
+      security:
+      - bearer: []
+      summary: Add the provided values to the costcenter field
+      tags:
+      - Account Settings
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-uac-write
+    put:
+      operationId: AccountsController_replaceCostcenterCostAllocationValues
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FieldValuesRequestDto'
+      responses:
+        '204':
+          description: The response doesn't have a body. The values of the field were replaced.
+        '400':
+          description: The provided values should not contain duplicate keys.
+        '401':
+          description: No valid session provided
+        '403':
+          description: Access denied
+        '500':
+          description: Something went wrong on Account Management's end
+      security:
+      - bearer: []
+      summary: Replace the current values of the costcenter field
+      tags:
+      - Account Settings
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-uac-write
+  /v1/accounts/{account-uuid}/settings/costcenters/{key}:
+    delete:
+      operationId: AccountsController_deleteCostcenterCostAllocationValue
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: key
+        required: true
+        in: path
+        description: The key for the field value.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: The given value on the costcenter field was deleted.
+        '400':
+          description: The request was unacceptable, often due to missing a required parameter
+        '401':
+          description: No valid session provided
+        '403':
+          description: Access denied
+        '500':
+          description: Something went wrong on Account Management's end
+      security:
+      - bearer: []
+      summary: Delete a value by key on the costcenter field
+      tags:
+      - Account Settings
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-uac-write
+  /v1/accounts/{account-uuid}/settings/products:
+    get:
+      operationId: AccountsController_listProductCostAllocationValues
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: The number of the requested page. Can be increased as long as **hasNextPage** is true in the response.
+        schema:
+          type: number
+      - name: page-size
+        required: false
+        in: query
+        description: Defines the requested number of entries for the next page.
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Success. The response contains a page of allowed cost-allocation values for the product field.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedFieldValueDto'
+        '400':
+          description: The request was unacceptable, often due to missing a required parameter
+        '401':
+          description: No valid session provided
+        '403':
+          description: Access denied
+        '500':
+          description: Something went wrong on Account Management's end
+      security:
+      - bearer: []
+      summary: Lists all possible values for the product field
+      tags:
+      - Account Settings
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-uac-read
+    post:
+      operationId: AccountsController_createProductCostAllocationValues
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FieldValuesRequestDto'
+      responses:
+        '204':
+          description: The response doesn't have a body. The values were added to the field.
+        '400':
+          description: The existing and provided values combined should not contain duplicate keys.
+        '401':
+          description: No valid session provided
+        '403':
+          description: Access denied
+        '500':
+          description: Something went wrong on Account Management's end
+      security:
+      - bearer: []
+      summary: Add the provided values to the product field
+      tags:
+      - Account Settings
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-uac-write
+    put:
+      operationId: AccountsController_replaceProductCostAllocationValues
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FieldValuesRequestDto'
+      responses:
+        '204':
+          description: The response doesn't have a body. The values of the field were replaced.
+        '400':
+          description: The provided values should not contain duplicate keys.
+        '401':
+          description: No valid session provided
+        '403':
+          description: Access denied
+        '500':
+          description: Something went wrong on Account Management's end
+      security:
+      - bearer: []
+      summary: Replace the current values of the product field
+      tags:
+      - Account Settings
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-uac-write
+  /v1/accounts/{account-uuid}/settings/products/{key}:
+    delete:
+      operationId: AccountsController_deleteProductCostAllocationValue
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: key
+        required: true
+        in: path
+        description: The key for the field value.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: The given value on the product field was deleted.
+        '400':
+          description: The request was unacceptable, often due to missing a required parameter
+        '401':
+          description: No valid session provided
+        '403':
+          description: Access denied
+        '500':
+          description: Something went wrong on Account Management's end
+      security:
+      - bearer: []
+      summary: Delete a value by key on the product field
+      tags:
+      - Account Settings
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-uac-write
+components:
+  schemas:
+    FieldValueDto:
+      type: object
+      properties:
+        key:
+          type: string
+          description: The key of this value.
+      required:
+      - key
+    FieldValuesRequestDto:
+      type: object
+      properties:
+        values:
+          description: The requested values.
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldValueDto'
+      required:
+      - values
+    PaginatedFieldValueDto:
+      type: object
+      properties:
+        records:
+          description: The records on the current page.
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldValueDto'
+        hasNextPage:
+          type: boolean
+          description: Indicates if there is another page to load.
+      required:
+      - records
+      - hasNextPage
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+externalDocs:
+  description: OpenAPI specification
+  url: /openapi.json

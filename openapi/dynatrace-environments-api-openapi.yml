@@ -74,42 +74,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    Error:
-      type: object
-      description: Details of an API error.
-      properties:
-        code:
-          type: integer
-          description: The HTTP status code of the error.
-          example: 500
-        message:
-          type: string
-          description: A human-readable description of the error.
-          example: Example description.
-    EnvironmentCollection:
-      type: object
-      description: A paginated collection of environments.
-      properties:
-        nextPageKey:
-          type: string
-          description: Cursor for the next page of results.
-          nullable: true
-          example: example-value
-        totalCount:
-          type: integer
-          format: int64
-          description: The total number of environments in the account.
-          example: 500
-        environments:
-          type: array
-          description: The list of environments on this page.
-          items:
-            $ref: '#/components/schemas/Environment'
-          example:
-          - id: abc123
-            name: Production Service
-            status: ACTIVE
-            trial: true
     ErrorEnvelope:
       type: object
       description: Error response envelope returned when a request fails.
@@ -140,6 +104,55 @@ components:
           type: boolean
           description: Whether the environment is a trial environment.
           example: true
+    EnvironmentCollection:
+      type: object
+      description: A paginated collection of environments.
+      properties:
+        nextPageKey:
+          type: string
+          description: Cursor for the next page of results.
+          nullable: true
+          example: example-value
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of environments in the account.
+          example: 500
+        environments:
+          type: array
+          description: The list of environments on this page.
+          items:
+            $ref: '#/components/schemas/Environment'
+          example:
+          - id: abc123
+            name: Production Service
+            status: ACTIVE
+            trial: true
+    Error:
+      type: object
+      description: Details of an API error.
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+          example: 500
+        message:
+          type: string
+          description: A human-readable description of the error.
+          example: Example description.
+  responses:
+    Unauthorized:
+      description: Unauthorized — missing or invalid OAuth token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Forbidden:
+      description: Forbidden — the token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
   parameters:
     accountUuid:
       name: accountUuid
@@ -149,19 +162,6 @@ components:
       schema:
         type: string
         format: uuid
-  responses:
-    Forbidden:
-      description: Forbidden — the token lacks the required scope
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    Unauthorized:
-      description: Unauthorized — missing or invalid OAuth token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
   securitySchemes:
     oauth2:
       type: oauth2

@@ -1,0 +1,263 @@
+openapi: 3.2.0
+info:
+  title: Dynatrace Account Management Service user management API
+  description: The enterprise management API for Dynatrace SaaS enables automation of operational tasks related to user access and environment lifecycle management.
+  version: '1.0'
+  contact: {}
+servers: []
+tags:
+- name: Service user management
+  description: Manage service users within an account.
+paths:
+  /iam/v1/accounts/{account-uuid}/service-users:
+    post:
+      operationId: ServiceUsersController_createServiceUserForAccount
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: The JSON body of the request. Contains the name of the new service user.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceUserDto'
+      responses:
+        '201':
+          description: Success. The new service user has been created. The response contains service user details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalServiceUserWithGroupUuidDto'
+      security:
+      - bearer: []
+      summary: Creates a new service user in an account
+      tags:
+      - Service user management
+      x-token-scopes:
+      - account-idm-write
+    get:
+      operationId: ServiceUsersController_getServiceUsersFromAccount
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: The number of the requested page. Can be increased as long as **nextPageKey** is available in the response.
+        schema:
+          type: integer
+      - name: page-size
+        required: false
+        in: query
+        description: Defines the requested number of entries for the next page.
+        schema:
+          type: integer
+      - name: page-key
+        required: false
+        in: query
+        description: The cursor for the next page of results. You can find it in the **nextPageKey** field of the previous response.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success. Service users assigned to account fetched successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalServiceUsersPageDto'
+      security:
+      - bearer: []
+      summary: Get service users assigned to account
+      tags:
+      - Service user management
+      x-token-scopes:
+      - account-idm-read
+  /iam/v1/accounts/{account-uuid}/service-users/{user-uuid}:
+    put:
+      operationId: ServiceUsersController_updateServiceUserForAccount
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: user-uuid
+        required: true
+        in: path
+        description: The UUID of the required user.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: The JSON body of the request. Contains changed name and description of the service user.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceUserDto'
+      responses:
+        default:
+          description: Success. The service user has been updated.
+      security:
+      - bearer: []
+      summary: Updates name and description of service user in an account
+      tags:
+      - Service user management
+      x-token-scopes:
+      - account-idm-write
+    get:
+      operationId: ServiceUsersController_getServiceUser
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: user-uuid
+        required: true
+        in: path
+        description: The UUID of the required user.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success. The user has been fetched.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalServiceUserWithGroupUuidDto'
+      security:
+      - bearer: []
+      summary: Get service user by uuid
+      tags:
+      - Service user management
+      x-token-scopes:
+      - account-idm-read
+    delete:
+      operationId: ServiceUsersController_deleteUser
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: user-uuid
+        required: true
+        in: path
+        description: The UUID of the required user.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success. The user has been deleted. Response doesn't have a body.
+      security:
+      - bearer: []
+      summary: Removes service user
+      tags:
+      - Service user management
+      x-token-scopes:
+      - account-idm-write
+components:
+  schemas:
+    ExternalServiceUsersPageDto:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalServiceUserDto'
+        nextPageKey:
+          type: string
+          description: Next page key to be used in querying for next results page
+        totalCount:
+          type: number
+          description: Total number of service users
+      required:
+      - results
+      - totalCount
+    ExternalServiceUserWithGroupUuidDto:
+      type: object
+      properties:
+        uid:
+          type: string
+          description: UUID of service user
+        email:
+          type: string
+          description: Email of service user
+        name:
+          type: string
+          description: Name of service user
+        surname:
+          type: string
+          description: Surname of service user
+        description:
+          type: string
+          description: The description of the service user
+        createdAt:
+          type: string
+          description: The date and time when the user was created in `2021-05-01T15:11:00Z` format.
+        groupUuid:
+          type: string
+          description: Uuid of the group which enables assigning policy to service user
+      required:
+      - uid
+      - email
+      - name
+      - createdAt
+      - groupUuid
+    ExternalServiceUserDto:
+      type: object
+      properties:
+        uid:
+          type: string
+          description: UUID of service user
+        email:
+          type: string
+          description: Email of service user
+        name:
+          type: string
+          description: Name of service user
+        surname:
+          type: string
+          description: Surname of service user
+        description:
+          type: string
+          description: The description of the service user
+        createdAt:
+          type: string
+          description: The date and time when the user was created in `2021-05-01T15:11:00Z` format.
+      required:
+      - uid
+      - email
+      - name
+      - createdAt
+    ServiceUserDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the new service user
+        description:
+          type: string
+          description: The description of the new service user
+      required:
+      - name
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+externalDocs:
+  description: OpenAPI specification
+  url: /openapi.json

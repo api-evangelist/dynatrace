@@ -249,7 +249,38 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  responses:
+    BadRequest:
+      description: Bad request — invalid request body or parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized — missing or invalid OAuth token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    NotFound:
+      description: Not found — the specified user, group, or resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Forbidden:
+      description: Forbidden — the token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
   schemas:
+    ErrorEnvelope:
+      type: object
+      description: Error response envelope returned when a request fails.
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
     User:
       type: object
       description: Represents a user in the Dynatrace account.
@@ -286,18 +317,6 @@ components:
           - INACTIVE
           - PENDING_INVITE
           example: ACTIVE
-    Error:
-      type: object
-      description: Details of an API error.
-      properties:
-        code:
-          type: integer
-          description: The HTTP status code of the error.
-          example: 500
-        message:
-          type: string
-          description: A human-readable description of the error.
-          example: Example description.
     UserCollection:
       type: object
       description: A paginated collection of users.
@@ -325,12 +344,18 @@ components:
             groups:
             - example-value
             userStatus: ACTIVE
-    ErrorEnvelope:
+    Error:
       type: object
-      description: Error response envelope returned when a request fails.
+      description: Details of an API error.
       properties:
-        error:
-          $ref: '#/components/schemas/Error'
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+          example: 500
+        message:
+          type: string
+          description: A human-readable description of the error.
+          example: Example description.
     UserCreateRequest:
       type: object
       description: Request body for creating or updating a user.
@@ -359,32 +384,14 @@ components:
             type: string
           example:
           - example-value
-  responses:
-    NotFound:
-      description: Not found — the specified user, group, or resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    BadRequest:
-      description: Bad request — invalid request body or parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    Forbidden:
-      description: Forbidden — the token lacks the required scope
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    Unauthorized:
-      description: Unauthorized — missing or invalid OAuth token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
   parameters:
+    userId:
+      name: userId
+      in: path
+      description: The unique identifier of the user. Typically the user's email address or a UUID assigned by the system.
+      required: true
+      schema:
+        type: string
     accountUuid:
       name: accountUuid
       in: path
@@ -393,13 +400,6 @@ components:
       schema:
         type: string
         format: uuid
-    userId:
-      name: userId
-      in: path
-      description: The unique identifier of the user. Typically the user's email address or a UUID assigned by the system.
-      required: true
-      schema:
-        type: string
   securitySchemes:
     oauth2:
       type: oauth2

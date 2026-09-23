@@ -1,0 +1,652 @@
+openapi: 3.2.0
+info:
+  title: Dynatrace Account Management … Workload Identity Federation…
+  description: The enterprise management API for Dynatrace SaaS enables automation of operational tasks related to user access and environment lifecycle management.
+  version: '1.0'
+  contact: {}
+servers: []
+tags:
+- name: Workload Identity Federation
+  description: Manage workload identity federation trust policies and their service-user mappings.
+paths:
+  /iam/v1/accounts/{account-uuid}/wif/trust-policies:
+    get:
+      operationId: listWifTrustPolicies
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: pageNumber
+        required: false
+        in: query
+        description: The number of the requested page.
+        schema:
+          type: number
+      - name: pageSize
+        required: false
+        in: query
+        description: Defines the requested number of entries for the next page.
+        schema:
+          type: number
+      responses:
+        '200':
+          description: WIF trust policies fetched.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestWifTrustPolicyList'
+      security:
+      - bearer: []
+      summary: Returns WIF trust policies within account
+      tags:
+      - Workload Identity Federation
+      x-token-scopes:
+      - account-idm-read
+    post:
+      operationId: createWifTrustPolicy
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: WIF trust policy creation form
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestWifTrustPolicyForm'
+      responses:
+        '201':
+          description: WIF trust policy created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestWifTrustPolicy'
+      security:
+      - bearer: []
+      summary: Creates WIF trust policy
+      tags:
+      - Workload Identity Federation
+      x-token-scopes:
+      - account-idm-write
+  /iam/v1/accounts/{account-uuid}/wif/trust-policies/{trust-policy-uuid}:
+    get:
+      operationId: getWifTrustPolicy
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: trust-policy-uuid
+        required: true
+        in: path
+        description: The UUID of the required trust policy.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: WIF trust policy fetched.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestWifTrustPolicy'
+      security:
+      - bearer: []
+      summary: Returns WIF trust policy
+      tags:
+      - Workload Identity Federation
+      x-token-scopes:
+      - account-idm-read
+    put:
+      operationId: updateWifTrustPolicy
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: trust-policy-uuid
+        required: true
+        in: path
+        description: The UUID of the required trust policy.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: WIF trust policy update form
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestWifTrustPolicyForm'
+      responses:
+        '200':
+          description: WIF trust policy updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestWifTrustPolicy'
+      security:
+      - bearer: []
+      summary: Updates WIF trust policy
+      tags:
+      - Workload Identity Federation
+      x-token-scopes:
+      - account-idm-write
+    delete:
+      operationId: deleteWifTrustPolicy
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: trust-policy-uuid
+        required: true
+        in: path
+        description: The UUID of the required trust policy.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: WIF trust policy deleted.
+      security:
+      - bearer: []
+      summary: Deletes WIF trust policy
+      tags:
+      - Workload Identity Federation
+      x-token-scopes:
+      - account-idm-write
+    patch:
+      operationId: patchWifTrustPolicyStatus
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: trust-policy-uuid
+        required: true
+        in: path
+        description: The UUID of the required trust policy.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: WIF trust policy status update form
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestWifTrustPolicyPatchForm'
+      responses:
+        '200':
+          description: WIF trust policy status updated.
+      security:
+      - bearer: []
+      summary: Updates WIF trust policy status
+      tags:
+      - Workload Identity Federation
+      x-token-scopes:
+      - account-idm-write
+  /iam/v1/accounts/{account-uuid}/wif/trust-policies/{trust-policy-uuid}/mappings:
+    get:
+      operationId: listWifServiceUserMappings
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: trust-policy-uuid
+        required: true
+        in: path
+        description: The UUID of the required trust policy.
+        schema:
+          type: string
+      - name: pageNumber
+        required: false
+        in: query
+        description: The number of the requested page.
+        schema:
+          type: number
+      - name: pageSize
+        required: false
+        in: query
+        description: Defines the requested number of entries for the next page.
+        schema:
+          type: number
+      responses:
+        '200':
+          description: WIF service user mappings fetched.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestWifServiceUserMappingList'
+      security:
+      - bearer: []
+      summary: Returns WIF service user mappings
+      tags:
+      - Workload Identity Federation
+      x-token-scopes:
+      - account-idm-read
+    post:
+      operationId: createWifServiceUserMapping
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: trust-policy-uuid
+        required: true
+        in: path
+        description: The UUID of the required trust policy.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: WIF service user mapping creation form
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestWifServiceUserMappingForm'
+      responses:
+        '201':
+          description: WIF service user mapping created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestWifServiceUserMapping'
+      security:
+      - bearer: []
+      summary: Creates WIF service user mapping
+      tags:
+      - Workload Identity Federation
+      x-token-scopes:
+      - account-idm-write
+  /iam/v1/accounts/{account-uuid}/wif/trust-policies/{trust-policy-uuid}/mappings/{mapping-uuid}:
+    get:
+      operationId: getWifServiceUserMapping
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: trust-policy-uuid
+        required: true
+        in: path
+        description: The UUID of the required trust policy.
+        schema:
+          type: string
+      - name: mapping-uuid
+        required: true
+        in: path
+        description: The UUID of the required service user mapping.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: WIF service user mapping fetched.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestWifServiceUserMapping'
+      security:
+      - bearer: []
+      summary: Returns WIF service user mapping
+      tags:
+      - Workload Identity Federation
+      x-token-scopes:
+      - account-idm-read
+    put:
+      operationId: updateWifServiceUserMapping
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: trust-policy-uuid
+        required: true
+        in: path
+        description: The UUID of the required trust policy.
+        schema:
+          type: string
+      - name: mapping-uuid
+        required: true
+        in: path
+        description: The UUID of the required service user mapping.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: WIF service user mapping update form
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestWifServiceUserMappingForm'
+      responses:
+        '200':
+          description: WIF service user mapping updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestWifServiceUserMapping'
+      security:
+      - bearer: []
+      summary: Updates WIF service user mapping
+      tags:
+      - Workload Identity Federation
+      x-token-scopes:
+      - account-idm-write
+    delete:
+      operationId: deleteWifServiceUserMapping
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: trust-policy-uuid
+        required: true
+        in: path
+        description: The UUID of the required trust policy.
+        schema:
+          type: string
+      - name: mapping-uuid
+        required: true
+        in: path
+        description: The UUID of the required service user mapping.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: WIF service user mapping deleted.
+      security:
+      - bearer: []
+      summary: Deletes WIF service user mapping
+      tags:
+      - Workload Identity Federation
+      x-token-scopes:
+      - account-idm-write
+    patch:
+      operationId: patchWifServiceUserMappingStatus
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: trust-policy-uuid
+        required: true
+        in: path
+        description: The UUID of the required trust policy.
+        schema:
+          type: string
+      - name: mapping-uuid
+        required: true
+        in: path
+        description: The UUID of the required service user mapping.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: WIF service user mapping status update form
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestWifServiceUserMappingPatchForm'
+      responses:
+        '200':
+          description: WIF service user mapping status updated.
+      security:
+      - bearer: []
+      summary: Updates WIF service user mapping status
+      tags:
+      - Workload Identity Federation
+      x-token-scopes:
+      - account-idm-write
+components:
+  schemas:
+    RestWifTrustPolicyList:
+      type: object
+      properties:
+        pageSize:
+          type: number
+        pageNumber:
+          type: number
+        total:
+          type: number
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RestWifTrustPolicyListItem'
+    RestWifClaimMapping:
+      type: object
+      properties:
+        claimName:
+          type: string
+        claimValue:
+          type: string
+        matchType:
+          type: string
+          enum:
+          - EXACT
+          - GLOB
+    RestWifServiceUserMapping:
+      type: object
+      properties:
+        uuid:
+          type: string
+        serviceUserUuid:
+          type: string
+        environmentId:
+          type: string
+        scopes:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+        claimMappings:
+          type: array
+          items:
+            $ref: '#/components/schemas/RestWifClaimMapping'
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+    RestWifServiceUserMappingForm:
+      type: object
+      properties:
+        serviceUserUuid:
+          type: string
+        environmentId:
+          type: string
+        scopes:
+          type: array
+          items:
+            type: string
+        claimMappings:
+          type: array
+          items:
+            $ref: '#/components/schemas/RestWifClaimMappingForm'
+      required:
+      - serviceUserUuid
+      - environmentId
+      - scopes
+      - claimMappings
+    RestWifServiceUserMappingPatchForm:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+      required:
+      - status
+    RestWifServiceUserMappingListItem:
+      type: object
+      properties:
+        uuid:
+          type: string
+        serviceUserUuid:
+          type: string
+        environmentId:
+          type: string
+        scopes:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+    RestWifTrustPolicyPatchForm:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+      required:
+      - status
+    RestWifServiceUserMappingList:
+      type: object
+      properties:
+        pageSize:
+          type: number
+        pageNumber:
+          type: number
+        total:
+          type: number
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RestWifServiceUserMappingListItem'
+    RestWifClaimMappingForm:
+      type: object
+      properties:
+        claimName:
+          type: string
+        claimValue:
+          type: string
+        matchType:
+          type: string
+          enum:
+          - EXACT
+          - GLOB
+      required:
+      - claimName
+      - claimValue
+      - matchType
+    RestWifTrustPolicyForm:
+      type: object
+      properties:
+        name:
+          type: string
+        issuerUrl:
+          type: string
+        jwksUri:
+          type: string
+        audience:
+          type: string
+        description:
+          type: string
+      required:
+      - name
+      - issuerUrl
+      - audience
+    RestWifTrustPolicy:
+      type: object
+      properties:
+        uuid:
+          type: string
+        name:
+          type: string
+        issuerUrl:
+          type: string
+        issuerUrlHash:
+          type: string
+        jwksUri:
+          type: string
+        description:
+          type: string
+        audience:
+          type: string
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        serviceUserMappings:
+          type: array
+          items:
+            $ref: '#/components/schemas/RestWifServiceUserMapping'
+    RestWifTrustPolicyListItem:
+      type: object
+      properties:
+        uuid:
+          type: string
+        name:
+          type: string
+        issuerUrl:
+          type: string
+        audience:
+          type: string
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+externalDocs:
+  description: OpenAPI specification
+  url: /openapi.json

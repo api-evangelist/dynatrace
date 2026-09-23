@@ -1,0 +1,1883 @@
+openapi: 3.2.0
+info:
+  title: Dynatrace Account Management Policy Management API
+  description: The enterprise management API for Dynatrace SaaS enables automation of operational tasks related to user access and environment lifecycle management.
+  version: '1.0'
+  contact: {}
+servers: []
+tags:
+- name: Policy Management
+  description: Manage IAM policies, policy bindings, and permission boundaries.
+paths:
+  /iam/v1/repo/{level-type}/{level-id}/policies/validation:
+    post:
+      deprecated: true
+      description: 'Deprecated since Mon, 15 Jun 2026 00:00:00 GMT. This endpoint will be removed on Mon, 11 Jan 2027 00:00:00 GMT.
+
+
+        This endpoint is unavailable within global level. Validation moved to create/update policy endpoints.'
+      operationId: validateNewLevelPolicy
+      parameters:
+      - name: level-id
+        required: true
+        in: path
+        description: "The ID of the policy level. Use one of the following values, depending on the level type: \n\n* account: use the UUID of the account. \n* environment: use the ID of the environment."
+        schema: {}
+      - name: level-type
+        required: true
+        in: path
+        description: "The type of the [policy](https://dt-url.net/eu03uap) level. The following values are available: \n\n* `account`: An account policy applies to all environments of an account. \n* `environment`: An environment policy applies to a specific environment. \n\n Each level inherits the policies of the higher level and extends them with its own policies."
+        schema: {}
+      requestBody:
+        required: true
+        description: The JSON body of the request. Contains the configuration of a policy to be validated.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateLevelPolicyRequestDto'
+      responses:
+        '200':
+          description: Success. The submitted policy is valid. Check the response body for possible validation warnings.
+          headers:
+            Deprecation:
+              description: The date from which this endpoint is deprecated.
+              schema:
+                type: string
+                example: Mon, 15 Jun 2026 00:00:00 GMT
+            Sunset:
+              description: The date after which this endpoint will return 410 Gone.
+              schema:
+                type: string
+                example: Mon, 11 Jan 2027 00:00:00 GMT
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationDto'
+        '400':
+          description: Failed. The request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '410':
+          description: This endpoint has been removed.
+        '422':
+          description: The specified response not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Validates the payload for the `POST /iam/v1/repo/{levelType}/{levelId}/policies`…
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:policies:read
+  /iam/v1/repo/{level-type}/{level-id}/policies/validation/{policy-uuid}:
+    post:
+      deprecated: true
+      description: 'Deprecated since Mon, 15 Jun 2026 00:00:00 GMT. This endpoint will be removed on Mon, 11 Jan 2027 00:00:00 GMT.
+
+
+        This endpoint is unavailable within global level. Validation moved to create/update policy endpoints.'
+      operationId: validateLevelPolicy
+      parameters:
+      - name: policy-uuid
+        required: true
+        in: path
+        description: The ID of the policy to be validated.
+        schema: {}
+      - name: level-id
+        required: true
+        in: path
+        description: "The ID of the policy level. Use one of the following values, depending on the level type: \n\n* account: use the UUID of the account. \n* environment: use the ID of the environment."
+        schema: {}
+      - name: level-type
+        required: true
+        in: path
+        description: "The type of the [policy](https://dt-url.net/eu03uap) level. The following values are available: \n\n* `account`: An account policy applies to all environments of an account. \n* `environment`: An environment policy applies to a specific environment. \n\n Each level inherits the policies of the higher level and extends them with its own policies."
+        schema: {}
+      requestBody:
+        required: true
+        description: The JSON body of the request. Contains the configuration of a policy to be validated.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateLevelPolicyRequestDto'
+      responses:
+        '200':
+          description: Success. The submitted policy is valid. Check the response body for possible validation warnings.
+          headers:
+            Deprecation:
+              description: The date from which this endpoint is deprecated.
+              schema:
+                type: string
+                example: Mon, 15 Jun 2026 00:00:00 GMT
+            Sunset:
+              description: The date after which this endpoint will return 410 Gone.
+              schema:
+                type: string
+                example: Mon, 11 Jan 2027 00:00:00 GMT
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationDto'
+        '400':
+          description: Failed. The request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '410':
+          description: This endpoint has been removed.
+        '422':
+          description: The specified response not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Validates the payload for the `PUT /iam/v1/repo/{levelType}/{levelId}/policies/{…
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:policies:read
+  /iam/v1/resolution/{level-type}/{level-id}/effectivepermissions:
+    get:
+      operationId: getEffectivePermissions
+      parameters:
+      - name: size
+        required: false
+        in: query
+        schema:
+          default: 100
+          type: integer
+      - name: page
+        required: false
+        in: query
+        schema:
+          default: 1
+          type: integer
+      - name: services
+        required: false
+        in: query
+        description: Optional services list. Policies for given services will be returned
+        schema: {}
+      - name: entityId
+        required: true
+        in: query
+        description: Required entity id.
+        schema: {}
+      - name: entityType
+        required: true
+        in: query
+        description: "Required entity type. The following values are available: \n\n* user \n* group"
+        schema: {}
+      - name: level-id
+        required: true
+        in: path
+        description: "The ID of the policy level. Use one of the following values, depending on the level type: \n\n* account: use the UUID of the account. \n* environment: use the ID of the environment."
+        schema: {}
+      - name: level-type
+        required: true
+        in: path
+        description: "The type of the [policy](https://dt-url.net/eu03uap) level. The following values are available: \n\n* `account`: An account policy applies to all environments of an account. \n* `environment`: An environment policy applies to a specific environment. \n\n Each level inherits the policies of the higher level and extends them with its own policies."
+        schema: {}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EffectivePermissions'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Gets effective permissions for a user or group
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:effective-permissions:read
+  /iam/v1/repo/{level-type}/{level-id}/policies/aggregate:
+    get:
+      description: This endpoint is unavailable within global level
+      operationId: getPolicyOverviewList
+      parameters:
+      - name: level-id
+        required: true
+        in: path
+        description: "The ID of the policy level. Use one of the following values, depending on the level type: \n\n* account: use the UUID of the account. \n* environment: use the ID of the environment."
+        schema: {}
+      - name: level-type
+        required: true
+        in: path
+        description: "The type of the [policy](https://dt-url.net/eu03uap) level. The following values are available: \n\n* `account`: An account policy applies to all environments of an account. \n* `environment`: An environment policy applies to a specific environment. \n\n Each level inherits the policies of the higher level and extends them with its own policies."
+        schema: {}
+      responses:
+        '200':
+          description: Success. The response contains the list of policies.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyOverviewDtoList'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Lists all policies for a level, including inherited from higher levels
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+  /iam/v1/repo/{level-type}/{level-id}/policies:
+    get:
+      operationId: getLevelPolicies
+      parameters:
+      - name: categories
+        required: false
+        in: query
+        description: Optional policy categories set. Only policies that match given categories will be returned.
+        schema: {}
+      - name: name
+        required: false
+        in: query
+        description: Optional policy name. Only policies that are of equal name will be returned.
+        schema: {}
+      - name: level-id
+        required: true
+        in: path
+        description: "The ID of the policy level. Use one of the following values, depending on the level type: \n\n* global: use the `global` value. \n* account: use the UUID of the account. \n* environment: use the ID of the environment."
+        schema: {}
+      - name: level-type
+        required: true
+        in: path
+        description: "The type of the [policy](https://dt-url.net/eu03uap) level. The following values are available: \n\n* `global`: A global policy applies to all accounts and environments. It is defined and managed by Dynatrace. \n* `account`: An account policy applies to all environments of an account. \n* `environment`: An environment policy applies to a specific environment. \n\n Each level inherits the policies of the higher level and extends them with its own policies."
+        schema: {}
+      responses:
+        '200':
+          description: Success. The response contains the list of policies.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyDtoList'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Lists all native policies of a level
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:policies:read
+    post:
+      description: This endpoint is unavailable within global level
+      operationId: createLevelPolicy
+      parameters:
+      - name: level-id
+        required: true
+        in: path
+        description: "The ID of the policy level. Use one of the following values, depending on the level type: \n\n* account: use the UUID of the account. \n* environment: use the ID of the environment."
+        schema: {}
+      - name: level-type
+        required: true
+        in: path
+        description: "The type of the [policy](https://dt-url.net/eu03uap) level. The following values are available: \n\n* `account`: An account policy applies to all environments of an account. \n* `environment`: An environment policy applies to a specific environment. \n\n Each level inherits the policies of the higher level and extends them with its own policies."
+        schema: {}
+      requestBody:
+        required: true
+        description: The JSON body of the request. Contains the configuration of a new policy.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateLevelPolicyRequestDto'
+      responses:
+        '201':
+          description: Success. The policy has been created. The response contains the configuration of the policy.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LevelPolicyDto'
+        '400':
+          description: Failed. The request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '422':
+          description: The specified response not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Creates a new policy
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:policies:write
+  /iam/v1/repo/{level-type}/{level-id}/policies/{policy-uuid}:
+    get:
+      operationId: getLevelPolicy
+      parameters:
+      - name: policy-uuid
+        required: true
+        in: path
+        description: The ID of the required policy.
+        schema: {}
+      - name: level-id
+        required: true
+        in: path
+        description: "The ID of the policy level. Use one of the following values, depending on the level type: \n\n* global: use the `global` value. \n* account: use the UUID of the account. \n* environment: use the ID of the environment."
+        schema: {}
+      - name: level-type
+        required: true
+        in: path
+        description: "The type of the [policy](https://dt-url.net/eu03uap) level. The following values are available: \n\n* `global`: A global policy applies to all accounts and environments. It is defined and managed by Dynatrace. \n* `account`: An account policy applies to all environments of an account. \n* `environment`: An environment policy applies to a specific environment. \n\n Each level inherits the policies of the higher level and extends them with its own policies."
+        schema: {}
+      responses:
+        '200':
+          description: Success. The response contains the configuration of the policy.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LevelPolicyDto'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Gets a policy
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:policies:read
+    put:
+      description: 'If the specified policy doesn''t exist, a new one is created.
+
+        This endpoint is unavailable within global level'
+      operationId: updateLevelPolicy
+      parameters:
+      - name: policy-uuid
+        required: true
+        in: path
+        description: The ID of the required policy.
+        schema: {}
+      - name: level-id
+        required: true
+        in: path
+        description: "The ID of the policy level. Use one of the following values, depending on the level type: \n\n* account: use the UUID of the account. \n* environment: use the ID of the environment."
+        schema: {}
+      - name: level-type
+        required: true
+        in: path
+        description: "The type of the [policy](https://dt-url.net/eu03uap) level. The following values are available: \n\n* `account`: An account policy applies to all environments of an account. \n* `environment`: An environment policy applies to a specific environment. \n\n Each level inherits the policies of the higher level and extends them with its own policies."
+        schema: {}
+      requestBody:
+        required: true
+        description: The JSON body of the request. Contains the updated configuration of a policy.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateLevelPolicyRequestDto'
+      responses:
+        '201':
+          description: Success. The policy has been created. The response contains the configuration of the policy.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LevelPolicyDto'
+        '204':
+          description: Success. The policy has been updated. The response doesn't have a body.
+        '400':
+          description: Failed. The request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '422':
+          description: The specified response not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Updates a policy
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:policies:write
+    delete:
+      description: This endpoint is unavailable within global level
+      operationId: deleteLevelPolicy
+      parameters:
+      - name: force
+        required: true
+        in: query
+        description: Set to `true` to delete a policy that is still in use.
+        schema:
+          default: false
+      - name: policy-uuid
+        required: true
+        in: path
+        description: The ID of the required policy.
+        schema: {}
+      - name: level-id
+        required: true
+        in: path
+        description: "The ID of the policy level. Use one of the following values, depending on the level type: \n\n* account: use the UUID of the account. \n* environment: use the ID of the environment."
+        schema: {}
+      - name: level-type
+        required: true
+        in: path
+        description: "The type of the [policy](https://dt-url.net/eu03uap) level. The following values are available: \n\n* `account`: An account policy applies to all environments of an account. \n* `environment`: An environment policy applies to a specific environment. \n\n Each level inherits the policies of the higher level and extends them with its own policies."
+        schema: {}
+      responses:
+        '204':
+          description: Success. The policy has been deleted. The response doesn't have a body.
+        '400':
+          description: Failed. The request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Deletes a policy
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:policies:write
+  /iam/v1/repo/{level-type}/{level-id}/bindings/groups/{group-uuid}:
+    get:
+      operationId: getPolicyUuidsBindings
+      parameters:
+      - name: details
+        required: false
+        in: query
+        description: Optional parameter to print-out additional details containing boundaries, metadata, parameters.
+        schema: {}
+      - name: group-uuid
+        required: true
+        in: path
+        description: The ID of the required user group.
+        schema: {}
+      - name: level-id
+        required: true
+        in: path
+        description: "The ID of the policy level. Use one of the following values, depending on the level type: \n\n* global: use the `global` value. \n* account: use the UUID of the account. \n* environment: use the ID of the environment."
+        schema: {}
+      - name: level-type
+        required: true
+        in: path
+        description: "The type of the [policy](https://dt-url.net/eu03uap) level. The following values are available: \n\n* `global`: A global policy applies to all accounts and environments. It is defined and managed by Dynatrace. \n* `account`: An account policy applies to all environments of an account. \n* `environment`: An environment policy applies to a specific environment. \n\n Each level inherits the policies of the higher level and extends them with its own policies."
+        schema: {}
+      responses:
+        '200':
+          description: Success. The response contains the list of policies.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyUuidsWithoutMetadataDto'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Lists all policies for a user group
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:read
+    put:
+      description: 'The request overwrites existing policies.
+
+        This endpoint is unavailable within global level'
+      operationId: updatePolicyBindingsToGroup
+      parameters:
+      - name: group-uuid
+        required: true
+        in: path
+        description: The ID of the required user group.
+        schema: {}
+      - name: level-id
+        required: true
+        in: path
+        description: "The ID of the policy level. Use one of the following values, depending on the level type: \n\n* account: use the UUID of the account. \n* environment: use the ID of the environment."
+        schema: {}
+      - name: level-type
+        required: true
+        in: path
+        description: "The type of the [policy](https://dt-url.net/eu03uap) level. The following values are available: \n\n* `account`: An account policy applies to all environments of an account. \n* `environment`: An environment policy applies to a specific environment. \n\n Each level inherits the policies of the higher level and extends them with its own policies."
+        schema: {}
+      requestBody:
+        required: true
+        description: "The JSON body of the request. Contains new policies for the group. \n\n Any policy not presented in the request is discarded."
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyUuidsDto'
+      responses:
+        '204':
+          description: Success. The group policies have been updated. The response doesn't have a body.
+        '400':
+          description: Failed. The request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '422':
+          description: The specified response not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Updates policy bindings for a user group
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:write
+  /iam/v1/repo/{level-type}/{level-id}/bindings:
+    get:
+      description: A policy binding shows which user groups use the policy.
+      operationId: getAllLevelPoliciesBindings
+      parameters:
+      - name: level-id
+        required: true
+        in: path
+        description: "The ID of the policy level. Use one of the following values, depending on the level type: \n\n* global: use the `global` value. \n* account: use the UUID of the account. \n* environment: use the ID of the environment."
+        schema: {}
+      - name: level-type
+        required: true
+        in: path
+        description: "The type of the [policy](https://dt-url.net/eu03uap) level. The following values are available: \n\n* `global`: A global policy applies to all accounts and environments. It is defined and managed by Dynatrace. \n* `account`: An account policy applies to all environments of an account. \n* `environment`: An environment policy applies to a specific environment. \n\n Each level inherits the policies of the higher level and extends them with its own policies."
+        schema: {}
+      responses:
+        '200':
+          description: Success. The response contains bindings of the level policies.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LevelPolicyBindingDto'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Lists all policy bindings of a level
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:read
+    delete:
+      description: This endpoint is unavailable within global level
+      operationId: deleteLevelPolicyBindings
+      parameters:
+      - name: level-id
+        required: true
+        in: path
+        description: "The ID of the policy level. Use one of the following values, depending on the level type: \n\n* account: use the UUID of the account. \n* environment: use the ID of the environment."
+        schema: {}
+      - name: level-type
+        required: true
+        in: path
+        description: "The type of the [policy](https://dt-url.net/eu03uap) level. The following values are available: \n\n* `account`: An account policy applies to all environments of an account. \n* `environment`: An environment policy applies to a specific environment. \n\n Each level inherits the policies of the higher level and extends them with its own policies."
+        schema: {}
+      responses:
+        '204':
+          description: Success. Policy bindings have been deleted. The response doesn't have a body.
+        '400':
+          description: Failed. The request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '422':
+          description: The specified response not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Deletes all policy bindings from a level
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:write
+  /iam/v1/repo/{level-type}/{level-id}/bindings/{policy-uuid}:
+    get:
+      description: This endpoint is unavailable within global level
+      operationId: getLevelPolicyBindings
+      parameters:
+      - name: policy-uuid
+        required: true
+        in: path
+        description: The ID of the required policy.
+        schema: {}
+      - name: level-id
+        required: true
+        in: path
+        description: "The ID of the policy level. Use one of the following values, depending on the level type: \n\n* global: use the `global` value. \n* account: use the UUID of the account. \n* environment: use the ID of the environment."
+        schema: {}
+      - name: level-type
+        required: true
+        in: path
+        description: "The type of the [policy](https://dt-url.net/eu03uap) level. The following values are available: \n\n* `global`: A global policy applies to all accounts and environments. It is defined and managed by Dynatrace. \n* `account`: An account policy applies to all environments of an account. \n* `environment`: An environment policy applies to a specific environment. \n\n Each level inherits the policies of the higher level and extends them with its own policies."
+        schema: {}
+      responses:
+        '200':
+          description: Successful response - list of policy bindings with parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LevelPolicyBindingDto'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Get policy bindings within a level
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:read
+    post:
+      description: 'Existing bindings remain unaffected.
+
+        This endpoint is unavailable within global level'
+      operationId: appendLevelPolicyBindings
+      parameters:
+      - name: policy-uuid
+        required: true
+        in: path
+        description: The ID of the required policy.
+        schema: {}
+      - name: level-id
+        required: true
+        in: path
+        description: "The ID of the policy level. Use one of the following values, depending on the level type: \n\n* account: use the UUID of the account. \n* environment: use the ID of the environment."
+        schema: {}
+      - name: level-type
+        required: true
+        in: path
+        description: "The type of the [policy](https://dt-url.net/eu03uap) level. The following values are available: \n\n* `account`: An account policy applies to all environments of an account. \n* `environment`: An environment policy applies to a specific environment. \n\n Each level inherits the policies of the higher level and extends them with its own policies."
+        schema: {}
+      requestBody:
+        required: true
+        description: The JSON body of the request. Contains user groups that must use the policy and optional boundaries.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppendLevelPolicyBindingsRequestDto'
+      responses:
+        '204':
+          description: Success. Policy bindings created.
+        '400':
+          description: Failed. The request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '422':
+          description: The specified response not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Adds policy bindings to a level
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:write
+    delete:
+      description: This endpoint is unavailable within global level
+      operationId: deleteLevelPolicyBindingsForPolicy
+      parameters:
+      - name: forceMultiple
+        required: true
+        in: query
+        description: Forces multiple in case delete by parameters and metadata query
+        schema:
+          default: false
+      - name: query-params
+        required: false
+        in: query
+        description: Key-value pairs for policy template parameters and metadata. Only bindings matching given parameters and metadata will be updated or deleted.
+        schema:
+          example: " { \n   \"parameters[param1]\": \"value1\",\n   \"parameters[param2]\": \"value2\",\n   \"metadata[param1]\": \"value1\" \n }"
+          type: object
+      - name: policy-uuid
+        required: true
+        in: path
+        description: The ID of the required policy.
+        schema: {}
+      - name: level-id
+        required: true
+        in: path
+        description: "The ID of the policy level. Use one of the following values, depending on the level type: \n\n* account: use the UUID of the account. \n* environment: use the ID of the environment."
+        schema: {}
+      - name: level-type
+        required: true
+        in: path
+        description: "The type of the [policy](https://dt-url.net/eu03uap) level. The following values are available: \n\n* `account`: An account policy applies to all environments of an account. \n* `environment`: An environment policy applies to a specific environment. \n\n Each level inherits the policies of the higher level and extends them with its own policies."
+        schema: {}
+      responses:
+        '204':
+          description: Success. Policy binding has been deleted. The response doesn't have a body.
+        '400':
+          description: Failed. The request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Deletes all bindings of a policy
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:write
+  /iam/v1/repo/{level-type}/{level-id}/bindings/descendants/{policy-uuid}:
+    get:
+      description: This endpoint is unavailable within global level
+      operationId: getLevelDescendantsPolicyBindings
+      parameters:
+      - name: size
+        required: false
+        in: query
+        schema:
+          default: 100
+          type: integer
+      - name: page
+        required: false
+        in: query
+        schema:
+          default: 1
+          type: integer
+      - name: policy-uuid
+        required: true
+        in: path
+        description: The ID of the required policy.
+        schema: {}
+      - name: level-id
+        required: true
+        in: path
+        description: "The ID of the policy level. Use one of the following values, depending on the level type: \n\n* global: use the `global` value. \n* account: use the UUID of the account. \n* environment: use the ID of the environment."
+        schema: {}
+      - name: level-type
+        required: true
+        in: path
+        description: "The type of the [policy](https://dt-url.net/eu03uap) level. The following values are available: \n\n* `account`: An account policy applies to all environments of an account. \n\nEach level inherits the policies of the higher level and extends them with its own policies."
+        schema: {}
+      responses:
+        '200':
+          description: Successful response - list of policy bindings with parameters for all descendants of given account level
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LevelPolicyBindingDtoList'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Get policy bindings within descendants of a level
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:read
+  /iam/v1/repo/{level-type}/{level-id}/bindings/{policy-uuid}/{group-uuid}:
+    get:
+      description: This endpoint is unavailable within global level
+      operationId: getLevelPolicyBindingsForGroup
+      parameters:
+      - name: group-uuid
+        required: true
+        in: path
+        description: The ID of the required user group.
+        schema: {}
+      - name: policy-uuid
+        required: true
+        in: path
+        description: The ID of the required policy.
+        schema: {}
+      - name: level-id
+        required: true
+        in: path
+        description: "The ID of the policy level. Use one of the following values, depending on the level type: \n\n* global: use the `global` value. \n* account: use the UUID of the account. \n* environment: use the ID of the environment."
+        schema: {}
+      - name: level-type
+        required: true
+        in: path
+        description: "The type of the [policy](https://dt-url.net/eu03uap) level. The following values are available: \n\n* `global`: A global policy applies to all accounts and environments. It is defined and managed by Dynatrace. \n* `account`: An account policy applies to all environments of an account. \n* `environment`: An environment policy applies to a specific environment. \n\n Each level inherits the policies of the higher level and extends them with its own policies."
+        schema: {}
+      responses:
+        '200':
+          description: Successful response - list of policy bindings with parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LevelPolicyBindingDto'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Get policy bindings within a level
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:read
+    post:
+      description: This endpoint is unavailable within global level
+      operationId: appendParticularGroupBinding
+      parameters:
+      - name: group-uuid
+        required: true
+        in: path
+        description: The ID of the required user group.
+        schema: {}
+      - name: policy-uuid
+        required: true
+        in: path
+        description: The ID of the required policy.
+        schema: {}
+      - name: level-id
+        required: true
+        in: path
+        description: "The ID of the policy level. Use one of the following values, depending on the level type: \n\n* account: use the UUID of the account. \n* environment: use the ID of the environment."
+        schema: {}
+      - name: level-type
+        required: true
+        in: path
+        description: "The type of the [policy](https://dt-url.net/eu03uap) level. The following values are available: \n\n* `account`: An account policy applies to all environments of an account. \n* `environment`: An environment policy applies to a specific environment. \n\n Each level inherits the policies of the higher level and extends them with its own policies."
+        schema: {}
+      requestBody:
+        required: true
+        description: The JSON body of the request. Contains parameters, metadata and boundaries
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppendLevelPolicyBindingForGroupDto'
+      responses:
+        '204':
+          description: Success. Policy bindings created.
+        '400':
+          description: Failed. The request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '422':
+          description: The specified response not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Append policy bindings within a level for a user group
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:write
+    put:
+      description: This endpoint is unavailable within global level
+      operationId: updateLevelPolicyBindingForPolicyAndGroup
+      parameters:
+      - name: query-params
+        required: false
+        in: query
+        description: Key-value pairs for policy template parameters and metadata. Only bindings matching given parameters and metadata will be updated or deleted.
+        schema:
+          example: " { \n   \"parameters[param1]\": \"value1\",\n   \"parameters[param2]\": \"value2\",\n   \"metadata[param1]\": \"value1\" \n }"
+          type: object
+      - name: group-uuid
+        required: true
+        in: path
+        description: The ID of the required user group.
+        schema: {}
+      - name: policy-uuid
+        required: true
+        in: path
+        description: The ID of the required policy.
+        schema: {}
+      - name: level-id
+        required: true
+        in: path
+        description: "The ID of the policy level. Use one of the following values, depending on the level type: \n\n* account: use the UUID of the account. \n* environment: use the ID of the environment."
+        schema: {}
+      - name: level-type
+        required: true
+        in: path
+        description: "The type of the [policy](https://dt-url.net/eu03uap) level. The following values are available: \n\n* `account`: An account policy applies to all environments of an account. \n* `environment`: An environment policy applies to a specific environment. \n\n Each level inherits the policies of the higher level and extends them with its own policies."
+        schema: {}
+      requestBody:
+        required: true
+        description: The JSON body of the request. Contains parameters, metadata and boundaries
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppendLevelPolicyBindingForGroupDto'
+      responses:
+        '204':
+          description: Success. Policy bindings created or updated.
+        '400':
+          description: Failed. The request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '422':
+          description: The specified response not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Updates or creates a policy binding for a particular group and policy
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:write
+    delete:
+      description: This endpoint is unavailable within global level
+      operationId: deleteLevelPolicyBindingsForPolicyAndGroup
+      parameters:
+      - name: forceMultiple
+        required: true
+        in: query
+        description: Forces multiple in case delete by parameters and metadata query
+        schema:
+          default: false
+      - name: query-params
+        required: false
+        in: query
+        description: Key-value pairs for policy template parameters and metadata. Only bindings matching given parameters and metadata will be updated or deleted.
+        schema:
+          example: " { \n   \"parameters[param1]\": \"value1\",\n   \"parameters[param2]\": \"value2\",\n   \"metadata[param1]\": \"value1\" \n }"
+          type: object
+      - name: group-uuid
+        required: true
+        in: path
+        description: The ID of the required user group.
+        schema: {}
+      - name: policy-uuid
+        required: true
+        in: path
+        description: The ID of the required policy.
+        schema: {}
+      - name: level-id
+        required: true
+        in: path
+        description: "The ID of the policy level. Use one of the following values, depending on the level type: \n\n* account: use the UUID of the account. \n* environment: use the ID of the environment."
+        schema: {}
+      - name: level-type
+        required: true
+        in: path
+        description: "The type of the [policy](https://dt-url.net/eu03uap) level. The following values are available: \n\n* `account`: An account policy applies to all environments of an account. \n* `environment`: An environment policy applies to a specific environment. \n\n Each level inherits the policies of the higher level and extends them with its own policies."
+        schema: {}
+      responses:
+        '204':
+          description: Success. Policy binding has been deleted. The response doesn't have a body.
+        '400':
+          description: Failed. The request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Deletes a policy binding from a user group
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:write
+  /iam/v1/repo/account/{account-id}/boundaries:
+    get:
+      operationId: getPolicyBoundaries
+      parameters:
+      - name: size
+        required: false
+        in: query
+        schema:
+          default: 100
+          type: integer
+      - name: page
+        required: false
+        in: query
+        schema:
+          default: 1
+          type: integer
+      - name: account-id
+        required: true
+        in: path
+        description: The ID of the policy boundary level. Use the UUID of the account.
+        schema: {}
+      responses:
+        '200':
+          description: Successful response - list of policy boundaries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyBoundaryDtoList'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Get a list of policy boundaries within a level
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:boundaries:read
+    post:
+      operationId: postPolicyBoundary
+      parameters:
+      - name: account-id
+        required: true
+        in: path
+        description: The ID of the policy boundary level. Use the UUID of the account.
+        schema: {}
+      requestBody:
+        required: true
+        description: The JSON body of the request. Contains new policy boundary
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyBoundaryDto'
+      responses:
+        '201':
+          description: Successful response - policy boundary created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyBoundaryOverview'
+        '400':
+          description: Failed. The request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Create a policy boundary within a level
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:boundaries:write
+  /iam/v1/repo/account/{account-id}/boundaries/{policy-boundary-uuid}:
+    get:
+      operationId: getPolicyBoundary
+      parameters:
+      - name: policy-boundary-uuid
+        required: true
+        in: path
+        description: The ID of the required boundary.
+        schema: {}
+      - name: account-id
+        required: true
+        in: path
+        description: The ID of the policy boundary level. Use the UUID of the account.
+        schema: {}
+      responses:
+        '200':
+          description: Successful response - policy boundary
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyBoundaryOverview'
+        '404':
+          description: 'Failed. The specified policy boundary was not found.
+
+
+            Failed. The specified resource is not found.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Get policy boundary within a level
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:boundaries:read
+    put:
+      operationId: putPolicyBoundary
+      parameters:
+      - name: policy-boundary-uuid
+        required: true
+        in: path
+        description: The ID of the required boundary.
+        schema: {}
+      - name: account-id
+        required: true
+        in: path
+        description: The ID of the policy boundary level. Use the UUID of the account.
+        schema: {}
+      requestBody:
+        required: true
+        description: The JSON body of the request. Contains policy boundary
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyBoundaryDto'
+      responses:
+        '201':
+          description: Successful response - policy boundary created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyBoundaryOverview'
+        '204':
+          description: Successful response - policy boundary updated
+        '400':
+          description: Failed. The request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: 'Failed. The specified policy boundary was not found.
+
+
+            Failed. The specified resource is not found.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Update or create a new policy boundary by uuid within a level
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:boundaries:write
+    delete:
+      operationId: deletePolicyBoundary
+      parameters:
+      - name: policy-boundary-uuid
+        required: true
+        in: path
+        description: The ID of the required boundary.
+        schema: {}
+      - name: account-id
+        required: true
+        in: path
+        description: The ID of the policy boundary level. Use the UUID of the account.
+        schema: {}
+      responses:
+        '204':
+          description: Successful response - policy boundary deleted
+        '400':
+          description: Failed. The request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: 'Failed. The specified policy boundary was not found.
+
+
+            Failed. The specified resource is not found.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Delete policy boundary by uuid within a level
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:boundaries:write
+  /iam/v1/repo/{level-type}/{level-id}/limits:
+    get:
+      operationId: getLimitsForLevel
+      parameters:
+      - name: level-id
+        required: true
+        in: path
+        description: "The ID of the policy level. Use one of the following values, depending on the level type: \n\n* account: use the UUID of the account. \n* environment: use the ID of the environment."
+        schema: {}
+      - name: level-type
+        required: true
+        in: path
+        description: "The type of the [policy](https://dt-url.net/eu03uap) level. The following values are available: \n\n* `account`: An account policy applies to all environments of an account. \n* `environment`: An environment policy applies to a specific environment. \n\n Each level inherits the policies of the higher level and extends them with its own policies."
+        schema: {}
+      responses:
+        '200':
+          description: Successful response - information about limits defined for a level.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LevelLimitsDto'
+        '400':
+          description: Failed. The request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Failed. The specified resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+      security:
+      - bearer: []
+      summary: Returns limits defined for a level
+      tags:
+      - Policy Management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:limits:read
+components:
+  schemas:
+    EffectivePermissions:
+      type: object
+      properties:
+        effectivePermissions:
+          description: List of effective permissions.
+          type: array
+          items:
+            $ref: '#/components/schemas/EffectivePermission'
+      required:
+      - effectivePermissions
+    AppendLevelPolicyBindingForGroupDto:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: string
+          description: Parameters provided for bindings
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: Metadata provided for bindings
+        boundaries:
+          description: List of boundary UUIDs used in the binding.
+          type: array
+          items:
+            type: string
+    Binding:
+      type: object
+      properties:
+        policyUuid:
+          type: string
+          description: The ID of the policy.
+        groups:
+          description: A list of user groups to which the policy applies.
+          type: array
+          items:
+            type: string
+        parameters:
+          type: object
+          additionalProperties:
+            type: string
+          description: Parameters from bound policies
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: Metadata from bound policies
+        boundaries:
+          description: List of boundary UUIDs used in the binding.
+          type: array
+          items:
+            type: string
+      required:
+      - policyUuid
+      - groups
+      - boundaries
+    LimitEntry:
+      type: object
+      properties:
+        count:
+          type: number
+        limit:
+          type: string
+      required:
+      - count
+      - limit
+    ErrorDto:
+      type: object
+      properties:
+        code:
+          type: number
+          description: The code of the error.
+        message:
+          type: string
+          description: A short description of the error.
+        errorsMap:
+          type: object
+          additionalProperties:
+            type: string
+      required:
+      - code
+      - message
+      - errorsMap
+    ValidationDto:
+      type: object
+      properties:
+        warnings:
+          description: A list of validation warnings.
+          type: array
+          items:
+            type: string
+      required:
+      - warnings
+    AppendLevelPolicyBindingsRequestDto:
+      type: object
+      properties:
+        groups:
+          description: A list of user groups (specified by IDs) to which the policy applies.
+          type: array
+          items:
+            type: string
+        boundaries:
+          description: List of boundary UUIDs used in the binding.
+          type: array
+          items:
+            type: string
+      required:
+      - groups
+    EffectiveBinding:
+      type: object
+      properties:
+        groupUuid:
+          type: string
+          description: The UUID of group
+        levelType:
+          type: string
+          description: The type of the level to which the binding applies.
+        levelId:
+          type: string
+          description: The ID of the level to which the binding applies.
+      required:
+      - groupUuid
+      - levelType
+      - levelId
+    EffectivePolicy:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: The ID of the policy.
+        name:
+          type: string
+          description: The display name of the policy.
+        statementQuery:
+          type: string
+          description: The statement query of the policy.
+        levelType:
+          type: string
+          description: The type of the level to which the policy applies.
+        levelId:
+          type: string
+          description: The ID of the level to which the policy applies.
+      required:
+      - uuid
+      - name
+      - statementQuery
+      - levelType
+      - levelId
+    PolicyBoundaryOverview:
+      type: object
+      properties:
+        uuid:
+          type: string
+        levelType:
+          type: string
+        levelId:
+          type: string
+        name:
+          type: string
+          description: The display name of the policy boundary.
+        boundaryQuery:
+          type: string
+          description: The boundary query of the policy boundary.
+        boundaryConditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Condition'
+        metadata:
+          description: The metadata of the policy boundary.
+          allOf:
+          - $ref: '#/components/schemas/Map'
+      required:
+      - uuid
+      - levelType
+      - levelId
+      - name
+      - boundaryQuery
+      - boundaryConditions
+      - metadata
+    PolicyDtoList:
+      type: object
+      properties:
+        policies:
+          description: A list of policies.
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyDto'
+      required:
+      - policies
+    PolicyOverviewDtoList:
+      type: object
+      properties:
+        policyOverviewList:
+          description: A list of policies.
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyOverview'
+      required:
+      - policyOverviewList
+    PolicyBoundaryDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The display name of the policy boundary.
+        boundaryQuery:
+          type: string
+          description: The boundary query of the policy boundary.
+        metadata:
+          description: The metadata of the policy boundary.
+          allOf:
+          - $ref: '#/components/schemas/Map'
+      required:
+      - name
+      - boundaryQuery
+      - metadata
+    Condition:
+      type: object
+      properties:
+        name:
+          type: string
+          description: "The name of the condition. \n\n It indicates which part of the **services** is checked by the condition."
+        operator:
+          type: string
+          description: The operator of the condition.
+        values:
+          description: A list of reference values of the condition.
+          type: array
+          items:
+            type: string
+      required:
+      - name
+      - operator
+      - values
+    CreateOrUpdateLevelPolicyRequestDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The display name of the policy.
+        description:
+          type: string
+          description: A short description of the policy.
+        tags:
+          description: A list of tags.
+          type: array
+          items:
+            type: string
+        statementQuery:
+          type: string
+          description: The [statement](https://dt-url.net/ht03ucb) of the policy.
+      required:
+      - name
+      - description
+      - statementQuery
+    EffectivePermission:
+      type: object
+      properties:
+        permission:
+          type: string
+          description: One of a effective permissions
+        effects:
+          description: A list of policies.
+          type: array
+          items:
+            $ref: '#/components/schemas/EffectivePermissionEffects'
+      required:
+      - permission
+      - effects
+    Map:
+      type: object
+      properties: {}
+    Statement:
+      type: object
+      properties:
+        effect:
+          type: string
+          description: The effect of the policy (for example, allow something).
+        permissions:
+          description: A list of granted permissions.
+          type: array
+          items:
+            type: string
+        conditions:
+          description: A list of conditions limiting the granted permissions.
+          type: array
+          items:
+            $ref: '#/components/schemas/Condition'
+      required:
+      - effect
+      - permissions
+      - conditions
+    LevelPolicyDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: The ID of the policy.
+        name:
+          type: string
+          description: The display name of the policy.
+        tags:
+          description: A list of tags.
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+          description: A short description of the policy.
+        statementQuery:
+          type: string
+          description: The [statement](https://dt-url.net/ht03ucb) of the policy.
+        statements:
+          description: The expanded form of the policy statement.
+          type: array
+          items:
+            $ref: '#/components/schemas/Statement'
+      required:
+      - uuid
+      - name
+      - tags
+      - description
+      - statementQuery
+      - statements
+    LevelPolicyBindingDtoList:
+      type: object
+      properties:
+        pageSize:
+          type: number
+        pageNumber:
+          type: number
+        totalCount:
+          type: number
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/LevelPolicyBindingDto'
+      required:
+      - pageSize
+      - pageNumber
+      - totalCount
+      - content
+    EffectivePermissionEffects:
+      type: object
+      properties:
+        effect:
+          type: string
+          description: Effect of policy
+        conditions:
+          description: Policy condition
+          type: array
+          items:
+            $ref: '#/components/schemas/Condition'
+        effectivePolicies:
+          description: A list of effective policies.
+          type: array
+          items:
+            $ref: '#/components/schemas/EffectivePolicyWithBinding'
+      required:
+      - effect
+      - conditions
+      - effectivePolicies
+    LevelPolicyBindingDto:
+      type: object
+      properties:
+        levelType:
+          type: string
+          description: The type of the policy level.
+        levelId:
+          type: string
+          description: The ID of the policy level.
+        policyBindings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Binding'
+      required:
+      - levelType
+      - levelId
+      - policyBindings
+    LevelLimitsDto:
+      type: object
+      properties:
+        policies:
+          description: Information about policies limit set for a level.
+          allOf:
+          - $ref: '#/components/schemas/LimitEntry'
+        bindings:
+          description: Information about policy bindings limit set for a level.
+          allOf:
+          - $ref: '#/components/schemas/LimitEntry'
+        boundaries:
+          description: Information about policy boundaries limit set for a level.
+          allOf:
+          - $ref: '#/components/schemas/LimitEntry'
+      required:
+      - policies
+      - bindings
+      - boundaries
+    EffectivePolicyWithBinding:
+      type: object
+      properties:
+        policy:
+          description: Effective policy
+          allOf:
+          - $ref: '#/components/schemas/EffectivePolicy'
+        binding:
+          description: Effective binding
+          allOf:
+          - $ref: '#/components/schemas/EffectiveBinding'
+      required:
+      - policy
+      - binding
+    PolicyDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: The ID of the policy.
+        name:
+          type: string
+          description: The display name of the policy.
+        description:
+          type: string
+          description: A short description of the policy.
+      required:
+      - uuid
+      - name
+      - description
+    PolicyBoundaryDtoList:
+      type: object
+      properties:
+        pageSize:
+          type: number
+        pageNumber:
+          type: number
+        totalCount:
+          type: number
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyBoundaryOverview'
+      required:
+      - pageSize
+      - pageNumber
+      - totalCount
+      - content
+    PolicyUuidsWithoutMetadataDto:
+      type: object
+      properties:
+        policyUuids:
+          description: A list of policies bound to the user group.
+          type: array
+          items:
+            type: string
+      required:
+      - policyUuids
+    PolicyOverview:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: The ID of the policy.
+        name:
+          type: string
+          description: The display name of the policy.
+        description:
+          type: string
+          description: A short description of the policy.
+        levelId:
+          type: string
+          description: The ID of the level to which the policy applies.
+        levelType:
+          type: string
+          description: The type of the level to which the policy applies.
+      required:
+      - uuid
+      - name
+      - description
+      - levelId
+      - levelType
+    PolicyUuidsDto:
+      type: object
+      properties:
+        policyUuids:
+          description: A list of policies bound to the user group.
+          type: array
+          items:
+            type: string
+      required:
+      - policyUuids
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+externalDocs:
+  description: OpenAPI specification
+  url: /openapi.json

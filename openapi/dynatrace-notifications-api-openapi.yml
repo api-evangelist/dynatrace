@@ -1,0 +1,393 @@
+openapi: 3.2.0
+info:
+  title: Dynatrace Account Management Notifications API
+  description: The enterprise management API for Dynatrace SaaS enables automation of operational tasks related to user access and environment lifecycle management.
+  version: '1.0'
+  contact: {}
+servers: []
+tags:
+- name: Notifications
+  description: Manage notifications for an account.
+paths:
+  /v1/accounts/{account-uuid}/notifications:
+    post:
+      deprecated: true
+      description: Deprecated since Mon, 15 Jun 2026 00:00:00 GMT. Use the new version instead. This endpoint will be removed on Mon, 11 Jan 2027 00:00:00 GMT.
+      operationId: listNotifications
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationQueryParamsDto'
+      responses:
+        '200':
+          description: Success. The response contains a list of notifications based on the given query.
+          headers:
+            Warning:
+              description: Warning message if invalid sort columns were provided and ignored
+              schema:
+                type: string
+                example: '199 - "Invalid sort keys: badColumn. Valid sort keys are: type, date"'
+            Deprecation:
+              description: The date from which this endpoint is deprecated.
+              schema:
+                type: string
+                example: Mon, 15 Jun 2026 00:00:00 GMT
+            Sunset:
+              description: The date after which this endpoint will return 410 Gone.
+              schema:
+                type: string
+                example: Mon, 11 Jan 2027 00:00:00 GMT
+            Link:
+              description: Link to the successor endpoint.
+              schema:
+                type: string
+                example: </v2/accounts/{accountUuid}/notifications>; rel="successor-version"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationListDto'
+              example:
+                records:
+                - key: budget-key-example
+                  accountUuid: 00000000-0000-0000-0000-000000000000
+                  message: Message for budget 0 0
+                  severity: WARN
+                  type: budget
+                  details:
+                    environments:
+                    - uuid: env-uuid
+                      clusterUuid: cluster-uuid
+                    capabilities:
+                    - cap1
+                    allEnvironments: false
+                    allCapabilities: true
+                  date: '2025-12-14T10:02:09.297Z'
+                - key: byok-key-example
+                  accountUuid: 00000000-0000-0000-0000-000000000000
+                  message: BYOK event message
+                  severity: WARN
+                  type: byok-revoked
+                  details:
+                    environmentUuid: env-uuid
+                    keyName: key-name
+                  date: '2025-12-14T10:02:09.297Z'
+                totalRecordCount: 300
+                hasNextPage: true
+        '400':
+          description: Failed. The request was unacceptable, often due to missing a required parameter
+        '401':
+          description: Failed. The bearer token is incorrect/expired or the requested account information does not match the bearer token
+        '403':
+          description: Access denied
+        '404':
+          description: Failed. The requested resource was not found
+        '410':
+          description: This endpoint has been removed. Use the [new version](#/Notifications/listNotificationsV2) instead.
+        '500':
+          description: Failed. Something went wrong in Account Management API
+      security:
+      - bearer: []
+      summary: Lists notifications for an account
+      tags:
+      - Notifications
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-uac-read
+      - account-uac-write
+  /v2/accounts/{account-uuid}/notifications:
+    get:
+      operationId: listNotificationsV2
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: page-key
+        required: false
+        in: query
+        description: The cursor for the next page of results. You can find it in the **nextPageKey** field of the previous response.
+        schema: {}
+      - name: page-size
+        required: false
+        in: query
+        description: Defines the requested number of entries for the next page.
+        schema:
+          type: number
+      - name: sorts
+        required: false
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - type
+            - -type
+            - date
+            - -date
+      - name: environments
+        required: false
+        in: query
+        description: "A list of environment IDs to filter notifications by. \n\nTo obtain environment IDs, use the [GET environments](https://dt-url.net/6823uuy) call and look for the **data[].id** field of the response."
+        schema:
+          type: array
+          items:
+            type: string
+      - name: capabilities
+        required: false
+        in: query
+        description: "A list of capabilities to filter notifications by. \n\nTo obtain capability keys, use the [GET subscriptions](https://dt-url.net/v302ts3) call and look for the **capabilities[].key** field of the response."
+        schema:
+          type: array
+          items:
+            type: string
+      - name: severities
+        required: false
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - SEVERE
+            - WARN
+            - INFO
+      - name: types
+        required: false
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - FORECAST
+            - BUDGET
+            - COST
+            - BYOK_REVOKED
+            - BYOK_ACTIVATED
+            - ENVIRONMENT_UPGRADE
+            - ENVIRONMENT_DOWNGRADE
+      - name: end-time
+        required: false
+        in: query
+        description: End of the timeframe in ISO 8601 format.
+        schema: {}
+      - name: start-time
+        required: false
+        in: query
+        description: Start of the timeframe in ISO 8601 format.
+        schema: {}
+      responses:
+        '200':
+          description: Success. The response contains a list of notifications based on the given query.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationV2ListDto'
+        '400':
+          description: Failed. The request was unacceptable, often due to missing a required parameter
+        '401':
+          description: Failed. The bearer token is incorrect/expired or the requested account information does not match the bearer token
+        '403':
+          description: Access denied
+        '404':
+          description: Failed. The requested resource was not found
+        '500':
+          description: Failed. Something went wrong in Account Management API
+      security:
+      - bearer: []
+      summary: Lists notifications for an account
+      tags:
+      - Notifications
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-uac-read
+components:
+  schemas:
+    NotificationV2ListDto:
+      type: object
+      properties:
+        records:
+          description: A list of notifications of the account.
+          type: array
+          items:
+            $ref: '#/components/schemas/EventApiModel'
+        totalRecordCount:
+          type: number
+          description: The total number of notifications matching the filter.
+        hasNextPage:
+          type: boolean
+          description: If there are more notifications.
+        nextPageKey:
+          type: string
+          description: The cursor for the next page of results. Present only when **hasNextPage** is `true`.
+      required:
+      - records
+      - totalRecordCount
+      - hasNextPage
+    SubscriptionRelatedEventDataDto:
+      type: object
+      properties:
+        environments:
+          type: array
+          items:
+            type: string
+        capabilities:
+          type: array
+          items:
+            type: string
+        allEnvironments:
+          type: boolean
+        allCapabilities:
+          type: boolean
+      required:
+      - environments
+      - capabilities
+      - allEnvironments
+      - allCapabilities
+    NotificationListDto:
+      type: object
+      properties:
+        records:
+          description: A list of notifications of the account.
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationDto'
+        totalRecordCount:
+          type: number
+          description: The total number of notifications matching the filter.
+        hasNextPage:
+          type: boolean
+          description: If there are more notifications.
+      required:
+      - records
+      - totalRecordCount
+      - hasNextPage
+    EventApiModel:
+      type: object
+      properties: {}
+    NotificationDto:
+      type: object
+      properties:
+        key:
+          type: string
+        accountUuid:
+          type: string
+        message:
+          type: string
+        severity:
+          type: string
+        type:
+          type: string
+        details:
+          anyOf:
+          - $ref: '#/components/schemas/SubscriptionRelatedEventDataDto'
+          - $ref: '#/components/schemas/ByokEventDto'
+        date:
+          type: string
+      required:
+      - key
+      - accountUuid
+      - message
+      - severity
+      - type
+      - details
+      - date
+    ByokEventDto:
+      type: object
+      properties:
+        environmentUuid:
+          type: string
+        keyName:
+          type: string
+      required:
+      - environmentUuid
+      - keyName
+    NotificationQueryParamsDto:
+      type: object
+      properties:
+        startDateTime:
+          type: string
+          description: Start date and time to filter notifications.
+          example: '2023-01-01T00:00:00Z'
+        endDateTime:
+          type: string
+          description: End date and time to filter notifications.
+          example: '2023-12-31T23:59:59Z'
+        types:
+          type: array
+          description: Notification types to filter notifications.
+          items:
+            type: string
+            enum:
+            - FORECAST
+            - BUDGET
+            - COST
+            - BYOK_REVOKED
+            - BYOK_ACTIVATED
+            - ENVIRONMENT_UPGRADE
+            - ENVIRONMENT_DOWNGRADE
+        severities:
+          type: array
+          description: Notification severities to filter notifications.
+          items:
+            type: string
+            enum:
+            - SEVERE
+            - WARN
+            - INFO
+        capabilities:
+          description: Capabilities to filter notifications.
+          example:
+          - LOG_MANAGEMENT_ANALYZE
+          type: array
+          items:
+            type: array
+        environments:
+          description: Environments to filter notifications.
+          example:
+          - abc12345
+          type: array
+          items:
+            type: array
+        page:
+          type: number
+          description: The page number.
+          example: 1
+        pageSize:
+          type: number
+          description: The maximum number of notifications to return, max 100.
+          example: 20
+        sorts:
+          type: array
+          description: The property to sort by. Prefix with "-" to invert sort order.
+          example:
+          - -date
+          items:
+            type: string
+            enum:
+            - type
+            - -type
+            - date
+            - -date
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+externalDocs:
+  description: OpenAPI specification
+  url: /openapi.json

@@ -1,0 +1,315 @@
+openapi: 3.2.0
+info:
+  title: Dynatrace Account Management Account Audits API
+  description: The enterprise management API for Dynatrace SaaS enables automation of operational tasks related to user access and environment lifecycle management.
+  version: '1.0'
+  contact: {}
+servers: []
+tags:
+- name: Account Audits
+  description: Access account-level audit logs.
+paths:
+  /audit/v1/accounts/{account-uuid}:
+    get:
+      operationId: AuditsController_listAuditsByAccount
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: startTime
+        required: false
+        in: query
+        description: The start of the requested timeframe Supports absolute timestamps (ISO-8601 or Unix epoch in milliseconds) and relative timestamps (e.g., now()-2d). If using a relative timestamp, it follows the format [now()][-|+]<offset>, where now() represents the current  time and the offset specifies a duration (e.g., d for days or h for hours).
+        schema:
+          type: string
+      - name: endTime
+        required: false
+        in: query
+        description: The end of the requested timeframe. Supports absolute timestamps (ISO-8601 or Unix epoch in milliseconds) and relative timestamps (e.g., now()-2d). If using a relative timestamp, it follows the format [now()][-|+]<offset>, where now() represents the current  time and the offset specifies a duration (e.g., d for days or h for hours).
+        schema:
+          type: string
+      - name: addFields
+        required: false
+        in: query
+        style: form
+        explode: false
+        description: Comma separated list of additional fields to be included in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter
+        required: false
+        in: query
+        description: 'Additional filter to be included in the request.
+
+          Supported fields are:
+
+          <table>  <thead>    <tr>      <th>Field</th>      <th>Supported Operators</th>    </tr>  </thead>  <tbody>    <tr>      <td><code>timestamp</code></td>     <td><code>== = != > >= < <=</code></td>   </tr>    <tr>      <td><code>accountUuid</code></td>     <td><code>== = != contains starts-with ends-with in</code></td>   </tr>    <tr>      <td><code>user</code></td>      <td><code>== = != contains starts-with ends-with in</code></td>    </tr>    <tr>      <td><code>eventProvider</code></td>      <td><code>== = != contains starts-with ends-with in</code></td>    </tr>    <tr>      <td><code>eventType</code></td>      <td><code>== = != contains starts-with ends-with in</code></td>    </tr>    <tr>      <td><code>resource</code></td>      <td><code>== = != contains starts-with ends-with in</code></td>    </tr>    <tr>      <td><code>resourceName</code></td>      <td><code>== = != contains starts-with ends-with in</code></td>    </tr>    <tr>      <td><code>authenticationClientId</code></td>      <td><code>== = != contains starts-with ends-with in</code></td>    </tr>    <tr>      <td><code>authenticationGrantType</code></td>      <td><code>== = != contains starts-with ends-with in</code></td>    </tr>    <tr>      <td><code>authenticationToken</code></td>      <td><code>== = != contains starts-with ends-with in</code></td>    </tr>      <td><code>authenticationType</code></td>      <td><code>== = != contains starts-with ends-with in</code></td>    </tr>      <td><code>eventOutcome</code></td>      <td><code>== = != contains starts-with ends-with in</code></td>    </tr>      <td><code>eventReason</code></td>      <td><code>== = != contains starts-with ends-with in</code></td>    </tr>      <td><code>eventVersion</code></td>      <td><code>== = != contains starts-with ends-with in</code></td>    </tr>      <td><code>originAddress</code></td>      <td><code>== = != contains starts-with ends-with in</code></td>    </tr>      <td><code>originSession</code></td>      <td><code>== = != contains starts-with ends-with in</code></td>    </tr>      <td><code>originType</code></td>      <td><code>== = != contains starts-with ends-with in</code></td>    </tr>      <td><code>originXForwardedFor</code></td>      <td><code>== = != contains starts-with ends-with in</code></td>    </tr>      <td><code>resourceId</code></td>      <td><code>== = != contains starts-with ends-with in</code></td>    </tr>      <td><code>environmentUuid</code></td>      <td><code>== = != contains starts-with ends-with in</code></td>    </tr>      <td><code>userOrganization</code></td>      <td><code>== = != contains starts-with ends-with in</code></td>    </tr>  </tbody> </table>
+
+
+          Expressions can be combined with boolean operators <code>and</code>, <code>or</code> and <code>not</code>.
+
+
+          Example: <code>(resourceName contains ''user'' and resource = ''Policy'') or not (resourceName starts-with ''test'')</code>.'
+        schema:
+          maxLength: 256
+      - name: limit
+        required: false
+        in: query
+        description: The maximum number of audit entries to return.
+        schema:
+          default: 50
+      - name: scanLimitGigabyte
+        required: false
+        in: query
+        description: Limit in gigabytes for the amount of data that will be scanned during read.
+        schema:
+          default: 500
+          minimum: 1
+          maximum: 1500000000
+      - name: resultSizeLimitMegabyte
+        required: false
+        in: query
+        description: The maximum size of the result set, in megabytes, that will be returned.
+        schema:
+          default: 2
+          minimum: 1
+          maximum: 15
+      responses:
+        '200':
+          description: Success. The response contains a list of all account level audit entries for the provided query.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditsByAccountDto'
+        '400':
+          description: The request is malformed or contains invalid parameters (e.g. invalid filter syntax, bad date format, unsupported add-fields value).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                error: true
+                message: 'Error occurred during filter evaluation: unsupported filter value'
+                payload: null
+        '401':
+          description: The request is missing a valid bearer token or the token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                error: true
+                message: Unauthorized
+                payload: null
+        '403':
+          description: The bearer token does not have the required permissions to access this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                error: true
+                message: Forbidden
+                payload: null
+        '500':
+          description: Something went wrong on Account Management's end
+        '504':
+          description: The upstream query exceeded the allowed time or scan limits.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                error: true
+                message: Query timeout. Retry executing the query at later stage.
+                payload: null
+      security:
+      - bearer: []
+      summary: List account level audit logs
+      tags:
+      - Account Audits
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-audit-logs-read
+components:
+  schemas:
+    AuditWarningDto:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A warning message related to the request.
+          example: Your result has been limited to 1.
+      required:
+      - message
+    AuditsByAccountDto:
+      type: object
+      properties:
+        audits:
+          description: A list of audit records for the account.
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditDto'
+        warnings:
+          description: A list of warning messages related to the request.
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditWarningDto'
+      required:
+      - audits
+      - warnings
+    AuditDto:
+      type: object
+      properties:
+        eventId:
+          type: string
+          description: The ID of the event.
+          format: uuid
+          example: af1f98c9-c611-4056-841b-d039b1af3f98
+        timestamp:
+          type: string
+          description: The timestamp of the audit event (in UTC).
+          format: date-time
+        user:
+          type: string
+          description: The email address of the user that performed the operation or DYNATRACE in case the operation was performed by an Dynatrace internal employee.
+          example: user@company.com
+        resource:
+          type: string
+          description: The resource (entity) affected by the operation.
+          example: POLICY
+        resourceName:
+          type: string
+          description: The name of the resource.
+          example: Standard User
+        eventProvider:
+          type: string
+          description: Display name of the system that created the event.
+          example: Identity & Account Management
+        eventType:
+          type: string
+          description: The type of the event.
+          example: CREATE
+        accountUuid:
+          type: string
+          format: uuid
+          description: The unique identifier of the account.
+          example: 6b929f34-bf86-47c6-8a67-4de81011affc
+        authenticationClientId:
+          type: string
+          description: The client ID used for authentication.
+        authenticationGrantType:
+          type: string
+          description: The type of grant used for authentication.
+          example: AUTHORIZATION_CODE
+        authenticationToken:
+          type: string
+          description: The token used for authentication.
+        authenticationType:
+          type: string
+          description: The type of authentication used.
+          example: OAUTH2
+        details:
+          type: object
+          description: A map that contains additional fields.
+          additionalProperties:
+            type: string
+          example:
+            json_before: '{property: "value_old"}'
+            json_after: '{property: "value_new"}'
+        eventOutcome:
+          type: string
+          description: If the operation was successful or failed.
+          example: SUCCESS
+        eventReason:
+          type: string
+          description: Optional reason for the change.
+        eventVersion:
+          type: string
+          description: The version of the audit event.
+          example: 1.0.0
+        originAddress:
+          type: string
+          description: The originating address of the request.
+          example: 0.0.0.0
+        originSession:
+          type: string
+          description: The session ID of the origin.
+        originType:
+          type: string
+          description: The origin type of the request
+          example: REST
+        originXForwardedFor:
+          type: string
+          description: The X-Forwarded-For header value from the origin.
+          example: 192.168.1.1
+        resourceId:
+          type: string
+          description: The unique identifier of the resource.
+          example: fc2adb60-5291-43bb-b759-03985ef9a5b0
+        environmentUuid:
+          type: string
+          description: The unique identifier of the environment.
+          example: bfe96125
+        userOrganization:
+          type: string
+          description: Organization of the user that performed the operation.
+          example: CUSTOMER
+      required:
+      - eventId
+      - timestamp
+      - user
+      - resource
+      - resourceName
+      - eventProvider
+      - eventType
+      - accountUuid
+      - authenticationClientId
+      - authenticationGrantType
+      - authenticationToken
+      - authenticationType
+      - details
+      - eventOutcome
+      - eventReason
+      - eventVersion
+      - originAddress
+      - originSession
+      - originType
+      - originXForwardedFor
+      - resourceId
+      - environmentUuid
+      - userOrganization
+    ErrorResponseDto:
+      type: object
+      properties:
+        error:
+          type: boolean
+          description: Always true for error responses.
+          example: true
+        message:
+          type: string
+          description: A short description of the error.
+          example: An unknown error occurred.
+        payload:
+          type:
+          - object
+          - 'null'
+          description: Optional additional error details.
+          default: null
+      required:
+      - error
+      - message
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+externalDocs:
+  description: OpenAPI specification
+  url: /openapi.json

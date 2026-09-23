@@ -1,0 +1,107 @@
+openapi: 3.2.0
+info:
+  title: Dynatrace Account Management Reference Data API
+  description: The enterprise management API for Dynatrace SaaS enables automation of operational tasks related to user access and environment lifecycle management.
+  version: '1.0'
+  contact: {}
+servers: []
+tags:
+- name: Reference Data
+  description: Look up reference data such as time zones, regions, and available permissions.
+paths:
+  /ref/v1/time-zones:
+    get:
+      operationId: ReferenceDataController_
+      parameters: []
+      responses:
+        '200':
+          description: Success. The response contains the list of time zones.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimeZoneDto'
+      security:
+      - bearer: []
+      summary: Lists all available time zones
+      tags:
+      - Reference Data
+  /ref/v1/regions:
+    get:
+      operationId: ReferenceDataController_
+      parameters: []
+      responses:
+        '200':
+          description: Success. The response contains the list of regions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RegionDto'
+      security:
+      - bearer: []
+      summary: Lists all available regions
+      tags:
+      - Reference Data
+  /ref/v1/account/permissions:
+    get:
+      operationId: ReferenceDataController_getPermissions
+      parameters: []
+      responses:
+        '200':
+          description: Success. The response contains the list of permissions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PermissionDto'
+      security:
+      - bearer: []
+      summary: Lists all available permissions
+      tags:
+      - Reference Data
+components:
+  schemas:
+    PermissionDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the permission.
+        description:
+          type: string
+          description: The display name of the permission.
+      required:
+      - id
+      - description
+    RegionDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the region.
+      required:
+      - name
+    TimeZoneDto:
+      type: object
+      properties:
+        displayName:
+          type: string
+          description: The UTC-based name of the time zone.
+        name:
+          type: string
+          description: The standard name of the time zone.
+      required:
+      - displayName
+      - name
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+externalDocs:
+  description: OpenAPI specification
+  url: /openapi.json

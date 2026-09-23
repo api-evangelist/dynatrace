@@ -1,0 +1,283 @@
+openapi: 3.2.0
+info:
+  title: Dynatrace Account Management Environment Management API
+  description: The enterprise management API for Dynatrace SaaS enables automation of operational tasks related to user access and environment lifecycle management.
+  version: '1.0'
+  contact: {}
+servers: []
+tags:
+- name: Environment Management
+  description: List environments and clusters and manage their IP allowlist configuration.
+paths:
+  /env/v1/accounts/{account-uuid}/environments:
+    get:
+      operationId: EnvironmentResourcesController_getEnvironmentResources
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success. The response contains a list of the account's environments.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentResourceDto'
+      security:
+      - bearer: []
+      summary: Lists all environments and management zones of an account
+      tags:
+      - Environment Management
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-idm-read
+  /env/v2/accounts/{account-uuid}/environments:
+    get:
+      operationId: EnvironmentResourcesController_getEnvironments
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentListDto'
+      security:
+      - bearer: []
+      summary: Lists all environments in an account
+      tags:
+      - Environment Management
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-env-read
+  /env/v2/accounts/{account-uuid}/clusters:
+    get:
+      operationId: EnvironmentResourcesController_getClusters
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterListDto'
+      security:
+      - bearer: []
+      summary: Lists all clusters in a managed account
+      tags:
+      - Environment Management
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-env-read
+  /env/v1/accounts/{account-uuid}/environments/{environment-uuid}/ip-allowlist:
+    get:
+      operationId: EnvironmentResourcesController_getConfig
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: environment-uuid
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The IP configuration has been successfully fetched.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpConfigDto'
+      security:
+      - bearer: []
+      summary: Get IP configuration for a specific tenant
+      tags:
+      - Environment Management
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-env-read
+    put:
+      operationId: EnvironmentResourcesController_setConfig
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: environment-uuid
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: The body of the request. Contains the key and serialized value for setting a ip config for a specific tenant on a specific cluster.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IpConfigDto'
+      responses:
+        '201':
+          description: Success. The IP configuration has been successfully set.
+      security:
+      - bearer: []
+      summary: Set IP configuration for a specific tenant
+      tags:
+      - Environment Management
+      x-required-permissions:
+      - account-viewer
+      x-token-scopes:
+      - account-env-write
+components:
+  schemas:
+    AllowlistItem:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the list.
+          example: Some IP-range
+        ipRange:
+          type: string
+          description: One ip address or the range of ip addresses. Supports the CIDR format.
+          example: 10.0.0.0/32
+      required:
+      - name
+      - ipRange
+    ManagementZoneResourceDto:
+      type: object
+      properties:
+        parent:
+          type: string
+          description: The ID of the environment to which the management zone belongs.
+        name:
+          type: string
+          description: The name of the management zone.
+        id:
+          type: string
+          description: The ID of the management zone.
+      required:
+      - parent
+      - name
+      - id
+    TenantResourceDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the environment.
+        id:
+          type: string
+          description: The ID of the environment.
+      required:
+      - name
+      - id
+    ClusterListDto:
+      type: object
+      properties:
+        data:
+          description: Lists all clusters in a managed account
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterDto'
+      required:
+      - data
+    ClusterDto:
+      type: object
+      properties:
+        clusterId:
+          type: string
+          description: The UUID of the cluster.
+      required:
+      - clusterId
+    EnvironmentDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The UUID of the environment.
+        name:
+          type: string
+          description: Friendly name of the environment
+        active:
+          type: boolean
+          description: Property to determine if environment is active
+        url:
+          type: string
+          description: The url of the environment
+      required:
+      - id
+      - active
+      - url
+    EnvironmentListDto:
+      type: object
+      properties:
+        data:
+          description: Lists all environments in an account
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvironmentDto'
+      required:
+      - data
+    EnvironmentResourceDto:
+      type: object
+      properties:
+        tenantResources:
+          description: A list of environments in the account.
+          type: array
+          items:
+            $ref: '#/components/schemas/TenantResourceDto'
+        managementZoneResources:
+          description: A list of management zones in the account.
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagementZoneResourceDto'
+      required:
+      - tenantResources
+      - managementZoneResources
+    IpConfigDto:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: If enabled the ip config allow list gets applied.
+        allowWebhookOverride:
+          type: boolean
+          description: If enabled the webhook ip allowlists will ignore the main allowlist CIDR range limitations.
+        allowlist:
+          description: Contains a list of valid IP addresses in CIDR format which are allowed. If enabled it must not be empty.
+          type: array
+          items:
+            $ref: '#/components/schemas/AllowlistItem'
+      required:
+      - enabled
+      - allowWebhookOverride
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+externalDocs:
+  description: OpenAPI specification
+  url: /openapi.json

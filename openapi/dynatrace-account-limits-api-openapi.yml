@@ -1,0 +1,78 @@
+openapi: 3.2.0
+info:
+  title: Dynatrace Account Management Account limits API
+  description: The enterprise management API for Dynatrace SaaS enables automation of operational tasks related to user access and environment lifecycle management.
+  version: '1.0'
+  contact: {}
+servers: []
+tags:
+- name: Account limits
+  description: Retrieve the limits configured for an account.
+paths:
+  /iam/v1/accounts/{account-uuid}/limits:
+    get:
+      operationId: getLimitsForAccount
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response - information about limits defined for a level.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountLimitsPage'
+      security:
+      - bearer: []
+      summary: Returns limits defined for an account
+      tags:
+      - Account limits
+      x-token-scopes:
+      - account-idm-read
+components:
+  schemas:
+    AccountLimitsDto:
+      type: object
+      properties:
+        currentValue:
+          type: number
+        limitType:
+          type: string
+        limitValue:
+          type: number
+      required:
+      - currentValue
+      - limitType
+      - limitValue
+    AccountLimitsPage:
+      type: object
+      properties:
+        pageSize:
+          type: number
+          description: Page size.
+        pageNumber:
+          type: number
+          description: Page number.
+        total:
+          type: number
+          description: Total count of entries.
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountLimitsDto'
+      required:
+      - pageSize
+      - pageNumber
+      - total
+      - results
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+externalDocs:
+  description: OpenAPI specification
+  url: /openapi.json

@@ -1,0 +1,309 @@
+openapi: 3.2.0
+info:
+  title: Dynatrace Account Management Group Management API
+  description: The enterprise management API for Dynatrace SaaS enables automation of operational tasks related to user access and environment lifecycle management.
+  version: '1.0'
+  contact: {}
+servers: []
+tags:
+- name: Group Management
+  description: Create and manage user groups and their members.
+paths:
+  /iam/v1/accounts/{account-uuid}/groups:
+    get:
+      operationId: GroupsController_getGroups
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success. The response contains the list of user groups.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupListDto'
+      security:
+      - bearer: []
+      summary: Lists all user groups of an account
+      tags:
+      - Group Management
+      x-required-permissions:
+      - account-user-management
+      x-token-scopes:
+      - account-idm-read
+    post:
+      operationId: GroupsController_createGroups
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: The body of the request. Contains a list of configurations for new groups.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/InsertGroupDto'
+      responses:
+        '201':
+          description: Success. The response contains descriptions of newly created groups.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetGroupDto'
+      security:
+      - bearer: []
+      summary: Creates new user groups
+      tags:
+      - Group Management
+      x-required-permissions:
+      - account-user-management
+      x-token-scopes:
+      - account-idm-write
+  /iam/v1/accounts/{account-uuid}/groups/{group-uuid}/users:
+    get:
+      operationId: GroupsController_getUsersForGroup
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: group-uuid
+        required: true
+        in: path
+        description: The UUID of the required user group.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success. The response contains members of the group.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupUserListDto'
+      security:
+      - bearer: []
+      summary: Lists all members of a group
+      tags:
+      - Group Management
+      x-required-permissions:
+      - account-user-management
+      x-token-scopes:
+      - account-idm-read
+  /iam/v1/accounts/{account-uuid}/groups/{group-uuid}:
+    put:
+      operationId: GroupsController_editGroup
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: group-uuid
+        required: true
+        in: path
+        description: The UUID of the required user group.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: "The body of the request. Contains the updated parameters of the group. \n\n You can't change the UUID of the group."
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutGroupDto'
+      responses:
+        '200':
+          description: Success. The group has been modified. The response doesn't have a body.
+      security:
+      - bearer: []
+      summary: Edits a user group
+      tags:
+      - Group Management
+      x-required-permissions:
+      - account-user-management
+      x-token-scopes:
+      - account-idm-write
+    delete:
+      operationId: GroupsController_deleteGroup
+      parameters:
+      - name: account-uuid
+        required: true
+        in: path
+        description: "The ID of the required account. \n\n You can find the UUID on the **Account Management** > **Identity & access management** > **OAuth clients** page, during creation of an OAuth client."
+        schema:
+          type: string
+      - name: group-uuid
+        required: true
+        in: path
+        description: The UUID of the required user group.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success. The group has been deleted. The response doesn't have a body.
+      security:
+      - bearer: []
+      summary: Deletes a user group
+      tags:
+      - Group Management
+      x-required-permissions:
+      - account-user-management
+      x-token-scopes:
+      - account-idm-write
+components:
+  schemas:
+    GetGroupDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: The UUID of the user group.
+        name:
+          type: string
+          description: The name of the user group.
+        description:
+          type: string
+          description: A short description of the user group.
+        federatedAttributeValues:
+          description: A list of values associating this group with the corresponding claim from an identity provider.
+          type: array
+          items:
+            type: string
+        owner:
+          type: string
+          enum:
+          - LOCAL
+          - SCIM
+          - SAML
+          - DCS
+          - ALL_USERS
+          description: The type of the group. `LOCAL`, `SCIM`, `SAML` and `DCS` corresponds to the identity provider from which the group originates. `ALL_USERS` is a special case of `LOCAL` group. It means that group is always assigned to all users in the account.
+        createdAt:
+          type: string
+          description: The date and time of the group creation in `2021-05-01T15:11:00Z` format.
+        updatedAt:
+          type: string
+          description: The date and time of the most recent group modification in `2021-05-01T15:11:00Z` format.
+      required:
+      - name
+      - owner
+      - createdAt
+      - updatedAt
+    GroupUserListDto:
+      type: object
+      properties:
+        count:
+          type: number
+          description: The number of entries in the list.
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserDto'
+      required:
+      - count
+      - items
+    UserDto:
+      type: object
+      properties:
+        uid:
+          type: string
+          description: The UUID of the user.
+        email:
+          type: string
+          description: The email address of the user.
+        name:
+          type: string
+          description: The first name of the user.
+        surname:
+          type: string
+          description: The last name of the user.
+        userStatus:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - PENDING
+          - DELETED
+          - ECUSTOMS_MANUALLY_BLOCKED
+          description: "The status of this user in Dynatrace: \n\n* `ACTIVE`: The user is active.\n* `INACTIVE`: The user is deactivated and cannot sign in to Dynatrace. \n* `PENDING`: The user received an invitation, but hasn't completed sign-up yet. \n* `DELETED`: The user was deleted and cannot sign in to Dynatrace anymore. \n* `ECUSTOMS_MANUALLY_BLOCKED`: The user is blocked due to to a trade and export compliance violation. \n"
+        emergencyContact:
+          type: boolean
+          description: The user is (`true`) or is not (`false`) an emergency contact for the account.
+      required:
+      - uid
+      - email
+    GroupListDto:
+      type: object
+      properties:
+        count:
+          type: number
+          description: The number of entries in the list.
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetGroupDto'
+      required:
+      - count
+      - items
+    PutGroupDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: The UUID of the user group.
+        name:
+          type: string
+          description: The name of the user group.
+        description:
+          type: string
+          description: A short description of the user group. Max length is 255 characters.
+        federatedAttributeValues:
+          description: "A list of values associating this group with the corresponding claim from an identity provider. \n\n If present and the group has owner = `LOCAL`, then group owner is set to `SAML`. \n\n If missing and the group has owner = `SAML`, then group owner is set to `LOCAL`. \n\n Cannot set this value for groups having owner set to `SCIM` or `ALL_USERS`."
+          type: array
+          items:
+            type: string
+      required:
+      - name
+    InsertGroupDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: The UUID of the user group.
+          readOnly: true
+        name:
+          type: string
+          description: The name of the user group.
+        description:
+          type: string
+          description: A short description of the user group. Max length is 255 characters.
+        federatedAttributeValues:
+          description: "A list of values associating this group with the corresponding claim from an identity provider. \n\n If present and the group has owner = `LOCAL`, then group owner is set to `SAML`. \n\n If missing and the group has owner = `SAML`, then group owner is set to `LOCAL`. \n\n Cannot set this value for groups having owner set to `SCIM` or `ALL_USERS`."
+          type: array
+          items:
+            type: string
+      required:
+      - name
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+externalDocs:
+  description: OpenAPI specification
+  url: /openapi.json

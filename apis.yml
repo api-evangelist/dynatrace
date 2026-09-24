@@ -20,8 +20,6 @@ apis:
     type: Authentication
   - url: https://developer.dynatrace.com/develop/sdks/client-classic-environment-v2/
     type: SDKs
-  - url: graphql/dynatrace-graphql.md
-    type: GraphQL
   description: >-
     The Dynatrace Environment API provides access to monitoring data and configuration settings for a
     specific Dynatrace environment. It includes endpoints for metrics, problems, events, logs, entities,
@@ -474,7 +472,7 @@ apis:
   tags:
   - Causal Analysis
   - Davis AI
-  - Machine-Learning
+  - Machine Learning
   - Platform
   - Predictive Analytics
   tags_raw:
@@ -483,6 +481,7 @@ apis:
   - Machine Learning
   - Platform
   - Predictive Analytics
+  - Machine-Learning
   humanURL: https://developer.dynatrace.com/develop/sdks/client-davis-analyzers/
   baseURL: https://mySampleEnv.live.dynatrace.com/platform
   image: https://www.dynatrace.com/logo.png
@@ -3942,6 +3941,7 @@ tags:
 - Digital Experience Management
 - Intelligence
 - Observability
+- Monitoring
 type: Index
 deliveryModel:
   model: unknown

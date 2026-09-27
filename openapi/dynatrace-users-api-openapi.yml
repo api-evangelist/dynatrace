@@ -250,8 +250,8 @@ paths:
         dispatcher: FALLBACK
 components:
   responses:
-    BadRequest:
-      description: Bad request — invalid request body or parameters
+    NotFound:
+      description: Not found — the specified user, group, or resource does not exist
       content:
         application/json:
           schema:
@@ -262,25 +262,19 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorEnvelope'
-    NotFound:
-      description: Not found — the specified user, group, or resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
     Forbidden:
       description: Forbidden — the token lacks the required scope
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorEnvelope'
+    BadRequest:
+      description: Bad request — invalid request body or parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
   schemas:
-    ErrorEnvelope:
-      type: object
-      description: Error response envelope returned when a request fails.
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
     User:
       type: object
       description: Represents a user in the Dynatrace account.
@@ -344,18 +338,12 @@ components:
             groups:
             - example-value
             userStatus: ACTIVE
-    Error:
+    ErrorEnvelope:
       type: object
-      description: Details of an API error.
+      description: Error response envelope returned when a request fails.
       properties:
-        code:
-          type: integer
-          description: The HTTP status code of the error.
-          example: 500
-        message:
-          type: string
-          description: A human-readable description of the error.
-          example: Example description.
+        error:
+          $ref: '#/components/schemas/Error'
     UserCreateRequest:
       type: object
       description: Request body for creating or updating a user.
@@ -384,14 +372,19 @@ components:
             type: string
           example:
           - example-value
+    Error:
+      type: object
+      description: Details of an API error.
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+          example: 500
+        message:
+          type: string
+          description: A human-readable description of the error.
+          example: Example description.
   parameters:
-    userId:
-      name: userId
-      in: path
-      description: The unique identifier of the user. Typically the user's email address or a UUID assigned by the system.
-      required: true
-      schema:
-        type: string
     accountUuid:
       name: accountUuid
       in: path
@@ -400,6 +393,13 @@ components:
       schema:
         type: string
         format: uuid
+    userId:
+      name: userId
+      in: path
+      description: The unique identifier of the user. Typically the user's email address or a UUID assigned by the system.
+      required: true
+      schema:
+        type: string
   securitySchemes:
     oauth2:
       type: oauth2

@@ -73,7 +73,40 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  parameters:
+    accountUuid:
+      name: accountUuid
+      in: path
+      description: The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API.
+      required: true
+      schema:
+        type: string
+        format: uuid
   schemas:
+    EnvironmentCollection:
+      type: object
+      description: A paginated collection of environments.
+      properties:
+        nextPageKey:
+          type: string
+          description: Cursor for the next page of results.
+          nullable: true
+          example: example-value
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of environments in the account.
+          example: 500
+        environments:
+          type: array
+          description: The list of environments on this page.
+          items:
+            $ref: '#/components/schemas/Environment'
+          example:
+          - id: abc123
+            name: Production Service
+            status: ACTIVE
+            trial: true
     ErrorEnvelope:
       type: object
       description: Error response envelope returned when a request fails.
@@ -104,30 +137,6 @@ components:
           type: boolean
           description: Whether the environment is a trial environment.
           example: true
-    EnvironmentCollection:
-      type: object
-      description: A paginated collection of environments.
-      properties:
-        nextPageKey:
-          type: string
-          description: Cursor for the next page of results.
-          nullable: true
-          example: example-value
-        totalCount:
-          type: integer
-          format: int64
-          description: The total number of environments in the account.
-          example: 500
-        environments:
-          type: array
-          description: The list of environments on this page.
-          items:
-            $ref: '#/components/schemas/Environment'
-          example:
-          - id: abc123
-            name: Production Service
-            status: ACTIVE
-            trial: true
     Error:
       type: object
       description: Details of an API error.
@@ -153,15 +162,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorEnvelope'
-  parameters:
-    accountUuid:
-      name: accountUuid
-      in: path
-      description: The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API.
-      required: true
-      schema:
-        type: string
-        format: uuid
   securitySchemes:
     oauth2:
       type: oauth2

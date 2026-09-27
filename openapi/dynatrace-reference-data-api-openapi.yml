@@ -29,7 +29,7 @@ paths:
       - Reference Data
   /ref/v1/regions:
     get:
-      operationId: ReferenceDataController_
+      operationId: getRefV1Regions
       parameters: []
       responses:
         '200':
@@ -45,6 +45,8 @@ paths:
       summary: Lists all available regions
       tags:
       - Reference Data
+      x-operation-id-source: normalized
+      x-operation-id-original: ReferenceDataController_
   /ref/v1/account/permissions:
     get:
       operationId: ReferenceDataController_getPermissions
@@ -65,6 +67,14 @@ paths:
       - Reference Data
 components:
   schemas:
+    RegionDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the region.
+      required:
+      - name
     PermissionDto:
       type: object
       properties:
@@ -77,14 +87,6 @@ components:
       required:
       - id
       - description
-    RegionDto:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the region.
-      required:
-      - name
     TimeZoneDto:
       type: object
       properties:

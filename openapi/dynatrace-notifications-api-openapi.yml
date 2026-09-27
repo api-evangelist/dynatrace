@@ -238,47 +238,6 @@ components:
       - records
       - totalRecordCount
       - hasNextPage
-    SubscriptionRelatedEventDataDto:
-      type: object
-      properties:
-        environments:
-          type: array
-          items:
-            type: string
-        capabilities:
-          type: array
-          items:
-            type: string
-        allEnvironments:
-          type: boolean
-        allCapabilities:
-          type: boolean
-      required:
-      - environments
-      - capabilities
-      - allEnvironments
-      - allCapabilities
-    NotificationListDto:
-      type: object
-      properties:
-        records:
-          description: A list of notifications of the account.
-          type: array
-          items:
-            $ref: '#/components/schemas/NotificationDto'
-        totalRecordCount:
-          type: number
-          description: The total number of notifications matching the filter.
-        hasNextPage:
-          type: boolean
-          description: If there are more notifications.
-      required:
-      - records
-      - totalRecordCount
-      - hasNextPage
-    EventApiModel:
-      type: object
-      properties: {}
     NotificationDto:
       type: object
       properties:
@@ -306,16 +265,9 @@ components:
       - type
       - details
       - date
-    ByokEventDto:
+    EventApiModel:
       type: object
-      properties:
-        environmentUuid:
-          type: string
-        keyName:
-          type: string
-      required:
-      - environmentUuid
-      - keyName
+      properties: {}
     NotificationQueryParamsDto:
       type: object
       properties:
@@ -383,6 +335,54 @@ components:
             - -type
             - date
             - -date
+    SubscriptionRelatedEventDataDto:
+      type: object
+      properties:
+        environments:
+          type: array
+          items:
+            type: string
+        capabilities:
+          type: array
+          items:
+            type: string
+        allEnvironments:
+          type: boolean
+        allCapabilities:
+          type: boolean
+      required:
+      - environments
+      - capabilities
+      - allEnvironments
+      - allCapabilities
+    NotificationListDto:
+      type: object
+      properties:
+        records:
+          description: A list of notifications of the account.
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationDto'
+        totalRecordCount:
+          type: number
+          description: The total number of notifications matching the filter.
+        hasNextPage:
+          type: boolean
+          description: If there are more notifications.
+      required:
+      - records
+      - totalRecordCount
+      - hasNextPage
+    ByokEventDto:
+      type: object
+      properties:
+        environmentUuid:
+          type: string
+        keyName:
+          type: string
+      required:
+      - environmentUuid
+      - keyName
   securitySchemes:
     bearer:
       scheme: bearer

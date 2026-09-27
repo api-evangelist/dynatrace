@@ -151,20 +151,18 @@ paths:
       - account-env-write
 components:
   schemas:
-    AllowlistItem:
+    TenantResourceDto:
       type: object
       properties:
         name:
           type: string
-          description: The name of the list.
-          example: Some IP-range
-        ipRange:
+          description: The name of the environment.
+        id:
           type: string
-          description: One ip address or the range of ip addresses. Supports the CIDR format.
-          example: 10.0.0.0/32
+          description: The ID of the environment.
       required:
       - name
-      - ipRange
+      - id
     ManagementZoneResourceDto:
       type: object
       properties:
@@ -181,26 +179,30 @@ components:
       - parent
       - name
       - id
-    TenantResourceDto:
+    EnvironmentResourceDto:
       type: object
       properties:
-        name:
-          type: string
-          description: The name of the environment.
-        id:
-          type: string
-          description: The ID of the environment.
+        tenantResources:
+          description: A list of environments in the account.
+          type: array
+          items:
+            $ref: '#/components/schemas/TenantResourceDto'
+        managementZoneResources:
+          description: A list of management zones in the account.
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagementZoneResourceDto'
       required:
-      - name
-      - id
-    ClusterListDto:
+      - tenantResources
+      - managementZoneResources
+    EnvironmentListDto:
       type: object
       properties:
         data:
-          description: Lists all clusters in a managed account
+          description: Lists all environments in an account
           type: array
           items:
-            $ref: '#/components/schemas/ClusterDto'
+            $ref: '#/components/schemas/EnvironmentDto'
       required:
       - data
     ClusterDto:
@@ -211,6 +213,37 @@ components:
           description: The UUID of the cluster.
       required:
       - clusterId
+    AllowlistItem:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the list.
+          example: Some IP-range
+        ipRange:
+          type: string
+          description: One ip address or the range of ip addresses. Supports the CIDR format.
+          example: 10.0.0.0/32
+      required:
+      - name
+      - ipRange
+    IpConfigDto:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: If enabled the ip config allow list gets applied.
+        allowWebhookOverride:
+          type: boolean
+          description: If enabled the webhook ip allowlists will ignore the main allowlist CIDR range limitations.
+        allowlist:
+          description: Contains a list of valid IP addresses in CIDR format which are allowed. If enabled it must not be empty.
+          type: array
+          items:
+            $ref: '#/components/schemas/AllowlistItem'
+      required:
+      - enabled
+      - allowWebhookOverride
     EnvironmentDto:
       type: object
       properties:
@@ -230,49 +263,16 @@ components:
       - id
       - active
       - url
-    EnvironmentListDto:
+    ClusterListDto:
       type: object
       properties:
         data:
-          description: Lists all environments in an account
+          description: Lists all clusters in a managed account
           type: array
           items:
-            $ref: '#/components/schemas/EnvironmentDto'
+            $ref: '#/components/schemas/ClusterDto'
       required:
       - data
-    EnvironmentResourceDto:
-      type: object
-      properties:
-        tenantResources:
-          description: A list of environments in the account.
-          type: array
-          items:
-            $ref: '#/components/schemas/TenantResourceDto'
-        managementZoneResources:
-          description: A list of management zones in the account.
-          type: array
-          items:
-            $ref: '#/components/schemas/ManagementZoneResourceDto'
-      required:
-      - tenantResources
-      - managementZoneResources
-    IpConfigDto:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: If enabled the ip config allow list gets applied.
-        allowWebhookOverride:
-          type: boolean
-          description: If enabled the webhook ip allowlists will ignore the main allowlist CIDR range limitations.
-        allowlist:
-          description: Contains a list of valid IP addresses in CIDR format which are allowed. If enabled it must not be empty.
-          type: array
-          items:
-            $ref: '#/components/schemas/AllowlistItem'
-      required:
-      - enabled
-      - allowWebhookOverride
   securitySchemes:
     bearer:
       scheme: bearer

@@ -239,27 +239,48 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  responses:
+    NotFound:
+      description: Not found — the specified user, group, or resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Forbidden:
+      description: Forbidden — the token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized — missing or invalid OAuth token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    BadRequest:
+      description: Bad request — invalid request body or parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  parameters:
+    groupId:
+      name: groupId
+      in: path
+      description: The unique identifier of the group.
+      required: true
+      schema:
+        type: string
+    accountUuid:
+      name: accountUuid
+      in: path
+      description: The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API.
+      required: true
+      schema:
+        type: string
+        format: uuid
   schemas:
-    GroupCreateRequest:
-      type: object
-      description: Request body for creating or updating a group.
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: The display name of the group.
-          example: Production Service
-        description:
-          type: string
-          description: An optional description of the group's purpose or access scope.
-          example: Example description.
-    ErrorEnvelope:
-      type: object
-      description: Error response envelope returned when a request fails.
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
     GroupCollection:
       type: object
       description: A paginated collection of groups.
@@ -286,18 +307,6 @@ components:
             owner: example-value
             createdAt: '2025-03-15T14:30:00Z'
             updatedAt: '2025-03-15T14:30:00Z'
-    Error:
-      type: object
-      description: Details of an API error.
-      properties:
-        code:
-          type: integer
-          description: The HTTP status code of the error.
-          example: 500
-        message:
-          type: string
-          description: A human-readable description of the error.
-          example: Example description.
     Group:
       type: object
       description: Represents a user group in the Dynatrace account.
@@ -328,47 +337,38 @@ components:
           format: date-time
           description: The date and time when the group was last updated.
           example: '2025-03-15T14:30:00Z'
-  responses:
-    BadRequest:
-      description: Bad request — invalid request body or parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    Unauthorized:
-      description: Unauthorized — missing or invalid OAuth token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    NotFound:
-      description: Not found — the specified user, group, or resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    Forbidden:
-      description: Forbidden — the token lacks the required scope
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-  parameters:
-    groupId:
-      name: groupId
-      in: path
-      description: The unique identifier of the group.
-      required: true
-      schema:
-        type: string
-    accountUuid:
-      name: accountUuid
-      in: path
-      description: The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API.
-      required: true
-      schema:
-        type: string
-        format: uuid
+    GroupCreateRequest:
+      type: object
+      description: Request body for creating or updating a group.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: The display name of the group.
+          example: Production Service
+        description:
+          type: string
+          description: An optional description of the group's purpose or access scope.
+          example: Example description.
+    ErrorEnvelope:
+      type: object
+      description: Error response envelope returned when a request fails.
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    Error:
+      type: object
+      description: Details of an API error.
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+          example: 500
+        message:
+          type: string
+          description: A human-readable description of the error.
+          example: Example description.
   securitySchemes:
     oauth2:
       type: oauth2

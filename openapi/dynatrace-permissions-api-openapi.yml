@@ -54,27 +54,16 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  parameters:
+    accountUuid:
+      name: accountUuid
+      in: path
+      description: The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API.
+      required: true
+      schema:
+        type: string
+        format: uuid
   schemas:
-    PermissionCollection:
-      type: object
-      description: A collection of permission assignments for the account.
-      properties:
-        permissions:
-          type: array
-          description: The list of all permissions in the account.
-          items:
-            $ref: '#/components/schemas/Permission'
-          example:
-          - permissionName: Production Service
-            scope: example-value
-            scopeType: ACCOUNT
-            groupId: abc123
-    ErrorEnvelope:
-      type: object
-      description: Error response envelope returned when a request fails.
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
     Permission:
       type: object
       description: Represents a permission assignment granting a group access to a Dynatrace environment or account-level capability.
@@ -98,6 +87,26 @@ components:
           type: string
           description: The ID of the group this permission is assigned to.
           example: abc123
+    PermissionCollection:
+      type: object
+      description: A collection of permission assignments for the account.
+      properties:
+        permissions:
+          type: array
+          description: The list of all permissions in the account.
+          items:
+            $ref: '#/components/schemas/Permission'
+          example:
+          - permissionName: Production Service
+            scope: example-value
+            scopeType: ACCOUNT
+            groupId: abc123
+    ErrorEnvelope:
+      type: object
+      description: Error response envelope returned when a request fails.
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
     Error:
       type: object
       description: Details of an API error.
@@ -123,15 +132,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorEnvelope'
-  parameters:
-    accountUuid:
-      name: accountUuid
-      in: path
-      description: The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API.
-      required: true
-      schema:
-        type: string
-        format: uuid
   securitySchemes:
     oauth2:
       type: oauth2

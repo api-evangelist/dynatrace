@@ -178,59 +178,6 @@ paths:
       - platform-token:tokens:manage
 components:
   schemas:
-    PlatformTokenMetadataDto:
-      type: object
-      properties:
-        lastUsedAt:
-          format: date-time
-          type: string
-        lastClientIp:
-          type: string
-      required:
-      - lastUsedAt
-      - lastClientIp
-    GeneratePlatformTokenForm:
-      type: object
-      properties:
-        name:
-          type: string
-        scope:
-          type: array
-          items:
-            type: string
-        resource:
-          type: array
-          items:
-            type: string
-        tags:
-          type: array
-          items:
-            type: string
-        expirationDate:
-          format: date-time
-          type: string
-        userUuid:
-          type: string
-      required:
-      - name
-      - scope
-      - resource
-      - tags
-      - expirationDate
-      - userUuid
-    PlatformTokenSecret:
-      type: object
-      properties:
-        name:
-          type: string
-        tokenId:
-          type: string
-        token:
-          type: string
-      required:
-      - name
-      - tokenId
-      - token
     PlatformTokenStatusUpdateDto:
       type: object
       properties:
@@ -282,6 +229,67 @@ components:
       - expirationDate
       - userUuid
       - metadata
+    PlatformTokenMetadataDto:
+      type: object
+      properties:
+        lastUsedAt:
+          format: date-time
+          type: string
+        lastClientIp:
+          type: string
+      required:
+      - lastUsedAt
+      - lastClientIp
+    PlatformTokenSecret:
+      type: object
+      properties:
+        name:
+          type: string
+        tokenId:
+          type: string
+        token:
+          type: string
+      required:
+      - name
+      - tokenId
+      - token
+    GeneratePlatformTokenForm:
+      type: object
+      properties:
+        name:
+          type: string
+        scope:
+          type: array
+          items:
+            type: string
+        resource:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
+        expirationDate:
+          format: date-time
+          type: string
+        userUuid:
+          type: string
+      required:
+      - name
+      - scope
+      - resource
+      - tags
+      - expirationDate
+      - userUuid
+    PlatformTokenExpirationDateDto:
+      type: object
+      properties:
+        expirationDate:
+          format: date-time
+          type: string
+      required:
+      - expirationDate
     PlatformTokenPageDto:
       type: object
       properties:
@@ -303,14 +311,6 @@ components:
       - pageNumber
       - total
       - results
-    PlatformTokenExpirationDateDto:
-      type: object
-      properties:
-        expirationDate:
-          format: date-time
-          type: string
-      required:
-      - expirationDate
   securitySchemes:
     bearer:
       scheme: bearer

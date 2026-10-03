@@ -315,6 +315,24 @@ paths:
       - account-uac-write
 components:
   schemas:
+    FieldValueDto:
+      type: object
+      properties:
+        key:
+          type: string
+          description: The key of this value.
+      required:
+      - key
+    FieldValuesRequestDto:
+      type: object
+      properties:
+        values:
+          description: The requested values.
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldValueDto'
+      required:
+      - values
     PaginatedFieldValueDto:
       type: object
       properties:
@@ -329,24 +347,6 @@ components:
       required:
       - records
       - hasNextPage
-    FieldValuesRequestDto:
-      type: object
-      properties:
-        values:
-          description: The requested values.
-          type: array
-          items:
-            $ref: '#/components/schemas/FieldValueDto'
-      required:
-      - values
-    FieldValueDto:
-      type: object
-      properties:
-        key:
-          type: string
-          description: The key of this value.
-      required:
-      - key
   securitySchemes:
     bearer:
       scheme: bearer

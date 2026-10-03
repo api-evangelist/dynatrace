@@ -224,7 +224,70 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  responses:
+    NotFound:
+      description: Not found — the specified event does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Forbidden:
+      description: Forbidden — the API token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    BadRequest:
+      description: Bad request — invalid query parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized — missing or invalid API token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
   schemas:
+    EventIngestResult:
+      type: object
+      description: The result returned after successfully ingesting a custom event.
+      properties:
+        reportCount:
+          type: integer
+          description: The number of event reports created. This may be greater than 1 if the entitySelector matched multiple entities.
+          example: 500
+        eventIngestResults:
+          type: array
+          description: Details of each individual event ingestion result.
+          items:
+            $ref: '#/components/schemas/EventIngestResultItem'
+          example:
+          - eventId: abc123
+            status: ACTIVE
+    Error:
+      type: object
+      description: Details of an API error.
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+          example: 500
+        message:
+          type: string
+          description: A human-readable description of the error.
+          example: Example description.
+        constraintViolations:
+          type: array
+          description: A list of constraint violations for validation errors (HTTP 400).
+          items:
+            $ref: '#/components/schemas/ConstraintViolation'
+          example:
+          - path: example-value
+            message: Example description.
+            parameterLocation: example-value
+            location: example-value
     EventCollection:
       type: object
       description: A paginated collection of events.
@@ -257,6 +320,44 @@ components:
             entityId: {}
             properties: {}
             status: OPEN
+    ErrorEnvelope:
+      type: object
+      description: Error response envelope returned when a request fails.
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    ConstraintViolation:
+      type: object
+      description: Details of a single constraint violation in a request.
+      properties:
+        path:
+          type: string
+          description: The JSON path to the field that caused the violation.
+          example: example-value
+        message:
+          type: string
+          description: A description of the constraint violation.
+          example: Example description.
+        parameterLocation:
+          type: string
+          description: The location of the violating parameter (QUERY, PATH, BODY).
+          example: example-value
+        location:
+          type: string
+          description: The location detail for the violation.
+          example: example-value
+    EventIngestResultItem:
+      type: object
+      description: The result of ingesting an event for a single entity.
+      properties:
+        eventId:
+          type: string
+          description: The unique identifier assigned to the created event.
+          example: abc123
+        status:
+          type: string
+          description: The ingestion status for this entity. OK indicates success; other values indicate warnings or errors.
+          example: ACTIVE
     EntityStub:
       type: object
       description: A lightweight reference to a monitored entity.
@@ -273,6 +374,48 @@ components:
           type: string
           description: The type of the entity, e.g., SERVICE, HOST, PROCESS_GROUP, APPLICATION.
           example: STANDARD
+    Event:
+      type: object
+      description: Represents a single event in the Dynatrace environment. Events can be ingested via the API or detected automatically by Dynatrace.
+      properties:
+        eventId:
+          type: string
+          description: The unique identifier of the event.
+          example: abc123
+        eventType:
+          type: string
+          description: The type of the event.
+          example: STANDARD
+        title:
+          type: string
+          description: The display title of the event.
+          example: example-value
+        startTime:
+          type: integer
+          format: int64
+          description: The start time of the event as a Unix timestamp in milliseconds.
+          example: 1718153645993
+        endTime:
+          type: integer
+          format: int64
+          description: The end time of the event as a Unix timestamp in milliseconds. Null for open events.
+          nullable: true
+          example: 1718153645993
+        entityId:
+          $ref: '#/components/schemas/EntityStub'
+        properties:
+          type: object
+          description: Additional key-value metadata attached to the event.
+          additionalProperties:
+            type: string
+          example: {}
+        status:
+          type: string
+          description: The current status of the event. OPEN indicates the event is still active; CLOSED indicates it has ended.
+          enum:
+          - OPEN
+          - CLOSED
+          example: OPEN
     EventIngestPayload:
       type: object
       description: The payload for ingesting a custom event into Dynatrace. All events require at least an eventType and title. Custom events can target specific entities, include a time window, and carry additional metadata as key-value properties.
@@ -325,149 +468,6 @@ components:
             type: string
           maxProperties: 30
           example: {}
-    ConstraintViolation:
-      type: object
-      description: Details of a single constraint violation in a request.
-      properties:
-        path:
-          type: string
-          description: The JSON path to the field that caused the violation.
-          example: example-value
-        message:
-          type: string
-          description: A description of the constraint violation.
-          example: Example description.
-        parameterLocation:
-          type: string
-          description: The location of the violating parameter (QUERY, PATH, BODY).
-          example: example-value
-        location:
-          type: string
-          description: The location detail for the violation.
-          example: example-value
-    EventIngestResult:
-      type: object
-      description: The result returned after successfully ingesting a custom event.
-      properties:
-        reportCount:
-          type: integer
-          description: The number of event reports created. This may be greater than 1 if the entitySelector matched multiple entities.
-          example: 500
-        eventIngestResults:
-          type: array
-          description: Details of each individual event ingestion result.
-          items:
-            $ref: '#/components/schemas/EventIngestResultItem'
-          example:
-          - eventId: abc123
-            status: ACTIVE
-    EventIngestResultItem:
-      type: object
-      description: The result of ingesting an event for a single entity.
-      properties:
-        eventId:
-          type: string
-          description: The unique identifier assigned to the created event.
-          example: abc123
-        status:
-          type: string
-          description: The ingestion status for this entity. OK indicates success; other values indicate warnings or errors.
-          example: ACTIVE
-    Event:
-      type: object
-      description: Represents a single event in the Dynatrace environment. Events can be ingested via the API or detected automatically by Dynatrace.
-      properties:
-        eventId:
-          type: string
-          description: The unique identifier of the event.
-          example: abc123
-        eventType:
-          type: string
-          description: The type of the event.
-          example: STANDARD
-        title:
-          type: string
-          description: The display title of the event.
-          example: example-value
-        startTime:
-          type: integer
-          format: int64
-          description: The start time of the event as a Unix timestamp in milliseconds.
-          example: 1718153645993
-        endTime:
-          type: integer
-          format: int64
-          description: The end time of the event as a Unix timestamp in milliseconds. Null for open events.
-          nullable: true
-          example: 1718153645993
-        entityId:
-          $ref: '#/components/schemas/EntityStub'
-        properties:
-          type: object
-          description: Additional key-value metadata attached to the event.
-          additionalProperties:
-            type: string
-          example: {}
-        status:
-          type: string
-          description: The current status of the event. OPEN indicates the event is still active; CLOSED indicates it has ended.
-          enum:
-          - OPEN
-          - CLOSED
-          example: OPEN
-    ErrorEnvelope:
-      type: object
-      description: Error response envelope returned when a request fails.
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-    Error:
-      type: object
-      description: Details of an API error.
-      properties:
-        code:
-          type: integer
-          description: The HTTP status code of the error.
-          example: 500
-        message:
-          type: string
-          description: A human-readable description of the error.
-          example: Example description.
-        constraintViolations:
-          type: array
-          description: A list of constraint violations for validation errors (HTTP 400).
-          items:
-            $ref: '#/components/schemas/ConstraintViolation'
-          example:
-          - path: example-value
-            message: Example description.
-            parameterLocation: example-value
-            location: example-value
-  responses:
-    NotFound:
-      description: Not found — the specified event does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    Unauthorized:
-      description: Unauthorized — missing or invalid API token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    Forbidden:
-      description: Forbidden — the API token lacks the required scope
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    BadRequest:
-      description: Bad request — invalid query parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
   securitySchemes:
     api-token:
       type: apiKey

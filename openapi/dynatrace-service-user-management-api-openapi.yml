@@ -186,17 +186,6 @@ components:
       required:
       - results
       - totalCount
-    ServiceUserDto:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the new service user
-        description:
-          type: string
-          description: The description of the new service user
-      required:
-      - name
     ExternalServiceUserDto:
       type: object
       properties:
@@ -223,6 +212,17 @@ components:
       - email
       - name
       - createdAt
+    ServiceUserDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the new service user
+        description:
+          type: string
+          description: The description of the new service user
+      required:
+      - name
     ExternalServiceUserWithGroupUuidDto:
       type: object
       properties:

@@ -73,16 +73,43 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  parameters:
-    accountUuid:
-      name: accountUuid
-      in: path
-      description: The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API.
-      required: true
-      schema:
-        type: string
-        format: uuid
   schemas:
+    Error:
+      type: object
+      description: Details of an API error.
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+          example: 500
+        message:
+          type: string
+          description: A human-readable description of the error.
+          example: Example description.
+    Environment:
+      type: object
+      description: Represents a Dynatrace environment (tenant) associated with the account.
+      properties:
+        id:
+          type: string
+          description: The unique environment identifier (tenant ID).
+          example: abc123
+        name:
+          type: string
+          description: The display name of the environment.
+          example: Production Service
+        status:
+          type: string
+          description: The current status of the environment.
+          enum:
+          - ACTIVE
+          - SUSPENDED
+          - TRIAL
+          example: ACTIVE
+        trial:
+          type: boolean
+          description: Whether the environment is a trial environment.
+          example: true
     EnvironmentCollection:
       type: object
       description: A paginated collection of environments.
@@ -113,55 +140,28 @@ components:
       properties:
         error:
           $ref: '#/components/schemas/Error'
-    Environment:
-      type: object
-      description: Represents a Dynatrace environment (tenant) associated with the account.
-      properties:
-        id:
-          type: string
-          description: The unique environment identifier (tenant ID).
-          example: abc123
-        name:
-          type: string
-          description: The display name of the environment.
-          example: Production Service
-        status:
-          type: string
-          description: The current status of the environment.
-          enum:
-          - ACTIVE
-          - SUSPENDED
-          - TRIAL
-          example: ACTIVE
-        trial:
-          type: boolean
-          description: Whether the environment is a trial environment.
-          example: true
-    Error:
-      type: object
-      description: Details of an API error.
-      properties:
-        code:
-          type: integer
-          description: The HTTP status code of the error.
-          example: 500
-        message:
-          type: string
-          description: A human-readable description of the error.
-          example: Example description.
   responses:
-    Unauthorized:
-      description: Unauthorized — missing or invalid OAuth token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
     Forbidden:
       description: Forbidden — the token lacks the required scope
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized — missing or invalid OAuth token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  parameters:
+    accountUuid:
+      name: accountUuid
+      in: path
+      description: The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API.
+      required: true
+      schema:
+        type: string
+        format: uuid
   securitySchemes:
     oauth2:
       type: oauth2

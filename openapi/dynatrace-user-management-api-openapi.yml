@@ -238,28 +238,6 @@ paths:
       - account-idm-write
 components:
   schemas:
-    UserEmailDto:
-      type: object
-      properties:
-        email:
-          type: string
-          description: The email address of the user.
-      required:
-      - email
-    UserListDto:
-      type: object
-      properties:
-        count:
-          type: number
-          description: The number of entries in the list.
-        items:
-          description: A list of the account's users.
-          type: array
-          items:
-            $ref: '#/components/schemas/UsersDto'
-      required:
-      - count
-      - items
     UsersDto:
       type: object
       properties:
@@ -294,70 +272,6 @@ components:
       required:
       - uid
       - email
-    GroupUserDto:
-      type: object
-      properties:
-        uid:
-          type: string
-          description: The UUID of the user.
-        email:
-          type: string
-          description: The email address of the user.
-        name:
-          type: string
-          description: The first name of the user.
-        surname:
-          type: string
-          description: The last name of the user.
-        userStatus:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - PENDING
-          - DELETED
-          - ECUSTOMS_MANUALLY_BLOCKED
-          description: "The status of this user in Dynatrace: \n\n* `ACTIVE`: The user is active.\n* `INACTIVE`: The user is deactivated and cannot sign in to Dynatrace. \n* `PENDING`: The user received an invitation, but hasn't completed sign-up yet. \n* `DELETED`: The user was deleted and cannot sign in to Dynatrace anymore. \n* `ECUSTOMS_MANUALLY_BLOCKED`: The user is blocked due to to a trade and export compliance violation. \n"
-        emergencyContact:
-          type: boolean
-          description: The user is (`true`) or is not (`false`) an emergency contact for the account.
-        groups:
-          description: A list of groups of which the user is a member.
-          type: array
-          items:
-            $ref: '#/components/schemas/AccountGroupDto'
-      required:
-      - uid
-      - email
-      - groups
-    UserLoginMetaDataDto:
-      type: object
-      properties:
-        successfulLoginCounter:
-          type: number
-          description: The number of successful sign-ins.
-        failedLoginCounter:
-          type: number
-          description: The number of failed sign-ins.
-        lastSuccessfulLogin:
-          type: string
-          description: The date and time of the most recent successful sign-in in `2021-05-01T15:11:00Z` format.
-        lastFailedLogin:
-          type: string
-          description: The date and time of the most recent failed sign-in in `2021-05-01T15:11:00Z` format.
-        createdAt:
-          type: string
-          description: The date and time of user creation in `2021-05-01T15:11:00Z` format.
-        updatedAt:
-          type: string
-          description: The date and time of the most recent modification to the user in `2021-05-01T15:11:00Z` format.
-      required:
-      - successfulLoginCounter
-      - failedLoginCounter
-      - lastSuccessfulLogin
-      - lastFailedLogin
-      - createdAt
-      - updatedAt
     AccountGroupDto:
       type: object
       properties:
@@ -400,6 +314,92 @@ components:
       - description
       - createdAt
       - updatedAt
+    UserLoginMetaDataDto:
+      type: object
+      properties:
+        successfulLoginCounter:
+          type: number
+          description: The number of successful sign-ins.
+        failedLoginCounter:
+          type: number
+          description: The number of failed sign-ins.
+        lastSuccessfulLogin:
+          type: string
+          description: The date and time of the most recent successful sign-in in `2021-05-01T15:11:00Z` format.
+        lastFailedLogin:
+          type: string
+          description: The date and time of the most recent failed sign-in in `2021-05-01T15:11:00Z` format.
+        createdAt:
+          type: string
+          description: The date and time of user creation in `2021-05-01T15:11:00Z` format.
+        updatedAt:
+          type: string
+          description: The date and time of the most recent modification to the user in `2021-05-01T15:11:00Z` format.
+      required:
+      - successfulLoginCounter
+      - failedLoginCounter
+      - lastSuccessfulLogin
+      - lastFailedLogin
+      - createdAt
+      - updatedAt
+    GroupUserDto:
+      type: object
+      properties:
+        uid:
+          type: string
+          description: The UUID of the user.
+        email:
+          type: string
+          description: The email address of the user.
+        name:
+          type: string
+          description: The first name of the user.
+        surname:
+          type: string
+          description: The last name of the user.
+        userStatus:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - PENDING
+          - DELETED
+          - ECUSTOMS_MANUALLY_BLOCKED
+          description: "The status of this user in Dynatrace: \n\n* `ACTIVE`: The user is active.\n* `INACTIVE`: The user is deactivated and cannot sign in to Dynatrace. \n* `PENDING`: The user received an invitation, but hasn't completed sign-up yet. \n* `DELETED`: The user was deleted and cannot sign in to Dynatrace anymore. \n* `ECUSTOMS_MANUALLY_BLOCKED`: The user is blocked due to to a trade and export compliance violation. \n"
+        emergencyContact:
+          type: boolean
+          description: The user is (`true`) or is not (`false`) an emergency contact for the account.
+        groups:
+          description: A list of groups of which the user is a member.
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountGroupDto'
+      required:
+      - uid
+      - email
+      - groups
+    UserEmailDto:
+      type: object
+      properties:
+        email:
+          type: string
+          description: The email address of the user.
+      required:
+      - email
+    UserListDto:
+      type: object
+      properties:
+        count:
+          type: number
+          description: The number of entries in the list.
+        items:
+          description: A list of the account's users.
+          type: array
+          items:
+            $ref: '#/components/schemas/UsersDto'
+      required:
+      - count
+      - items
   securitySchemes:
     bearer:
       scheme: bearer

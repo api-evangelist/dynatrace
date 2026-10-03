@@ -252,34 +252,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorEnvelope'
-    Unauthorized:
-      description: Unauthorized — missing or invalid OAuth token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
     BadRequest:
       description: Bad request — invalid request body or parameters
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorEnvelope'
-  parameters:
-    groupId:
-      name: groupId
-      in: path
-      description: The unique identifier of the group.
-      required: true
-      schema:
-        type: string
-    accountUuid:
-      name: accountUuid
-      in: path
-      description: The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API.
-      required: true
-      schema:
-        type: string
-        format: uuid
+    Unauthorized:
+      description: Unauthorized — missing or invalid OAuth token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
   schemas:
     GroupCollection:
       type: object
@@ -307,6 +291,18 @@ components:
             owner: example-value
             createdAt: '2025-03-15T14:30:00Z'
             updatedAt: '2025-03-15T14:30:00Z'
+    Error:
+      type: object
+      description: Details of an API error.
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+          example: 500
+        message:
+          type: string
+          description: A human-readable description of the error.
+          example: Example description.
     Group:
       type: object
       description: Represents a user group in the Dynatrace account.
@@ -357,18 +353,22 @@ components:
       properties:
         error:
           $ref: '#/components/schemas/Error'
-    Error:
-      type: object
-      description: Details of an API error.
-      properties:
-        code:
-          type: integer
-          description: The HTTP status code of the error.
-          example: 500
-        message:
-          type: string
-          description: A human-readable description of the error.
-          example: Example description.
+  parameters:
+    groupId:
+      name: groupId
+      in: path
+      description: The unique identifier of the group.
+      required: true
+      schema:
+        type: string
+    accountUuid:
+      name: accountUuid
+      in: path
+      description: The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API.
+      required: true
+      schema:
+        type: string
+        format: uuid
   securitySchemes:
     oauth2:
       type: oauth2

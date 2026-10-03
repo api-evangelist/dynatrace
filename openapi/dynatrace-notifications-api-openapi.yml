@@ -217,23 +217,40 @@ paths:
       - account-uac-read
 components:
   schemas:
-    NotificationV2ListDto:
+    SubscriptionRelatedEventDataDto:
+      type: object
+      properties:
+        environments:
+          type: array
+          items:
+            type: string
+        capabilities:
+          type: array
+          items:
+            type: string
+        allEnvironments:
+          type: boolean
+        allCapabilities:
+          type: boolean
+      required:
+      - environments
+      - capabilities
+      - allEnvironments
+      - allCapabilities
+    NotificationListDto:
       type: object
       properties:
         records:
           description: A list of notifications of the account.
           type: array
           items:
-            $ref: '#/components/schemas/EventApiModel'
+            $ref: '#/components/schemas/NotificationDto'
         totalRecordCount:
           type: number
           description: The total number of notifications matching the filter.
         hasNextPage:
           type: boolean
           description: If there are more notifications.
-        nextPageKey:
-          type: string
-          description: The cursor for the next page of results. Present only when **hasNextPage** is `true`.
       required:
       - records
       - totalRecordCount
@@ -265,9 +282,6 @@ components:
       - type
       - details
       - date
-    EventApiModel:
-      type: object
-      properties: {}
     NotificationQueryParamsDto:
       type: object
       properties:
@@ -335,44 +349,6 @@ components:
             - -type
             - date
             - -date
-    SubscriptionRelatedEventDataDto:
-      type: object
-      properties:
-        environments:
-          type: array
-          items:
-            type: string
-        capabilities:
-          type: array
-          items:
-            type: string
-        allEnvironments:
-          type: boolean
-        allCapabilities:
-          type: boolean
-      required:
-      - environments
-      - capabilities
-      - allEnvironments
-      - allCapabilities
-    NotificationListDto:
-      type: object
-      properties:
-        records:
-          description: A list of notifications of the account.
-          type: array
-          items:
-            $ref: '#/components/schemas/NotificationDto'
-        totalRecordCount:
-          type: number
-          description: The total number of notifications matching the filter.
-        hasNextPage:
-          type: boolean
-          description: If there are more notifications.
-      required:
-      - records
-      - totalRecordCount
-      - hasNextPage
     ByokEventDto:
       type: object
       properties:
@@ -383,6 +359,30 @@ components:
       required:
       - environmentUuid
       - keyName
+    NotificationV2ListDto:
+      type: object
+      properties:
+        records:
+          description: A list of notifications of the account.
+          type: array
+          items:
+            $ref: '#/components/schemas/EventApiModel'
+        totalRecordCount:
+          type: number
+          description: The total number of notifications matching the filter.
+        hasNextPage:
+          type: boolean
+          description: If there are more notifications.
+        nextPageKey:
+          type: string
+          description: The cursor for the next page of results. Present only when **hasNextPage** is `true`.
+      required:
+      - records
+      - totalRecordCount
+      - hasNextPage
+    EventApiModel:
+      type: object
+      properties: {}
   securitySchemes:
     bearer:
       scheme: bearer

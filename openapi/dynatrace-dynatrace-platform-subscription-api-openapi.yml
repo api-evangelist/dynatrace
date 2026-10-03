@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Dynatrace Account Management Dynatrace Platform… Dynatrace……
+  title: Dynatrace Account Management Dynatrace Platform……
   description: The enterprise management API for Dynatrace SaaS enables automation of operational tasks related to user access and environment lifecycle management.
   version: '1.0'
   contact: {}
@@ -739,16 +739,87 @@ paths:
       - account-uac-read
 components:
   schemas:
-    SubscriptionListDto:
+    SubscriptionEnvironmentCostV2Dto:
+      type: object
+      properties:
+        environmentId:
+          type: string
+          description: The UUID of the environment
+        cost:
+          description: A list of subscription cost for the environment.
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionCapabilityCostDto'
+      required:
+      - environmentId
+      - cost
+    RateCardCapabilitiesDto:
+      type: object
+      properties:
+        key:
+          type: string
+          description: The capability key
+        name:
+          type: string
+          description: The capability name
+        quotedPrice:
+          type: string
+          description: The quoted price for the capability
+        quotedUnitOfMeasure:
+          type: string
+          description: The quoted unit of measure for the capability
+        price:
+          type: string
+          description: The price for the capability
+        startTime:
+          type: string
+          description: The start date of the capability in `2021-05-01T15:11:00Z` format.
+        endTime:
+          type: string
+          description: The end date of the capability in `2021-05-01T15:11:00Z` format.
+        deploymentType:
+          type: string
+          description: The deployment type
+      required:
+      - key
+      - name
+      - quotedPrice
+      - quotedUnitOfMeasure
+      - price
+      - startTime
+      - endTime
+    SubscriptionEnvironmentCostListV2Dto:
       type: object
       properties:
         data:
-          description: A list of subscriptions of the account.
+          description: Cost data of the subscription.
           type: array
           items:
-            $ref: '#/components/schemas/SubscriptionSummaryDto'
+            $ref: '#/components/schemas/SubscriptionEnvironmentCostV2Dto'
+        lastModifiedTime:
+          type: string
+          description: The time the subscription data was last modified in `2021-05-01T15:11:00Z` format.
       required:
       - data
+      - lastModifiedTime
+    SubscriptionEnvironmentUsageListV3Dto:
+      type: object
+      properties:
+        data:
+          description: Subscription usage data
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionEnvironmentUsageV3Dto'
+        lastModifiedTime:
+          type: string
+          description: The time the subscription data was last modified in `2021-05-01T15:11:00Z` format.
+        nextPageKey:
+          type: string
+          description: The next page key for pagination if next page exists
+      required:
+      - data
+      - lastModifiedTime
+      - nextPageKey
     SubscriptionEnvironmentCostListV3Dto:
       type: object
       properties:
@@ -767,34 +838,155 @@ components:
       - data
       - lastModifiedTime
       - nextPageKey
-    SubscriptionUsageDto:
+    SubscriptionCapabilityCostDto:
       type: object
       properties:
+        startTime:
+          type: string
+          description: The start time for the capability cost in `2021-05-01T15:11:00Z` format.
+        endTime:
+          type: string
+          description: The end time for the capability cost in `2021-05-01T15:11:00Z` format.
+        value:
+          type: number
+          description: The total cost for all the capabilities.
+        currencyCode:
+          type: string
+          description: The currency of the cost.
         capabilityKey:
           type: string
           description: The key of the subscription capability.
         capabilityName:
           type: string
           description: The display name of the subscription capability.
-        startTime:
-          type: string
-          description: The start time of the capability usage in `2021-05-01T15:11:00Z` format.
-        endTime:
-          type: string
-          description: The end time of the capability usage in `2021-05-01T15:11:00Z` format.
-        value:
-          type: number
-          description: The subscription usage by the capability.
-        unitMeasure:
-          type: string
-          description: The unit of the capability usage.
       required:
-      - capabilityKey
-      - capabilityName
       - startTime
       - endTime
       - value
-      - unitMeasure
+      - currencyCode
+      - capabilityKey
+      - capabilityName
+    RateCardSummaryDto:
+      type: object
+      properties:
+        quoteNumber:
+          type: string
+          description: The quote number for a rate-card
+        startTime:
+          type: string
+          description: The start date of the rate-card in `2021-05-01T15:11:00Z` format.
+        endTime:
+          type: string
+          description: The end date of the rate-card in `2021-05-01T15:11:00Z` format.
+        currencyCode:
+          type: string
+          description: The currency code of a rate-card
+        capabilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/RateCardCapabilitiesDto'
+      required:
+      - quoteNumber
+      - startTime
+      - endTime
+      - currencyCode
+      - capabilities
+    PaginatedEnvironmentBreakdownDto:
+      type: object
+      properties:
+        environmentId:
+          type: string
+          description: Identifier of the environment
+        field:
+          type: string
+          description: Field used to generate the breakdown. Can be `COSTCENTER` or `PRODUCT`
+        records:
+          description: List of individual breakdown entries.
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvironmentCostBreakdownDto'
+        nextPageKey:
+          type: string
+          description: Key to request the next page.
+      required:
+      - environmentId
+      - field
+      - records
+      - nextPageKey
+    SubscriptionCostBookingDto:
+      type: object
+      properties:
+        startTime:
+          type: string
+          description: The start time for the capability cost in `2021-05-01T15:11:00Z` format.
+        endTime:
+          type: string
+          description: The end time for the capability cost in `2021-05-01T15:11:00Z` format.
+        value:
+          type: number
+          description: The total cost for all the capabilities.
+        currencyCode:
+          type: string
+          description: The currency of the cost.
+        lastBookingDate:
+          type: string
+          description: The last booking date for the capability cost
+      required:
+      - startTime
+      - endTime
+      - value
+      - currencyCode
+      - lastBookingDate
+    SubscriptionSummaryDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: The UUID of the Dynatrace Platform Subscription.
+        type:
+          type: string
+          description: The type of the Dynatrace Platform Subscription.
+        subType:
+          type: string
+          description: The sub-type of the Dynatrace Platform Subscription.
+        name:
+          type: string
+          description: The display name of the Dynatrace Platform Subscription.
+        status:
+          type: string
+          description: The status of the Dynatrace Platform Subscription.
+        startTime:
+          type: string
+          description: The start date of the subscription in `2021-05-01` format.
+        endTime:
+          type: string
+          description: The end date of the subscription in `2021-05-01` format.
+      required:
+      - uuid
+      - type
+      - subType
+      - name
+      - status
+      - startTime
+      - endTime
+    SubscriptionEnvironmentCostV3Dto:
+      type: object
+      properties:
+        clusterId:
+          type: string
+          description: The UUID of the Managed cluster
+        environmentId:
+          type: string
+          description: The UUID of the environment.
+        cost:
+          description: Subscription costs for the environment.
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionCapabilityCostReceivedDto'
+      required:
+      - clusterId
+      - environmentId
+      - cost
     SubscriptionDto:
       type: object
       properties:
@@ -854,38 +1046,62 @@ components:
       - currentPeriod
       - periods
       - capabilities
-    SubscriptionSummaryDto:
+    SubscriptionAccountDto:
       type: object
       properties:
         uuid:
           type: string
-          description: The UUID of the Dynatrace Platform Subscription.
-        type:
-          type: string
-          description: The type of the Dynatrace Platform Subscription.
-        subType:
-          type: string
-          description: The sub-type of the Dynatrace Platform Subscription.
-        name:
-          type: string
-          description: The display name of the Dynatrace Platform Subscription.
-        status:
-          type: string
-          description: The status of the Dynatrace Platform Subscription.
-        startTime:
-          type: string
-          description: The start date of the subscription in `2021-05-01` format.
-        endTime:
-          type: string
-          description: The end date of the subscription in `2021-05-01` format.
+          description: The UUID of the account.
       required:
       - uuid
-      - type
-      - subType
-      - name
-      - status
-      - startTime
-      - endTime
+    Forecast:
+      type: object
+      properties:
+        forecastMedian:
+          type: number
+          description: The median forecasted usage.
+        forecastLower:
+          type: number
+          description: The lower bound of forecasted usage.
+        forecastUpper:
+          type: number
+          description: The upper bound of forecasted usage.
+        budget:
+          type: number
+          description: The budget quota used in the forecast.
+        forecastBudgetPct:
+          type: number
+          description: The forecasted usage of the budget, in percent.
+        forecastBudgetDate:
+          format: date-time
+          type: string
+          description: The date when the forecasted usage consumes all the budget quota.
+        forecastCreatedAt:
+          format: date-time
+          type: string
+          description: The date when the forecast was created.
+      required:
+      - forecastMedian
+      - forecastLower
+      - forecastUpper
+      - budget
+      - forecastBudgetPct
+      - forecastBudgetDate
+      - forecastCreatedAt
+    SubscriptionCostListDto:
+      type: object
+      properties:
+        data:
+          description: Cost data of the subscription.
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionCostBookingDto'
+        lastModifiedTime:
+          type: string
+          description: The time the subscription data was last modified in `2021-05-01T15:11:00Z` format.
+      required:
+      - data
+      - lastModifiedTime
     SubscriptionCapabilityCostReceivedDto:
       type: object
       properties:
@@ -918,41 +1134,114 @@ components:
       - capabilityKey
       - capabilityName
       - bookingDate
-    RateCardCapabilitiesDto:
+    SubscriptionEnvironmentUsageListV2Dto:
+      type: object
+      properties:
+        data:
+          description: Usage data of the subscription.
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionEnvironmentUsageV2Dto'
+        lastModifiedTime:
+          type: string
+          description: The time the subscription data was last modified in `2021-05-01T15:11:00Z` format.
+      required:
+      - data
+      - lastModifiedTime
+    SubscriptionUsageListDto:
+      type: object
+      properties:
+        data:
+          description: Usage data of the subscription.
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionUsageDto'
+        lastModifiedTime:
+          type: string
+          description: The time the subscription data was last modified in `2021-05-01T15:11:00Z` format.
+      required:
+      - data
+      - lastModifiedTime
+    SubscriptionCapabilityDto:
       type: object
       properties:
         key:
           type: string
-          description: The capability key
+          description: The key of the subscription capability.
         name:
           type: string
-          description: The capability name
-        quotedPrice:
-          type: string
-          description: The quoted price for the capability
-        quotedUnitOfMeasure:
-          type: string
-          description: The quoted unit of measure for the capability
-        price:
-          type: string
-          description: The price for the capability
-        startTime:
-          type: string
-          description: The start date of the capability in `2021-05-01T15:11:00Z` format.
-        endTime:
-          type: string
-          description: The end date of the capability in `2021-05-01T15:11:00Z` format.
-        deploymentType:
-          type: string
-          description: The deployment type
+          description: The display name of the subscription capability.
       required:
       - key
       - name
-      - quotedPrice
-      - quotedUnitOfMeasure
-      - price
+    SubscriptionBudgetDto:
+      type: object
+      properties:
+        total:
+          type: number
+          description: The total budget of the subscription.
+        used:
+          type: number
+          description: The used budget of the subscription.
+        currencyCode:
+          type: string
+          description: The currency of the subscription.
+      required:
+      - total
+      - used
+      - currencyCode
+    SubscriptionListDto:
+      type: object
+      properties:
+        data:
+          description: A list of subscriptions of the account.
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionSummaryDto'
+      required:
+      - data
+    SubscriptionEnvironmentUsageV2Dto:
+      type: object
+      properties:
+        environmentId:
+          type: string
+          description: The UUID of the environment
+        usage:
+          description: A list of subscription usage for the environment.
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionUsageDto'
+      required:
+      - environmentId
+      - usage
+    SubscriptionUsageDto:
+      type: object
+      properties:
+        capabilityKey:
+          type: string
+          description: The key of the subscription capability.
+        capabilityName:
+          type: string
+          description: The display name of the subscription capability.
+        startTime:
+          type: string
+          description: The start time of the capability usage in `2021-05-01T15:11:00Z` format.
+        endTime:
+          type: string
+          description: The end time of the capability usage in `2021-05-01T15:11:00Z` format.
+        value:
+          type: number
+          description: The subscription usage by the capability.
+        unitMeasure:
+          type: string
+          description: The unit of the capability usage.
+      required:
+      - capabilityKey
+      - capabilityName
       - startTime
       - endTime
+      - value
+      - unitMeasure
     SubscriptionCurrentPeriodDto:
       type: object
       properties:
@@ -989,28 +1278,6 @@ components:
       - capability
       - key
       - costs
-    PaginatedEnvironmentBreakdownDto:
-      type: object
-      properties:
-        environmentId:
-          type: string
-          description: Identifier of the environment
-        field:
-          type: string
-          description: Field used to generate the breakdown. Can be `COSTCENTER` or `PRODUCT`
-        records:
-          description: List of individual breakdown entries.
-          type: array
-          items:
-            $ref: '#/components/schemas/EnvironmentCostBreakdownDto'
-        nextPageKey:
-          type: string
-          description: Key to request the next page.
-      required:
-      - environmentId
-      - field
-      - records
-      - nextPageKey
     SubscriptionPeriodDto:
       type: object
       properties:
@@ -1023,249 +1290,6 @@ components:
       required:
       - startTime
       - endTime
-    SubscriptionEnvironmentUsageListV2Dto:
-      type: object
-      properties:
-        data:
-          description: Usage data of the subscription.
-          type: array
-          items:
-            $ref: '#/components/schemas/SubscriptionEnvironmentUsageV2Dto'
-        lastModifiedTime:
-          type: string
-          description: The time the subscription data was last modified in `2021-05-01T15:11:00Z` format.
-      required:
-      - data
-      - lastModifiedTime
-    SubscriptionEnvironmentUsageListV3Dto:
-      type: object
-      properties:
-        data:
-          description: Subscription usage data
-          type: array
-          items:
-            $ref: '#/components/schemas/SubscriptionEnvironmentUsageV3Dto'
-        lastModifiedTime:
-          type: string
-          description: The time the subscription data was last modified in `2021-05-01T15:11:00Z` format.
-        nextPageKey:
-          type: string
-          description: The next page key for pagination if next page exists
-      required:
-      - data
-      - lastModifiedTime
-      - nextPageKey
-    SubscriptionCapabilityDto:
-      type: object
-      properties:
-        key:
-          type: string
-          description: The key of the subscription capability.
-        name:
-          type: string
-          description: The display name of the subscription capability.
-      required:
-      - key
-      - name
-    SubscriptionEnvironmentCostListV2Dto:
-      type: object
-      properties:
-        data:
-          description: Cost data of the subscription.
-          type: array
-          items:
-            $ref: '#/components/schemas/SubscriptionEnvironmentCostV2Dto'
-        lastModifiedTime:
-          type: string
-          description: The time the subscription data was last modified in `2021-05-01T15:11:00Z` format.
-      required:
-      - data
-      - lastModifiedTime
-    RateCardSummaryDto:
-      type: object
-      properties:
-        quoteNumber:
-          type: string
-          description: The quote number for a rate-card
-        startTime:
-          type: string
-          description: The start date of the rate-card in `2021-05-01T15:11:00Z` format.
-        endTime:
-          type: string
-          description: The end date of the rate-card in `2021-05-01T15:11:00Z` format.
-        currencyCode:
-          type: string
-          description: The currency code of a rate-card
-        capabilities:
-          type: array
-          items:
-            $ref: '#/components/schemas/RateCardCapabilitiesDto'
-      required:
-      - quoteNumber
-      - startTime
-      - endTime
-      - currencyCode
-      - capabilities
-    Forecast:
-      type: object
-      properties:
-        forecastMedian:
-          type: number
-          description: The median forecasted usage.
-        forecastLower:
-          type: number
-          description: The lower bound of forecasted usage.
-        forecastUpper:
-          type: number
-          description: The upper bound of forecasted usage.
-        budget:
-          type: number
-          description: The budget quota used in the forecast.
-        forecastBudgetPct:
-          type: number
-          description: The forecasted usage of the budget, in percent.
-        forecastBudgetDate:
-          format: date-time
-          type: string
-          description: The date when the forecasted usage consumes all the budget quota.
-        forecastCreatedAt:
-          format: date-time
-          type: string
-          description: The date when the forecast was created.
-      required:
-      - forecastMedian
-      - forecastLower
-      - forecastUpper
-      - budget
-      - forecastBudgetPct
-      - forecastBudgetDate
-      - forecastCreatedAt
-    SubscriptionEnvironmentCostV3Dto:
-      type: object
-      properties:
-        clusterId:
-          type: string
-          description: The UUID of the Managed cluster
-        environmentId:
-          type: string
-          description: The UUID of the environment.
-        cost:
-          description: Subscription costs for the environment.
-          type: array
-          items:
-            $ref: '#/components/schemas/SubscriptionCapabilityCostReceivedDto'
-      required:
-      - clusterId
-      - environmentId
-      - cost
-    SubscriptionEnvironmentCostV2Dto:
-      type: object
-      properties:
-        environmentId:
-          type: string
-          description: The UUID of the environment
-        cost:
-          description: A list of subscription cost for the environment.
-          type: array
-          items:
-            $ref: '#/components/schemas/SubscriptionCapabilityCostDto'
-      required:
-      - environmentId
-      - cost
-    SubscriptionBudgetDto:
-      type: object
-      properties:
-        total:
-          type: number
-          description: The total budget of the subscription.
-        used:
-          type: number
-          description: The used budget of the subscription.
-        currencyCode:
-          type: string
-          description: The currency of the subscription.
-      required:
-      - total
-      - used
-      - currencyCode
-    SubscriptionUsageListDto:
-      type: object
-      properties:
-        data:
-          description: Usage data of the subscription.
-          type: array
-          items:
-            $ref: '#/components/schemas/SubscriptionUsageDto'
-        lastModifiedTime:
-          type: string
-          description: The time the subscription data was last modified in `2021-05-01T15:11:00Z` format.
-      required:
-      - data
-      - lastModifiedTime
-    SubscriptionCostListDto:
-      type: object
-      properties:
-        data:
-          description: Cost data of the subscription.
-          type: array
-          items:
-            $ref: '#/components/schemas/SubscriptionCostBookingDto'
-        lastModifiedTime:
-          type: string
-          description: The time the subscription data was last modified in `2021-05-01T15:11:00Z` format.
-      required:
-      - data
-      - lastModifiedTime
-    SubscriptionEnvironmentUsageV2Dto:
-      type: object
-      properties:
-        environmentId:
-          type: string
-          description: The UUID of the environment
-        usage:
-          description: A list of subscription usage for the environment.
-          type: array
-          items:
-            $ref: '#/components/schemas/SubscriptionUsageDto'
-      required:
-      - environmentId
-      - usage
-    SubscriptionAccountDto:
-      type: object
-      properties:
-        uuid:
-          type: string
-          description: The UUID of the account.
-      required:
-      - uuid
-    SubscriptionCapabilityCostDto:
-      type: object
-      properties:
-        startTime:
-          type: string
-          description: The start time for the capability cost in `2021-05-01T15:11:00Z` format.
-        endTime:
-          type: string
-          description: The end time for the capability cost in `2021-05-01T15:11:00Z` format.
-        value:
-          type: number
-          description: The total cost for all the capabilities.
-        currencyCode:
-          type: string
-          description: The currency of the cost.
-        capabilityKey:
-          type: string
-          description: The key of the subscription capability.
-        capabilityName:
-          type: string
-          description: The display name of the subscription capability.
-      required:
-      - startTime
-      - endTime
-      - value
-      - currencyCode
-      - capabilityKey
-      - capabilityName
     SubscriptionEnvironmentUsageV3Dto:
       type: object
       properties:
@@ -1284,30 +1308,6 @@ components:
       - clusterId
       - environmentId
       - usage
-    SubscriptionCostBookingDto:
-      type: object
-      properties:
-        startTime:
-          type: string
-          description: The start time for the capability cost in `2021-05-01T15:11:00Z` format.
-        endTime:
-          type: string
-          description: The end time for the capability cost in `2021-05-01T15:11:00Z` format.
-        value:
-          type: number
-          description: The total cost for all the capabilities.
-        currencyCode:
-          type: string
-          description: The currency of the cost.
-        lastBookingDate:
-          type: string
-          description: The last booking date for the capability cost
-      required:
-      - startTime
-      - endTime
-      - value
-      - currencyCode
-      - lastBookingDate
   securitySchemes:
     bearer:
       scheme: bearer

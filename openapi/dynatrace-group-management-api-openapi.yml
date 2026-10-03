@@ -167,6 +167,75 @@ paths:
       - account-idm-write
 components:
   schemas:
+    GroupListDto:
+      type: object
+      properties:
+        count:
+          type: number
+          description: The number of entries in the list.
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetGroupDto'
+      required:
+      - count
+      - items
+    PutGroupDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: The UUID of the user group.
+        name:
+          type: string
+          description: The name of the user group.
+        description:
+          type: string
+          description: A short description of the user group. Max length is 255 characters.
+        federatedAttributeValues:
+          description: "A list of values associating this group with the corresponding claim from an identity provider. \n\n If present and the group has owner = `LOCAL`, then group owner is set to `SAML`. \n\n If missing and the group has owner = `SAML`, then group owner is set to `LOCAL`. \n\n Cannot set this value for groups having owner set to `SCIM` or `ALL_USERS`."
+          type: array
+          items:
+            type: string
+      required:
+      - name
+    GetGroupDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: The UUID of the user group.
+        name:
+          type: string
+          description: The name of the user group.
+        description:
+          type: string
+          description: A short description of the user group.
+        federatedAttributeValues:
+          description: A list of values associating this group with the corresponding claim from an identity provider.
+          type: array
+          items:
+            type: string
+        owner:
+          type: string
+          enum:
+          - LOCAL
+          - SCIM
+          - SAML
+          - DCS
+          - ALL_USERS
+          description: The type of the group. `LOCAL`, `SCIM`, `SAML` and `DCS` corresponds to the identity provider from which the group originates. `ALL_USERS` is a special case of `LOCAL` group. It means that group is always assigned to all users in the account.
+        createdAt:
+          type: string
+          description: The date and time of the group creation in `2021-05-01T15:11:00Z` format.
+        updatedAt:
+          type: string
+          description: The date and time of the most recent group modification in `2021-05-01T15:11:00Z` format.
+      required:
+      - name
+      - owner
+      - createdAt
+      - updatedAt
     UserDto:
       type: object
       properties:
@@ -210,75 +279,6 @@ components:
       required:
       - count
       - items
-    GetGroupDto:
-      type: object
-      properties:
-        uuid:
-          type: string
-          description: The UUID of the user group.
-        name:
-          type: string
-          description: The name of the user group.
-        description:
-          type: string
-          description: A short description of the user group.
-        federatedAttributeValues:
-          description: A list of values associating this group with the corresponding claim from an identity provider.
-          type: array
-          items:
-            type: string
-        owner:
-          type: string
-          enum:
-          - LOCAL
-          - SCIM
-          - SAML
-          - DCS
-          - ALL_USERS
-          description: The type of the group. `LOCAL`, `SCIM`, `SAML` and `DCS` corresponds to the identity provider from which the group originates. `ALL_USERS` is a special case of `LOCAL` group. It means that group is always assigned to all users in the account.
-        createdAt:
-          type: string
-          description: The date and time of the group creation in `2021-05-01T15:11:00Z` format.
-        updatedAt:
-          type: string
-          description: The date and time of the most recent group modification in `2021-05-01T15:11:00Z` format.
-      required:
-      - name
-      - owner
-      - createdAt
-      - updatedAt
-    GroupListDto:
-      type: object
-      properties:
-        count:
-          type: number
-          description: The number of entries in the list.
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetGroupDto'
-      required:
-      - count
-      - items
-    PutGroupDto:
-      type: object
-      properties:
-        uuid:
-          type: string
-          description: The UUID of the user group.
-        name:
-          type: string
-          description: The name of the user group.
-        description:
-          type: string
-          description: A short description of the user group. Max length is 255 characters.
-        federatedAttributeValues:
-          description: "A list of values associating this group with the corresponding claim from an identity provider. \n\n If present and the group has owner = `LOCAL`, then group owner is set to `SAML`. \n\n If missing and the group has owner = `SAML`, then group owner is set to `LOCAL`. \n\n Cannot set this value for groups having owner set to `SCIM` or `ALL_USERS`."
-          type: array
-          items:
-            type: string
-      required:
-      - name
     InsertGroupDto:
       type: object
       properties:

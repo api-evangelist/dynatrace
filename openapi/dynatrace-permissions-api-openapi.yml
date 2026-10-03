@@ -54,16 +54,19 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  parameters:
-    accountUuid:
-      name: accountUuid
-      in: path
-      description: The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API.
-      required: true
-      schema:
-        type: string
-        format: uuid
   schemas:
+    Error:
+      type: object
+      description: Details of an API error.
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+          example: 500
+        message:
+          type: string
+          description: A human-readable description of the error.
+          example: Example description.
     Permission:
       type: object
       description: Represents a permission assignment granting a group access to a Dynatrace environment or account-level capability.
@@ -87,6 +90,12 @@ components:
           type: string
           description: The ID of the group this permission is assigned to.
           example: abc123
+    ErrorEnvelope:
+      type: object
+      description: Error response envelope returned when a request fails.
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
     PermissionCollection:
       type: object
       description: A collection of permission assignments for the account.
@@ -101,37 +110,28 @@ components:
             scope: example-value
             scopeType: ACCOUNT
             groupId: abc123
-    ErrorEnvelope:
-      type: object
-      description: Error response envelope returned when a request fails.
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-    Error:
-      type: object
-      description: Details of an API error.
-      properties:
-        code:
-          type: integer
-          description: The HTTP status code of the error.
-          example: 500
-        message:
-          type: string
-          description: A human-readable description of the error.
-          example: Example description.
   responses:
-    Unauthorized:
-      description: Unauthorized — missing or invalid OAuth token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
     Forbidden:
       description: Forbidden — the token lacks the required scope
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized — missing or invalid OAuth token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  parameters:
+    accountUuid:
+      name: accountUuid
+      in: path
+      description: The UUID of the Dynatrace account. Found in the Dynatrace account settings or obtained from the account API.
+      required: true
+      schema:
+        type: string
+        format: uuid
   securitySchemes:
     oauth2:
       type: oauth2

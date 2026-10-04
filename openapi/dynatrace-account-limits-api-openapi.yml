@@ -34,19 +34,6 @@ paths:
       - account-idm-read
 components:
   schemas:
-    AccountLimitsDto:
-      type: object
-      properties:
-        currentValue:
-          type: number
-        limitType:
-          type: string
-        limitValue:
-          type: number
-      required:
-      - currentValue
-      - limitType
-      - limitValue
     AccountLimitsPage:
       type: object
       properties:
@@ -68,6 +55,19 @@ components:
       - pageNumber
       - total
       - results
+    AccountLimitsDto:
+      type: object
+      properties:
+        currentValue:
+          type: number
+        limitType:
+          type: string
+        limitValue:
+          type: number
+      required:
+      - currentValue
+      - limitType
+      - limitValue
   securitySchemes:
     bearer:
       scheme: bearer

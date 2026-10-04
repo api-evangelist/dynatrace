@@ -151,30 +151,6 @@ paths:
       - account-env-write
 components:
   schemas:
-    AllowlistItem:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the list.
-          example: Some IP-range
-        ipRange:
-          type: string
-          description: One ip address or the range of ip addresses. Supports the CIDR format.
-          example: 10.0.0.0/32
-      required:
-      - name
-      - ipRange
-    EnvironmentListDto:
-      type: object
-      properties:
-        data:
-          description: Lists all environments in an account
-          type: array
-          items:
-            $ref: '#/components/schemas/EnvironmentDto'
-      required:
-      - data
     TenantResourceDto:
       type: object
       properties:
@@ -187,22 +163,26 @@ components:
       required:
       - name
       - id
-    ManagementZoneResourceDto:
+    ClusterListDto:
       type: object
       properties:
-        parent:
-          type: string
-          description: The ID of the environment to which the management zone belongs.
-        name:
-          type: string
-          description: The name of the management zone.
-        id:
-          type: string
-          description: The ID of the management zone.
+        data:
+          description: Lists all clusters in a managed account
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterDto'
       required:
-      - parent
-      - name
-      - id
+      - data
+    EnvironmentListDto:
+      type: object
+      properties:
+        data:
+          description: Lists all environments in an account
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvironmentDto'
+      required:
+      - data
     EnvironmentDto:
       type: object
       properties:
@@ -222,6 +202,22 @@ components:
       - id
       - active
       - url
+    ManagementZoneResourceDto:
+      type: object
+      properties:
+        parent:
+          type: string
+          description: The ID of the environment to which the management zone belongs.
+        name:
+          type: string
+          description: The name of the management zone.
+        id:
+          type: string
+          description: The ID of the management zone.
+      required:
+      - parent
+      - name
+      - id
     EnvironmentResourceDto:
       type: object
       properties:
@@ -238,16 +234,6 @@ components:
       required:
       - tenantResources
       - managementZoneResources
-    ClusterListDto:
-      type: object
-      properties:
-        data:
-          description: Lists all clusters in a managed account
-          type: array
-          items:
-            $ref: '#/components/schemas/ClusterDto'
-      required:
-      - data
     IpConfigDto:
       type: object
       properties:
@@ -265,6 +251,20 @@ components:
       required:
       - enabled
       - allowWebhookOverride
+    AllowlistItem:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the list.
+          example: Some IP-range
+        ipRange:
+          type: string
+          description: One ip address or the range of ip addresses. Supports the CIDR format.
+          example: 10.0.0.0/32
+      required:
+      - name
+      - ipRange
     ClusterDto:
       type: object
       properties:

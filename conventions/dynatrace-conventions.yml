@@ -48,6 +48,7 @@ auth:
   see: authentication/dynatrace-authentication.yml
 
 idempotency:
+  coverage: none
   supported: false
   header: null
   note: >-

@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-rate-card-summary-dto-schema.json",
+  "title": "RateCardSummaryDto",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/RateCardSummaryDto",
+  "type": "object",
+  "properties": {
+    "quoteNumber": {
+      "type": "string",
+      "description": "The quote number for a rate-card"
+    },
+    "startTime": {
+      "type": "string",
+      "description": "The start date of the rate-card in `2021-05-01T15:11:00Z` format."
+    },
+    "endTime": {
+      "type": "string",
+      "description": "The end date of the rate-card in `2021-05-01T15:11:00Z` format."
+    },
+    "currencyCode": {
+      "type": "string",
+      "description": "The currency code of a rate-card"
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/RateCardCapabilitiesDto"
+      }
+    }
+  },
+  "required": [
+    "quoteNumber",
+    "startTime",
+    "endTime",
+    "currencyCode",
+    "capabilities"
+  ],
+  "$defs": {
+    "RateCardCapabilitiesDto": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "The capability key"
+        },
+        "name": {
+          "type": "string",
+          "description": "The capability name"
+        },
+        "quotedPrice": {
+          "type": "string",
+          "description": "The quoted price for the capability"
+        },
+        "quotedUnitOfMeasure": {
+          "type": "string",
+          "description": "The quoted unit of measure for the capability"
+        },
+        "price": {
+          "type": "string",
+          "description": "The price for the capability"
+        },
+        "startTime": {
+          "type": "string",
+          "description": "The start date of the capability in `2021-05-01T15:11:00Z` format."
+        },
+        "endTime": {
+          "type": "string",
+          "description": "The end date of the capability in `2021-05-01T15:11:00Z` format."
+        },
+        "deploymentType": {
+          "type": "string",
+          "description": "The deployment type"
+        }
+      },
+      "required": [
+        "key",
+        "name",
+        "quotedPrice",
+        "quotedUnitOfMeasure",
+        "price",
+        "startTime",
+        "endTime"
+      ]
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-insert-group-dto-schema.json",
+  "title": "InsertGroupDto",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-group-management-api-openapi.yml#/components/schemas/InsertGroupDto",
+  "type": "object",
+  "properties": {
+    "uuid": {
+      "type": "string",
+      "description": "The UUID of the user group.",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the user group."
+    },
+    "description": {
+      "type": "string",
+      "description": "A short description of the user group. Max length is 255 characters."
+    },
+    "federatedAttributeValues": {
+      "description": "A list of values associating this group with the corresponding claim from an identity provider. \n\n If present and the group has owner = `LOCAL`, then group owner is set to `SAML`. \n\n If missing and the group has owner = `SAML`, then group owner is set to `LOCAL`. \n\n Cannot set this value for groups having owner set to `SCIM` or `ALL_USERS`.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

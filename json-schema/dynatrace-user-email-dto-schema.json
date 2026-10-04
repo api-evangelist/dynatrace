@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-user-email-dto-schema.json",
+  "title": "UserEmailDto",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-user-management-api-openapi.yml#/components/schemas/UserEmailDto",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "description": "The email address of the user."
+    }
+  },
+  "required": [
+    "email"
+  ]
+}

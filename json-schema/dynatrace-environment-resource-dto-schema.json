@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-environment-resource-dto-schema.json",
+  "title": "EnvironmentResourceDto",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-environment-management-api-openapi.yml#/components/schemas/EnvironmentResourceDto",
+  "type": "object",
+  "properties": {
+    "tenantResources": {
+      "description": "A list of environments in the account.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/TenantResourceDto"
+      }
+    },
+    "managementZoneResources": {
+      "description": "A list of management zones in the account.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ManagementZoneResourceDto"
+      }
+    }
+  },
+  "required": [
+    "tenantResources",
+    "managementZoneResources"
+  ],
+  "$defs": {
+    "ManagementZoneResourceDto": {
+      "type": "object",
+      "properties": {
+        "parent": {
+          "type": "string",
+          "description": "The ID of the environment to which the management zone belongs."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the management zone."
+        },
+        "id": {
+          "type": "string",
+          "description": "The ID of the management zone."
+        }
+      },
+      "required": [
+        "parent",
+        "name",
+        "id"
+      ]
+    },
+    "TenantResourceDto": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the environment."
+        },
+        "id": {
+          "type": "string",
+          "description": "The ID of the environment."
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ]
+    }
+  }
+}

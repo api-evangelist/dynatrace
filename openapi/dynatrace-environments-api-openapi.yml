@@ -74,18 +74,12 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    Error:
+    ErrorEnvelope:
       type: object
-      description: Details of an API error.
+      description: Error response envelope returned when a request fails.
       properties:
-        code:
-          type: integer
-          description: The HTTP status code of the error.
-          example: 500
-        message:
-          type: string
-          description: A human-readable description of the error.
-          example: Example description.
+        error:
+          $ref: '#/components/schemas/Error'
     Environment:
       type: object
       description: Represents a Dynatrace environment (tenant) associated with the account.
@@ -134,25 +128,18 @@ components:
             name: Production Service
             status: ACTIVE
             trial: true
-    ErrorEnvelope:
+    Error:
       type: object
-      description: Error response envelope returned when a request fails.
+      description: Details of an API error.
       properties:
-        error:
-          $ref: '#/components/schemas/Error'
-  responses:
-    Forbidden:
-      description: Forbidden — the token lacks the required scope
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    Unauthorized:
-      description: Unauthorized — missing or invalid OAuth token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+          example: 500
+        message:
+          type: string
+          description: A human-readable description of the error.
+          example: Example description.
   parameters:
     accountUuid:
       name: accountUuid
@@ -162,6 +149,19 @@ components:
       schema:
         type: string
         format: uuid
+  responses:
+    Unauthorized:
+      description: Unauthorized — missing or invalid OAuth token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Forbidden:
+      description: Forbidden — the token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
   securitySchemes:
     oauth2:
       type: oauth2

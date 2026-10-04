@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-level-limits-dto-schema.json",
+  "title": "LevelLimitsDto",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-policy-management-api-openapi.yml#/components/schemas/LevelLimitsDto",
+  "type": "object",
+  "properties": {
+    "policies": {
+      "description": "Information about policies limit set for a level.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/LimitEntry"
+        }
+      ]
+    },
+    "bindings": {
+      "description": "Information about policy bindings limit set for a level.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/LimitEntry"
+        }
+      ]
+    },
+    "boundaries": {
+      "description": "Information about policy boundaries limit set for a level.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/LimitEntry"
+        }
+      ]
+    }
+  },
+  "required": [
+    "policies",
+    "bindings",
+    "boundaries"
+  ],
+  "$defs": {
+    "LimitEntry": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "number"
+        },
+        "limit": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "count",
+        "limit"
+      ]
+    }
+  }
+}

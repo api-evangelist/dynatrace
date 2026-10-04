@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-field-values-request-dto-schema.json",
+  "title": "FieldValuesRequestDto",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-account-settings-api-openapi.yml#/components/schemas/FieldValuesRequestDto",
+  "type": "object",
+  "properties": {
+    "values": {
+      "description": "The requested values.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/FieldValueDto"
+      }
+    }
+  },
+  "required": [
+    "values"
+  ],
+  "$defs": {
+    "FieldValueDto": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "The key of this value."
+        }
+      },
+      "required": [
+        "key"
+      ]
+    }
+  }
+}

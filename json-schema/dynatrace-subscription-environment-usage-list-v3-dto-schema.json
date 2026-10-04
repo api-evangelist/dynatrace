@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-subscription-environment-usage-list-v3-dto-schema.json",
+  "title": "SubscriptionEnvironmentUsageListV3Dto",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionEnvironmentUsageListV3Dto",
+  "type": "object",
+  "properties": {
+    "data": {
+      "description": "Subscription usage data",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SubscriptionEnvironmentUsageV3Dto"
+      }
+    },
+    "lastModifiedTime": {
+      "type": "string",
+      "description": "The time the subscription data was last modified in `2021-05-01T15:11:00Z` format."
+    },
+    "nextPageKey": {
+      "type": "string",
+      "description": "The next page key for pagination if next page exists"
+    }
+  },
+  "required": [
+    "data",
+    "lastModifiedTime",
+    "nextPageKey"
+  ],
+  "$defs": {
+    "SubscriptionEnvironmentUsageV3Dto": {
+      "type": "object",
+      "properties": {
+        "clusterId": {
+          "type": "string",
+          "description": "The UUID of the Managed cluster."
+        },
+        "environmentId": {
+          "type": "string",
+          "description": "The UUID of the environment."
+        },
+        "usage": {
+          "description": "Subscription usage information for the environment.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SubscriptionUsageDto"
+          }
+        }
+      },
+      "required": [
+        "clusterId",
+        "environmentId",
+        "usage"
+      ]
+    },
+    "SubscriptionUsageDto": {
+      "type": "object",
+      "properties": {
+        "capabilityKey": {
+          "type": "string",
+          "description": "The key of the subscription capability."
+        },
+        "capabilityName": {
+          "type": "string",
+          "description": "The display name of the subscription capability."
+        },
+        "startTime": {
+          "type": "string",
+          "description": "The start time of the capability usage in `2021-05-01T15:11:00Z` format."
+        },
+        "endTime": {
+          "type": "string",
+          "description": "The end time of the capability usage in `2021-05-01T15:11:00Z` format."
+        },
+        "value": {
+          "type": "number",
+          "description": "The subscription usage by the capability."
+        },
+        "unitMeasure": {
+          "type": "string",
+          "description": "The unit of the capability usage."
+        }
+      },
+      "required": [
+        "capabilityKey",
+        "capabilityName",
+        "startTime",
+        "endTime",
+        "value",
+        "unitMeasure"
+      ]
+    }
+  }
+}

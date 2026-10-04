@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Dynatrace Account Management … … Workload Identity……
+  title: Dynatrace Account Management … … Workload Identity………
   description: The enterprise management API for Dynatrace SaaS enables automation of operational tasks related to user access and environment lifecycle management.
   version: '1.0'
   contact: {}
@@ -425,16 +425,43 @@ paths:
       - account-idm-write
 components:
   schemas:
-    RestWifTrustPolicyPatchForm:
+    RestWifServiceUserMappingForm:
       type: object
       properties:
-        status:
+        serviceUserUuid:
           type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
+        environmentId:
+          type: string
+        scopes:
+          type: array
+          items:
+            type: string
+        claimMappings:
+          type: array
+          items:
+            $ref: '#/components/schemas/RestWifClaimMappingForm'
       required:
-      - status
+      - serviceUserUuid
+      - environmentId
+      - scopes
+      - claimMappings
+    RestWifTrustPolicyForm:
+      type: object
+      properties:
+        name:
+          type: string
+        issuerUrl:
+          type: string
+        jwksUri:
+          type: string
+        audience:
+          type: string
+        description:
+          type: string
+      required:
+      - name
+      - issuerUrl
+      - audience
     RestWifTrustPolicyListItem:
       type: object
       properties:
@@ -457,71 +484,7 @@ components:
         updatedAt:
           format: date-time
           type: string
-    RestWifClaimMapping:
-      type: object
-      properties:
-        claimName:
-          type: string
-        claimValue:
-          type: string
-        matchType:
-          type: string
-          enum:
-          - EXACT
-          - GLOB
-    RestWifTrustPolicyList:
-      type: object
-      properties:
-        pageSize:
-          type: number
-        pageNumber:
-          type: number
-        total:
-          type: number
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/RestWifTrustPolicyListItem'
-    RestWifClaimMappingForm:
-      type: object
-      properties:
-        claimName:
-          type: string
-        claimValue:
-          type: string
-        matchType:
-          type: string
-          enum:
-          - EXACT
-          - GLOB
-      required:
-      - claimName
-      - claimValue
-      - matchType
-    RestWifServiceUserMappingList:
-      type: object
-      properties:
-        pageSize:
-          type: number
-        pageNumber:
-          type: number
-        total:
-          type: number
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/RestWifServiceUserMappingListItem'
-    RestWifServiceUserMappingPatchForm:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-      required:
-      - status
-    RestWifServiceUserMappingListItem:
+    RestWifServiceUserMapping:
       type: object
       properties:
         uuid:
@@ -539,12 +502,49 @@ components:
           enum:
           - ACTIVE
           - INACTIVE
+        claimMappings:
+          type: array
+          items:
+            $ref: '#/components/schemas/RestWifClaimMapping'
         createdAt:
           format: date-time
           type: string
         updatedAt:
           format: date-time
           type: string
+    RestWifServiceUserMappingPatchForm:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+      required:
+      - status
+    RestWifServiceUserMappingList:
+      type: object
+      properties:
+        pageSize:
+          type: number
+        pageNumber:
+          type: number
+        total:
+          type: number
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RestWifServiceUserMappingListItem'
+    RestWifTrustPolicyPatchForm:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+      required:
+      - status
     RestWifTrustPolicy:
       type: object
       properties:
@@ -577,7 +577,36 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RestWifServiceUserMapping'
-    RestWifServiceUserMapping:
+    RestWifClaimMappingForm:
+      type: object
+      properties:
+        claimName:
+          type: string
+        claimValue:
+          type: string
+        matchType:
+          type: string
+          enum:
+          - EXACT
+          - GLOB
+      required:
+      - claimName
+      - claimValue
+      - matchType
+    RestWifTrustPolicyList:
+      type: object
+      properties:
+        pageSize:
+          type: number
+        pageNumber:
+          type: number
+        total:
+          type: number
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RestWifTrustPolicyListItem'
+    RestWifServiceUserMappingListItem:
       type: object
       properties:
         uuid:
@@ -595,53 +624,24 @@ components:
           enum:
           - ACTIVE
           - INACTIVE
-        claimMappings:
-          type: array
-          items:
-            $ref: '#/components/schemas/RestWifClaimMapping'
         createdAt:
           format: date-time
           type: string
         updatedAt:
           format: date-time
           type: string
-    RestWifTrustPolicyForm:
+    RestWifClaimMapping:
       type: object
       properties:
-        name:
+        claimName:
           type: string
-        issuerUrl:
+        claimValue:
           type: string
-        jwksUri:
+        matchType:
           type: string
-        audience:
-          type: string
-        description:
-          type: string
-      required:
-      - name
-      - issuerUrl
-      - audience
-    RestWifServiceUserMappingForm:
-      type: object
-      properties:
-        serviceUserUuid:
-          type: string
-        environmentId:
-          type: string
-        scopes:
-          type: array
-          items:
-            type: string
-        claimMappings:
-          type: array
-          items:
-            $ref: '#/components/schemas/RestWifClaimMappingForm'
-      required:
-      - serviceUserUuid
-      - environmentId
-      - scopes
-      - claimMappings
+          enum:
+          - EXACT
+          - GLOB
   securitySchemes:
     bearer:
       scheme: bearer

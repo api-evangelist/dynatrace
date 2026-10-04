@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-create-or-update-level-policy-request-dto-schema.json",
+  "title": "CreateOrUpdateLevelPolicyRequestDto",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-policy-management-api-openapi.yml#/components/schemas/CreateOrUpdateLevelPolicyRequestDto",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The display name of the policy."
+    },
+    "description": {
+      "type": "string",
+      "description": "A short description of the policy."
+    },
+    "tags": {
+      "description": "A list of tags.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "statementQuery": {
+      "type": "string",
+      "description": "The [statement](https://dt-url.net/ht03ucb) of the policy."
+    }
+  },
+  "required": [
+    "name",
+    "description",
+    "statementQuery"
+  ]
+}

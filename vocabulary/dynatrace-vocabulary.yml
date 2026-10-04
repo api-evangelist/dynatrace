@@ -1,0 +1,419 @@
+generated: '2026-10-04'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/dynatrace-account-audits-api-openapi.yml
+- openapi/dynatrace-account-limits-api-openapi.yml
+- openapi/dynatrace-account-settings-api-openapi.yml
+- openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml
+- openapi/dynatrace-entities-api-openapi.yml
+vocabulary:
+  name: Dynatrace Domain Vocabulary
+  description: 'Terms declared by Dynatrace''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-04'
+  terms:
+  - term: Account Audits
+    definition: Access account-level audit logs.
+    tags:
+    - Resource Group
+    source: openapi/dynatrace-account-audits-api-openapi.yml
+  - term: Account limits
+    definition: Retrieve the limits configured for an account.
+    tags:
+    - Resource Group
+    source: openapi/dynatrace-account-limits-api-openapi.yml
+  - term: Account Settings
+    definition: Manage account settings such as cost-center and product field values.
+    tags:
+    - Resource Group
+    source: openapi/dynatrace-account-settings-api-openapi.yml
+  - term: Dynatrace Platform Subscription
+    definition: View platform subscriptions and their usage, cost, forecast, and rate-card data.
+    tags:
+    - Resource Group
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml
+  - term: Entities
+    definition: Operations for querying monitored entities and entity types
+    tags:
+    - Resource Group
+    source: openapi/dynatrace-entities-api-openapi.yml
+  - term: Environment Management
+    definition: List environments and clusters and manage their IP allowlist configuration.
+    tags:
+    - Resource Group
+    source: openapi/dynatrace-environment-management-api-openapi.yml
+  - term: Environments
+    definition: Operations for listing environments in the account
+    tags:
+    - Resource Group
+    source: openapi/dynatrace-environments-api-openapi.yml
+  - term: Events
+    definition: Operations for querying and ingesting custom events
+    tags:
+    - Resource Group
+    source: openapi/dynatrace-events-api-openapi.yml
+  - term: Group Management
+    definition: Create and manage user groups and their members.
+    tags:
+    - Resource Group
+    source: openapi/dynatrace-group-management-api-openapi.yml
+  - term: Groups
+    definition: Operations for managing user groups and group membership
+    tags:
+    - Resource Group
+    source: openapi/dynatrace-groups-api-openapi.yml
+  - term: Logs
+    definition: Operations for ingesting, searching, aggregating, and exporting log records
+    tags:
+    - Resource Group
+    source: openapi/dynatrace-logs-api-openapi.yml
+  - term: Metrics
+    definition: Operations for querying, managing, and ingesting time-series metrics
+    tags:
+    - Resource Group
+    source: openapi/dynatrace-metrics-api-openapi.yml
+  - term: Notifications
+    definition: Manage notifications for an account.
+    tags:
+    - Resource Group
+    source: openapi/dynatrace-notifications-api-openapi.yml
+  - term: Permission management
+    definition: Manage group permissions (deprecated; use policy management instead).
+    tags:
+    - Resource Group
+    source: openapi/dynatrace-permission-management-api-openapi.yml
+  - term: Permissions
+    definition: Operations for querying account-level permissions
+    tags:
+    - Resource Group
+    source: openapi/dynatrace-permissions-api-openapi.yml
+  - term: Platform Tokens
+    definition: Manage platform tokens for account users.
+    tags:
+    - Resource Group
+    source: openapi/dynatrace-platform-tokens-api-openapi.yml
+  - term: Policy Management
+    definition: Manage IAM policies, policy bindings, and permission boundaries.
+    tags:
+    - Resource Group
+    source: openapi/dynatrace-policy-management-api-openapi.yml
+  - term: Problems
+    definition: Operations for querying and managing detected problems
+    tags:
+    - Resource Group
+    source: openapi/dynatrace-problems-api-openapi.yml
+  - term: Reference Data
+    definition: Look up reference data such as time zones, regions, and available permissions.
+    tags:
+    - Resource Group
+    source: openapi/dynatrace-reference-data-api-openapi.yml
+  - term: Service user management
+    definition: Manage service users within an account.
+    tags:
+    - Resource Group
+    source: openapi/dynatrace-service-user-management-api-openapi.yml
+  - term: User Management
+    definition: Manage users in an account and their group memberships.
+    tags:
+    - Resource Group
+    source: openapi/dynatrace-user-management-api-openapi.yml
+  - term: Users
+    definition: Operations for managing account users
+    tags:
+    - Resource Group
+    source: openapi/dynatrace-users-api-openapi.yml
+  - term: Workload Identity Federation
+    definition: Manage workload identity federation trust policies and their service-user mappings.
+    tags:
+    - Resource Group
+    source: openapi/dynatrace-workload-identity-federation-api-openapi.yml
+  - term: AuditDto
+    definition: 'Object declared by the contract with fields: eventId, timestamp, user, resource, resourceName, eventProvider, eventType, accountUuid,
+      authenticationClientId, authenticationGrantType, authenticationToken, authenticationType. (11 more)'
+    tags:
+    - Object
+    source: openapi/dynatrace-account-audits-api-openapi.yml#/components/schemas/AuditDto
+  - term: ErrorResponseDto
+    definition: 'Object declared by the contract with fields: error, message, payload.'
+    tags:
+    - Object
+    source: openapi/dynatrace-account-audits-api-openapi.yml#/components/schemas/ErrorResponseDto
+  - term: AuditWarningDto
+    definition: 'Object declared by the contract with fields: message.'
+    tags:
+    - Object
+    source: openapi/dynatrace-account-audits-api-openapi.yml#/components/schemas/AuditWarningDto
+  - term: AuditsByAccountDto
+    definition: 'Object declared by the contract with fields: audits, warnings.'
+    tags:
+    - Object
+    source: openapi/dynatrace-account-audits-api-openapi.yml#/components/schemas/AuditsByAccountDto
+  - term: AccountLimitsDto
+    definition: 'Object declared by the contract with fields: currentValue, limitType, limitValue.'
+    tags:
+    - Object
+    source: openapi/dynatrace-account-limits-api-openapi.yml#/components/schemas/AccountLimitsDto
+  - term: AccountLimitsPage
+    definition: 'Object declared by the contract with fields: pageSize, pageNumber, total, results.'
+    tags:
+    - Object
+    source: openapi/dynatrace-account-limits-api-openapi.yml#/components/schemas/AccountLimitsPage
+  - term: FieldValueDto
+    definition: 'Object declared by the contract with fields: key.'
+    tags:
+    - Object
+    source: openapi/dynatrace-account-settings-api-openapi.yml#/components/schemas/FieldValueDto
+  - term: FieldValuesRequestDto
+    definition: 'Object declared by the contract with fields: values.'
+    tags:
+    - Object
+    source: openapi/dynatrace-account-settings-api-openapi.yml#/components/schemas/FieldValuesRequestDto
+  - term: PaginatedFieldValueDto
+    definition: 'Object declared by the contract with fields: records, hasNextPage.'
+    tags:
+    - Object
+    source: openapi/dynatrace-account-settings-api-openapi.yml#/components/schemas/PaginatedFieldValueDto
+  - term: SubscriptionEnvironmentCostV2Dto
+    definition: 'Object declared by the contract with fields: environmentId, cost.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionEnvironmentCostV2Dto
+  - term: RateCardCapabilitiesDto
+    definition: 'Object declared by the contract with fields: key, name, quotedPrice, quotedUnitOfMeasure, price, startTime, endTime, deploymentType.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/RateCardCapabilitiesDto
+  - term: SubscriptionEnvironmentCostListV2Dto
+    definition: 'Object declared by the contract with fields: data, lastModifiedTime.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionEnvironmentCostListV2Dto
+  - term: SubscriptionEnvironmentUsageListV3Dto
+    definition: 'Object declared by the contract with fields: data, lastModifiedTime, nextPageKey.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionEnvironmentUsageListV3Dto
+  - term: SubscriptionEnvironmentCostListV3Dto
+    definition: 'Object declared by the contract with fields: data, lastModifiedTime, nextPageKey.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionEnvironmentCostListV3Dto
+  - term: SubscriptionCapabilityCostDto
+    definition: 'Object declared by the contract with fields: startTime, endTime, value, currencyCode, capabilityKey, capabilityName.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionCapabilityCostDto
+  - term: RateCardSummaryDto
+    definition: 'Object declared by the contract with fields: quoteNumber, startTime, endTime, currencyCode, capabilities.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/RateCardSummaryDto
+  - term: PaginatedEnvironmentBreakdownDto
+    definition: 'Object declared by the contract with fields: environmentId, field, records, nextPageKey.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/PaginatedEnvironmentBreakdownDto
+  - term: SubscriptionCostBookingDto
+    definition: 'Object declared by the contract with fields: startTime, endTime, value, currencyCode, lastBookingDate.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionCostBookingDto
+  - term: SubscriptionSummaryDto
+    definition: 'Object declared by the contract with fields: uuid, type, subType, name, status, startTime, endTime.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionSummaryDto
+  - term: SubscriptionEnvironmentCostV3Dto
+    definition: 'Object declared by the contract with fields: clusterId, environmentId, cost.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionEnvironmentCostV3Dto
+  - term: SubscriptionDto
+    definition: 'Object declared by the contract with fields: uuid, type, subType, name, status, startTime, endTime, account, budget, currentPeriod,
+      periods, capabilities.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionDto
+  - term: SubscriptionAccountDto
+    definition: 'Object declared by the contract with fields: uuid.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionAccountDto
+  - term: Forecast
+    definition: 'Object declared by the contract with fields: forecastMedian, forecastLower, forecastUpper, budget, forecastBudgetPct, forecastBudgetDate,
+      forecastCreatedAt.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/Forecast
+  - term: SubscriptionCostListDto
+    definition: 'Object declared by the contract with fields: data, lastModifiedTime.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionCostListDto
+  - term: SubscriptionCapabilityCostReceivedDto
+    definition: 'Object declared by the contract with fields: startTime, endTime, value, currencyCode, capabilityKey, capabilityName, bookingDate.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionCapabilityCostReceivedDto
+  - term: SubscriptionEnvironmentUsageListV2Dto
+    definition: 'Object declared by the contract with fields: data, lastModifiedTime.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionEnvironmentUsageListV2Dto
+  - term: SubscriptionUsageListDto
+    definition: 'Object declared by the contract with fields: data, lastModifiedTime.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionUsageListDto
+  - term: SubscriptionCapabilityDto
+    definition: 'Object declared by the contract with fields: key, name.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionCapabilityDto
+  - term: SubscriptionBudgetDto
+    definition: 'Object declared by the contract with fields: total, used, currencyCode.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionBudgetDto
+  - term: SubscriptionListDto
+    definition: 'Object declared by the contract with fields: data.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionListDto
+  - term: SubscriptionEnvironmentUsageV2Dto
+    definition: 'Object declared by the contract with fields: environmentId, usage.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionEnvironmentUsageV2Dto
+  - term: SubscriptionUsageDto
+    definition: 'Object declared by the contract with fields: capabilityKey, capabilityName, startTime, endTime, value, unitMeasure.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionUsageDto
+  - term: SubscriptionCurrentPeriodDto
+    definition: 'Object declared by the contract with fields: startTime, endTime, daysRemaining.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionCurrentPeriodDto
+  - term: EnvironmentCostBreakdownDto
+    definition: 'Object declared by the contract with fields: date, capability, key, costs.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/EnvironmentCostBreakdownDto
+  - term: SubscriptionPeriodDto
+    definition: 'Object declared by the contract with fields: startTime, endTime.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionPeriodDto
+  - term: SubscriptionEnvironmentUsageV3Dto
+    definition: 'Object declared by the contract with fields: clusterId, environmentId, usage.'
+    tags:
+    - Object
+    source: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionEnvironmentUsageV3Dto
+  - term: EntityType
+    definition: Defines an entity type including its display name, available properties, and supported relationship types.
+    tags:
+    - Object
+    source: openapi/dynatrace-entities-api-openapi.yml#/components/schemas/EntityType
+  - term: EntityCollection
+    definition: A paginated collection of monitored entities.
+    tags:
+    - Object
+    source: openapi/dynatrace-entities-api-openapi.yml#/components/schemas/EntityCollection
+  - term: EntityTypeRelationship
+    definition: Describes a relationship type for an entity type.
+    tags:
+    - Object
+    source: openapi/dynatrace-entities-api-openapi.yml#/components/schemas/EntityTypeRelationship
+  - term: EntityTypeProperty
+    definition: Describes a single property of an entity type.
+    tags:
+    - Object
+    source: openapi/dynatrace-entities-api-openapi.yml#/components/schemas/EntityTypeProperty
+  - term: Error
+    definition: Details of an API error.
+    tags:
+    - Object
+    source: openapi/dynatrace-entities-api-openapi.yml#/components/schemas/Error
+  - term: Entity
+    definition: Represents a monitored entity in Dynatrace. Entities are the components of your monitored environment such as services, hosts,
+      processes, and applications. Each entity has a unique ID, a type, properties, tags, and relationships to other entities.
+    tags:
+    - Object
+    source: openapi/dynatrace-entities-api-openapi.yml#/components/schemas/Entity
+  - term: EntityTag
+    definition: A tag applied to a monitored entity.
+    tags:
+    - Object
+    source: openapi/dynatrace-entities-api-openapi.yml#/components/schemas/EntityTag
+  - term: ManagementZone
+    definition: A management zone reference.
+    tags:
+    - Object
+    source: openapi/dynatrace-entities-api-openapi.yml#/components/schemas/ManagementZone
+  - term: EntityLookupRequest
+    definition: Request body for looking up an entity by name and type.
+    tags:
+    - Object
+    source: openapi/dynatrace-entities-api-openapi.yml#/components/schemas/EntityLookupRequest
+  - term: ErrorEnvelope
+    definition: Error response envelope returned when a request fails.
+    tags:
+    - Object
+    source: openapi/dynatrace-entities-api-openapi.yml#/components/schemas/ErrorEnvelope
+  - term: ConstraintViolation
+    definition: Details of a single constraint violation in a request.
+    tags:
+    - Object
+    source: openapi/dynatrace-entities-api-openapi.yml#/components/schemas/ConstraintViolation
+  - term: EntityTypeCollection
+    definition: A paginated collection of entity type definitions.
+    tags:
+    - Object
+    source: openapi/dynatrace-entities-api-openapi.yml#/components/schemas/EntityTypeCollection
+  - term: AllowlistItem
+    definition: 'Object declared by the contract with fields: name, ipRange.'
+    tags:
+    - Object
+    source: openapi/dynatrace-environment-management-api-openapi.yml#/components/schemas/AllowlistItem
+  - term: EnvironmentListDto
+    definition: 'Object declared by the contract with fields: data.'
+    tags:
+    - Object
+    source: openapi/dynatrace-environment-management-api-openapi.yml#/components/schemas/EnvironmentListDto
+  - term: TenantResourceDto
+    definition: 'Object declared by the contract with fields: name, id.'
+    tags:
+    - Object
+    source: openapi/dynatrace-environment-management-api-openapi.yml#/components/schemas/TenantResourceDto
+  - term: ManagementZoneResourceDto
+    definition: 'Object declared by the contract with fields: parent, name, id.'
+    tags:
+    - Object
+    source: openapi/dynatrace-environment-management-api-openapi.yml#/components/schemas/ManagementZoneResourceDto
+  - term: EnvironmentDto
+    definition: 'Object declared by the contract with fields: id, name, active, url.'
+    tags:
+    - Object
+    source: openapi/dynatrace-environment-management-api-openapi.yml#/components/schemas/EnvironmentDto
+  - term: EnvironmentResourceDto
+    definition: 'Object declared by the contract with fields: tenantResources, managementZoneResources.'
+    tags:
+    - Object
+    source: openapi/dynatrace-environment-management-api-openapi.yml#/components/schemas/EnvironmentResourceDto
+  - term: ClusterListDto
+    definition: 'Object declared by the contract with fields: data.'
+    tags:
+    - Object
+    source: openapi/dynatrace-environment-management-api-openapi.yml#/components/schemas/ClusterListDto
+  - term: IpConfigDto
+    definition: 'Object declared by the contract with fields: enabled, allowWebhookOverride, allowlist.'
+    tags:
+    - Object
+    source: openapi/dynatrace-environment-management-api-openapi.yml#/components/schemas/IpConfigDto
+  - term: ClusterDto
+    definition: 'Object declared by the contract with fields: clusterId.'
+    tags:
+    - Object
+    source: openapi/dynatrace-environment-management-api-openapi.yml#/components/schemas/ClusterDto

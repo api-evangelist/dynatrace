@@ -139,6 +139,31 @@ paths:
       - account-audit-logs-read
 components:
   schemas:
+    AuditWarningDto:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A warning message related to the request.
+          example: Your result has been limited to 1.
+      required:
+      - message
+    AuditsByAccountDto:
+      type: object
+      properties:
+        audits:
+          description: A list of audit records for the account.
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditDto'
+        warnings:
+          description: A list of warning messages related to the request.
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditWarningDto'
+      required:
+      - audits
+      - warnings
     AuditDto:
       type: object
       properties:
@@ -280,31 +305,6 @@ components:
       required:
       - error
       - message
-    AuditWarningDto:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A warning message related to the request.
-          example: Your result has been limited to 1.
-      required:
-      - message
-    AuditsByAccountDto:
-      type: object
-      properties:
-        audits:
-          description: A list of audit records for the account.
-          type: array
-          items:
-            $ref: '#/components/schemas/AuditDto'
-        warnings:
-          description: A list of warning messages related to the request.
-          type: array
-          items:
-            $ref: '#/components/schemas/AuditWarningDto'
-      required:
-      - audits
-      - warnings
   securitySchemes:
     bearer:
       scheme: bearer

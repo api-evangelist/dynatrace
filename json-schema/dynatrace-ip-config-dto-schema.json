@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-ip-config-dto-schema.json",
+  "title": "IpConfigDto",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-environment-management-api-openapi.yml#/components/schemas/IpConfigDto",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": "boolean",
+      "description": "If enabled the ip config allow list gets applied."
+    },
+    "allowWebhookOverride": {
+      "type": "boolean",
+      "description": "If enabled the webhook ip allowlists will ignore the main allowlist CIDR range limitations."
+    },
+    "allowlist": {
+      "description": "Contains a list of valid IP addresses in CIDR format which are allowed. If enabled it must not be empty.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AllowlistItem"
+      }
+    }
+  },
+  "required": [
+    "enabled",
+    "allowWebhookOverride"
+  ],
+  "$defs": {
+    "AllowlistItem": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the list."
+        },
+        "ipRange": {
+          "type": "string",
+          "description": "One ip address or the range of ip addresses. Supports the CIDR format."
+        }
+      },
+      "required": [
+        "name",
+        "ipRange"
+      ]
+    }
+  }
+}

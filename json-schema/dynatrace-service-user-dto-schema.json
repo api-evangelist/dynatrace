@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-service-user-dto-schema.json",
+  "title": "ServiceUserDto",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-service-user-management-api-openapi.yml#/components/schemas/ServiceUserDto",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the new service user"
+    },
+    "description": {
+      "type": "string",
+      "description": "The description of the new service user"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

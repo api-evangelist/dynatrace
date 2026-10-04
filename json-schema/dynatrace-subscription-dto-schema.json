@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-subscription-dto-schema.json",
+  "title": "SubscriptionDto",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml#/components/schemas/SubscriptionDto",
+  "type": "object",
+  "properties": {
+    "uuid": {
+      "type": "string",
+      "description": "The UUID of the Dynatrace Platform Subscription."
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of the Dynatrace Platform Subscription."
+    },
+    "subType": {
+      "type": "string",
+      "description": "The sub-type of the Dynatrace Platform Subscription."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the Dynatrace Platform Subscription."
+    },
+    "status": {
+      "type": "string",
+      "description": "The status of the Dynatrace Platform Subscription."
+    },
+    "startTime": {
+      "type": "string",
+      "description": "The start date of the subscription in `2021-05-01` format."
+    },
+    "endTime": {
+      "type": "string",
+      "description": "The end date of the subscription in `2021-05-01` format."
+    },
+    "account": {
+      "description": "The account associated with the subscription.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/SubscriptionAccountDto"
+        }
+      ]
+    },
+    "budget": {
+      "description": "The budget associated with the subscription.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/SubscriptionBudgetDto"
+        }
+      ]
+    },
+    "currentPeriod": {
+      "description": "The current period associated with the subscription.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/SubscriptionCurrentPeriodDto"
+        }
+      ]
+    },
+    "periods": {
+      "description": "A list of subscription periods.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SubscriptionPeriodDto"
+      }
+    },
+    "capabilities": {
+      "description": "A list of subscription capabilities.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SubscriptionCapabilityDto"
+      }
+    }
+  },
+  "required": [
+    "uuid",
+    "type",
+    "subType",
+    "name",
+    "status",
+    "startTime",
+    "endTime",
+    "account",
+    "budget",
+    "currentPeriod",
+    "periods",
+    "capabilities"
+  ],
+  "$defs": {
+    "SubscriptionAccountDto": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "description": "The UUID of the account."
+        }
+      },
+      "required": [
+        "uuid"
+      ]
+    },
+    "SubscriptionBudgetDto": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "number",
+          "description": "The total budget of the subscription."
+        },
+        "used": {
+          "type": "number",
+          "description": "The used budget of the subscription."
+        },
+        "currencyCode": {
+          "type": "string",
+          "description": "The currency of the subscription."
+        }
+      },
+      "required": [
+        "total",
+        "used",
+        "currencyCode"
+      ]
+    },
+    "SubscriptionCapabilityDto": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "The key of the subscription capability."
+        },
+        "name": {
+          "type": "string",
+          "description": "The display name of the subscription capability."
+        }
+      },
+      "required": [
+        "key",
+        "name"
+      ]
+    },
+    "SubscriptionCurrentPeriodDto": {
+      "type": "object",
+      "properties": {
+        "startTime": {
+          "type": "string",
+          "description": "The current period start date in `2021-05-01` format."
+        },
+        "endTime": {
+          "type": "string",
+          "description": "The current period end date in `2021-05-01` format."
+        },
+        "daysRemaining": {
+          "type": "number",
+          "description": "Remaining days in the current period."
+        }
+      },
+      "required": [
+        "startTime",
+        "endTime",
+        "daysRemaining"
+      ]
+    },
+    "SubscriptionPeriodDto": {
+      "type": "object",
+      "properties": {
+        "startTime": {
+          "type": "string",
+          "description": "The subscription period start time in `2021-05-01T15:11:00Z` format."
+        },
+        "endTime": {
+          "type": "string",
+          "description": "The subscription period end time in `2021-05-01T15:11:00Z` format."
+        }
+      },
+      "required": [
+        "startTime",
+        "endTime"
+      ]
+    }
+  }
+}

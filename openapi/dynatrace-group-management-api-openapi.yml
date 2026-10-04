@@ -167,19 +167,6 @@ paths:
       - account-idm-write
 components:
   schemas:
-    GroupListDto:
-      type: object
-      properties:
-        count:
-          type: number
-          description: The number of entries in the list.
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetGroupDto'
-      required:
-      - count
-      - items
     PutGroupDto:
       type: object
       properties:
@@ -199,6 +186,49 @@ components:
             type: string
       required:
       - name
+    GroupListDto:
+      type: object
+      properties:
+        count:
+          type: number
+          description: The number of entries in the list.
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetGroupDto'
+      required:
+      - count
+      - items
+    UserDto:
+      type: object
+      properties:
+        uid:
+          type: string
+          description: The UUID of the user.
+        email:
+          type: string
+          description: The email address of the user.
+        name:
+          type: string
+          description: The first name of the user.
+        surname:
+          type: string
+          description: The last name of the user.
+        userStatus:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - PENDING
+          - DELETED
+          - ECUSTOMS_MANUALLY_BLOCKED
+          description: "The status of this user in Dynatrace: \n\n* `ACTIVE`: The user is active.\n* `INACTIVE`: The user is deactivated and cannot sign in to Dynatrace. \n* `PENDING`: The user received an invitation, but hasn't completed sign-up yet. \n* `DELETED`: The user was deleted and cannot sign in to Dynatrace anymore. \n* `ECUSTOMS_MANUALLY_BLOCKED`: The user is blocked due to to a trade and export compliance violation. \n"
+        emergencyContact:
+          type: boolean
+          description: The user is (`true`) or is not (`false`) an emergency contact for the account.
+      required:
+      - uid
+      - email
     GetGroupDto:
       type: object
       properties:
@@ -236,49 +266,6 @@ components:
       - owner
       - createdAt
       - updatedAt
-    UserDto:
-      type: object
-      properties:
-        uid:
-          type: string
-          description: The UUID of the user.
-        email:
-          type: string
-          description: The email address of the user.
-        name:
-          type: string
-          description: The first name of the user.
-        surname:
-          type: string
-          description: The last name of the user.
-        userStatus:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - PENDING
-          - DELETED
-          - ECUSTOMS_MANUALLY_BLOCKED
-          description: "The status of this user in Dynatrace: \n\n* `ACTIVE`: The user is active.\n* `INACTIVE`: The user is deactivated and cannot sign in to Dynatrace. \n* `PENDING`: The user received an invitation, but hasn't completed sign-up yet. \n* `DELETED`: The user was deleted and cannot sign in to Dynatrace anymore. \n* `ECUSTOMS_MANUALLY_BLOCKED`: The user is blocked due to to a trade and export compliance violation. \n"
-        emergencyContact:
-          type: boolean
-          description: The user is (`true`) or is not (`false`) an emergency contact for the account.
-      required:
-      - uid
-      - email
-    GroupUserListDto:
-      type: object
-      properties:
-        count:
-          type: number
-          description: The number of entries in the list.
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserDto'
-      required:
-      - count
-      - items
     InsertGroupDto:
       type: object
       properties:
@@ -299,6 +286,19 @@ components:
             type: string
       required:
       - name
+    GroupUserListDto:
+      type: object
+      properties:
+        count:
+          type: number
+          description: The number of entries in the list.
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserDto'
+      required:
+      - count
+      - items
   securitySchemes:
     bearer:
       scheme: bearer

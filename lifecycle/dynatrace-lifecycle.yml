@@ -20,7 +20,7 @@ versioning:
     and a generation transition (v1 to v2) is treated as a deprecation with its own migration guide.
   docs: https://docs.dynatrace.com/docs/dynatrace-api/basics
 
-deprecation_policy:
+deprecation:
   published: true
   url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides
   statement: >-

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-external-service-users-page-dto-schema.json",
+  "title": "ExternalServiceUsersPageDto",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-service-user-management-api-openapi.yml#/components/schemas/ExternalServiceUsersPageDto",
+  "type": "object",
+  "properties": {
+    "results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ExternalServiceUserDto"
+      }
+    },
+    "nextPageKey": {
+      "type": "string",
+      "description": "Next page key to be used in querying for next results page"
+    },
+    "totalCount": {
+      "type": "number",
+      "description": "Total number of service users"
+    }
+  },
+  "required": [
+    "results",
+    "totalCount"
+  ],
+  "$defs": {
+    "ExternalServiceUserDto": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "UUID of service user"
+        },
+        "email": {
+          "type": "string",
+          "description": "Email of service user"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of service user"
+        },
+        "surname": {
+          "type": "string",
+          "description": "Surname of service user"
+        },
+        "description": {
+          "type": "string",
+          "description": "The description of the service user"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "The date and time when the user was created in `2021-05-01T15:11:00Z` format."
+        }
+      },
+      "required": [
+        "uid",
+        "email",
+        "name",
+        "createdAt"
+      ]
+    }
+  }
+}

@@ -239,70 +239,13 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  responses:
-    NotFound:
-      description: Not found — the specified user, group, or resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    Forbidden:
-      description: Forbidden — the token lacks the required scope
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    BadRequest:
-      description: Bad request — invalid request body or parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    Unauthorized:
-      description: Unauthorized — missing or invalid OAuth token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
   schemas:
-    GroupCollection:
+    ErrorEnvelope:
       type: object
-      description: A paginated collection of groups.
+      description: Error response envelope returned when a request fails.
       properties:
-        nextPageKey:
-          type: string
-          description: Cursor for the next page of results.
-          nullable: true
-          example: example-value
-        totalCount:
-          type: integer
-          format: int64
-          description: The total number of groups in the account.
-          example: 500
-        items:
-          type: array
-          description: The list of groups on this page.
-          items:
-            $ref: '#/components/schemas/Group'
-          example:
-          - groupId: abc123
-            name: Production Service
-            description: Example description.
-            owner: example-value
-            createdAt: '2025-03-15T14:30:00Z'
-            updatedAt: '2025-03-15T14:30:00Z'
-    Error:
-      type: object
-      description: Details of an API error.
-      properties:
-        code:
-          type: integer
-          description: The HTTP status code of the error.
-          example: 500
-        message:
-          type: string
-          description: A human-readable description of the error.
-          example: Example description.
+        error:
+          $ref: '#/components/schemas/Error'
     Group:
       type: object
       description: Represents a user group in the Dynatrace account.
@@ -333,6 +276,44 @@ components:
           format: date-time
           description: The date and time when the group was last updated.
           example: '2025-03-15T14:30:00Z'
+    Error:
+      type: object
+      description: Details of an API error.
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+          example: 500
+        message:
+          type: string
+          description: A human-readable description of the error.
+          example: Example description.
+    GroupCollection:
+      type: object
+      description: A paginated collection of groups.
+      properties:
+        nextPageKey:
+          type: string
+          description: Cursor for the next page of results.
+          nullable: true
+          example: example-value
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of groups in the account.
+          example: 500
+        items:
+          type: array
+          description: The list of groups on this page.
+          items:
+            $ref: '#/components/schemas/Group'
+          example:
+          - groupId: abc123
+            name: Production Service
+            description: Example description.
+            owner: example-value
+            createdAt: '2025-03-15T14:30:00Z'
+            updatedAt: '2025-03-15T14:30:00Z'
     GroupCreateRequest:
       type: object
       description: Request body for creating or updating a group.
@@ -347,20 +328,7 @@ components:
           type: string
           description: An optional description of the group's purpose or access scope.
           example: Example description.
-    ErrorEnvelope:
-      type: object
-      description: Error response envelope returned when a request fails.
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
   parameters:
-    groupId:
-      name: groupId
-      in: path
-      description: The unique identifier of the group.
-      required: true
-      schema:
-        type: string
     accountUuid:
       name: accountUuid
       in: path
@@ -369,6 +337,38 @@ components:
       schema:
         type: string
         format: uuid
+    groupId:
+      name: groupId
+      in: path
+      description: The unique identifier of the group.
+      required: true
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: Bad request — invalid request body or parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized — missing or invalid OAuth token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Forbidden:
+      description: Forbidden — the token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    NotFound:
+      description: Not found — the specified user, group, or resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
   securitySchemes:
     oauth2:
       type: oauth2

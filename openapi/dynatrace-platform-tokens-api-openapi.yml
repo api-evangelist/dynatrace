@@ -188,6 +188,77 @@ components:
           - INACTIVE
       required:
       - status
+    PlatformTokenPageDto:
+      type: object
+      properties:
+        pageSize:
+          type: number
+          description: Page size.
+        pageNumber:
+          type: number
+          description: Page number.
+        total:
+          type: number
+          description: Total count of entries.
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformTokenDto'
+      required:
+      - pageSize
+      - pageNumber
+      - total
+      - results
+    PlatformTokenSecret:
+      type: object
+      properties:
+        name:
+          type: string
+        tokenId:
+          type: string
+        token:
+          type: string
+      required:
+      - name
+      - tokenId
+      - token
+    GeneratePlatformTokenForm:
+      type: object
+      properties:
+        name:
+          type: string
+        scope:
+          type: array
+          items:
+            type: string
+        resource:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
+        expirationDate:
+          format: date-time
+          type: string
+        userUuid:
+          type: string
+      required:
+      - name
+      - scope
+      - resource
+      - tags
+      - expirationDate
+      - userUuid
+    PlatformTokenExpirationDateDto:
+      type: object
+      properties:
+        expirationDate:
+          format: date-time
+          type: string
+      required:
+      - expirationDate
     PlatformTokenDto:
       type: object
       properties:
@@ -240,77 +311,6 @@ components:
       required:
       - lastUsedAt
       - lastClientIp
-    PlatformTokenSecret:
-      type: object
-      properties:
-        name:
-          type: string
-        tokenId:
-          type: string
-        token:
-          type: string
-      required:
-      - name
-      - tokenId
-      - token
-    GeneratePlatformTokenForm:
-      type: object
-      properties:
-        name:
-          type: string
-        scope:
-          type: array
-          items:
-            type: string
-        resource:
-          type: array
-          items:
-            type: string
-        tags:
-          type: array
-          items:
-            type: string
-        expirationDate:
-          format: date-time
-          type: string
-        userUuid:
-          type: string
-      required:
-      - name
-      - scope
-      - resource
-      - tags
-      - expirationDate
-      - userUuid
-    PlatformTokenExpirationDateDto:
-      type: object
-      properties:
-        expirationDate:
-          format: date-time
-          type: string
-      required:
-      - expirationDate
-    PlatformTokenPageDto:
-      type: object
-      properties:
-        pageSize:
-          type: number
-          description: Page size.
-        pageNumber:
-          type: number
-          description: Page number.
-        total:
-          type: number
-          description: Total count of entries.
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/PlatformTokenDto'
-      required:
-      - pageSize
-      - pageNumber
-      - total
-      - results
   securitySchemes:
     bearer:
       scheme: bearer

@@ -323,144 +323,27 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  responses:
-    NotFound:
-      description: Not found — the specified metric does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    Forbidden:
-      description: Forbidden — the API token lacks the required scope
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    BadRequest:
-      description: Bad request — invalid query parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    Unauthorized:
-      description: Unauthorized — missing or invalid API token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
   schemas:
-    MetricDescriptorCollection:
+    ConstraintViolation:
       type: object
-      description: A paginated collection of metric descriptors returned by the list metrics endpoint.
+      description: Details of a single constraint violation in a request.
       properties:
-        nextPageKey:
+        path:
           type: string
-          description: The cursor for the next page of results. Include this value as the nextPageKey query parameter in the next request. Null if there are no more results.
-          nullable: true
+          description: The JSON path to the field that caused the violation.
           example: example-value
-        totalCount:
-          type: integer
-          format: int64
-          description: The total number of metrics available matching the query.
-          example: 500
-        resolution:
-          type: string
-          description: The resolution of the data if applicable.
-          example: example-value
-        metrics:
-          type: array
-          description: The list of metric descriptors on this page.
-          items:
-            $ref: '#/components/schemas/MetricDescriptor'
-          example:
-          - metricId: abc123
-            displayName: Production Service
-            description: Example description.
-            unit: example-value
-            dduBillable: true
-            created: 500
-            lastWritten: 500
-            entityType:
-            - STANDARD
-            aggregationTypes:
-            - min
-            dimensionDefinitions:
-            - key: example-value
-              name: Production Service
-              type: STANDARD
-              displayName: Production Service
-            transformations:
-            - example-value
-            defaultAggregation: {}
-    Error:
-      type: object
-      description: Details of an API error.
-      properties:
-        code:
-          type: integer
-          description: The HTTP status code of the error.
-          example: 500
         message:
           type: string
-          description: A human-readable description of the error.
+          description: A description of the constraint violation.
           example: Example description.
-        constraintViolations:
-          type: array
-          description: A list of constraint violations for validation errors (HTTP 400).
-          items:
-            $ref: '#/components/schemas/ConstraintViolation'
-          example:
-          - path: example-value
-            message: Example description.
-            parameterLocation: example-value
-            location: example-value
-    MetricDimensionDefinition:
-      type: object
-      description: Defines a single dimension of a metric.
-      properties:
-        key:
+        parameterLocation:
           type: string
-          description: The unique key identifying this dimension.
+          description: The location of the violating parameter (QUERY, PATH, BODY).
           example: example-value
-        name:
+        location:
           type: string
-          description: The display name of the dimension.
-          example: Production Service
-        type:
-          type: string
-          description: The type of the dimension. For example, ENTITY for entity dimensions or STRING for string dimensions.
-          example: STANDARD
-        displayName:
-          type: string
-          description: The human-readable display name of the dimension.
-          example: Production Service
-    MetricData:
-      type: object
-      description: The result of a metric query, containing time-series data for each requested metric and dimension combination.
-      properties:
-        resolution:
-          type: string
-          description: The resolution of the data points in the response. For example, 1h means each data point represents one hour of data.
+          description: The location detail for the violation.
           example: example-value
-        nextPageKey:
-          type: string
-          description: The cursor for the next page of results if the response is paginated. Null if all results are returned.
-          nullable: true
-          example: example-value
-        totalCount:
-          type: integer
-          format: int64
-          description: The total number of data series in the result.
-          example: 500
-        result:
-          type: array
-          description: The list of metric series collections, one per metric key matched by the selector.
-          items:
-            $ref: '#/components/schemas/MetricSeriesCollection'
-          example:
-          - metricId: abc123
-            data:
-            - {}
     MetricDefaultAggregation:
       type: object
       description: The default aggregation setting for the metric.
@@ -482,32 +365,6 @@ components:
           format: double
           description: The parameter for the aggregation type, used for percentile aggregation to specify the percentile value (e.g., 95).
           example: 87.5
-    ErrorEnvelope:
-      type: object
-      description: Error response envelope returned when a request fails.
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-    ConstraintViolation:
-      type: object
-      description: Details of a single constraint violation in a request.
-      properties:
-        path:
-          type: string
-          description: The JSON path to the field that caused the violation.
-          example: example-value
-        message:
-          type: string
-          description: A description of the constraint violation.
-          example: Example description.
-        parameterLocation:
-          type: string
-          description: The location of the violating parameter (QUERY, PATH, BODY).
-          example: example-value
-        location:
-          type: string
-          description: The location detail for the violation.
-          example: example-value
     MetricSeries:
       type: object
       description: A single time series representing metric values for a specific combination of dimension values over a time range.
@@ -546,6 +403,75 @@ components:
             format: double
           example:
           - example-value
+    ErrorEnvelope:
+      type: object
+      description: Error response envelope returned when a request fails.
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    MetricDimensionDefinition:
+      type: object
+      description: Defines a single dimension of a metric.
+      properties:
+        key:
+          type: string
+          description: The unique key identifying this dimension.
+          example: example-value
+        name:
+          type: string
+          description: The display name of the dimension.
+          example: Production Service
+        type:
+          type: string
+          description: The type of the dimension. For example, ENTITY for entity dimensions or STRING for string dimensions.
+          example: STANDARD
+        displayName:
+          type: string
+          description: The human-readable display name of the dimension.
+          example: Production Service
+    MetricSeriesCollection:
+      type: object
+      description: A collection of time-series data for a single metric key, containing one series per unique dimension combination.
+      properties:
+        metricId:
+          type: string
+          description: The metric key for this collection, including any applied transformations.
+          example: abc123
+        data:
+          type: array
+          description: The list of individual time series, one per unique combination of dimension values.
+          items:
+            $ref: '#/components/schemas/MetricSeries'
+          example:
+          - dimensionMap: {}
+            dimensions:
+            - {}
+            timestamps:
+            - {}
+            values:
+            - {}
+    Error:
+      type: object
+      description: Details of an API error.
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+          example: 500
+        message:
+          type: string
+          description: A human-readable description of the error.
+          example: Example description.
+        constraintViolations:
+          type: array
+          description: A list of constraint violations for validation errors (HTTP 400).
+          items:
+            $ref: '#/components/schemas/ConstraintViolation'
+          example:
+          - path: example-value
+            message: Example description.
+            parameterLocation: example-value
+            location: example-value
     MetricDescriptor:
       type: object
       description: Describes a single metric including its metadata, supported aggregations, entity dimensions, and default aggregation settings.
@@ -621,27 +547,101 @@ components:
           - example-value
         defaultAggregation:
           $ref: '#/components/schemas/MetricDefaultAggregation'
-    MetricSeriesCollection:
+    MetricDescriptorCollection:
       type: object
-      description: A collection of time-series data for a single metric key, containing one series per unique dimension combination.
+      description: A paginated collection of metric descriptors returned by the list metrics endpoint.
       properties:
-        metricId:
+        nextPageKey:
           type: string
-          description: The metric key for this collection, including any applied transformations.
-          example: abc123
-        data:
+          description: The cursor for the next page of results. Include this value as the nextPageKey query parameter in the next request. Null if there are no more results.
+          nullable: true
+          example: example-value
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of metrics available matching the query.
+          example: 500
+        resolution:
+          type: string
+          description: The resolution of the data if applicable.
+          example: example-value
+        metrics:
           type: array
-          description: The list of individual time series, one per unique combination of dimension values.
+          description: The list of metric descriptors on this page.
           items:
-            $ref: '#/components/schemas/MetricSeries'
+            $ref: '#/components/schemas/MetricDescriptor'
           example:
-          - dimensionMap: {}
-            dimensions:
+          - metricId: abc123
+            displayName: Production Service
+            description: Example description.
+            unit: example-value
+            dduBillable: true
+            created: 500
+            lastWritten: 500
+            entityType:
+            - STANDARD
+            aggregationTypes:
+            - min
+            dimensionDefinitions:
+            - key: example-value
+              name: Production Service
+              type: STANDARD
+              displayName: Production Service
+            transformations:
+            - example-value
+            defaultAggregation: {}
+    MetricData:
+      type: object
+      description: The result of a metric query, containing time-series data for each requested metric and dimension combination.
+      properties:
+        resolution:
+          type: string
+          description: The resolution of the data points in the response. For example, 1h means each data point represents one hour of data.
+          example: example-value
+        nextPageKey:
+          type: string
+          description: The cursor for the next page of results if the response is paginated. Null if all results are returned.
+          nullable: true
+          example: example-value
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of data series in the result.
+          example: 500
+        result:
+          type: array
+          description: The list of metric series collections, one per metric key matched by the selector.
+          items:
+            $ref: '#/components/schemas/MetricSeriesCollection'
+          example:
+          - metricId: abc123
+            data:
             - {}
-            timestamps:
-            - {}
-            values:
-            - {}
+  responses:
+    BadRequest:
+      description: Bad request — invalid query parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized — missing or invalid API token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Forbidden:
+      description: Forbidden — the API token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    NotFound:
+      description: Not found — the specified metric does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
   parameters:
     metricKey:
       name: metricKey

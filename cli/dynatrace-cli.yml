@@ -12,6 +12,8 @@ description: >-
   whether the task is configuration deployment, platform operation, app development or extension
   packaging.
 
+install: []
+commands: []
 tools:
   - name: monaco
     full_name: Dynatrace Configuration as Code

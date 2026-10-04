@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-level-policy-dto-schema.json",
+  "title": "LevelPolicyDto",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-policy-management-api-openapi.yml#/components/schemas/LevelPolicyDto",
+  "type": "object",
+  "properties": {
+    "uuid": {
+      "type": "string",
+      "description": "The ID of the policy."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the policy."
+    },
+    "tags": {
+      "description": "A list of tags.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "description": {
+      "type": "string",
+      "description": "A short description of the policy."
+    },
+    "statementQuery": {
+      "type": "string",
+      "description": "The [statement](https://dt-url.net/ht03ucb) of the policy."
+    },
+    "statements": {
+      "description": "The expanded form of the policy statement.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Statement"
+      }
+    }
+  },
+  "required": [
+    "uuid",
+    "name",
+    "tags",
+    "description",
+    "statementQuery",
+    "statements"
+  ],
+  "$defs": {
+    "Condition": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the condition. \n\n It indicates which part of the **services** is checked by the condition."
+        },
+        "operator": {
+          "type": "string",
+          "description": "The operator of the condition."
+        },
+        "values": {
+          "description": "A list of reference values of the condition.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "operator",
+        "values"
+      ]
+    },
+    "Statement": {
+      "type": "object",
+      "properties": {
+        "effect": {
+          "type": "string",
+          "description": "The effect of the policy (for example, allow something)."
+        },
+        "permissions": {
+          "description": "A list of granted permissions.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "conditions": {
+          "description": "A list of conditions limiting the granted permissions.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Condition"
+          }
+        }
+      },
+      "required": [
+        "effect",
+        "permissions",
+        "conditions"
+      ]
+    }
+  }
+}

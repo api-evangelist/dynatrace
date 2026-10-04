@@ -238,6 +238,20 @@ paths:
       - account-idm-write
 components:
   schemas:
+    UserListDto:
+      type: object
+      properties:
+        count:
+          type: number
+          description: The number of entries in the list.
+        items:
+          description: A list of the account's users.
+          type: array
+          items:
+            $ref: '#/components/schemas/UsersDto'
+      required:
+      - count
+      - items
     UsersDto:
       type: object
       properties:
@@ -342,6 +356,14 @@ components:
       - lastFailedLogin
       - createdAt
       - updatedAt
+    UserEmailDto:
+      type: object
+      properties:
+        email:
+          type: string
+          description: The email address of the user.
+      required:
+      - email
     GroupUserDto:
       type: object
       properties:
@@ -378,28 +400,6 @@ components:
       - uid
       - email
       - groups
-    UserEmailDto:
-      type: object
-      properties:
-        email:
-          type: string
-          description: The email address of the user.
-      required:
-      - email
-    UserListDto:
-      type: object
-      properties:
-        count:
-          type: number
-          description: The number of entries in the list.
-        items:
-          description: A list of the account's users.
-          type: array
-          items:
-            $ref: '#/components/schemas/UsersDto'
-      required:
-      - count
-      - items
   securitySchemes:
     bearer:
       scheme: bearer

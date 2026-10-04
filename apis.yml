@@ -1,5 +1,460 @@
 aid: dynatrace
+
 url: https://raw.githubusercontent.com/api-evangelist/dynatrace/refs/heads/main/apis.yml
+
+name: Dynatrace
+
+tags:
+- AI Operations
+- Analytics
+- APM
+- Application Performance Monitoring
+- Application Security
+- Automation
+- Cloud Monitoring
+- Digital Experience Management
+- Intelligence
+- Observability
+- Monitoring
+
+deliveryModel:
+  model: saas
+  license_evidence:
+    not_product:
+    - dynatrace/dynatrace-api
+  open_source: unknown
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: low
+  source:
+  - openapi
+  - pricing
+  - repository-not-product
+  generated: '2026-09-25'
+  method: derived
+
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+
+image: https://www.dynatrace.com/logo.png
+
+access: 3rd-Party
+
+created: '2025-01-08'
+
+modified: '2026-08-29'
+
+position: Consuming
+
+description: Dynatrace is a software intelligence platform that provides application performance monitoring, artificial intelligence for operations,
+  cloud infrastructure monitoring, and digital experience management.
+
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+
+specificationVersion: '0.23'
+
+common:
+- type: Spectral
+  url: rules/dynatrace-spectral-rules.yml
+- type: Spectral
+  url: rules/dynatrace-rules.yml
+- type: Spectral
+  url: rules/dynatrace-jsonschema-spectral-rules.yml
+- type: Spectral
+  url: rules/dynatrace-asyncapi-spectral-rules.yml
+- type: JSONLD
+  url: json-ld/dynatrace-problems-v2-context.jsonld
+- type: JSONLD
+  url: json-ld/dynatrace-metrics-v2-context.jsonld
+- type: JSONLD
+  url: json-ld/dynatrace-log-monitoring-v2-context.jsonld
+- type: JSONLD
+  url: json-ld/dynatrace-events-v2-context.jsonld
+- type: JSONLD
+  url: json-ld/dynatrace-entities-v2-context.jsonld
+- type: JSONLD
+  url: json-ld/dynatrace-account-management-context.jsonld
+- type: Vocabulary
+  url: vocabulary/dynatrace-vocabulary.yml
+- type: Sandbox
+  url: sandbox/dynatrace-sandbox.yml
+- type: Hosts
+  url: hosts/dynatrace-hosts.yml
+- type: Vendors
+  url: vendors/dynatrace-vendors.yml
+- type: Sandbox
+  url: https://www.dynatrace.com/signup/playground/infrastructure/
+- type: Newsroom
+  url: https://www.dynatrace.com/news/tag/business-observability/
+- type: Website
+  url: https://www.dynatrace.com/
+- type: CapabilityMap
+  url: capabilities/dynatrace-capability-edges.yml
+  name: Dynatrace Business Capability Map
+- type: AgenticAccess
+  url: agentic-access/dynatrace-agentic-access.yml
+- type: TrustCenter
+  url: security/dynatrace-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/dynatrace-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/dynatrace-domain-security.yml
+- type: Authentication
+  url: authentication/dynatrace-authentication.yml
+- type: OAuthScopes
+  url: scopes/dynatrace-scopes.yml
+- name: Agent Skills
+  url: https://github.com/Dynatrace/dynatrace-for-ai
+  type: AgentSkills
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/dynatrace/overview
+- type: Arazzo
+  url: arazzo/dynatrace-account-access-audit-workflow.yml
+  name: Dynatrace Audit Account Access
+- type: Arazzo
+  url: arazzo/dynatrace-annotate-deployment-event-workflow.yml
+  name: Dynatrace Annotate a Deployment with a Custom Event
+- type: Arazzo
+  url: arazzo/dynatrace-entity-dependency-map-workflow.yml
+  name: Dynatrace Map an Entity's Dependencies
+- type: Arazzo
+  url: arazzo/dynatrace-entity-type-discovery-workflow.yml
+  name: Dynatrace Discover an Entity Type and Sample Its Entities
+- type: Arazzo
+  url: arazzo/dynatrace-error-log-investigation-workflow.yml
+  name: Dynatrace Investigate Error Logs and Annotate
+- type: Arazzo
+  url: arazzo/dynatrace-export-logs-for-siem-workflow.yml
+  name: Dynatrace Export Logs for SIEM Forwarding
+- type: Arazzo
+  url: arazzo/dynatrace-ingest-and-search-logs-workflow.yml
+  name: Dynatrace Ingest Log Records and Search Them Back
+- type: Arazzo
+  url: arazzo/dynatrace-ingest-and-verify-metric-workflow.yml
+  name: Dynatrace Ingest a Custom Metric and Verify It
+- type: Arazzo
+  url: arazzo/dynatrace-metric-threshold-alert-workflow.yml
+  name: Dynatrace Query a Metric and Raise an Alert Event
+- type: Arazzo
+  url: arazzo/dynatrace-onboard-account-user-workflow.yml
+  name: Dynatrace Onboard a User into a New Group
+- type: Arazzo
+  url: arazzo/dynatrace-problem-comment-lifecycle-workflow.yml
+  name: Dynatrace Manage a Problem Comment Lifecycle
+- type: Arazzo
+  url: arazzo/dynatrace-problem-comment-thread-workflow.yml
+  name: Dynatrace Add a Comment to a Problem and Read the Thread
+- type: Arazzo
+  url: arazzo/dynatrace-problem-triage-and-close-workflow.yml
+  name: Dynatrace Triage and Close a Problem
+- type: Arazzo
+  url: arazzo/dynatrace-service-health-snapshot-workflow.yml
+  name: Dynatrace Service Health Snapshot
+- type: Arazzo
+  url: arazzo/dynatrace-service-problem-lookup-workflow.yml
+  name: Dynatrace Find Problems Affecting a Named Service
+- type: LinkedIn
+  url: https://www.linkedin.com/company/dynatrace
+- url: https://www.dynatrace.com/support/help/dynatrace-api
+  type: Portal
+- url: https://docs.dynatrace.com/docs/dynatrace-api
+  type: Documentation
+- url: https://www.dynatrace.com/support/help/dynatrace-api/basics/dynatrace-api-authentication
+  type: Authentication
+- url: https://www.dynatrace.com/support/help/dynatrace-api/basics
+  type: GettingStarted
+- url: https://www.dynatrace.com/support/help/dynatrace-api/basics/dynatrace-api-response-codes
+  type: APIReference
+- url: https://docs.dynatrace.com/docs/whats-new/dynatrace-api
+  type: ChangeLog
+- url: https://www.dynatrace.com/company/trust-center/terms-of-use/
+  type: TermsOfService
+- url: https://www.dynatrace.com/company/trust-center/privacy/
+  type: PrivacyPolicy
+- url: https://www.dynatrace.com/support/
+  type: Support
+- url: https://www.dynatrace.com/pricing/
+  type: Pricing
+- url: https://www.dynatrace.com/signup/
+  type: Signup
+- url: https://community.dynatrace.com/
+  type: Support
+- url: https://community.dynatrace.com/t5/Developer-Blog/bg-p/dev_blog
+  type: Blog
+- url: https://dynatrace.status.io/
+  type: StatusPage
+- url: https://github.com/Dynatrace
+  type: GitHubOrganization
+- url: https://developer.dynatrace.com/
+  type: DeveloperPortal
+- url: https://stackoverflow.com/questions/tagged/dynatrace
+  type: StackOverflow
+- url: https://www.youtube.com/c/dynatrace
+  type: YouTube
+- url: json-schema/dynatrace-metric-series-schema.json
+  type: JSONSchema
+- url: json-schema/dynatrace-problem-schema.json
+  type: JSONSchema
+- url: json-ld/dynatrace-context.jsonld
+  type: JSONLD
+- url: https://developer.dynatrace.com/develop/sdks/
+  type: SDKs
+- url: https://developer.dynatrace.com/develop/access-platform-apis-from-outside/
+  type: Authentication
+- url: https://docs.dynatrace.com/docs/manage/identity-access-management
+  type: Security
+- url: https://github.com/Dynatrace/dynatrace-api
+  type: GitHubRepository
+- url: https://www.dynatrace.com/hub/
+  type: Marketplace
+- url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides
+  type: ReleaseNotes
+- url: https://developer.dynatrace.com/plan/platform-services/
+  type: Documentation
+- type: Features
+  data:
+  - name: Full-Stack Observability
+    description: End-to-end monitoring of applications, infrastructure, and digital experiences with automatic discovery and AI-powered root cause
+      analysis.
+  - name: Davis AI Engine
+    description: Deterministic AI engine that automatically detects anomalies, identifies root causes, and provides precise answers about performance
+      issues without manual configuration.
+  - name: Grail Data Lakehouse
+    description: Unified data store that combines logs, metrics, traces, events, and business data in a single analytics platform with unlimited
+      retention and DQL query language.
+  - name: Software Intelligence
+    description: Real-time topology mapping and dependency analysis across distributed systems with automatic baselining and smart alerting.
+  - name: Cloud Automation
+    description: Automated workflows, remediation, and orchestration capabilities that integrate with CI/CD pipelines and IT service management
+      tools.
+  - name: Application Security
+    description: Runtime application security with vulnerability detection, attack protection, and security analytics built into the observability
+      platform.
+  - name: Digital Experience Monitoring
+    description: Real user monitoring, session replay, and synthetic monitoring for web and mobile applications to optimize user experience.
+  - name: OpenPipeline Data Ingestion
+    description: Flexible data ingestion framework supporting any data source and format with configurable routing, processing, and enrichment
+      pipelines.
+  - name: Extensions Framework
+    description: Extensible monitoring platform with 600+ out-of-the-box integrations and a framework for building custom data collection extensions.
+  - name: Service Level Objectives
+    description: Automated SLO tracking and evaluation with burn rate alerting and reliability scoring based on real monitoring data.
+- type: UseCases
+  data:
+  - name: Infrastructure Monitoring
+    description: Monitor hosts, containers, and cloud infrastructure with automatic discovery, health metrics, and capacity planning across hybrid
+      and multi-cloud environments.
+  - name: Application Performance Management
+    description: Trace distributed transactions end-to-end, identify bottlenecks, and optimize application performance with code-level visibility
+      and AI-powered insights.
+  - name: Log Analytics and Management
+    description: Ingest, search, and analyze log data at scale using the Grail data lakehouse with DQL queries for troubleshooting and compliance.
+  - name: Cloud Migration Monitoring
+    description: Track application health and performance during cloud migration with automatic dependency mapping and impact analysis.
+  - name: DevOps and SRE Automation
+    description: Integrate observability into CI/CD pipelines with automated quality gates, deployment validation, and incident response workflows.
+  - name: Business Analytics
+    description: Correlate business events with technical performance data to measure revenue impact and optimize digital business outcomes.
+  - name: Security Posture Management
+    description: Detect runtime vulnerabilities, monitor attack attempts, and assess application security posture with integrated security analytics.
+  - name: Synthetic Testing
+    description: Proactively monitor application availability and performance with browser-based and HTTP synthetic tests from global locations.
+- type: Integrations
+  data:
+  - name: AWS CloudWatch
+    description: Native integration with AWS services for monitoring EC2, Lambda, RDS, and other AWS resources with automatic tagging and topology
+      mapping.
+  - name: Azure Monitor
+    description: Deep integration with Microsoft Azure for monitoring Azure App Services, AKS, Functions, and other Azure platform services.
+  - name: Google Cloud Platform
+    description: Integration with GCP services including GKE, Cloud Run, Cloud Functions, and BigQuery for comprehensive cloud monitoring.
+  - name: Kubernetes
+    description: Full-stack Kubernetes monitoring with automatic pod, node, and cluster discovery, resource utilization tracking, and workload
+      health analysis.
+  - name: ServiceNow
+    description: Bidirectional integration with ServiceNow for automated incident creation, enrichment, and resolution based on Dynatrace problem
+      detection.
+  - name: PagerDuty
+    description: Integration with PagerDuty for intelligent alert routing, incident management, and on-call notification based on Dynatrace AI-detected
+      problems.
+  - name: Slack
+    description: Notification integration with Slack channels for real-time alerts on performance issues, deployments, and problem resolution
+      updates.
+  - name: Jira
+    description: Integration with Atlassian Jira for automated issue creation and tracking based on detected performance problems and vulnerabilities.
+  - name: Terraform
+    description: Terraform provider for infrastructure-as-code management of Dynatrace monitoring configuration, dashboards, and alerting profiles.
+  - name: Ansible
+    description: Ansible collection for automated deployment and configuration of Dynatrace OneAgent and environment settings across infrastructure.
+- type: CLI
+  url: https://github.com/Dynatrace/dynatrace-configuration-as-code
+  title: Configuration as Code CLI
+- type: SDKs
+  url: https://github.com/Dynatrace/OneAgent-SDK-for-Java
+  title: Java OneAgent SDK
+- type: SDKs
+  url: https://github.com/Dynatrace/OneAgent-SDK-for-Python
+  title: Python OneAgent SDK
+- type: SDKs
+  url: https://github.com/Dynatrace/OneAgent-SDK-for-NodeJs
+  title: Node.js OneAgent SDK
+- type: SDKs
+  url: https://github.com/Dynatrace/OneAgent-SDK-for-dotnet
+  title: .NET OneAgent SDK
+- type: SDKs
+  url: https://github.com/Dynatrace/OneAgent-SDK-for-C
+  title: C OneAgent SDK
+- type: SDKs
+  url: https://github.com/Dynatrace/swift-mobile-sdk
+  title: Swift Mobile SDK
+- type: CodeExamples
+  url: https://github.com/Dynatrace/Dynatrace-workflow-samples
+  title: Workflow Samples
+- type: CodeExamples
+  url: https://github.com/Dynatrace/snippets
+  title: Code Snippets
+- type: CodeExamples
+  url: https://github.com/Dynatrace/community-examples
+  title: Community Examples
+- type: Tutorials
+  url: https://github.com/Dynatrace/Dynatrace-Tutorial
+  title: Tutorials
+- type: SpectralRules
+  url: rules/dynatrace-spectral-rules.yml
+- type: Vocabulary
+  url: vocabulary/dynatrace-vocabulary.yaml
+- type: JSONLD
+  url: json-ld/dynatrace-account-management-api-context.jsonld
+- type: JSONLD
+  url: json-ld/dynatrace-dynatrace-metric-series-context.jsonld
+- type: JSONLD
+  url: json-ld/dynatrace-dynatrace-problem-context.jsonld
+- type: JSONLD
+  url: json-ld/dynatrace-entities-api-v2-context.jsonld
+- type: JSONLD
+  url: json-ld/dynatrace-events-api-v2-context.jsonld
+- type: JSONLD
+  url: json-ld/dynatrace-log-monitoring-api-v2-context.jsonld
+- type: JSONLD
+  url: json-ld/dynatrace-metrics-api-v2-context.jsonld
+- type: JSONLD
+  url: json-ld/dynatrace-problems-api-v2-context.jsonld
+- type: JSONLD
+  url: json-ld/dynatrace-problems-entity-ref-context.jsonld
+- type: JSONLD
+  url: json-ld/dynatrace-problems-impacted-entity-context.jsonld
+- type: JSONLD
+  url: json-ld/dynatrace-problems-problem-details-context.jsonld
+- type: JSONLD
+  url: json-ld/dynatrace-problems-problem-notification-payload-context.jsonld
+- type: JSONLD
+  url: json-ld/dynatrace-problems-webhook-header-context.jsonld
+- type: JSONLD
+  url: json-ld/dynatrace-problems-webhook-notification-config-context.jsonld
+  name: Dynatrace Account Management API (full spec, harvested from https://api.dynatrace.com/openapi.json — 57 paths, 96 operations)
+- type: Packages
+  url: packages/dynatrace-packages.yml
+- type: SDKs
+  url: packages/dynatrace-packages.yml
+  name: First-party SDK inventory with registry versions and release dates
+- type: WellKnown
+  url: well-known/dynatrace-well-known.yml
+- type: SecurityTxt
+  url: well-known/dynatrace-security.txt
+- type: OpenIDConnect
+  url: well-known/dynatrace-openid-configuration.json
+  name: OIDC discovery for https://sso.dynatrace.com
+- type: MCPServer
+  url: mcp/dynatrace-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/dynatrace-tool-crosswalk.yml
+- type: LLMsTxt
+  url: llms/dynatrace-llms.txt
+- type: Conformance
+  url: conformance/dynatrace-conformance.yml
+- type: Compliance
+  url: security/dynatrace-trust-center.yml
+  name: SOC 2, ISO 27001/27017/27018, PCI DSS, HIPAA, FedRAMP, GDPR, CSA STAR
+- type: ErrorCatalog
+  url: errors/dynatrace-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/dynatrace-lifecycle.yml
+- type: Deprecation
+  url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides
+  name: Dynatrace API deprecation and migration guides
+- type: Conventions
+  url: conventions/dynatrace-conventions.yml
+- type: ChangeLog
+  url: changelog/dynatrace-changelog.yml
+- type: CLI
+  url: cli/dynatrace-cli.yml
+  name: monaco, dtctl, dt-app and dt-cli
+- type: Components
+  url: components/dynatrace-components.yml
+  name: Strato design system
+- type: DataModel
+  url: data-model/dynatrace-data-model.yml
+- type: Plans
+  url: plans/dynatrace-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/dynatrace-rate-limits.yml
+- type: FinOps
+  url: finops/dynatrace-finops.yml
+- type: Webhooks
+  url: asyncapi/dynatrace-problems-asyncapi.yml
+  name: Dynatrace problem notification webhooks
+- type: AgentSkill
+  url: skills/_index.yml
+  name: 17 Dynatrace-published Agent Skills plus 3 REST-grounded skills
+- type: AgentSkill
+  url: skills/dynatrace-triage-problem.md
+- type: AgentSkill
+  url: skills/dynatrace-ingest-telemetry.md
+- type: AgentSkill
+  url: skills/dynatrace-manage-account-access.md
+- type: Marketplace
+  url: https://www.dynatrace.com/hub/detail/dynatrace-mcp-server/
+  name: Dynatrace Remote MCP Server on Dynatrace Hub
+- type: Overlay
+  url: overlays/dynatrace-entities-overlay.yaml
+- type: Overlay
+  url: overlays/dynatrace-environments-overlay.yaml
+- type: Overlay
+  url: overlays/dynatrace-events-overlay.yaml
+- type: Overlay
+  url: overlays/dynatrace-groups-overlay.yaml
+- type: Overlay
+  url: overlays/dynatrace-logs-overlay.yaml
+- type: Overlay
+  url: overlays/dynatrace-metrics-overlay.yaml
+- type: Overlay
+  url: overlays/dynatrace-permissions-overlay.yaml
+- type: Overlay
+  url: overlays/dynatrace-problems-overlay.yaml
+- type: Overlay
+  url: overlays/dynatrace-users-overlay.yaml
+- type: SignUp
+  url: https://www.dynatrace.com/signup/
+- type: Postman
+  url: https://www.postman.com/kinlaneapi/dynatrace/overview
+  name: Community Postman workspace maintained by API Evangelist, not by Dynatrace
+- type: Trial
+  url: https://www.dynatrace.com/trial/
+
 apis:
 - aid: dynatrace:dynatrace-environment-api
   name: Dynatrace Environment API
@@ -15,16 +470,13 @@ apis:
   properties:
   - url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api
     type: Documentation
-  - url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/dynatrace-api-authentication
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/dynatrace-api-authentication
     type: Authentication
   - url: https://developer.dynatrace.com/develop/sdks/client-classic-environment-v2/
     type: SDKs
-  description: >-
-    The Dynatrace Environment API provides access to monitoring data and configuration settings for a
-    specific Dynatrace environment. It includes endpoints for metrics, problems, events, logs, entities,
-    settings, and synthetic monitoring, and is the primary API for interacting with observability data
-    within a Dynatrace environment.
+  description: The Dynatrace Environment API provides access to monitoring data and configuration settings for a specific Dynatrace environment.
+    It includes endpoints for metrics, problems, events, logs, entities, settings, and synthetic monitoring, and is the primary API for interacting
+    with observability data within a Dynatrace environment.
 - aid: dynatrace:dynatrace-synthetic-api-v2
   name: Dynatrace Synthetic API v2
   tags:
@@ -38,13 +490,10 @@ apis:
   properties:
   - url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/synthetic-v2
     type: Documentation
-  - url: >-
-      https://docs.dynatrace.com/docs/dynatrace-api/environment-api/synthetic-v2/synthetic-monitor-execution
+  - url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/synthetic-v2/synthetic-monitor-execution
     type: APIReference
-  description: >-
-    The Dynatrace Synthetic API v2 provides programmatic access to synthetic monitoring resources including
-    browser monitors, HTTP monitors, and clickpaths. It allows you to create, update, delete, and retrieve
-    synthetic monitors and their execution results.
+  description: The Dynatrace Synthetic API v2 provides programmatic access to synthetic monitoring resources including browser monitors, HTTP
+    monitors, and clickpaths. It allows you to create, update, delete, and retrieve synthetic monitors and their execution results.
 - aid: dynatrace:dynatrace-configuration-api
   name: Dynatrace Configuration API
   tags:
@@ -52,22 +501,17 @@ apis:
   - Management
   - Monitoring
   - Observability
-  humanURL: >-
-    https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/configuration-api
+  humanURL: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/configuration-api
   baseURL: https://mySampleEnv.live.dynatrace.com/api/config/v1
   image: https://www.dynatrace.com/logo.png
   properties:
-  - url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/configuration-api
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/configuration-api
     type: Documentation
-  - url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/dynatrace-api-authentication
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/dynatrace-api-authentication
     type: Authentication
-  description: >-
-    The Dynatrace Configuration API provides access to environment-level configuration settings including
-    alerting profiles, anomaly detection rules, application detection rules, and data privacy settings.
-    It supports GET, POST, PUT, and DELETE operations for managing Dynatrace environment configuration
-    programmatically.
+  description: The Dynatrace Configuration API provides access to environment-level configuration settings including alerting profiles, anomaly
+    detection rules, application detection rules, and data privacy settings. It supports GET, POST, PUT, and DELETE operations for managing Dynatrace
+    environment configuration programmatically.
 - aid: dynatrace:dynatrace-openpipeline-api
   name: Dynatrace OpenPipeline API
   tags:
@@ -80,21 +524,17 @@ apis:
   - Data Pipelines
   - Observability
   - Platform
-  humanURL: >-
-    https://docs.dynatrace.com/docs/discover-dynatrace/platform/openpipeline/reference/openpipeline-api
+  humanURL: https://docs.dynatrace.com/docs/discover-dynatrace/platform/openpipeline/reference/openpipeline-api
   baseURL: https://mySampleEnv.live.dynatrace.com/platform
   image: https://www.dynatrace.com/logo.png
   properties:
-  - url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/platform/openpipeline/reference/openpipeline-api
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/platform/openpipeline/reference/openpipeline-api
     type: Documentation
   - url: https://docs.dynatrace.com/docs/discover-dynatrace/platform/openpipeline
     type: APIReference
-  description: >-
-    The Dynatrace OpenPipeline API enables configuration of data ingestion pipelines that handle observability,
-    security, and business data from any source or format. It provides endpoints for managing pipeline
-    configurations, ingest sources, routing rules, and processing stages that feed data into the Grail
-    data lakehouse.
+  description: The Dynatrace OpenPipeline API enables configuration of data ingestion pipelines that handle observability, security, and business
+    data from any source or format. It provides endpoints for managing pipeline configurations, ingest sources, routing rules, and processing
+    stages that feed data into the Grail data lakehouse.
 - aid: dynatrace:dynatrace-automation-api
   name: Dynatrace Automation API
   tags:
@@ -112,10 +552,9 @@ apis:
     type: APIReference
   - url: https://developer.dynatrace.com/develop/sdks/client-automation/
     type: SDKs
-  description: >-
-    The Dynatrace Automation API provides access to the Workflows automation engine, allowing you to create,
-    manage, and execute automated workflows within Dynatrace. It supports orchestrating remediation actions,
-    alert responses, and multi-step automation tasks through the REST API.
+  description: The Dynatrace Automation API provides access to the Workflows automation engine, allowing you to create, manage, and execute automated
+    workflows within Dynatrace. It supports orchestrating remediation actions, alert responses, and multi-step automation tasks through the REST
+    API.
 - aid: dynatrace:dynatrace-settings-api-v2
   name: Dynatrace Settings API 2.0
   tags:
@@ -129,11 +568,9 @@ apis:
   properties:
   - url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/settings
     type: Documentation
-  description: >-
-    The Dynatrace Settings API 2.0 is the modern, schema-driven configuration API for managing Dynatrace
-    environment settings objects. It replaces portions of the Configuration API v1 and provides a unified
-    approach to reading and writing anomaly detection, alerting, and platform settings through versioned
-    schema definitions.
+  description: The Dynatrace Settings API 2.0 is the modern, schema-driven configuration API for managing Dynatrace environment settings objects.
+    It replaces portions of the Configuration API v1 and provides a unified approach to reading and writing anomaly detection, alerting, and platform
+    settings through versioned schema definitions.
 - aid: dynatrace:dynatrace-extensions-api-v2
   name: Dynatrace Extensions API 2.0
   tags:
@@ -154,10 +591,9 @@ apis:
     type: Documentation
   - url: https://docs.dynatrace.com/docs/ingest-from/extensions/manage-extensions
     type: APIReference
-  description: >-
-    The Dynatrace Extensions API 2.0 provides endpoints for managing monitoring extensions including uploading,
-    activating, configuring, and removing extensions within a Dynatrace environment. It supports the Extensions
-    2.0 framework used for custom data collection and integration with third-party systems and technologies.
+  description: The Dynatrace Extensions API 2.0 provides endpoints for managing monitoring extensions including uploading, activating, configuring,
+    and removing extensions within a Dynatrace environment. It supports the Extensions 2.0 framework used for custom data collection and integration
+    with third-party systems and technologies.
 - aid: dynatrace:dynatrace-grail-dql-api
   name: Dynatrace DQL/Grail Query API
   tags:
@@ -176,11 +612,9 @@ apis:
     type: APIReference
   - url: https://developer.dynatrace.com/develop/sdks/client-query/
     type: SDKs
-  description: >-
-    The Dynatrace DQL/Grail Query API enables execution of DQL (Dynatrace Query Language) queries against
-    the Grail data lakehouse via REST. Queries execute asynchronously using a POST to initiate and GET
-    to poll for results, providing programmatic access to unified observability, security, and business
-    data stored in Grail for custom analytics and automated workflows.
+  description: The Dynatrace DQL/Grail Query API enables execution of DQL (Dynatrace Query Language) queries against the Grail data lakehouse
+    via REST. Queries execute asynchronously using a POST to initiate and GET to poll for results, providing programmatic access to unified observability,
+    security, and business data stored in Grail for custom analytics and automated workflows.
 - aid: dynatrace:dynatrace-access-tokens-api-v2
   name: Dynatrace Access Tokens API v2
   tags:
@@ -194,17 +628,13 @@ apis:
   properties:
   - url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/tokens-v2
     type: Documentation
-  - url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/tokens-v2/api-tokens
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/tokens-v2/api-tokens
     type: APIReference
-  - url: >-
-      https://docs.dynatrace.com/docs/manage/identity-access-management/access-tokens-and-oauth-clients/access-tokens
+  - url: https://docs.dynatrace.com/docs/manage/identity-access-management/access-tokens-and-oauth-clients/access-tokens
     type: GettingStarted
-  description: >-
-    The Dynatrace Access Tokens API v2 allows you to create, list, update, and delete API access tokens
-    and ActiveGate tokens within a Dynatrace environment. It provides fine-grained scope management for
-    controlling access to specific product functionality, and supports both environment-level API tokens
-    and ActiveGate connection tokens.
+  description: The Dynatrace Access Tokens API v2 allows you to create, list, update, and delete API access tokens and ActiveGate tokens within
+    a Dynatrace environment. It provides fine-grained scope management for controlling access to specific product functionality, and supports
+    both environment-level API tokens and ActiveGate connection tokens.
 - aid: dynatrace:dynatrace-slo-api
   name: Dynatrace Service-Level Objectives API
   tags:
@@ -216,21 +646,17 @@ apis:
   - Reliability
   - Service Level Objectives
   - SLO
-  humanURL: >-
-    https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/service-level-objectives
+  humanURL: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/service-level-objectives
   baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
   image: https://www.dynatrace.com/logo.png
   properties:
-  - url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/service-level-objectives
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/service-level-objectives
     type: Documentation
   - url: https://docs.dynatrace.com/docs/deliver/service-level-objectives
     type: APIReference
-  description: >-
-    The Dynatrace Service-Level Objectives API is a management API for creating, editing, listing, deleting,
-    and evaluating SLOs and SLO templates within a Dynatrace environment. It enables programmatic definition
-    of reliability targets and automated evaluation of service-level compliance based on Dynatrace monitoring
-    data.
+  description: The Dynatrace Service-Level Objectives API is a management API for creating, editing, listing, deleting, and evaluating SLOs and
+    SLO templates within a Dynatrace environment. It enables programmatic definition of reliability targets and automated evaluation of service-level
+    compliance based on Dynatrace monitoring data.
 - aid: dynatrace:dynatrace-releases-api
   name: Dynatrace Releases API
   tags:
@@ -238,18 +664,15 @@ apis:
   - Observability
   - Releases
   - Version Management
-  humanURL: >-
-    https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/releaseapi
+  humanURL: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/releaseapi
   baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
   image: https://www.dynatrace.com/logo.png
   properties:
-  - url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/releaseapi
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/releaseapi
     type: Documentation
-  description: >-
-    The Dynatrace Releases API provides an overview of releases deployed in your monitored environment.
-    It allows you to retrieve information about software releases, deployment versions, and release stages,
-    enabling automated tracking of deployment activity and version management across monitored entities.
+  description: The Dynatrace Releases API provides an overview of releases deployed in your monitored environment. It allows you to retrieve information
+    about software releases, deployment versions, and release stages, enabling automated tracking of deployment activity and version management
+    across monitored entities.
 - aid: dynatrace:dynatrace-network-zones-api
   name: Dynatrace Network Zones API
   tags:
@@ -265,11 +688,9 @@ apis:
     type: Documentation
   - url: https://docs.dynatrace.com/docs/manage/network-zones/network-zones-basic-info
     type: APIReference
-  description: >-
-    The Dynatrace Network Zones API enables you to manage network zones within a Dynatrace environment.
-    It provides endpoints for listing all network zones, retrieving zone details including OneAgent counts,
-    creating and updating zone configurations, deleting zones, and getting global network zone configuration
-    settings.
+  description: The Dynatrace Network Zones API enables you to manage network zones within a Dynatrace environment. It provides endpoints for listing
+    all network zones, retrieving zone details including OneAgent counts, creating and updating zone configurations, deleting zones, and getting
+    global network zone configuration settings.
 - aid: dynatrace:dynatrace-deployment-api
   name: Dynatrace Deployment API
   tags:
@@ -288,14 +709,11 @@ apis:
   properties:
   - url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/deployment
     type: Documentation
-  - url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/deployment/oneagent
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/deployment/oneagent
     type: APIReference
-  description: >-
-    The Dynatrace Deployment API provides endpoints for downloading OneAgent and ActiveGate installers,
-    listing available installer versions, and retrieving ActiveGate endpoint information. It enables automated
-    deployment and upgrade of monitoring agents across your infrastructure using the InstallerDownload
-    token scope.
+  description: The Dynatrace Deployment API provides endpoints for downloading OneAgent and ActiveGate installers, listing available installer
+    versions, and retrieving ActiveGate endpoint information. It enables automated deployment and upgrade of monitoring agents across your infrastructure
+    using the InstallerDownload token scope.
 - aid: dynatrace:dynatrace-audit-logs-api
   name: Dynatrace Audit Logs API
   tags:
@@ -309,14 +727,11 @@ apis:
   properties:
   - url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/audit-logs
     type: Documentation
-  - url: >-
-      https://docs.dynatrace.com/docs/manage/data-privacy-and-security/configuration/audit-logs-api
+  - url: https://docs.dynatrace.com/docs/manage/data-privacy-and-security/configuration/audit-logs-api
     type: APIReference
-  description: >-
-    The Dynatrace Audit Logs API provides access to audit-related events within a Dynatrace environment
-    including logins, logouts, configuration changes, and API token modifications. Audit logs are retained
-    for 30 days and support filtering by event type, user, and time range for security monitoring and
-    compliance purposes.
+  description: The Dynatrace Audit Logs API provides access to audit-related events within a Dynatrace environment including logins, logouts,
+    configuration changes, and API token modifications. Audit logs are retained for 30 days and support filtering by event type, user, and time
+    range for security monitoring and compliance purposes.
 - aid: dynatrace:dynatrace-business-events-api-v2
   name: Dynatrace Business Events API v2
   tags:
@@ -324,21 +739,17 @@ apis:
   - Business Events
   - Business Intelligence
   - Observability
-  humanURL: >-
-    https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/business-analytics-v2
+  humanURL: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/business-analytics-v2
   baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
   image: https://www.dynatrace.com/logo.png
   properties:
-  - url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/business-analytics-v2
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/business-analytics-v2
     type: Documentation
   - url: https://docs.dynatrace.com/docs/observe/business-observability/bo-api-ingest
     type: APIReference
-  description: >-
-    The Dynatrace Business Events API v2 enables ingestion of business event data in JSON format into
-    Dynatrace via the bizevents/ingest endpoint. It supports business-grade reporting and analytics through
-    the Grail data lakehouse with lossless data prioritization, deep data capture from in-flight payloads,
-    and powerful ad-hoc queries for business observability use cases.
+  description: The Dynatrace Business Events API v2 enables ingestion of business event data in JSON format into Dynatrace via the bizevents/ingest
+    endpoint. It supports business-grade reporting and analytics through the Grail data lakehouse with lossless data prioritization, deep data
+    capture from in-flight payloads, and powerful ad-hoc queries for business observability use cases.
 - aid: dynatrace:dynatrace-application-security-api
   name: Dynatrace Application Security API
   tags:
@@ -346,25 +757,19 @@ apis:
   - Runtime Protection
   - Security
   - Vulnerabilities
-  humanURL: >-
-    https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/application-security/vulnerabilities
+  humanURL: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/application-security/vulnerabilities
   baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
   image: https://www.dynatrace.com/logo.png
   properties:
-  - url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/application-security/vulnerabilities
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/application-security/vulnerabilities
     type: Documentation
-  - url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/application-security/attacks
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/application-security/attacks
     type: APIReference
-  - url: >-
-      https://docs.dynatrace.com/docs/dynatrace-api/environment-api/application-security/davis-security-advice
+  - url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/application-security/davis-security-advice
     type: APIReference
-  description: >-
-    The Dynatrace Application Security API provides endpoints for querying vulnerabilities, vulnerability
-    details, remediation items, vulnerable functions, and security attacks within a Dynatrace environment.
-    It includes the Vulnerabilities API, Attacks API, and Davis Security Advisor API for comprehensive
-    runtime application security analysis and threat detection.
+  description: The Dynatrace Application Security API provides endpoints for querying vulnerabilities, vulnerability details, remediation items,
+    vulnerable functions, and security attacks within a Dynatrace environment. It includes the Vulnerabilities API, Attacks API, and Davis Security
+    Advisor API for comprehensive runtime application security analysis and threat detection.
 - aid: dynatrace:dynatrace-custom-tags-api
   name: Dynatrace Custom Tags API
   tags:
@@ -377,11 +782,9 @@ apis:
   properties:
   - url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/custom-tags
     type: Documentation
-  description: >-
-    The Dynatrace Custom Tags API allows you to manage custom tags on monitored entities within a Dynatrace
-    environment. It provides endpoints for reading, adding, and removing tags from entities such as hosts,
-    services, processes, and applications, enabling automated organization and categorization of monitored
-    resources.
+  description: The Dynatrace Custom Tags API allows you to manage custom tags on monitored entities within a Dynatrace environment. It provides
+    endpoints for reading, adding, and removing tags from entities such as hosts, services, processes, and applications, enabling automated organization
+    and categorization of monitored resources.
 - aid: dynatrace:dynatrace-activegate-api
   name: Dynatrace ActiveGate API
   tags:
@@ -389,21 +792,17 @@ apis:
   - Deployment
   - Infrastructure
   - Monitoring
-  humanURL: >-
-    https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/activegates
+  humanURL: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/activegates
   baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
   image: https://www.dynatrace.com/logo.png
   properties:
-  - url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/activegates
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/activegates
     type: Documentation
-  - url: >-
-      https://docs.dynatrace.com/docs/dynatrace-api/environment-api/tokens-v2/activegate-tokens
+  - url: https://docs.dynatrace.com/docs/dynatrace-api/environment-api/tokens-v2/activegate-tokens
     type: APIReference
-  description: >-
-    The Dynatrace ActiveGate API enables you to view and manage ActiveGate configurations within a Dynatrace
-    environment. It provides endpoints for listing ActiveGates, retrieving ActiveGate details, managing
-    auto-update configurations, and monitoring auto-update job status for Environment ActiveGates.
+  description: The Dynatrace ActiveGate API enables you to view and manage ActiveGate configurations within a Dynatrace environment. It provides
+    endpoints for listing ActiveGates, retrieving ActiveGate details, managing auto-update configurations, and monitoring auto-update job status
+    for Environment ActiveGates.
 - aid: dynatrace:dynatrace-credential-vault-api
   name: Dynatrace Credential Vault API
   tags:
@@ -419,11 +818,9 @@ apis:
     type: Documentation
   - url: https://docs.dynatrace.com/docs/manage/credential-vault
     type: APIReference
-  description: >-
-    The Dynatrace Credential Vault API enables management of credentials used for synthetic browser and
-    HTTP monitors within a Dynatrace environment. It supports creating, listing, updating, and deleting
-    credential sets of type certificate, public certificate, token, and username/password for use in synthetic
-    monitoring configurations.
+  description: The Dynatrace Credential Vault API enables management of credentials used for synthetic browser and HTTP monitors within a Dynatrace
+    environment. It supports creating, listing, updating, and deleting credential sets of type certificate, public certificate, token, and username/password
+    for use in synthetic monitoring configurations.
 - aid: dynatrace:dynatrace-document-api
   name: Dynatrace Document API
   tags:
@@ -431,23 +828,19 @@ apis:
   - Documents
   - Notebooks
   - Platform
-  humanURL: >-
-    https://docs.dynatrace.com/docs/analyze-explore-automate/dashboards-and-notebooks/document-api
+  humanURL: https://docs.dynatrace.com/docs/analyze-explore-automate/dashboards-and-notebooks/document-api
   baseURL: https://mySampleEnv.live.dynatrace.com/platform/document/v1
   image: https://www.dynatrace.com/logo.png
   properties:
-  - url: >-
-      https://docs.dynatrace.com/docs/analyze-explore-automate/dashboards-and-notebooks/document-api
+  - url: https://docs.dynatrace.com/docs/analyze-explore-automate/dashboards-and-notebooks/document-api
     type: Documentation
   - url: https://developer.dynatrace.com/develop/sdks/client-document/
     type: SDKs
   - url: https://developer.dynatrace.com/plan/platform-services/document-service/
     type: APIReference
-  description: >-
-    The Dynatrace Document API provides a platform service for creating, managing, and sharing documents
-    such as dashboards, notebooks, and launchpads within Dynatrace. It persists content-agnostic documents
-    with metadata and supports querying by document type, enabling programmatic management of analytical
-    and visualization assets.
+  description: The Dynatrace Document API provides a platform service for creating, managing, and sharing documents such as dashboards, notebooks,
+    and launchpads within Dynatrace. It persists content-agnostic documents with metadata and supports querying by document type, enabling programmatic
+    management of analytical and visualization assets.
 - aid: dynatrace:dynatrace-grail-bucket-management-api
   name: Dynatrace Grail Bucket Management API
   tags:
@@ -463,10 +856,9 @@ apis:
     type: Documentation
   - url: https://docs.dynatrace.com/docs/platform/grail/organize-data
     type: APIReference
-  description: >-
-    The Dynatrace Grail Bucket Management API provides a public API for managing storage buckets within
-    the Grail data lakehouse. It supports creating, updating, deleting, and truncating buckets for organizing
-    logs, events, and business events data with configurable retention periods between 1 and 3657 days.
+  description: The Dynatrace Grail Bucket Management API provides a public API for managing storage buckets within the Grail data lakehouse. It
+    supports creating, updating, deleting, and truncating buckets for organizing logs, events, and business events data with configurable retention
+    periods between 1 and 3657 days.
 - aid: dynatrace:dynatrace-davis-ai-api
   name: Dynatrace Davis AI API
   tags:
@@ -492,11 +884,9 @@ apis:
     type: GettingStarted
   - url: https://docs.dynatrace.com/docs/discover-dynatrace/platform/davis-ai
     type: APIReference
-  description: >-
-    The Dynatrace Davis AI API provides access to the Davis predictive and causal AI platform service
-    for customized AI/ML analysis. It delivers time series forecasting, anomaly detection model training,
-    and automated monitoring of metric behavior changes, enabling application creators to build intelligent
-    automation and analytics within Dynatrace Apps.
+  description: The Dynatrace Davis AI API provides access to the Davis predictive and causal AI platform service for customized AI/ML analysis.
+    It delivers time series forecasting, anomaly detection model training, and automated monitoring of metric behavior changes, enabling application
+    creators to build intelligent automation and analytics within Dynatrace Apps.
 - aid: dynatrace:dynatrace-hub-api
   name: Dynatrace Hub API
   tags:
@@ -519,11 +909,9 @@ apis:
     type: Documentation
   - url: https://docs.dynatrace.com/docs/manage/hub
     type: APIReference
-  description: >-
-    The Dynatrace Hub API provides programmatic access to the Dynatrace Hub catalog content including
-    apps, extensions, and technologies in the context of the current environment. It supports listing
-    and retrieving details for apps, extensions, technologies, and Hub categories for building custom
-    catalog integrations and discovery experiences.
+  description: The Dynatrace Hub API provides programmatic access to the Dynatrace Hub catalog content including apps, extensions, and technologies
+    in the context of the current environment. It supports listing and retrieving details for apps, extensions, technologies, and Hub categories
+    for building custom catalog integrations and discovery experiences.
 - aid: dynatrace:dynatrace-oneagent-on-host-api
   name: Dynatrace OneAgent on a Host API
   tags:
@@ -531,18 +919,15 @@ apis:
   - Host Monitoring
   - Infrastructure
   - OneAgent
-  humanURL: >-
-    https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/oneagent-on-host
+  humanURL: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/oneagent-on-host
   baseURL: https://mySampleEnv.live.dynatrace.com/api/v2
   image: https://www.dynatrace.com/logo.png
   properties:
-  - url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/oneagent-on-host
+  - url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/oneagent-on-host
     type: Documentation
-  description: >-
-    The Dynatrace OneAgent on a Host API enables you to check the configuration and status of OneAgent
-    instances deployed on your hosts. It provides endpoints for listing hosts with OneAgent details, retrieving
-    agent version information, and monitoring agent health and connectivity within a Dynatrace environment.
+  description: The Dynatrace OneAgent on a Host API enables you to check the configuration and status of OneAgent instances deployed on your hosts.
+    It provides endpoints for listing hosts with OneAgent details, retrieving agent version information, and monitoring agent health and connectivity
+    within a Dynatrace environment.
 - aid: dynatrace:dynatrace-platform-management-api
   name: Dynatrace Platform Management API
   tags:
@@ -558,11 +943,9 @@ apis:
     type: Documentation
   - url: https://developer.dynatrace.com/plan/platform-services/platform-management-service/
     type: APIReference
-  description: >-
-    The Dynatrace Platform Management API provides basic read-only information about the currently logged-in
-    environment including environment settings, license information, and permissions. It is a core platform
-    service used for querying environment metadata and configuration context within Dynatrace Apps and
-    automation workflows.
+  description: The Dynatrace Platform Management API provides basic read-only information about the currently logged-in environment including
+    environment settings, license information, and permissions. It is a core platform service used for querying environment metadata and configuration
+    context within Dynatrace Apps and automation workflows.
 - aid: dynatrace:dynatrace-entities-api
   name: Dynatrace Entities API
   description: Operations for querying monitored entities and entity types
@@ -670,16 +1053,13 @@ apis:
   - type: Examples
     url: examples/log-monitoring-api-v2-log-record-search-result-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api
   - type: Authentication
-    url: >-
-      https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication/account-api-authentication
+    url: https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication/account-api-authentication
   - type: APIReference
     url: https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/user-management-api
   - type: GettingStarted
-    url: >-
-      https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/environment-management-api
+    url: https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/environment-management-api
   - type: JSONSchema
     url: json-schema/account-management-api-environment-collection-schema.json
   - type: JSONSchema
@@ -741,8 +1121,7 @@ apis:
   - type: Examples
     url: examples/account-management-api-user-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
   - type: JSONSchema
     url: json-schema/events-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -786,8 +1165,7 @@ apis:
   - type: Examples
     url: examples/events-api-v2-event-ingest-result-item-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
   - type: AsyncAPI
     url: asyncapi/dynatrace-problems-asyncapi.yml
   - type: JSONSchema
@@ -857,8 +1235,7 @@ apis:
   - type: Examples
     url: examples/problems-api-v2-problem-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/entity-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/entity-v2
   - type: JSONSchema
     url: json-schema/entities-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -1028,16 +1405,13 @@ apis:
   - type: Examples
     url: examples/log-monitoring-api-v2-log-record-search-result-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api
   - type: Authentication
-    url: >-
-      https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication/account-api-authentication
+    url: https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication/account-api-authentication
   - type: APIReference
     url: https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/user-management-api
   - type: GettingStarted
-    url: >-
-      https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/environment-management-api
+    url: https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/environment-management-api
   - type: JSONSchema
     url: json-schema/account-management-api-environment-collection-schema.json
   - type: JSONSchema
@@ -1099,8 +1473,7 @@ apis:
   - type: Examples
     url: examples/account-management-api-user-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
   - type: JSONSchema
     url: json-schema/events-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -1144,8 +1517,7 @@ apis:
   - type: Examples
     url: examples/events-api-v2-event-ingest-result-item-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
   - type: AsyncAPI
     url: asyncapi/dynatrace-problems-asyncapi.yml
   - type: JSONSchema
@@ -1215,8 +1587,7 @@ apis:
   - type: Examples
     url: examples/problems-api-v2-problem-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/entity-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/entity-v2
   - type: JSONSchema
     url: json-schema/entities-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -1386,16 +1757,13 @@ apis:
   - type: Examples
     url: examples/log-monitoring-api-v2-log-record-search-result-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api
   - type: Authentication
-    url: >-
-      https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication/account-api-authentication
+    url: https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication/account-api-authentication
   - type: APIReference
     url: https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/user-management-api
   - type: GettingStarted
-    url: >-
-      https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/environment-management-api
+    url: https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/environment-management-api
   - type: JSONSchema
     url: json-schema/account-management-api-environment-collection-schema.json
   - type: JSONSchema
@@ -1457,8 +1825,7 @@ apis:
   - type: Examples
     url: examples/account-management-api-user-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
   - type: JSONSchema
     url: json-schema/events-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -1502,8 +1869,7 @@ apis:
   - type: Examples
     url: examples/events-api-v2-event-ingest-result-item-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
   - type: AsyncAPI
     url: asyncapi/dynatrace-problems-asyncapi.yml
   - type: JSONSchema
@@ -1573,8 +1939,7 @@ apis:
   - type: Examples
     url: examples/problems-api-v2-problem-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/entity-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/entity-v2
   - type: JSONSchema
     url: json-schema/entities-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -1744,16 +2109,13 @@ apis:
   - type: Examples
     url: examples/log-monitoring-api-v2-log-record-search-result-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api
   - type: Authentication
-    url: >-
-      https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication/account-api-authentication
+    url: https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication/account-api-authentication
   - type: APIReference
     url: https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/user-management-api
   - type: GettingStarted
-    url: >-
-      https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/environment-management-api
+    url: https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/environment-management-api
   - type: JSONSchema
     url: json-schema/account-management-api-environment-collection-schema.json
   - type: JSONSchema
@@ -1815,8 +2177,7 @@ apis:
   - type: Examples
     url: examples/account-management-api-user-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
   - type: JSONSchema
     url: json-schema/events-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -1860,8 +2221,7 @@ apis:
   - type: Examples
     url: examples/events-api-v2-event-ingest-result-item-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
   - type: AsyncAPI
     url: asyncapi/dynatrace-problems-asyncapi.yml
   - type: JSONSchema
@@ -1931,8 +2291,7 @@ apis:
   - type: Examples
     url: examples/problems-api-v2-problem-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/entity-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/entity-v2
   - type: JSONSchema
     url: json-schema/entities-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -2100,16 +2459,13 @@ apis:
   - type: Examples
     url: examples/log-monitoring-api-v2-log-record-search-result-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api
   - type: Authentication
-    url: >-
-      https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication/account-api-authentication
+    url: https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication/account-api-authentication
   - type: APIReference
     url: https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/user-management-api
   - type: GettingStarted
-    url: >-
-      https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/environment-management-api
+    url: https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/environment-management-api
   - type: JSONSchema
     url: json-schema/account-management-api-environment-collection-schema.json
   - type: JSONSchema
@@ -2171,8 +2527,7 @@ apis:
   - type: Examples
     url: examples/account-management-api-user-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
   - type: JSONSchema
     url: json-schema/events-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -2216,8 +2571,7 @@ apis:
   - type: Examples
     url: examples/events-api-v2-event-ingest-result-item-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
   - type: AsyncAPI
     url: asyncapi/dynatrace-problems-asyncapi.yml
   - type: JSONSchema
@@ -2287,8 +2641,7 @@ apis:
   - type: Examples
     url: examples/problems-api-v2-problem-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/entity-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/entity-v2
   - type: JSONSchema
     url: json-schema/entities-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -2456,16 +2809,13 @@ apis:
   - type: Examples
     url: examples/log-monitoring-api-v2-log-record-search-result-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api
   - type: Authentication
-    url: >-
-      https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication/account-api-authentication
+    url: https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication/account-api-authentication
   - type: APIReference
     url: https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/user-management-api
   - type: GettingStarted
-    url: >-
-      https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/environment-management-api
+    url: https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/environment-management-api
   - type: JSONSchema
     url: json-schema/account-management-api-environment-collection-schema.json
   - type: JSONSchema
@@ -2527,8 +2877,7 @@ apis:
   - type: Examples
     url: examples/account-management-api-user-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
   - type: JSONSchema
     url: json-schema/events-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -2572,8 +2921,7 @@ apis:
   - type: Examples
     url: examples/events-api-v2-event-ingest-result-item-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
   - type: AsyncAPI
     url: asyncapi/dynatrace-problems-asyncapi.yml
   - type: JSONSchema
@@ -2643,8 +2991,7 @@ apis:
   - type: Examples
     url: examples/problems-api-v2-problem-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/entity-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/entity-v2
   - type: JSONSchema
     url: json-schema/entities-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -2812,16 +3159,13 @@ apis:
   - type: Examples
     url: examples/log-monitoring-api-v2-log-record-search-result-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api
   - type: Authentication
-    url: >-
-      https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication/account-api-authentication
+    url: https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication/account-api-authentication
   - type: APIReference
     url: https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/user-management-api
   - type: GettingStarted
-    url: >-
-      https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/environment-management-api
+    url: https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/environment-management-api
   - type: JSONSchema
     url: json-schema/account-management-api-environment-collection-schema.json
   - type: JSONSchema
@@ -2883,8 +3227,7 @@ apis:
   - type: Examples
     url: examples/account-management-api-user-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
   - type: JSONSchema
     url: json-schema/events-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -2928,8 +3271,7 @@ apis:
   - type: Examples
     url: examples/events-api-v2-event-ingest-result-item-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
   - type: AsyncAPI
     url: asyncapi/dynatrace-problems-asyncapi.yml
   - type: JSONSchema
@@ -2999,8 +3341,7 @@ apis:
   - type: Examples
     url: examples/problems-api-v2-problem-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/entity-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/entity-v2
   - type: JSONSchema
     url: json-schema/entities-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -3168,16 +3509,13 @@ apis:
   - type: Examples
     url: examples/log-monitoring-api-v2-log-record-search-result-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api
   - type: Authentication
-    url: >-
-      https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication/account-api-authentication
+    url: https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication/account-api-authentication
   - type: APIReference
     url: https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/user-management-api
   - type: GettingStarted
-    url: >-
-      https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/environment-management-api
+    url: https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/environment-management-api
   - type: JSONSchema
     url: json-schema/account-management-api-environment-collection-schema.json
   - type: JSONSchema
@@ -3239,8 +3577,7 @@ apis:
   - type: Examples
     url: examples/account-management-api-user-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
   - type: JSONSchema
     url: json-schema/events-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -3284,8 +3621,7 @@ apis:
   - type: Examples
     url: examples/events-api-v2-event-ingest-result-item-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
   - type: AsyncAPI
     url: asyncapi/dynatrace-problems-asyncapi.yml
   - type: JSONSchema
@@ -3355,8 +3691,7 @@ apis:
   - type: Examples
     url: examples/problems-api-v2-problem-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/entity-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/entity-v2
   - type: JSONSchema
     url: json-schema/entities-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -3526,16 +3861,13 @@ apis:
   - type: Examples
     url: examples/log-monitoring-api-v2-log-record-search-result-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/account-management-api
   - type: Authentication
-    url: >-
-      https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication/account-api-authentication
+    url: https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication/account-api-authentication
   - type: APIReference
     url: https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/user-management-api
   - type: GettingStarted
-    url: >-
-      https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/environment-management-api
+    url: https://docs.dynatrace.com/docs/dynatrace-api/account-management-api/environment-management-api
   - type: JSONSchema
     url: json-schema/account-management-api-environment-collection-schema.json
   - type: JSONSchema
@@ -3597,8 +3929,7 @@ apis:
   - type: Examples
     url: examples/account-management-api-user-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/events-v2
   - type: JSONSchema
     url: json-schema/events-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -3642,8 +3973,7 @@ apis:
   - type: Examples
     url: examples/events-api-v2-event-ingest-result-item-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/problems-v2
   - type: AsyncAPI
     url: asyncapi/dynatrace-problems-asyncapi.yml
   - type: JSONSchema
@@ -3713,8 +4043,7 @@ apis:
   - type: Examples
     url: examples/problems-api-v2-problem-example.json
   - type: Documentation
-    url: >-
-      https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/entity-v2
+    url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/entity-v2
   - type: JSONSchema
     url: json-schema/entities-api-v2-constraint-violation-schema.json
   - type: JSONSchema
@@ -3785,6 +4114,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/dynatrace-account-audits-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/dynatrace-audits-by-account-dto-schema.json
 - aid: dynatrace:dynatrace-account-limits-api
   name: Dynatrace Account limits API
   description: Retrieve the limits configured for an account.
@@ -3795,6 +4126,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/dynatrace-account-limits-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/dynatrace-account-limits-page-schema.json
 - aid: dynatrace:dynatrace-account-settings-api
   name: Dynatrace Account Settings API
   description: Manage account settings such as cost-center and product field values.
@@ -3805,6 +4138,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/dynatrace-account-settings-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/dynatrace-paginated-field-value-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-field-values-request-dto-schema.json
 - aid: dynatrace:dynatrace-dynatrace-platform-subscription-api
   name: Dynatrace Dynatrace Platform Subscription API
   description: View platform subscriptions and their usage, cost, forecast, and rate-card data.
@@ -3815,6 +4152,18 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/dynatrace-subscription-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-forecast-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-rate-card-summary-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-paginated-environment-breakdown-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-subscription-environment-usage-list-v3-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-subscription-environment-cost-list-v3-dto-schema.json
 - aid: dynatrace:dynatrace-environment-management-api
   name: Dynatrace Environment management API
   description: List environments and clusters and manage their IP allowlist configuration.
@@ -3827,6 +4176,14 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/dynatrace-environment-management-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/dynatrace-ip-config-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-environment-resource-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-environment-list-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-cluster-list-dto-schema.json
 - aid: dynatrace:dynatrace-group-management-api
   name: Dynatrace Group management API
   description: Create and manage user groups and their members.
@@ -3839,6 +4196,16 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/dynatrace-group-management-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/dynatrace-get-group-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-insert-group-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-put-group-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-group-list-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-group-user-list-dto-schema.json
 - aid: dynatrace:dynatrace-notifications-api
   name: Dynatrace Notifications API
   description: Manage notifications for an account.
@@ -3851,6 +4218,12 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/dynatrace-notifications-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/dynatrace-notification-query-params-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-notification-v2-list-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-notification-list-dto-schema.json
 - aid: dynatrace:dynatrace-permission-management-api
   name: Dynatrace Permission management API
   description: Manage group permissions (deprecated; use policy management instead).
@@ -3861,6 +4234,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/dynatrace-permission-management-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/dynatrace-permissions-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-permissions-group-dto-schema.json
 - aid: dynatrace:dynatrace-platform-tokens-api
   name: Dynatrace Platform tokens API
   description: Manage platform tokens for account users.
@@ -3873,6 +4250,16 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/dynatrace-platform-tokens-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/dynatrace-generate-platform-token-form-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-platform-token-page-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-platform-token-secret-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-platform-token-expiration-date-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-platform-token-status-update-dto-schema.json
 - aid: dynatrace:dynatrace-policy-management-api
   name: Dynatrace Policy management API
   description: Manage IAM policies, policy bindings, and permission boundaries.
@@ -3885,6 +4272,18 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/dynatrace-policy-management-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/dynatrace-level-policy-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-policy-boundary-overview-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-level-limits-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-create-or-update-level-policy-request-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-append-level-policy-binding-for-group-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-policy-boundary-dto-schema.json
 - aid: dynatrace:dynatrace-reference-data-api
   name: Dynatrace Reference data API
   description: Look up reference data such as time zones, regions, and available permissions.
@@ -3897,6 +4296,12 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/dynatrace-reference-data-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/dynatrace-time-zone-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-permission-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-region-dto-schema.json
 - aid: dynatrace:dynatrace-service-user-management-api
   name: Dynatrace Service user management API
   description: Manage service users within an account.
@@ -3907,6 +4312,12 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/dynatrace-service-user-management-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/dynatrace-external-service-user-with-group-uuid-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-external-service-users-page-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-service-user-dto-schema.json
 - aid: dynatrace:dynatrace-user-management-api
   name: Dynatrace User management API
   description: Manage users in an account and their group memberships.
@@ -3919,6 +4330,12 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/dynatrace-user-management-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/dynatrace-group-user-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-user-list-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-user-email-dto-schema.json
 - aid: dynatrace:dynatrace-workload-identity-federation-api
   name: Dynatrace Workload Identity Federation API
   description: Manage workload identity federation trust policies and their service-user mappings.
@@ -3929,439 +4346,24 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/dynatrace-workload-identity-federation-api-openapi.yml
-name: Dynatrace
-tags:
-- AI Operations
-- Analytics
-- APM
-- Application Performance Monitoring
-- Application Security
-- Automation
-- Cloud Monitoring
-- Digital Experience Management
-- Intelligence
-- Observability
-- Monitoring
+  - type: JSONSchema
+    url: json-schema/dynatrace-rest-wif-trust-policy-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-rest-wif-service-user-mapping-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-rest-wif-service-user-mapping-form-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-rest-wif-trust-policy-form-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-rest-wif-service-user-mapping-list-schema.json
+  - type: JSONSchema
+    url: json-schema/dynatrace-rest-wif-trust-policy-list-schema.json
+
 type: Index
-deliveryModel:
-  model: saas
-  license_evidence:
-    not_product:
-    - dynatrace/dynatrace-api
-  open_source: unknown
-  commercial: true
-  callable_host: true
-  label: Hosted service · you call their endpoint
-  confidence: low
-  source:
-  - openapi
-  - pricing
-  - repository-not-product
-  generated: '2026-09-25'
-  method: derived
-accessModel:
-  pricing: paid
-  onboarding: self-serve
-  trial: false
-  try_now: false
-  public: false
-  label: Paid · Self-serve signup
-  confidence: high
-  source:
-  - plans
-  - authentication
-  generated: '2026-07-22'
-  method: derived
-image: https://www.dynatrace.com/logo.png
-access: 3rd-Party
-created: '2025-01-08'
-modified: '2026-08-29'
-position: Consuming
-description: Dynatrace is a software intelligence platform that provides application
-  performance monitoring, artificial intelligence for operations, cloud infrastructure
-  monitoring, and digital experience management.
-maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
-specificationVersion: '0.23'
+
 x-enrichment:
-  date: '2026-08-29'
+  date: '2026-10-04'
   status: enriched
-  artifacts_added: 30
-  pass: local-v1
-common:
-- type: Website
-  url: https://www.dynatrace.com/
-- type: CapabilityMap
-  url: capabilities/dynatrace-capability-edges.yml
-  name: Dynatrace Business Capability Map
-- type: AgenticAccess
-  url: agentic-access/dynatrace-agentic-access.yml
-- type: TrustCenter
-  url: security/dynatrace-trust-center.yml
-- type: VulnerabilityDisclosure
-  url: security/dynatrace-vulnerability-disclosure.yml
-- type: DomainSecurity
-  url: security/dynatrace-domain-security.yml
-- type: Authentication
-  url: authentication/dynatrace-authentication.yml
-- type: OAuthScopes
-  url: scopes/dynatrace-scopes.yml
-- name: Agent Skills
-  url: https://github.com/Dynatrace/dynatrace-for-ai
-  type: AgentSkills
-- type: PostmanWorkspace
-  url: https://www.postman.com/kinlaneapi/dynatrace/overview
-- type: Arazzo
-  url: arazzo/dynatrace-account-access-audit-workflow.yml
-  name: Dynatrace Audit Account Access
-- type: Arazzo
-  url: arazzo/dynatrace-annotate-deployment-event-workflow.yml
-  name: Dynatrace Annotate a Deployment with a Custom Event
-- type: Arazzo
-  url: arazzo/dynatrace-entity-dependency-map-workflow.yml
-  name: Dynatrace Map an Entity's Dependencies
-- type: Arazzo
-  url: arazzo/dynatrace-entity-type-discovery-workflow.yml
-  name: Dynatrace Discover an Entity Type and Sample Its Entities
-- type: Arazzo
-  url: arazzo/dynatrace-error-log-investigation-workflow.yml
-  name: Dynatrace Investigate Error Logs and Annotate
-- type: Arazzo
-  url: arazzo/dynatrace-export-logs-for-siem-workflow.yml
-  name: Dynatrace Export Logs for SIEM Forwarding
-- type: Arazzo
-  url: arazzo/dynatrace-ingest-and-search-logs-workflow.yml
-  name: Dynatrace Ingest Log Records and Search Them Back
-- type: Arazzo
-  url: arazzo/dynatrace-ingest-and-verify-metric-workflow.yml
-  name: Dynatrace Ingest a Custom Metric and Verify It
-- type: Arazzo
-  url: arazzo/dynatrace-metric-threshold-alert-workflow.yml
-  name: Dynatrace Query a Metric and Raise an Alert Event
-- type: Arazzo
-  url: arazzo/dynatrace-onboard-account-user-workflow.yml
-  name: Dynatrace Onboard a User into a New Group
-- type: Arazzo
-  url: arazzo/dynatrace-problem-comment-lifecycle-workflow.yml
-  name: Dynatrace Manage a Problem Comment Lifecycle
-- type: Arazzo
-  url: arazzo/dynatrace-problem-comment-thread-workflow.yml
-  name: Dynatrace Add a Comment to a Problem and Read the Thread
-- type: Arazzo
-  url: arazzo/dynatrace-problem-triage-and-close-workflow.yml
-  name: Dynatrace Triage and Close a Problem
-- type: Arazzo
-  url: arazzo/dynatrace-service-health-snapshot-workflow.yml
-  name: Dynatrace Service Health Snapshot
-- type: Arazzo
-  url: arazzo/dynatrace-service-problem-lookup-workflow.yml
-  name: Dynatrace Find Problems Affecting a Named Service
-- type: LinkedIn
-  url: https://www.linkedin.com/company/dynatrace
-- url: https://www.dynatrace.com/support/help/dynatrace-api
-  type: Portal
-- url: https://docs.dynatrace.com/docs/dynatrace-api
-  type: Documentation
-- url: https://www.dynatrace.com/support/help/dynatrace-api/basics/dynatrace-api-authentication
-  type: Authentication
-- url: https://www.dynatrace.com/support/help/dynatrace-api/basics
-  type: GettingStarted
-- url: https://www.dynatrace.com/support/help/dynatrace-api/basics/dynatrace-api-response-codes
-  type: APIReference
-- url: https://docs.dynatrace.com/docs/whats-new/dynatrace-api
-  type: ChangeLog
-- url: https://www.dynatrace.com/company/trust-center/terms-of-use/
-  type: TermsOfService
-- url: https://www.dynatrace.com/company/trust-center/privacy/
-  type: PrivacyPolicy
-- url: https://www.dynatrace.com/support/
-  type: Support
-- url: https://www.dynatrace.com/pricing/
-  type: Pricing
-- url: https://www.dynatrace.com/signup/
-  type: Signup
-- url: https://community.dynatrace.com/
-  type: Support
-- url: https://community.dynatrace.com/t5/Developer-Blog/bg-p/dev_blog
-  type: Blog
-- url: https://dynatrace.status.io/
-  type: StatusPage
-- url: https://github.com/Dynatrace
-  type: GitHubOrganization
-- url: https://developer.dynatrace.com/
-  type: DeveloperPortal
-- url: https://stackoverflow.com/questions/tagged/dynatrace
-  type: StackOverflow
-- url: https://www.youtube.com/c/dynatrace
-  type: YouTube
-- url: json-schema/dynatrace-metric-series-schema.json
-  type: JSONSchema
-- url: json-schema/dynatrace-problem-schema.json
-  type: JSONSchema
-- url: json-ld/dynatrace-context.jsonld
-  type: JSONLD
-- url: https://developer.dynatrace.com/develop/sdks/
-  type: SDKs
-- url: https://developer.dynatrace.com/develop/access-platform-apis-from-outside/
-  type: Authentication
-- url: https://docs.dynatrace.com/docs/manage/identity-access-management
-  type: Security
-- url: https://github.com/Dynatrace/dynatrace-api
-  type: GitHubRepository
-- url: https://www.dynatrace.com/hub/
-  type: Marketplace
-- url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides
-  type: ReleaseNotes
-- url: https://developer.dynatrace.com/plan/platform-services/
-  type: Documentation
-- type: Features
-  data:
-  - name: Full-Stack Observability
-    description: End-to-end monitoring of applications, infrastructure, and digital
-      experiences with automatic discovery and AI-powered root cause analysis.
-  - name: Davis AI Engine
-    description: Deterministic AI engine that automatically detects anomalies, identifies
-      root causes, and provides precise answers about performance issues without manual
-      configuration.
-  - name: Grail Data Lakehouse
-    description: Unified data store that combines logs, metrics, traces, events, and
-      business data in a single analytics platform with unlimited retention and DQL
-      query language.
-  - name: Software Intelligence
-    description: Real-time topology mapping and dependency analysis across distributed
-      systems with automatic baselining and smart alerting.
-  - name: Cloud Automation
-    description: Automated workflows, remediation, and orchestration capabilities
-      that integrate with CI/CD pipelines and IT service management tools.
-  - name: Application Security
-    description: Runtime application security with vulnerability detection, attack
-      protection, and security analytics built into the observability platform.
-  - name: Digital Experience Monitoring
-    description: Real user monitoring, session replay, and synthetic monitoring for
-      web and mobile applications to optimize user experience.
-  - name: OpenPipeline Data Ingestion
-    description: Flexible data ingestion framework supporting any data source and
-      format with configurable routing, processing, and enrichment pipelines.
-  - name: Extensions Framework
-    description: Extensible monitoring platform with 600+ out-of-the-box integrations
-      and a framework for building custom data collection extensions.
-  - name: Service Level Objectives
-    description: Automated SLO tracking and evaluation with burn rate alerting and
-      reliability scoring based on real monitoring data.
-- type: UseCases
-  data:
-  - name: Infrastructure Monitoring
-    description: Monitor hosts, containers, and cloud infrastructure with automatic
-      discovery, health metrics, and capacity planning across hybrid and multi-cloud
-      environments.
-  - name: Application Performance Management
-    description: Trace distributed transactions end-to-end, identify bottlenecks,
-      and optimize application performance with code-level visibility and AI-powered
-      insights.
-  - name: Log Analytics and Management
-    description: Ingest, search, and analyze log data at scale using the Grail data
-      lakehouse with DQL queries for troubleshooting and compliance.
-  - name: Cloud Migration Monitoring
-    description: Track application health and performance during cloud migration with
-      automatic dependency mapping and impact analysis.
-  - name: DevOps and SRE Automation
-    description: Integrate observability into CI/CD pipelines with automated quality
-      gates, deployment validation, and incident response workflows.
-  - name: Business Analytics
-    description: Correlate business events with technical performance data to measure
-      revenue impact and optimize digital business outcomes.
-  - name: Security Posture Management
-    description: Detect runtime vulnerabilities, monitor attack attempts, and assess
-      application security posture with integrated security analytics.
-  - name: Synthetic Testing
-    description: Proactively monitor application availability and performance with
-      browser-based and HTTP synthetic tests from global locations.
-- type: Integrations
-  data:
-  - name: AWS CloudWatch
-    description: Native integration with AWS services for monitoring EC2, Lambda,
-      RDS, and other AWS resources with automatic tagging and topology mapping.
-  - name: Azure Monitor
-    description: Deep integration with Microsoft Azure for monitoring Azure App Services,
-      AKS, Functions, and other Azure platform services.
-  - name: Google Cloud Platform
-    description: Integration with GCP services including GKE, Cloud Run, Cloud Functions,
-      and BigQuery for comprehensive cloud monitoring.
-  - name: Kubernetes
-    description: Full-stack Kubernetes monitoring with automatic pod, node, and cluster
-      discovery, resource utilization tracking, and workload health analysis.
-  - name: ServiceNow
-    description: Bidirectional integration with ServiceNow for automated incident
-      creation, enrichment, and resolution based on Dynatrace problem detection.
-  - name: PagerDuty
-    description: Integration with PagerDuty for intelligent alert routing, incident
-      management, and on-call notification based on Dynatrace AI-detected problems.
-  - name: Slack
-    description: Notification integration with Slack channels for real-time alerts
-      on performance issues, deployments, and problem resolution updates.
-  - name: Jira
-    description: Integration with Atlassian Jira for automated issue creation and
-      tracking based on detected performance problems and vulnerabilities.
-  - name: Terraform
-    description: Terraform provider for infrastructure-as-code management of Dynatrace
-      monitoring configuration, dashboards, and alerting profiles.
-  - name: Ansible
-    description: Ansible collection for automated deployment and configuration of
-      Dynatrace OneAgent and environment settings across infrastructure.
-- type: CLI
-  url: https://github.com/Dynatrace/dynatrace-configuration-as-code
-  title: Configuration as Code CLI
-- type: SDKs
-  url: https://github.com/Dynatrace/OneAgent-SDK-for-Java
-  title: Java OneAgent SDK
-- type: SDKs
-  url: https://github.com/Dynatrace/OneAgent-SDK-for-Python
-  title: Python OneAgent SDK
-- type: SDKs
-  url: https://github.com/Dynatrace/OneAgent-SDK-for-NodeJs
-  title: Node.js OneAgent SDK
-- type: SDKs
-  url: https://github.com/Dynatrace/OneAgent-SDK-for-dotnet
-  title: .NET OneAgent SDK
-- type: SDKs
-  url: https://github.com/Dynatrace/OneAgent-SDK-for-C
-  title: C OneAgent SDK
-- type: SDKs
-  url: https://github.com/Dynatrace/swift-mobile-sdk
-  title: Swift Mobile SDK
-- type: CodeExamples
-  url: https://github.com/Dynatrace/Dynatrace-workflow-samples
-  title: Workflow Samples
-- type: CodeExamples
-  url: https://github.com/Dynatrace/snippets
-  title: Code Snippets
-- type: CodeExamples
-  url: https://github.com/Dynatrace/community-examples
-  title: Community Examples
-- type: Tutorials
-  url: https://github.com/Dynatrace/Dynatrace-Tutorial
-  title: Tutorials
-- type: SpectralRules
-  url: rules/dynatrace-spectral-rules.yml
-- type: Vocabulary
-  url: vocabulary/dynatrace-vocabulary.yaml
-- type: JSONLD
-  url: json-ld/dynatrace-account-management-api-context.jsonld
-- type: JSONLD
-  url: json-ld/dynatrace-dynatrace-metric-series-context.jsonld
-- type: JSONLD
-  url: json-ld/dynatrace-dynatrace-problem-context.jsonld
-- type: JSONLD
-  url: json-ld/dynatrace-entities-api-v2-context.jsonld
-- type: JSONLD
-  url: json-ld/dynatrace-events-api-v2-context.jsonld
-- type: JSONLD
-  url: json-ld/dynatrace-log-monitoring-api-v2-context.jsonld
-- type: JSONLD
-  url: json-ld/dynatrace-metrics-api-v2-context.jsonld
-- type: JSONLD
-  url: json-ld/dynatrace-problems-api-v2-context.jsonld
-- type: JSONLD
-  url: json-ld/dynatrace-problems-entity-ref-context.jsonld
-- type: JSONLD
-  url: json-ld/dynatrace-problems-impacted-entity-context.jsonld
-- type: JSONLD
-  url: json-ld/dynatrace-problems-problem-details-context.jsonld
-- type: JSONLD
-  url: json-ld/dynatrace-problems-problem-notification-payload-context.jsonld
-- type: JSONLD
-  url: json-ld/dynatrace-problems-webhook-header-context.jsonld
-- type: JSONLD
-  url: json-ld/dynatrace-problems-webhook-notification-config-context.jsonld
-- type: OpenAPI
-  url: openapi/dynatrace-account-management-api-openapi.json
-  name: Dynatrace Account Management API (full spec, harvested from https://api.dynatrace.com/openapi.json — 57 paths, 96 operations)
-- type: Packages
-  url: packages/dynatrace-packages.yml
-- type: SDKs
-  url: packages/dynatrace-packages.yml
-  name: First-party SDK inventory with registry versions and release dates
-- type: WellKnown
-  url: well-known/dynatrace-well-known.yml
-- type: SecurityTxt
-  url: well-known/dynatrace-security.txt
-- type: OpenIDConnect
-  url: well-known/dynatrace-openid-configuration.json
-  name: OIDC discovery for https://sso.dynatrace.com
-- type: MCPServer
-  url: mcp/dynatrace-mcp.yml
-- type: ToolCrosswalk
-  url: mcp/dynatrace-tool-crosswalk.yml
-- type: LLMsTxt
-  url: llms/dynatrace-llms.txt
-- type: Conformance
-  url: conformance/dynatrace-conformance.yml
-- type: Compliance
-  url: security/dynatrace-trust-center.yml
-  name: SOC 2, ISO 27001/27017/27018, PCI DSS, HIPAA, FedRAMP, GDPR, CSA STAR
-- type: ErrorCatalog
-  url: errors/dynatrace-problem-types.yml
-- type: Lifecycle
-  url: lifecycle/dynatrace-lifecycle.yml
-- type: Deprecation
-  url: https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/deprecation-migration-guides
-  name: Dynatrace API deprecation and migration guides
-- type: Conventions
-  url: conventions/dynatrace-conventions.yml
-- type: ChangeLog
-  url: changelog/dynatrace-changelog.yml
-- type: CLI
-  url: cli/dynatrace-cli.yml
-  name: monaco, dtctl, dt-app and dt-cli
-- type: Components
-  url: components/dynatrace-components.yml
-  name: Strato design system
-- type: DataModel
-  url: data-model/dynatrace-data-model.yml
-- type: Plans
-  url: plans/dynatrace-plans-pricing.yml
-- type: RateLimits
-  url: rate-limits/dynatrace-rate-limits.yml
-- type: FinOps
-  url: finops/dynatrace-finops.yml
-- type: Webhooks
-  url: asyncapi/dynatrace-problems-asyncapi.yml
-  name: Dynatrace problem notification webhooks
-- type: AgentSkill
-  url: skills/_index.yml
-  name: 17 Dynatrace-published Agent Skills plus 3 REST-grounded skills
-- type: AgentSkill
-  url: skills/dynatrace-triage-problem.md
-- type: AgentSkill
-  url: skills/dynatrace-ingest-telemetry.md
-- type: AgentSkill
-  url: skills/dynatrace-manage-account-access.md
-- type: Marketplace
-  url: https://www.dynatrace.com/hub/detail/dynatrace-mcp-server/
-  name: Dynatrace Remote MCP Server on Dynatrace Hub
-- type: Overlay
-  url: overlays/dynatrace-entities-overlay.yaml
-- type: Overlay
-  url: overlays/dynatrace-environments-overlay.yaml
-- type: Overlay
-  url: overlays/dynatrace-events-overlay.yaml
-- type: Overlay
-  url: overlays/dynatrace-groups-overlay.yaml
-- type: Overlay
-  url: overlays/dynatrace-logs-overlay.yaml
-- type: Overlay
-  url: overlays/dynatrace-metrics-overlay.yaml
-- type: Overlay
-  url: overlays/dynatrace-permissions-overlay.yaml
-- type: Overlay
-  url: overlays/dynatrace-problems-overlay.yaml
-- type: Overlay
-  url: overlays/dynatrace-users-overlay.yaml
-- type: SignUp
-  url: https://www.dynatrace.com/signup/
-- type: Postman
-  url: https://www.postman.com/kinlaneapi/dynatrace/overview
-  name: Community Postman workspace maintained by API Evangelist, not by Dynatrace
-- type: Trial
-  url: https://www.dynatrace.com/trial/
+  artifacts_added: 56
+  pass: modular-v1
+  engine: identity=local,contract=local,surfaces=local,docs=local,regulatory=local

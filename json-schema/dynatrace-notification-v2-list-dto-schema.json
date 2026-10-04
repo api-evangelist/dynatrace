@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-notification-v2-list-dto-schema.json",
+  "title": "NotificationV2ListDto",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-notifications-api-openapi.yml#/components/schemas/NotificationV2ListDto",
+  "type": "object",
+  "properties": {
+    "records": {
+      "description": "A list of notifications of the account.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/EventApiModel"
+      }
+    },
+    "totalRecordCount": {
+      "type": "number",
+      "description": "The total number of notifications matching the filter."
+    },
+    "hasNextPage": {
+      "type": "boolean",
+      "description": "If there are more notifications."
+    },
+    "nextPageKey": {
+      "type": "string",
+      "description": "The cursor for the next page of results. Present only when **hasNextPage** is `true`."
+    }
+  },
+  "required": [
+    "records",
+    "totalRecordCount",
+    "hasNextPage"
+  ],
+  "$defs": {
+    "EventApiModel": {
+      "type": "object",
+      "properties": {}
+    }
+  }
+}

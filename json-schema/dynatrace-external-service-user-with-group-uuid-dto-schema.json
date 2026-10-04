@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-external-service-user-with-group-uuid-dto-schema.json",
+  "title": "ExternalServiceUserWithGroupUuidDto",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-service-user-management-api-openapi.yml#/components/schemas/ExternalServiceUserWithGroupUuidDto",
+  "type": "object",
+  "properties": {
+    "uid": {
+      "type": "string",
+      "description": "UUID of service user"
+    },
+    "email": {
+      "type": "string",
+      "description": "Email of service user"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of service user"
+    },
+    "surname": {
+      "type": "string",
+      "description": "Surname of service user"
+    },
+    "description": {
+      "type": "string",
+      "description": "The description of the service user"
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "The date and time when the user was created in `2021-05-01T15:11:00Z` format."
+    },
+    "groupUuid": {
+      "type": "string",
+      "description": "Uuid of the group which enables assigning policy to service user"
+    }
+  },
+  "required": [
+    "uid",
+    "email",
+    "name",
+    "createdAt",
+    "groupUuid"
+  ]
+}

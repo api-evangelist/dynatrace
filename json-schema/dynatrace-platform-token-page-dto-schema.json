@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-platform-token-page-dto-schema.json",
+  "title": "PlatformTokenPageDto",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-platform-tokens-api-openapi.yml#/components/schemas/PlatformTokenPageDto",
+  "type": "object",
+  "properties": {
+    "pageSize": {
+      "type": "number",
+      "description": "Page size."
+    },
+    "pageNumber": {
+      "type": "number",
+      "description": "Page number."
+    },
+    "total": {
+      "type": "number",
+      "description": "Total count of entries."
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PlatformTokenDto"
+      }
+    }
+  },
+  "required": [
+    "pageSize",
+    "pageNumber",
+    "total",
+    "results"
+  ],
+  "$defs": {
+    "PlatformTokenDto": {
+      "type": "object",
+      "properties": {
+        "tokenId": {
+          "type": "string"
+        },
+        "accountUuid": {
+          "type": "number"
+        },
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "resource": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "expirationDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "userUuid": {
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "#/$defs/PlatformTokenMetadataDto"
+        }
+      },
+      "required": [
+        "tokenId",
+        "accountUuid",
+        "description",
+        "name",
+        "scope",
+        "tags",
+        "resource",
+        "expirationDate",
+        "userUuid",
+        "metadata"
+      ]
+    },
+    "PlatformTokenMetadataDto": {
+      "type": "object",
+      "properties": {
+        "lastUsedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "lastClientIp": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "lastUsedAt",
+        "lastClientIp"
+      ]
+    }
+  }
+}

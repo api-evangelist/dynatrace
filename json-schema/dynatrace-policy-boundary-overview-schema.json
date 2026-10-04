@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-policy-boundary-overview-schema.json",
+  "title": "PolicyBoundaryOverview",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-policy-management-api-openapi.yml#/components/schemas/PolicyBoundaryOverview",
+  "type": "object",
+  "properties": {
+    "uuid": {
+      "type": "string"
+    },
+    "levelType": {
+      "type": "string"
+    },
+    "levelId": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the policy boundary."
+    },
+    "boundaryQuery": {
+      "type": "string",
+      "description": "The boundary query of the policy boundary."
+    },
+    "boundaryConditions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Condition"
+      }
+    },
+    "metadata": {
+      "description": "The metadata of the policy boundary.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/Map"
+        }
+      ]
+    }
+  },
+  "required": [
+    "uuid",
+    "levelType",
+    "levelId",
+    "name",
+    "boundaryQuery",
+    "boundaryConditions",
+    "metadata"
+  ],
+  "$defs": {
+    "Condition": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the condition. \n\n It indicates which part of the **services** is checked by the condition."
+        },
+        "operator": {
+          "type": "string",
+          "description": "The operator of the condition."
+        },
+        "values": {
+          "description": "A list of reference values of the condition.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "operator",
+        "values"
+      ]
+    },
+    "Map": {
+      "type": "object",
+      "properties": {}
+    }
+  }
+}

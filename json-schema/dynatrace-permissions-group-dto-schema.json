@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-permissions-group-dto-schema.json",
+  "title": "PermissionsGroupDto",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-permission-management-api-openapi.yml#/components/schemas/PermissionsGroupDto",
+  "type": "object",
+  "properties": {
+    "uuid": {
+      "type": "string",
+      "description": "The UUID of the user group."
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the user group."
+    },
+    "description": {
+      "type": "string",
+      "description": "A short description of the user group."
+    },
+    "federatedAttributeValues": {
+      "description": "A list of values associating this group with the corresponding claim from an identity provider.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "owner": {
+      "type": "string",
+      "enum": [
+        "LOCAL",
+        "SCIM",
+        "SAML",
+        "DCS",
+        "ALL_USERS"
+      ],
+      "description": "The type of the group. `LOCAL`, `SCIM`, `SAML` and `DCS` corresponds to the identity provider from which the group originates. `ALL_USERS` is a special case of `LOCAL` group. It means that group is always assigned to all users in the account."
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "The date and time of the group creation in `2021-05-01T15:11:00Z` format."
+    },
+    "updatedAt": {
+      "type": "string",
+      "description": "The date and time of the most recent group modification in `2021-05-01T15:11:00Z` format."
+    },
+    "permissions": {
+      "description": "A list of permissions assigned to the group.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PermissionsDto"
+      }
+    }
+  },
+  "required": [
+    "name",
+    "owner",
+    "createdAt",
+    "updatedAt",
+    "permissions"
+  ],
+  "$defs": {
+    "PermissionsDto": {
+      "type": "object",
+      "properties": {
+        "permissionName": {
+          "type": "string",
+          "description": "The name of the permission.",
+          "enum": [
+            "account-company-info",
+            "account-user-management",
+            "account-viewer",
+            "account-saml-flexible-federation",
+            "tenant-viewer",
+            "tenant-manage-settings",
+            "tenant-agent-install",
+            "tenant-logviewer",
+            "tenant-view-sensitive-request-data",
+            "tenant-configure-request-capture-data",
+            "tenant-replay-sessions-with-masking",
+            "tenant-replay-sessions-without-masking",
+            "tenant-manage-security-problems",
+            "tenant-view-security-problems",
+            "tenant-manage-support-tickets"
+          ]
+        },
+        "scope": {
+          "type": "string",
+          "description": "The scope of the permission. Depending on the scope type, it is defined by: \n\n* `account`: The UUID of the account. \n* `tenant`: The ID of the environment. \n* `management-zone`: The ID of the management zone from an environment in `{environment-id}:{management-zone-id}` format."
+        },
+        "scopeType": {
+          "type": "string",
+          "description": "The type of the permission scope.",
+          "enum": [
+            "account",
+            "tenant",
+            "management-zone"
+          ]
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "The date and time of the permission creation in `2021-05-01T15:11:00Z` format."
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "The date and time of the most recent permission modification in `2021-05-01T15:11:00Z` format."
+        }
+      },
+      "required": [
+        "permissionName",
+        "scope",
+        "scopeType"
+      ]
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-time-zone-dto-schema.json",
+  "title": "TimeZoneDto",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-reference-data-api-openapi.yml#/components/schemas/TimeZoneDto",
+  "type": "object",
+  "properties": {
+    "displayName": {
+      "type": "string",
+      "description": "The UTC-based name of the time zone."
+    },
+    "name": {
+      "type": "string",
+      "description": "The standard name of the time zone."
+    }
+  },
+  "required": [
+    "displayName",
+    "name"
+  ]
+}

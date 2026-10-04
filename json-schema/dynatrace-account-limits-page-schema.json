@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-account-limits-page-schema.json",
+  "title": "AccountLimitsPage",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-account-limits-api-openapi.yml#/components/schemas/AccountLimitsPage",
+  "type": "object",
+  "properties": {
+    "pageSize": {
+      "type": "number",
+      "description": "Page size."
+    },
+    "pageNumber": {
+      "type": "number",
+      "description": "Page number."
+    },
+    "total": {
+      "type": "number",
+      "description": "Total count of entries."
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AccountLimitsDto"
+      }
+    }
+  },
+  "required": [
+    "pageSize",
+    "pageNumber",
+    "total",
+    "results"
+  ],
+  "$defs": {
+    "AccountLimitsDto": {
+      "type": "object",
+      "properties": {
+        "currentValue": {
+          "type": "number"
+        },
+        "limitType": {
+          "type": "string"
+        },
+        "limitValue": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "currentValue",
+        "limitType",
+        "limitValue"
+      ]
+    }
+  }
+}

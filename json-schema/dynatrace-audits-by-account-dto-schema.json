@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-audits-by-account-dto-schema.json",
+  "title": "AuditsByAccountDto",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-account-audits-api-openapi.yml#/components/schemas/AuditsByAccountDto",
+  "type": "object",
+  "properties": {
+    "audits": {
+      "description": "A list of audit records for the account.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AuditDto"
+      }
+    },
+    "warnings": {
+      "description": "A list of warning messages related to the request.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AuditWarningDto"
+      }
+    }
+  },
+  "required": [
+    "audits",
+    "warnings"
+  ],
+  "$defs": {
+    "AuditDto": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string",
+          "description": "The ID of the event.",
+          "format": "uuid"
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "The timestamp of the audit event (in UTC).",
+          "format": "date-time"
+        },
+        "user": {
+          "type": "string",
+          "description": "The email address of the user that performed the operation or DYNATRACE in case the operation was performed by an Dynatrace internal employee."
+        },
+        "resource": {
+          "type": "string",
+          "description": "The resource (entity) affected by the operation."
+        },
+        "resourceName": {
+          "type": "string",
+          "description": "The name of the resource."
+        },
+        "eventProvider": {
+          "type": "string",
+          "description": "Display name of the system that created the event."
+        },
+        "eventType": {
+          "type": "string",
+          "description": "The type of the event."
+        },
+        "accountUuid": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The unique identifier of the account."
+        },
+        "authenticationClientId": {
+          "type": "string",
+          "description": "The client ID used for authentication."
+        },
+        "authenticationGrantType": {
+          "type": "string",
+          "description": "The type of grant used for authentication."
+        },
+        "authenticationToken": {
+          "type": "string",
+          "description": "The token used for authentication."
+        },
+        "authenticationType": {
+          "type": "string",
+          "description": "The type of authentication used."
+        },
+        "details": {
+          "type": "object",
+          "description": "A map that contains additional fields.",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "eventOutcome": {
+          "type": "string",
+          "description": "If the operation was successful or failed."
+        },
+        "eventReason": {
+          "type": "string",
+          "description": "Optional reason for the change."
+        },
+        "eventVersion": {
+          "type": "string",
+          "description": "The version of the audit event."
+        },
+        "originAddress": {
+          "type": "string",
+          "description": "The originating address of the request."
+        },
+        "originSession": {
+          "type": "string",
+          "description": "The session ID of the origin."
+        },
+        "originType": {
+          "type": "string",
+          "description": "The origin type of the request"
+        },
+        "originXForwardedFor": {
+          "type": "string",
+          "description": "The X-Forwarded-For header value from the origin."
+        },
+        "resourceId": {
+          "type": "string",
+          "description": "The unique identifier of the resource."
+        },
+        "environmentUuid": {
+          "type": "string",
+          "description": "The unique identifier of the environment."
+        },
+        "userOrganization": {
+          "type": "string",
+          "description": "Organization of the user that performed the operation."
+        }
+      },
+      "required": [
+        "eventId",
+        "timestamp",
+        "user",
+        "resource",
+        "resourceName",
+        "eventProvider",
+        "eventType",
+        "accountUuid",
+        "authenticationClientId",
+        "authenticationGrantType",
+        "authenticationToken",
+        "authenticationType",
+        "details",
+        "eventOutcome",
+        "eventReason",
+        "eventVersion",
+        "originAddress",
+        "originSession",
+        "originType",
+        "originXForwardedFor",
+        "resourceId",
+        "environmentUuid",
+        "userOrganization"
+      ]
+    },
+    "AuditWarningDto": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": "A warning message related to the request."
+        }
+      },
+      "required": [
+        "message"
+      ]
+    }
+  }
+}

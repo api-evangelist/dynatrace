@@ -67,6 +67,14 @@ paths:
       - Reference Data
 components:
   schemas:
+    RegionDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the region.
+      required:
+      - name
     PermissionDto:
       type: object
       properties:
@@ -79,14 +87,6 @@ components:
       required:
       - id
       - description
-    RegionDto:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the region.
-      required:
-      - name
     TimeZoneDto:
       type: object
       properties:

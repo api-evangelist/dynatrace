@@ -17,7 +17,7 @@ info:
   license:
     name: Dynatrace Terms of Service
     url: https://www.dynatrace.com/company/trust-center/terms/
-  externalDocs:
+  x-externalDocs:
     description: Dynatrace Problem Notification Configuration Documentation
     url: https://docs.dynatrace.com/docs/deliver-dynatrace-managed/problem-notifications
 

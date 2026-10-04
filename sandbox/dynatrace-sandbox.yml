@@ -13,6 +13,7 @@ description: >-
   a payments-style sandbox and should not be recorded as one.
 
 sandbox_available: false
+docs: []
 test_mode: false
 test_host: null
 test_key_prefix: null

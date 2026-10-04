@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-notification-query-params-dto-schema.json",
+  "title": "NotificationQueryParamsDto",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-notifications-api-openapi.yml#/components/schemas/NotificationQueryParamsDto",
+  "type": "object",
+  "properties": {
+    "startDateTime": {
+      "type": "string",
+      "description": "Start date and time to filter notifications."
+    },
+    "endDateTime": {
+      "type": "string",
+      "description": "End date and time to filter notifications."
+    },
+    "types": {
+      "type": "array",
+      "description": "Notification types to filter notifications.",
+      "items": {
+        "type": "string",
+        "enum": [
+          "FORECAST",
+          "BUDGET",
+          "COST",
+          "BYOK_REVOKED",
+          "BYOK_ACTIVATED",
+          "ENVIRONMENT_UPGRADE",
+          "ENVIRONMENT_DOWNGRADE"
+        ]
+      }
+    },
+    "severities": {
+      "type": "array",
+      "description": "Notification severities to filter notifications.",
+      "items": {
+        "type": "string",
+        "enum": [
+          "SEVERE",
+          "WARN",
+          "INFO"
+        ]
+      }
+    },
+    "capabilities": {
+      "description": "Capabilities to filter notifications.",
+      "type": "array",
+      "items": {
+        "type": "array"
+      }
+    },
+    "environments": {
+      "description": "Environments to filter notifications.",
+      "type": "array",
+      "items": {
+        "type": "array"
+      }
+    },
+    "page": {
+      "type": "number",
+      "description": "The page number."
+    },
+    "pageSize": {
+      "type": "number",
+      "description": "The maximum number of notifications to return, max 100."
+    },
+    "sorts": {
+      "type": "array",
+      "description": "The property to sort by. Prefix with \"-\" to invert sort order.",
+      "items": {
+        "type": "string",
+        "enum": [
+          "type",
+          "-type",
+          "date",
+          "-date"
+        ]
+      }
+    }
+  }
+}

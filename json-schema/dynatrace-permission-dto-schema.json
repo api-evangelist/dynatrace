@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-permission-dto-schema.json",
+  "title": "PermissionDto",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-reference-data-api-openapi.yml#/components/schemas/PermissionDto",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The ID of the permission."
+    },
+    "description": {
+      "type": "string",
+      "description": "The display name of the permission."
+    }
+  },
+  "required": [
+    "id",
+    "description"
+  ]
+}

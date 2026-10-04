@@ -1,0 +1,25 @@
+generated: '2026-10-04'
+method: probed
+source: https://www.dynatrace.com/company/trust-center/privacy/
+signals:
+  data_subject_request:
+    evidence:
+      - source: https://www.dynatrace.com/company/trust-center/privacy/
+        http_status: 200
+        fetched: /tmp/privacy.html
+        quote: "Each right is subject to certain exceptions prescribed by law. If you would like to exercise any of these rights, please use Dynatrace Privacy Request Form. We will process such requests in accordance with applicable law."
+    note: Provides mechanism for data subject requests via privacy portal.
+  ai_transparency:
+    evidence:
+      - source: https://www.dynatrace.com/company/trust-center/privacy/
+        http_status: 200
+        fetched: /tmp/privacy.html
+        quote: "Right not to be subject to automated decision-making. You have the right to request information about the logic involved in automated decision-making and a description of the likely outcome of processes where applicable under law. Dynatrace does not currently engage in solely automated decision-making that produces legal or similarly significant effects on individuals."
+    note: Declares no sole automated decision‑making and offers right to request logic.
+  data_retention:
+    evidence:
+      - source: https://www.dynatrace.com/company/trust-center/privacy/
+        http_status: 200
+        fetched: /tmp/privacy.html
+        quote: "We store the Personal Information we receive as described in this Notice for as long as you use our Services or as necessary to fulfill the purpose(s) for which it was collected, provide our Services, resolve disputes, establish legal defenses, conduct audits, pursue legitimate business purposes, enforce our agreements, and comply with applicable laws."
+    note: Describes retention period based on use and legal requirements.

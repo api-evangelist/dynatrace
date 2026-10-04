@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dynatrace/main/json-schema/dynatrace-cluster-list-dto-schema.json",
+  "title": "ClusterListDto",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/dynatrace-environment-management-api-openapi.yml#/components/schemas/ClusterListDto",
+  "type": "object",
+  "properties": {
+    "data": {
+      "description": "Lists all clusters in a managed account",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ClusterDto"
+      }
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "$defs": {
+    "ClusterDto": {
+      "type": "object",
+      "properties": {
+        "clusterId": {
+          "type": "string",
+          "description": "The UUID of the cluster."
+        }
+      },
+      "required": [
+        "clusterId"
+      ]
+    }
+  }
+}

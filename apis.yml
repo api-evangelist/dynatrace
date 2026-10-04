@@ -3939,7 +3939,6 @@ tags:
 - Automation
 - Cloud Monitoring
 - Digital Experience Management
-- Intelligence
 - Observability
 - Monitoring
 type: Index
@@ -4365,3 +4364,5 @@ common:
   name: Community Postman workspace maintained by API Evangelist, not by Dynatrace
 - type: Trial
   url: https://www.dynatrace.com/trial/
+x-tags-removed:
+- Intelligence

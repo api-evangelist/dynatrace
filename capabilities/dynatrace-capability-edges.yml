@@ -12,8 +12,17 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 5
+edge_count: 13
 edges:
+- tag: Permission management
+  spec_file: dynatrace-permission-management-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.9
+  evidence: PermissionsController_addGroupPermissions — 'Assigns permissions to a user group'; 'Sets permissions
+    of a user group. Existing permissions are overwritten'
+  reason: Authorisation grants against user groups under /iam/v1 — unambiguously identity and access management.
 - tag: Logs
   spec_file: dynatrace-logs-api-openapi.yml
   capability_id: BC-4220.20
@@ -23,6 +32,37 @@ edges:
   evidence: '"searchLogs  Dynatrace Search Log Records", "ingestLogs  Dynatrace Ingest Log Records", "aggregateLogs"'
   reason: Log ingestion, search, aggregation and export — directly the logs/metrics/traces surface of
     observability management.
+- tag: Policy Management
+  spec_file: dynatrace-policy-management-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.88
+  evidence: GET /iam/v1/resolution/{level-type}/{level-id}/effectivepermissions  getEffectivePermissions  Gets
+    effective permissions for a user or group; updatePolicyBindingsToGroup
+  reason: Operations create/update IAM policies and bind them to user groups, resolving effective permissions
+    — authorisation policy administration, i.e. Identity & Access Management. Not corporate 'Policy Management'
+    (BC-130.20), which concerns internal policy documents and attestation.
+- tag: User Management
+  spec_file: dynatrace-user-management-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.88
+  evidence: POST /iam/v1/accounts/{account-uuid}/users/{email}  Adds a user to groups; PUT .../groups  Sets
+    group membership of a user
+  reason: Account user provisioning and group membership assignment under an IAM API described as automating
+    'operational tasks related to user access' — Identity & Access Management, not HR employee records.
+- tag: Group Management
+  spec_file: dynatrace-group-management-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: GroupsController_getGroups — 'Lists all user groups of an account'; 'Creates new user groups';
+    'Lists all members of a group'
+  reason: CRUD over user groups and their membership under /iam/v1 — core identity and access management
+    administration.
 - tag: Metrics
   spec_file: dynatrace-metrics-api-openapi.yml
   capability_id: BC-4220.20
@@ -54,6 +94,38 @@ edges:
     of identity and access controls, including ... assigning users to groups, defining group permissions"'
   reason: IAM group lifecycle CRUD under an /iam/ path explicitly described as identity and access control
     management.
+- tag: Workload Identity Federation
+  spec_file: dynatrace-workload-identity-federation-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.82
+  evidence: POST /iam/v1/accounts/{account-uuid}/wif/trust-policies  createWifTrustPolicy; createWifServiceUserMapping;
+    RestWifClaimMapping
+  reason: Workload identity federation trust policies and claim-to-service-user mappings are federation
+    configuration — squarely Identity & Access Management (IAM/federation), not tenant commercial or compliance
+    capabilities.
+- tag: Dynatrace Platform Subscription
+  spec_file: dynatrace-dynatrace-platform-subscription-api-openapi.yml
+  capability_id: BC-4250
+  capability_id_l1: BC-4250
+  capability_name: Subscription Billing & Revenue Management
+  confidence: 0.8
+  evidence: '''Gets usage data of a subscription by date'', ''Gets aggregated cost data of a subscription
+    by date'', ''Lists all rate cards of an account'', ''Gets a forecast of the subscription usage by
+    the end of the annual commitment'''
+  reason: Operations expose subscription usage metering, rate cards and cost aggregation for a SaaS subscription
+    — squarely subscription billing/revenue management. Spread across metering (.10) and rating/charging
+    (.20), so L1 only.
+- tag: Service user management
+  spec_file: dynatrace-service-user-management-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: POST /iam/v1/accounts/{account-uuid}/service-users  Creates a new service user in an account
+  reason: CRUD over non-human service-user identities within an account, under the /iam/ path of an access-management
+    API — identity and access administration.
 - tag: Permissions
   spec_file: dynatrace-permissions-api-openapi.yml
   capability_id: BC-620.20
@@ -64,3 +136,14 @@ edges:
     "Permission"'
   reason: Enumeration of account-level permissions within the described IAM surface; supports access management,
     though the surface is a single read-only operation.
+- tag: Platform Tokens
+  spec_file: dynatrace-platform-tokens-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: POST /iam/v1/accounts/{account-uuid}/platform-tokens — 'Creates platform token for user';
+    'Updates platform token expiration data'; 'Updates platform token status'
+  reason: Lifecycle of access credentials issued to users under the IAM path — credential issuance, expiry
+    and revocation. Could alternatively be read as developer credential management (BC-4270.40), but the
+    /iam/ scoping and 'token for user' framing favour internal IAM.

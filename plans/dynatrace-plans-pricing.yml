@@ -363,3 +363,116 @@ plans:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - metered
+  - subscription
+  units:
+  - compute
+  - data
+  - negotiated
+  - object
+  - request
+  plans:
+  - name: Foundation and Discovery
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - compute
+    periods:
+    - month
+  - name: Infrastructure Monitoring
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - compute
+    periods:
+    - month
+  - name: Full-Stack Monitoring
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - data
+    periods:
+    - hour
+  - name: Kubernetes Platform Monitoring
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - compute
+    periods:
+    - hour
+  - name: Code Monitoring (Containers)
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - compute
+    periods:
+    - hour
+  - name: Log Management and Analytics
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - data
+    periods:
+    - day
+    - per-use
+  - name: Metrics
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - data
+    - other
+    periods:
+    - day
+    - per-use
+  - name: Traces and Events
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - data
+    periods:
+    - day
+    - per-use
+  - name: Real User Monitoring
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - object
+    periods:
+    - per-use
+  - name: Synthetic Monitoring
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - request
+    periods:
+    - per-use
+  - name: Application Security
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - compute
+    periods:
+    - month
+  - name: Enterprise Negotiated
+    access: enterprise
+    model: subscription
+    model_how: derived
+    units:
+    - negotiated
+    periods:
+    - month

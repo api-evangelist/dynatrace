@@ -1,4 +1,4 @@
-generated: '2026-09-16'
+generated: '2026-09-23'
 method: generated
 source: openapi/dynatrace-account-audits-api-openapi.yml, openapi/dynatrace-account-limits-api-openapi.yml,
   openapi/dynatrace-account-settings-api-openapi.yml, openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml,
@@ -17,12 +17,12 @@ description: Recommended x-agentic-access execution contracts, classified heuris
 summary:
   operations: 133
   by_action_class:
-    connected: 69
-    acting: 64
+    connected: 71
+    acting: 62
   by_consequence:
-    read: 69
+    read: 71
     safety-critical: 21
-    write: 43
+    write: 41
   human_in_the_loop_required: 21
 operations:
 - path: /audit/v1/accounts/{account-uuid}
@@ -315,18 +315,12 @@ operations:
   method: post
   operationId: lookupEntity
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /env/v1/accounts/{account-uuid}/environments
   method: get
   operationId: EnvironmentResourcesController_getEnvironmentResources
@@ -677,18 +671,12 @@ operations:
   method: post
   operationId: listNotifications
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v2/accounts/{account-uuid}/notifications
   method: get
   operationId: listNotificationsV2

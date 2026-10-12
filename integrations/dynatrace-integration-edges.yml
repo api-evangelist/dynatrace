@@ -1,0 +1,45 @@
+generated: '2026-10-13'
+method: searched
+checked:
+- https://github.com/open-telemetry/opentelemetry.io/blob/main/data/ecosystem/vendors.yaml
+- https://github.com/open-telemetry/opentelemetry.io/blob/main/data/registry/
+- https://www.dynatrace.com/hub/
+marketplace_apps:
+- marketplace: own
+  channel: partner-built
+  app: dynatrace
+  url: https://www.dynatrace.com/hub/
+  app_count: null
+  adapter: sweep-observability.py:unreadable
+  listed: 0
+  status: not-machine-readable (HTTP 200; client-rendered Hub; no public listing JSON found)
+edges:
+- partner_name: OpenTelemetry
+  partner: null
+  type: contract
+  channel: network-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://github.com/open-telemetry/opentelemetry.io/blob/main/data/ecosystem/vendors.yaml
+  contract_reference:
+    register: OpenTelemetry ecosystem + registry (opentelemetry.io data/)
+    spec_file: null
+    role: otlp-native
+    registered_name: Dynatrace
+    matched_domain: dynatrace.com
+    partner_match: domain+name-among-holders
+    api_families:
+    - distribution:collector
+    - otlp-native
+    records:
+    - vendors.yaml: Dynatrace
+      nativeOTLP: true
+    - distributions.yaml: Dynatrace Distribution of the OpenTelemetry Collector
+    detected_by: sweep-observability.py
+    detected: '2026-10-13'
+  detected_by: sweep-observability.py
+  detected: '2026-10-13'
+source:
+- https://github.com/open-telemetry/opentelemetry.io/blob/main/data/ecosystem/vendors.yaml
+- https://github.com/open-telemetry/opentelemetry.io/blob/main/data/registry/
+- https://www.dynatrace.com/hub/

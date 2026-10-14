@@ -3,6 +3,7 @@ method: searched
 checked:
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/ecosystem/vendors.yaml
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/registry/
+- https://plugins.jetbrains.com/
 - https://www.dynatrace.com/hub/
 marketplace_apps:
 - marketplace: own
@@ -39,6 +40,24 @@ edges:
     detected: '2026-10-13'
   detected_by: sweep-observability.py
   detected: '2026-10-13'
+- partner_name: JetBrains Marketplace
+  partner: jetbrains
+  partner_match: aggregator
+  type: marketplace
+  marketplace: jetbrains
+  channel: partner-built
+  relationship: platform-app
+  direction: third-party
+  evidence: https://plugins.jetbrains.com/vendor/Dynatrace
+  listing_count: 2
+  apps:
+  - Dynatrace Live Debugger
+  - Dynatrace Query Language
+  publisher_name: Dynatrace LLC
+  badges:
+  - Verified vendor
+  detected_by: sweep-devtools.py
+  detected: '2026-10-14'
 source:
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/ecosystem/vendors.yaml
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/registry/

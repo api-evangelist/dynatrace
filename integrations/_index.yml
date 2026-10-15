@@ -41,6 +41,19 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: dynatrace-microsoft-sentinel-own
+  label: Microsoft Sentinel (own)
+  partner: microsoft-sentinel
+  partner_name: Microsoft Sentinel (own)
+  category: Security - Others
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://github.com/Azure/Azure-Sentinel/tree/master/Solutions/Dynatrace
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
 - slug: dynatrace-mcp-registry
   label: MCP Registry
   partner: mcp
@@ -57,19 +70,40 @@
     registered_name: io.github.Dynatrace/dynatrace-for-ai
     register_id: io.github.Dynatrace/dynatrace-for-ai
     detected_by: sweep-agent-tools.py
-    detected: '2026-10-14'
+    detected: '2026-10-15'
   status: not-a-workflow
   arazzo: null
-- slug: dynatrace-microsoft-sentinel-own
-  label: Microsoft Sentinel (own)
-  partner: microsoft-sentinel
-  partner_name: Microsoft Sentinel (own)
-  category: Security - Others
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://github.com/Azure/Azure-Sentinel/tree/master/Solutions/Dynatrace
+- slug: dynatrace-cncf-cloud-native-landscape
+  label: CNCF (Cloud Native Landscape)
+  partner: cncf
+  partner_name: CNCF (Cloud Native Landscape)
+  category: Cloud native landscape
+  type: register
+  channel: standard-directory
+  evidence: https://github.com/cncf/landscape/blob/3a7d378b1824b82e729a453bb03fa6f1e37557e1/landscape.yml
   source: edge
-  relationship: platform-app
+  relationship: standard-participant
+  contract_reference:
+    register: CNCF Cloud Native Landscape (github.com/cncf/landscape landscape.yml @3a7d378b18)
+    spec_file: null
+    standard: Cloud Native (CNCF)
+    role: cncf-member (Silver)
+    registered_name: Dynatrace
+    registered_names:
+    - Dynatrace
+    website: https://www.dynatrace.com
+    matched_domain: dynatrace.com
+    matched_by: domain+name-among-holders
+    member_tier: Silver
+    joined: '2017-09-01'
+    end_user: false
+    cncf_projects: []
+    landscape_categories:
+    - Observability and Analysis / Observability
+    landscape_entries: 1
+    signal_note: 'participation only: a landscape listing is standard-participant evidence, not depth. Entries,
+      categories, tier and projects are CONTEXT, never read (breadth is not credit)'
+    detected_by: sweep-cloud-native.py
+    detected: '2026-10-15'
   status: not-a-workflow
   arazzo: null

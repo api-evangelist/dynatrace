@@ -630,6 +630,11 @@ apis:
 - aid: dynatrace:dynatrace-access-tokens-api-v2
   name: Dynatrace Access Tokens API v2
   tags:
+  - Identity and Access Management
+  - Authentication
+  - Security
+  - Tokens
+  tags_raw:
   - Access Management
   - Authentication
   - Security

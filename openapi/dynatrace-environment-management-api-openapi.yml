@@ -1,12 +1,12 @@
 openapi: 3.2.0
 info:
-  title: Dynatrace Account Management Environment Management API
+  title: Dynatrace Account Management Environment management API
   description: The enterprise management API for Dynatrace SaaS enables automation of operational tasks related to user access and environment lifecycle management.
   version: '1.0'
   contact: {}
 servers: []
 tags:
-- name: Environment Management
+- name: Environment management
   description: List environments and clusters and manage their IP allowlist configuration.
 paths:
   /env/v1/accounts/{account-uuid}/environments:
@@ -30,7 +30,7 @@ paths:
       - bearer: []
       summary: Lists all environments and management zones of an account
       tags:
-      - Environment Management
+      - Environment management
       x-required-permissions:
       - account-viewer
       x-token-scopes:
@@ -56,7 +56,7 @@ paths:
       - bearer: []
       summary: Lists all environments in an account
       tags:
-      - Environment Management
+      - Environment management
       x-required-permissions:
       - account-viewer
       x-token-scopes:
@@ -82,7 +82,7 @@ paths:
       - bearer: []
       summary: Lists all clusters in a managed account
       tags:
-      - Environment Management
+      - Environment management
       x-required-permissions:
       - account-viewer
       x-token-scopes:
@@ -112,7 +112,7 @@ paths:
       - bearer: []
       summary: Get IP configuration for a specific tenant
       tags:
-      - Environment Management
+      - Environment management
       x-required-permissions:
       - account-viewer
       x-token-scopes:
@@ -144,35 +144,13 @@ paths:
       - bearer: []
       summary: Set IP configuration for a specific tenant
       tags:
-      - Environment Management
+      - Environment management
       x-required-permissions:
       - account-viewer
       x-token-scopes:
       - account-env-write
 components:
   schemas:
-    TenantResourceDto:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the environment.
-        id:
-          type: string
-          description: The ID of the environment.
-      required:
-      - name
-      - id
-    ClusterListDto:
-      type: object
-      properties:
-        data:
-          description: Lists all clusters in a managed account
-          type: array
-          items:
-            $ref: '#/components/schemas/ClusterDto'
-      required:
-      - data
     EnvironmentListDto:
       type: object
       properties:
@@ -202,38 +180,20 @@ components:
       - id
       - active
       - url
-    ManagementZoneResourceDto:
+    AllowlistItem:
       type: object
       properties:
-        parent:
-          type: string
-          description: The ID of the environment to which the management zone belongs.
         name:
           type: string
-          description: The name of the management zone.
-        id:
+          description: The name of the list.
+          example: Some IP-range
+        ipRange:
           type: string
-          description: The ID of the management zone.
+          description: One ip address or the range of ip addresses. Supports the CIDR format.
+          example: 10.0.0.0/32
       required:
-      - parent
       - name
-      - id
-    EnvironmentResourceDto:
-      type: object
-      properties:
-        tenantResources:
-          description: A list of environments in the account.
-          type: array
-          items:
-            $ref: '#/components/schemas/TenantResourceDto'
-        managementZoneResources:
-          description: A list of management zones in the account.
-          type: array
-          items:
-            $ref: '#/components/schemas/ManagementZoneResourceDto'
-      required:
-      - tenantResources
-      - managementZoneResources
+      - ipRange
     IpConfigDto:
       type: object
       properties:
@@ -251,20 +211,32 @@ components:
       required:
       - enabled
       - allowWebhookOverride
-    AllowlistItem:
+    ClusterListDto:
       type: object
       properties:
-        name:
-          type: string
-          description: The name of the list.
-          example: Some IP-range
-        ipRange:
-          type: string
-          description: One ip address or the range of ip addresses. Supports the CIDR format.
-          example: 10.0.0.0/32
+        data:
+          description: Lists all clusters in a managed account
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterDto'
       required:
-      - name
-      - ipRange
+      - data
+    EnvironmentResourceDto:
+      type: object
+      properties:
+        tenantResources:
+          description: A list of environments in the account.
+          type: array
+          items:
+            $ref: '#/components/schemas/TenantResourceDto'
+        managementZoneResources:
+          description: A list of management zones in the account.
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagementZoneResourceDto'
+      required:
+      - tenantResources
+      - managementZoneResources
     ClusterDto:
       type: object
       properties:
@@ -273,6 +245,34 @@ components:
           description: The UUID of the cluster.
       required:
       - clusterId
+    ManagementZoneResourceDto:
+      type: object
+      properties:
+        parent:
+          type: string
+          description: The ID of the environment to which the management zone belongs.
+        name:
+          type: string
+          description: The name of the management zone.
+        id:
+          type: string
+          description: The ID of the management zone.
+      required:
+      - parent
+      - name
+      - id
+    TenantResourceDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the environment.
+        id:
+          type: string
+          description: The ID of the environment.
+      required:
+      - name
+      - id
   securitySchemes:
     bearer:
       scheme: bearer

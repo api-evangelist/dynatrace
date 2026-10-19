@@ -7,15 +7,11 @@ info:
 servers: []
 tags:
 - name: Permission management
-  description: Manage group permissions (deprecated; use policy management instead).
+  description: Manage group permissions. IAM policies are recommended instead.
 paths:
   /iam/v1/accounts/{account-uuid}/groups/{group-uuid}/permissions:
     get:
-      deprecated: true
-      description: 'Deprecated since Mon, 15 Jun 2026 00:00:00 GMT. This endpoint will be removed on Mon, 11 Jan 2027 00:00:00 GMT.
-
-
-        Consider upgrading your role-based permissions to IAM policies by following this guide. Learn how to manage policies. This deprecation and removal warning applies only to environment/tenant-scoped role-based permissions. For account-scoped permissions (account-viewer, account-company-info, account-user-management), this endpoint remains supported beyond the stated removal date and should continue to be used.'
+      description: Environment access should be managed using IAM policies. Learn how to manage policies.
       operationId: PermissionsController_getGroupPermissions
       parameters:
       - name: account-uuid
@@ -33,23 +29,10 @@ paths:
       responses:
         '200':
           description: Success. The response contains permissions of the user group.
-          headers:
-            Deprecation:
-              description: The date from which this endpoint is deprecated.
-              schema:
-                type: string
-                example: Mon, 15 Jun 2026 00:00:00 GMT
-            Sunset:
-              description: The date after which this endpoint will return 410 Gone.
-              schema:
-                type: string
-                example: Mon, 11 Jan 2027 00:00:00 GMT
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PermissionsGroupDto'
-        '410':
-          description: This endpoint has been removed.
       security:
       - bearer: []
       summary: Lists all permissions of a user group
@@ -60,11 +43,7 @@ paths:
       x-token-scopes:
       - account-idm-read
     post:
-      deprecated: true
-      description: 'Deprecated since Mon, 15 Jun 2026 00:00:00 GMT. This endpoint will be removed on Mon, 11 Jan 2027 00:00:00 GMT.
-
-
-        Consider upgrading your role-based permissions to IAM policies by following this guide. Learn how to manage policies. This deprecation and removal warning applies only to environment/tenant-scoped role-based permissions. For account-scoped permissions (account-viewer, account-company-info, account-user-management), this endpoint remains supported beyond the stated removal date and should continue to be used.'
+      description: Environment access should be managed using IAM policies. Learn how to manage policies.
       operationId: PermissionsController_addGroupPermissions
       parameters:
       - name: account-uuid
@@ -81,7 +60,7 @@ paths:
           type: string
       requestBody:
         required: true
-        description: "The body of the request. Contains a list of permissions to be assigned to the group. \n\nExisting permissions remain unaffected."
+        description: "The body of the request. Contains a list of permissions to be assigned to the group. The limit is 250 permissions. \n\nExisting permissions remain unaffected."
         content:
           application/json:
             schema:
@@ -89,22 +68,8 @@ paths:
               items:
                 $ref: '#/components/schemas/PermissionsDto'
       responses:
-        '200':
-          headers:
-            Deprecation:
-              description: The date from which this endpoint is deprecated.
-              schema:
-                type: string
-                example: Mon, 15 Jun 2026 00:00:00 GMT
-            Sunset:
-              description: The date after which this endpoint will return 410 Gone.
-              schema:
-                type: string
-                example: Mon, 11 Jan 2027 00:00:00 GMT
         '201':
           description: Success. Permissions have been assigned to the user group. Response doesn't have a body.
-        '410':
-          description: This endpoint has been removed.
       security:
       - bearer: []
       summary: Assigns permissions to a user group. Existing permissions remain unaffected
@@ -115,11 +80,7 @@ paths:
       x-token-scopes:
       - account-idm-write
     put:
-      deprecated: true
-      description: 'Deprecated since Mon, 15 Jun 2026 00:00:00 GMT. This endpoint will be removed on Mon, 11 Jan 2027 00:00:00 GMT.
-
-
-        Consider upgrading your role-based permissions to IAM policies by following this guide. Learn how to manage policies. This deprecation and removal warning applies only to environment/tenant-scoped role-based permissions. For account-scoped permissions (account-viewer, account-company-info, account-user-management), this endpoint remains supported beyond the stated removal date and should continue to be used.'
+      description: Environment access should be managed using IAM policies. Learn how to manage policies.
       operationId: PermissionsController_overwriteGroupPermissions
       parameters:
       - name: account-uuid
@@ -136,7 +97,7 @@ paths:
           type: string
       requestBody:
         required: true
-        description: "The body of the request. Contains a list of permissions to be assigned to the group. \n\n Existing permissions are overwritten."
+        description: "The body of the request. Contains a list of permissions to be assigned to the group. The limit is 250 permissions. \n\n Existing permissions are overwritten."
         content:
           application/json:
             schema:
@@ -146,19 +107,6 @@ paths:
       responses:
         '200':
           description: Success. User group's permissions have been set. Response doesn't have a body.
-          headers:
-            Deprecation:
-              description: The date from which this endpoint is deprecated.
-              schema:
-                type: string
-                example: Mon, 15 Jun 2026 00:00:00 GMT
-            Sunset:
-              description: The date after which this endpoint will return 410 Gone.
-              schema:
-                type: string
-                example: Mon, 11 Jan 2027 00:00:00 GMT
-        '410':
-          description: This endpoint has been removed.
       security:
       - bearer: []
       summary: Sets permissions of a user group. Existing permissions are overwritten
@@ -169,11 +117,7 @@ paths:
       x-token-scopes:
       - account-idm-write
     delete:
-      deprecated: true
-      description: 'Deprecated since Mon, 15 Jun 2026 00:00:00 GMT. This endpoint will be removed on Mon, 11 Jan 2027 00:00:00 GMT.
-
-
-        Consider upgrading your role-based permissions to IAM policies by following this guide. Learn how to manage policies. This deprecation and removal warning applies only to environment/tenant-scoped role-based permissions. For account-scoped permissions (account-viewer, account-company-info, account-user-management), this endpoint remains supported beyond the stated removal date and should continue to be used.'
+      description: Environment access should be managed using IAM policies. Learn how to manage policies.
       operationId: PermissionsController_removeGroupPermissions
       parameters:
       - name: account-uuid
@@ -229,19 +173,6 @@ paths:
       responses:
         '200':
           description: Success. The permission has been deleted from the group.
-          headers:
-            Deprecation:
-              description: The date from which this endpoint is deprecated.
-              schema:
-                type: string
-                example: Mon, 15 Jun 2026 00:00:00 GMT
-            Sunset:
-              description: The date after which this endpoint will return 410 Gone.
-              schema:
-                type: string
-                example: Mon, 11 Jan 2027 00:00:00 GMT
-        '410':
-          description: This endpoint has been removed.
       security:
       - bearer: []
       summary: Removes a permission from a user group

@@ -139,6 +139,26 @@ paths:
       - account-audit-logs-read
 components:
   schemas:
+    ErrorResponseDto:
+      type: object
+      properties:
+        error:
+          type: boolean
+          description: Always true for error responses.
+          example: true
+        message:
+          type: string
+          description: A short description of the error.
+          example: An unknown error occurred.
+        payload:
+          type:
+          - object
+          - 'null'
+          description: Optional additional error details.
+          default: null
+      required:
+      - error
+      - message
     AuditWarningDto:
       type: object
       properties:
@@ -285,26 +305,6 @@ components:
       - resourceId
       - environmentUuid
       - userOrganization
-    ErrorResponseDto:
-      type: object
-      properties:
-        error:
-          type: boolean
-          description: Always true for error responses.
-          example: true
-        message:
-          type: string
-          description: A short description of the error.
-          example: An unknown error occurred.
-        payload:
-          type:
-          - object
-          - 'null'
-          description: Optional additional error details.
-          default: null
-      required:
-      - error
-      - message
   securitySchemes:
     bearer:
       scheme: bearer

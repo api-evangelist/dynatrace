@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Dynatrace Account Management User Management API
+  title: Dynatrace Account Management User management API
   description: The enterprise management API for Dynatrace SaaS enables automation of operational tasks related to user access and environment lifecycle management.
   version: '1.0'
   contact: {}
@@ -219,7 +219,7 @@ paths:
       - name: group-uuid
         required: true
         in: query
-        description: "A list of groups the user is no longer a member of. \n\n To specify several groups, use the following format: `group-uuid=aaaaaa&group-uuid=bbbb`. \n\n The limit is 200 groups."
+        description: "A list of groups the user is no longer a member of. \n\n To specify several groups, use the following format: `group-uuid=aaaaaa&group-uuid=bbbb`. \n\n The limit is 20 groups."
         schema:
           type: array
           items:
@@ -238,20 +238,14 @@ paths:
       - account-idm-write
 components:
   schemas:
-    UserListDto:
+    UserEmailDto:
       type: object
       properties:
-        count:
-          type: number
-          description: The number of entries in the list.
-        items:
-          description: A list of the account's users.
-          type: array
-          items:
-            $ref: '#/components/schemas/UsersDto'
+        email:
+          type: string
+          description: The email address of the user.
       required:
-      - count
-      - items
+      - email
     UsersDto:
       type: object
       properties:
@@ -286,6 +280,56 @@ components:
       required:
       - uid
       - email
+    UserListDto:
+      type: object
+      properties:
+        count:
+          type: number
+          description: The number of entries in the list.
+        items:
+          description: A list of the account's users.
+          type: array
+          items:
+            $ref: '#/components/schemas/UsersDto'
+      required:
+      - count
+      - items
+    GroupUserDto:
+      type: object
+      properties:
+        uid:
+          type: string
+          description: The UUID of the user.
+        email:
+          type: string
+          description: The email address of the user.
+        name:
+          type: string
+          description: The first name of the user.
+        surname:
+          type: string
+          description: The last name of the user.
+        userStatus:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - PENDING
+          - DELETED
+          - ECUSTOMS_MANUALLY_BLOCKED
+          description: "The status of this user in Dynatrace: \n\n* `ACTIVE`: The user is active.\n* `INACTIVE`: The user is deactivated and cannot sign in to Dynatrace. \n* `PENDING`: The user received an invitation, but hasn't completed sign-up yet. \n* `DELETED`: The user was deleted and cannot sign in to Dynatrace anymore. \n* `ECUSTOMS_MANUALLY_BLOCKED`: The user is blocked due to to a trade and export compliance violation. \n"
+        emergencyContact:
+          type: boolean
+          description: The user is (`true`) or is not (`false`) an emergency contact for the account.
+        groups:
+          description: A list of groups of which the user is a member.
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountGroupDto'
+      required:
+      - uid
+      - email
+      - groups
     AccountGroupDto:
       type: object
       properties:
@@ -356,50 +400,6 @@ components:
       - lastFailedLogin
       - createdAt
       - updatedAt
-    UserEmailDto:
-      type: object
-      properties:
-        email:
-          type: string
-          description: The email address of the user.
-      required:
-      - email
-    GroupUserDto:
-      type: object
-      properties:
-        uid:
-          type: string
-          description: The UUID of the user.
-        email:
-          type: string
-          description: The email address of the user.
-        name:
-          type: string
-          description: The first name of the user.
-        surname:
-          type: string
-          description: The last name of the user.
-        userStatus:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - PENDING
-          - DELETED
-          - ECUSTOMS_MANUALLY_BLOCKED
-          description: "The status of this user in Dynatrace: \n\n* `ACTIVE`: The user is active.\n* `INACTIVE`: The user is deactivated and cannot sign in to Dynatrace. \n* `PENDING`: The user received an invitation, but hasn't completed sign-up yet. \n* `DELETED`: The user was deleted and cannot sign in to Dynatrace anymore. \n* `ECUSTOMS_MANUALLY_BLOCKED`: The user is blocked due to to a trade and export compliance violation. \n"
-        emergencyContact:
-          type: boolean
-          description: The user is (`true`) or is not (`false`) an emergency contact for the account.
-        groups:
-          description: A list of groups of which the user is a member.
-          type: array
-          items:
-            $ref: '#/components/schemas/AccountGroupDto'
-      required:
-      - uid
-      - email
-      - groups
   securitySchemes:
     bearer:
       scheme: bearer

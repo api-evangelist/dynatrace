@@ -1,12 +1,12 @@
 openapi: 3.2.0
 info:
-  title: Dynatrace Account Management Reference Data API
+  title: Dynatrace Account Management Reference data API
   description: The enterprise management API for Dynatrace SaaS enables automation of operational tasks related to user access and environment lifecycle management.
   version: '1.0'
   contact: {}
 servers: []
 tags:
-- name: Reference Data
+- name: Reference data
   description: Look up reference data such as time zones, regions, and available permissions.
 paths:
   /ref/v1/time-zones:
@@ -26,7 +26,7 @@ paths:
       - bearer: []
       summary: Lists all available time zones
       tags:
-      - Reference Data
+      - Reference data
   /ref/v1/regions:
     get:
       operationId: getRefV1Regions
@@ -44,7 +44,7 @@ paths:
       - bearer: []
       summary: Lists all available regions
       tags:
-      - Reference Data
+      - Reference data
       x-operation-id-source: normalized
       x-operation-id-original: ReferenceDataController_
   /ref/v1/account/permissions:
@@ -64,17 +64,9 @@ paths:
       - bearer: []
       summary: Lists all available permissions
       tags:
-      - Reference Data
+      - Reference data
 components:
   schemas:
-    RegionDto:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the region.
-      required:
-      - name
     PermissionDto:
       type: object
       properties:
@@ -98,6 +90,14 @@ components:
           description: The standard name of the time zone.
       required:
       - displayName
+      - name
+    RegionDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the region.
+      required:
       - name
   securitySchemes:
     bearer:

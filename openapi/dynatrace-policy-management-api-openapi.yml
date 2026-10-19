@@ -1,12 +1,12 @@
 openapi: 3.2.0
 info:
-  title: Dynatrace Account Management Policy Management API
+  title: Dynatrace Account Management Policy management API
   description: The enterprise management API for Dynatrace SaaS enables automation of operational tasks related to user access and environment lifecycle management.
   version: '1.0'
   contact: {}
 servers: []
 tags:
-- name: Policy Management
+- name: Policy management
   description: Manage IAM policies, policy bindings, and permission boundaries.
 paths:
   /iam/v1/repo/{level-type}/{level-id}/policies/validation:
@@ -77,7 +77,7 @@ paths:
       - bearer: []
       summary: Validates the payload for the `POST /iam/v1/repo/{levelType}/{levelId}/policies`…
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:policies:read
@@ -154,7 +154,7 @@ paths:
       - bearer: []
       summary: Validates the payload for the `PUT /iam/v1/repo/{levelType}/{levelId}/policies/{…
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:policies:read
@@ -216,7 +216,7 @@ paths:
       - bearer: []
       summary: Gets effective permissions for a user or group
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:effective-permissions:read
@@ -252,7 +252,7 @@ paths:
       - bearer: []
       summary: Lists all policies for a level, including inherited from higher levels
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
   /iam/v1/repo/{level-type}/{level-id}/policies:
@@ -296,7 +296,7 @@ paths:
       - bearer: []
       summary: Lists all native policies of a level
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:policies:read
@@ -350,7 +350,7 @@ paths:
       - bearer: []
       summary: Creates a new policy
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:policies:write
@@ -390,7 +390,7 @@ paths:
       - bearer: []
       summary: Gets a policy
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:policies:read
@@ -453,7 +453,7 @@ paths:
       - bearer: []
       summary: Updates a policy
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:policies:write
@@ -501,7 +501,7 @@ paths:
       - bearer: []
       summary: Deletes a policy
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:policies:write
@@ -546,7 +546,7 @@ paths:
       - bearer: []
       summary: Lists all policies for a user group
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:bindings:read
@@ -601,9 +601,9 @@ paths:
                 $ref: '#/components/schemas/ErrorDto'
       security:
       - bearer: []
-      summary: Updates policy bindings for a user group
+      summary: Updates policy bindings for a user group.
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:bindings:write
@@ -639,7 +639,7 @@ paths:
       - bearer: []
       summary: Lists all policy bindings of a level
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:bindings:read
@@ -682,7 +682,7 @@ paths:
       - bearer: []
       summary: Deletes all policy bindings from a level
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:bindings:write
@@ -723,7 +723,7 @@ paths:
       - bearer: []
       summary: Get policy bindings within a level
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:bindings:read
@@ -780,7 +780,7 @@ paths:
       - bearer: []
       summary: Adds policy bindings to a level
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:bindings:write
@@ -835,7 +835,7 @@ paths:
       - bearer: []
       summary: Deletes all bindings of a policy
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:bindings:write
@@ -888,7 +888,7 @@ paths:
       - bearer: []
       summary: Get policy bindings within descendants of a level
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:bindings:read
@@ -934,7 +934,7 @@ paths:
       - bearer: []
       summary: Get policy bindings within a level
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:bindings:read
@@ -994,7 +994,7 @@ paths:
       - bearer: []
       summary: Append policy bindings within a level for a user group
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:bindings:write
@@ -1061,7 +1061,7 @@ paths:
       - bearer: []
       summary: Updates or creates a policy binding for a particular group and policy
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:bindings:write
@@ -1121,7 +1121,7 @@ paths:
       - bearer: []
       summary: Deletes a policy binding from a user group
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:bindings:write
@@ -1163,7 +1163,7 @@ paths:
       - bearer: []
       summary: Get a list of policy boundaries within a level
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:boundaries:read
@@ -1205,7 +1205,7 @@ paths:
       - bearer: []
       summary: Create a policy boundary within a level
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:boundaries:write
@@ -1243,7 +1243,7 @@ paths:
       - bearer: []
       summary: Get policy boundary within a level
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:boundaries:read
@@ -1295,7 +1295,7 @@ paths:
       - bearer: []
       summary: Update or create a new policy boundary by uuid within a level
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:boundaries:write
@@ -1334,7 +1334,7 @@ paths:
       - bearer: []
       summary: Delete policy boundary by uuid within a level
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:boundaries:write
@@ -1375,96 +1375,82 @@ paths:
       - bearer: []
       summary: Returns limits defined for a level
       tags:
-      - Policy Management
+      - Policy management
       x-token-scopes:
       - iam-policies-management
       - iam:limits:read
 components:
   schemas:
-    EffectivePermissions:
+    PolicyUuidsDto:
       type: object
       properties:
-        effectivePermissions:
-          description: List of effective permissions.
+        policyUuids:
+          description: A list of policies bound to the user group.
           type: array
           items:
-            $ref: '#/components/schemas/EffectivePermission'
-      required:
-      - effectivePermissions
-    ErrorDto:
-      type: object
-      properties:
-        code:
-          type: number
-          description: The code of the error.
-        message:
-          type: string
-          description: A short description of the error.
-        errorsMap:
-          type: object
-          additionalProperties:
             type: string
       required:
-      - code
-      - message
-      - errorsMap
-    EffectivePolicy:
+      - policyUuids
+    PolicyOverviewDtoList:
+      type: object
+      properties:
+        policyOverviewList:
+          description: A list of policies.
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyOverview'
+      required:
+      - policyOverviewList
+    PolicyBoundaryOverview:
       type: object
       properties:
         uuid:
           type: string
-          description: The ID of the policy.
-        name:
-          type: string
-          description: The display name of the policy.
-        statementQuery:
-          type: string
-          description: The statement query of the policy.
         levelType:
           type: string
-          description: The type of the level to which the policy applies.
         levelId:
           type: string
-          description: The ID of the level to which the policy applies.
+        name:
+          type: string
+          description: The display name of the policy boundary.
+        boundaryQuery:
+          type: string
+          description: The boundary query of the policy boundary.
+        boundaryConditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Condition'
+        metadata:
+          type: object
+          description: The metadata of the policy boundary.
       required:
       - uuid
-      - name
-      - statementQuery
       - levelType
       - levelId
-    PolicyBoundaryDtoList:
+      - name
+      - boundaryQuery
+      - boundaryConditions
+      - metadata
+    LevelPolicyBindingDto:
       type: object
       properties:
-        pageSize:
-          type: number
-        pageNumber:
-          type: number
-        totalCount:
-          type: number
-        content:
+        levelType:
+          type: string
+          description: The type of the policy level.
+        levelId:
+          type: string
+          description: The ID of the policy level.
+        policyBindings:
           type: array
           items:
-            $ref: '#/components/schemas/PolicyBoundaryOverview'
+            $ref: '#/components/schemas/Binding'
       required:
-      - pageSize
-      - pageNumber
-      - totalCount
-      - content
-    AppendLevelPolicyBindingsRequestDto:
+      - levelType
+      - levelId
+      - policyBindings
+    EffectivePermissions:
       type: object
-      properties:
-        groups:
-          description: A list of user groups (specified by IDs) to which the policy applies.
-          type: array
-          items:
-            type: string
-        boundaries:
-          description: List of boundary UUIDs used in the binding.
-          type: array
-          items:
-            type: string
-      required:
-      - groups
+      properties: {}
     Statement:
       type: object
       properties:
@@ -1495,50 +1481,24 @@ components:
       required:
       - count
       - limit
-    EffectivePermissionEffects:
+    LevelPolicyBindingDtoList:
       type: object
       properties:
-        effect:
-          type: string
-          description: Effect of policy
-        conditions:
-          description: Policy condition
+        pageSize:
+          type: number
+        pageNumber:
+          type: number
+        totalCount:
+          type: number
+        content:
           type: array
           items:
-            $ref: '#/components/schemas/Condition'
-        effectivePolicies:
-          description: A list of effective policies.
-          type: array
-          items:
-            $ref: '#/components/schemas/EffectivePolicyWithBinding'
+            $ref: '#/components/schemas/LevelPolicyBindingDto'
       required:
-      - effect
-      - conditions
-      - effectivePolicies
-    EffectivePermission:
-      type: object
-      properties:
-        permission:
-          type: string
-          description: One of a effective permissions
-        effects:
-          description: A list of policies.
-          type: array
-          items:
-            $ref: '#/components/schemas/EffectivePermissionEffects'
-      required:
-      - permission
-      - effects
-    PolicyUuidsDto:
-      type: object
-      properties:
-        policyUuids:
-          description: A list of policies bound to the user group.
-          type: array
-          items:
-            type: string
-      required:
-      - policyUuids
+      - pageSize
+      - pageNumber
+      - totalCount
+      - content
     PolicyDto:
       type: object
       properties:
@@ -1555,53 +1515,6 @@ components:
       - uuid
       - name
       - description
-    PolicyBoundaryDto:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The display name of the policy boundary.
-        boundaryQuery:
-          type: string
-          description: The boundary query of the policy boundary.
-        metadata:
-          description: The metadata of the policy boundary.
-          allOf:
-          - $ref: '#/components/schemas/Map'
-      required:
-      - name
-      - boundaryQuery
-      - metadata
-    Binding:
-      type: object
-      properties:
-        policyUuid:
-          type: string
-          description: The ID of the policy.
-        groups:
-          description: A list of user groups to which the policy applies.
-          type: array
-          items:
-            type: string
-        parameters:
-          type: object
-          additionalProperties:
-            type: string
-          description: Parameters from bound policies
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-          description: Metadata from bound policies
-        boundaries:
-          description: List of boundary UUIDs used in the binding.
-          type: array
-          items:
-            type: string
-      required:
-      - policyUuid
-      - groups
-      - boundaries
     PolicyUuidsWithoutMetadataDto:
       type: object
       properties:
@@ -1612,23 +1525,6 @@ components:
             type: string
       required:
       - policyUuids
-    LevelPolicyBindingDto:
-      type: object
-      properties:
-        levelType:
-          type: string
-          description: The type of the policy level.
-        levelId:
-          type: string
-          description: The ID of the policy level.
-        policyBindings:
-          type: array
-          items:
-            $ref: '#/components/schemas/Binding'
-      required:
-      - levelType
-      - levelId
-      - policyBindings
     AppendLevelPolicyBindingForGroupDto:
       type: object
       properties:
@@ -1647,6 +1543,27 @@ components:
           type: array
           items:
             type: string
+    CreateOrUpdateLevelPolicyRequestDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The display name of the policy.
+        description:
+          type: string
+          description: A short description of the policy.
+        tags:
+          description: A list of tags.
+          type: array
+          items:
+            type: string
+        statementQuery:
+          type: string
+          description: The [statement](https://dt-url.net/ht03ucb) of the policy.
+      required:
+      - name
+      - description
+      - statementQuery
     LevelPolicyDto:
       type: object
       properties:
@@ -1679,6 +1596,36 @@ components:
       - description
       - statementQuery
       - statements
+    Binding:
+      type: object
+      properties:
+        policyUuid:
+          type: string
+          description: The ID of the policy.
+        groups:
+          description: A list of user groups to which the policy applies.
+          type: array
+          items:
+            type: string
+        parameters:
+          type: object
+          additionalProperties:
+            type: string
+          description: Parameters from bound policies
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: Metadata from bound policies
+        boundaries:
+          description: List of boundary UUIDs used in the binding.
+          type: array
+          items:
+            type: string
+      required:
+      - policyUuid
+      - groups
+      - boundaries
     Condition:
       type: object
       properties:
@@ -1697,49 +1644,6 @@ components:
       - name
       - operator
       - values
-    LevelLimitsDto:
-      type: object
-      properties:
-        policies:
-          description: Information about policies limit set for a level.
-          allOf:
-          - $ref: '#/components/schemas/LimitEntry'
-        bindings:
-          description: Information about policy bindings limit set for a level.
-          allOf:
-          - $ref: '#/components/schemas/LimitEntry'
-        boundaries:
-          description: Information about policy boundaries limit set for a level.
-          allOf:
-          - $ref: '#/components/schemas/LimitEntry'
-      required:
-      - policies
-      - bindings
-      - boundaries
-    CreateOrUpdateLevelPolicyRequestDto:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The display name of the policy.
-        description:
-          type: string
-          description: A short description of the policy.
-        tags:
-          description: A list of tags.
-          type: array
-          items:
-            type: string
-        statementQuery:
-          type: string
-          description: The [statement](https://dt-url.net/ht03ucb) of the policy.
-      required:
-      - name
-      - description
-      - statementQuery
-    Map:
-      type: object
-      properties: {}
     PolicyOverview:
       type: object
       properties:
@@ -1764,61 +1668,40 @@ components:
       - description
       - levelId
       - levelType
-    EffectivePolicyWithBinding:
+    AppendLevelPolicyBindingsRequestDto:
       type: object
       properties:
-        policy:
-          description: Effective policy
-          allOf:
-          - $ref: '#/components/schemas/EffectivePolicy'
-        binding:
-          description: Effective binding
-          allOf:
-          - $ref: '#/components/schemas/EffectiveBinding'
-      required:
-      - policy
-      - binding
-    PolicyBoundaryOverview:
-      type: object
-      properties:
-        uuid:
-          type: string
-        levelType:
-          type: string
-        levelId:
-          type: string
-        name:
-          type: string
-          description: The display name of the policy boundary.
-        boundaryQuery:
-          type: string
-          description: The boundary query of the policy boundary.
-        boundaryConditions:
+        groups:
+          description: A list of user groups (specified by IDs) to which the policy applies.
           type: array
           items:
-            $ref: '#/components/schemas/Condition'
-        metadata:
-          description: The metadata of the policy boundary.
-          allOf:
-          - $ref: '#/components/schemas/Map'
-      required:
-      - uuid
-      - levelType
-      - levelId
-      - name
-      - boundaryQuery
-      - boundaryConditions
-      - metadata
-    PolicyOverviewDtoList:
-      type: object
-      properties:
-        policyOverviewList:
-          description: A list of policies.
+            type: string
+        boundaries:
+          description: List of boundary UUIDs used in the binding.
           type: array
           items:
-            $ref: '#/components/schemas/PolicyOverview'
+            type: string
       required:
-      - policyOverviewList
+      - groups
+    LevelLimitsDto:
+      type: object
+      properties:
+        policies:
+          description: Information about policies limit set for a level.
+          allOf:
+          - $ref: '#/components/schemas/LimitEntry'
+        bindings:
+          description: Information about policy bindings limit set for a level.
+          allOf:
+          - $ref: '#/components/schemas/LimitEntry'
+        boundaries:
+          description: Information about policy boundaries limit set for a level.
+          allOf:
+          - $ref: '#/components/schemas/LimitEntry'
+      required:
+      - policies
+      - bindings
+      - boundaries
     PolicyDtoList:
       type: object
       properties:
@@ -1829,33 +1712,7 @@ components:
             $ref: '#/components/schemas/PolicyDto'
       required:
       - policies
-    ValidationDto:
-      type: object
-      properties:
-        warnings:
-          description: A list of validation warnings.
-          type: array
-          items:
-            type: string
-      required:
-      - warnings
-    EffectiveBinding:
-      type: object
-      properties:
-        groupUuid:
-          type: string
-          description: The UUID of group
-        levelType:
-          type: string
-          description: The type of the level to which the binding applies.
-        levelId:
-          type: string
-          description: The ID of the level to which the binding applies.
-      required:
-      - groupUuid
-      - levelType
-      - levelId
-    LevelPolicyBindingDtoList:
+    PolicyBoundaryDtoList:
       type: object
       properties:
         pageSize:
@@ -1867,12 +1724,55 @@ components:
         content:
           type: array
           items:
-            $ref: '#/components/schemas/LevelPolicyBindingDto'
+            $ref: '#/components/schemas/PolicyBoundaryOverview'
       required:
       - pageSize
       - pageNumber
       - totalCount
       - content
+    ErrorDto:
+      type: object
+      properties:
+        code:
+          type: number
+          description: The code of the error.
+        message:
+          type: string
+          description: A short description of the error.
+        errorsMap:
+          type: object
+          additionalProperties:
+            type: string
+      required:
+      - code
+      - message
+      - errorsMap
+    PolicyBoundaryDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The display name of the policy boundary.
+        boundaryQuery:
+          type: string
+          description: The boundary query of the policy boundary.
+        metadata:
+          type: object
+          description: The metadata of the policy boundary.
+      required:
+      - name
+      - boundaryQuery
+      - metadata
+    ValidationDto:
+      type: object
+      properties:
+        warnings:
+          description: A list of validation warnings.
+          type: array
+          items:
+            type: string
+      required:
+      - warnings
   securitySchemes:
     bearer:
       scheme: bearer

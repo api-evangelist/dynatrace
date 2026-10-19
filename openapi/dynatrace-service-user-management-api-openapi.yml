@@ -186,36 +186,6 @@ components:
       required:
       - results
       - totalCount
-    ExternalServiceUserWithGroupUuidDto:
-      type: object
-      properties:
-        uid:
-          type: string
-          description: UUID of service user
-        email:
-          type: string
-          description: Email of service user
-        name:
-          type: string
-          description: Name of service user
-        surname:
-          type: string
-          description: Surname of service user
-        description:
-          type: string
-          description: The description of the service user
-        createdAt:
-          type: string
-          description: The date and time when the user was created in `2021-05-01T15:11:00Z` format.
-        groupUuid:
-          type: string
-          description: Uuid of the group which enables assigning policy to service user
-      required:
-      - uid
-      - email
-      - name
-      - createdAt
-      - groupUuid
     ServiceUserDto:
       type: object
       properties:
@@ -253,6 +223,36 @@ components:
       - email
       - name
       - createdAt
+    ExternalServiceUserWithGroupUuidDto:
+      type: object
+      properties:
+        uid:
+          type: string
+          description: UUID of service user
+        email:
+          type: string
+          description: Email of service user
+        name:
+          type: string
+          description: Name of service user
+        surname:
+          type: string
+          description: Surname of service user
+        description:
+          type: string
+          description: The description of the service user
+        createdAt:
+          type: string
+          description: The date and time when the user was created in `2021-05-01T15:11:00Z` format.
+        groupUuid:
+          type: string
+          description: Uuid of the group which enables assigning policy to service user
+      required:
+      - uid
+      - email
+      - name
+      - createdAt
+      - groupUuid
   securitySchemes:
     bearer:
       scheme: bearer

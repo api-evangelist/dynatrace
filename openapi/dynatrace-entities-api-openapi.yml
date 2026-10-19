@@ -374,139 +374,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    ConstraintViolation:
-      type: object
-      description: Details of a single constraint violation in a request.
-      properties:
-        path:
-          type: string
-          description: The JSON path to the field that caused the violation.
-          example: example-value
-        message:
-          type: string
-          description: A description of the constraint violation.
-          example: Example description.
-        parameterLocation:
-          type: string
-          description: The location of the violating parameter (QUERY, PATH, BODY).
-          example: example-value
-        location:
-          type: string
-          description: The location detail for the violation.
-          example: example-value
-    EntityType:
-      type: object
-      description: Defines an entity type including its display name, available properties, and supported relationship types.
-      properties:
-        type:
-          type: string
-          description: The entity type identifier, e.g., SERVICE.
-          example: STANDARD
-        displayName:
-          type: string
-          description: The human-readable display name of the entity type.
-          example: Production Service
-        description:
-          type: string
-          description: A description of what this entity type represents.
-          example: Example description.
-        properties:
-          type: array
-          description: The list of properties available for this entity type.
-          items:
-            $ref: '#/components/schemas/EntityTypeProperty'
-          example:
-          - id: abc123
-            displayName: Production Service
-            type: STANDARD
-        fromRelationships:
-          type: array
-          description: The relationship types where entities of this type are the source.
-          items:
-            $ref: '#/components/schemas/EntityTypeRelationship'
-          example:
-          - id: abc123
-            toTypes:
-            - {}
-        toRelationships:
-          type: array
-          description: The relationship types where entities of this type are the target.
-          items:
-            $ref: '#/components/schemas/EntityTypeRelationship'
-          example:
-          - id: abc123
-            toTypes:
-            - {}
-    EntityTag:
-      type: object
-      description: A tag applied to a monitored entity.
-      properties:
-        context:
-          type: string
-          description: The origin context of the tag. For example, CONTEXTLESS, ENVIRONMENT, AWS, KUBERNETES, etc.
-          example: example-value
-        key:
-          type: string
-          description: The key of the tag.
-          example: example-value
-        value:
-          type: string
-          description: The value of the tag, if applicable.
-          nullable: true
-          example: example-value
-        stringRepresentation:
-          type: string
-          description: The full string representation of the tag as displayed in the Dynatrace UI, e.g., [KUBERNETES]app:my-service.
-          example: example-value
-    ErrorEnvelope:
-      type: object
-      description: Error response envelope returned when a request fails.
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-    EntityTypeProperty:
-      type: object
-      description: Describes a single property of an entity type.
-      properties:
-        id:
-          type: string
-          description: The property key identifier.
-          example: abc123
-        displayName:
-          type: string
-          description: The human-readable display name of the property.
-          example: Production Service
-        type:
-          type: string
-          description: The data type of the property value.
-          example: STANDARD
-    ManagementZone:
-      type: object
-      description: A management zone reference.
-      properties:
-        id:
-          type: string
-          description: The unique identifier of the management zone.
-          example: abc123
-        name:
-          type: string
-          description: The display name of the management zone.
-          example: Production Service
-    EntityLookupRequest:
-      type: object
-      description: Request body for looking up an entity by name and type.
-      required:
-      - name
-      - type
-      properties:
-        name:
-          type: string
-          description: The display name of the entity to look up.
-          example: Production Service
-        type:
-          type: string
-          description: The entity type to search within, e.g., SERVICE, HOST.
-          example: STANDARD
     Error:
       type: object
       description: Details of an API error.
@@ -529,21 +396,57 @@ components:
             message: Example description.
             parameterLocation: example-value
             location: example-value
-    EntityTypeRelationship:
+    ConstraintViolation:
       type: object
-      description: Describes a relationship type for an entity type.
+      description: Details of a single constraint violation in a request.
+      properties:
+        path:
+          type: string
+          description: The JSON path to the field that caused the violation.
+          example: example-value
+        message:
+          type: string
+          description: A description of the constraint violation.
+          example: Example description.
+        parameterLocation:
+          type: string
+          description: The location of the violating parameter (QUERY, PATH, BODY).
+          example: example-value
+        location:
+          type: string
+          description: The location detail for the violation.
+          example: example-value
+    EntityTypeProperty:
+      type: object
+      description: Describes a single property of an entity type.
       properties:
         id:
           type: string
-          description: The relationship type identifier, e.g., runsOn.
+          description: The property key identifier.
           example: abc123
-        toTypes:
-          type: array
-          description: The entity types that can participate in this relationship.
-          items:
-            type: string
-          example:
-          - STANDARD
+        displayName:
+          type: string
+          description: The human-readable display name of the property.
+          example: Production Service
+        type:
+          type: string
+          description: The data type of the property value.
+          example: STANDARD
+    EntityLookupRequest:
+      type: object
+      description: Request body for looking up an entity by name and type.
+      required:
+      - name
+      - type
+      properties:
+        name:
+          type: string
+          description: The display name of the entity to look up.
+          example: Production Service
+        type:
+          type: string
+          description: The entity type to search within, e.g., SERVICE, HOST.
+          example: STANDARD
     Entity:
       type: object
       description: Represents a monitored entity in Dynatrace. Entities are the components of your monitored environment such as services, hosts, processes, and applications. Each entity has a unique ID, a type, properties, tags, and relationships to other entities.
@@ -609,41 +512,6 @@ components:
             items:
               type: string
           example: {}
-    EntityTypeCollection:
-      type: object
-      description: A paginated collection of entity type definitions.
-      properties:
-        nextPageKey:
-          type: string
-          description: Cursor for the next page of results.
-          nullable: true
-          example: example-value
-        totalCount:
-          type: integer
-          format: int64
-          description: The total number of entity types.
-          example: 500
-        types:
-          type: array
-          description: The list of entity types on this page.
-          items:
-            $ref: '#/components/schemas/EntityType'
-          example:
-          - type: STANDARD
-            displayName: Production Service
-            description: Example description.
-            properties:
-            - id: abc123
-              displayName: Production Service
-              type: STANDARD
-            fromRelationships:
-            - id: abc123
-              toTypes:
-              - {}
-            toRelationships:
-            - id: abc123
-              toTypes:
-              - {}
     EntityCollection:
       type: object
       description: A paginated collection of monitored entities.
@@ -684,13 +552,139 @@ components:
               name: Production Service
             toRelationships: {}
             fromRelationships: {}
+    EntityTypeRelationship:
+      type: object
+      description: Describes a relationship type for an entity type.
+      properties:
+        id:
+          type: string
+          description: The relationship type identifier, e.g., runsOn.
+          example: abc123
+        toTypes:
+          type: array
+          description: The entity types that can participate in this relationship.
+          items:
+            type: string
+          example:
+          - STANDARD
+    EntityTag:
+      type: object
+      description: A tag applied to a monitored entity.
+      properties:
+        context:
+          type: string
+          description: The origin context of the tag. For example, CONTEXTLESS, ENVIRONMENT, AWS, KUBERNETES, etc.
+          example: example-value
+        key:
+          type: string
+          description: The key of the tag.
+          example: example-value
+        value:
+          type: string
+          description: The value of the tag, if applicable.
+          nullable: true
+          example: example-value
+        stringRepresentation:
+          type: string
+          description: The full string representation of the tag as displayed in the Dynatrace UI, e.g., [KUBERNETES]app:my-service.
+          example: example-value
+    EntityType:
+      type: object
+      description: Defines an entity type including its display name, available properties, and supported relationship types.
+      properties:
+        type:
+          type: string
+          description: The entity type identifier, e.g., SERVICE.
+          example: STANDARD
+        displayName:
+          type: string
+          description: The human-readable display name of the entity type.
+          example: Production Service
+        description:
+          type: string
+          description: A description of what this entity type represents.
+          example: Example description.
+        properties:
+          type: array
+          description: The list of properties available for this entity type.
+          items:
+            $ref: '#/components/schemas/EntityTypeProperty'
+          example:
+          - id: abc123
+            displayName: Production Service
+            type: STANDARD
+        fromRelationships:
+          type: array
+          description: The relationship types where entities of this type are the source.
+          items:
+            $ref: '#/components/schemas/EntityTypeRelationship'
+          example:
+          - id: abc123
+            toTypes:
+            - {}
+        toRelationships:
+          type: array
+          description: The relationship types where entities of this type are the target.
+          items:
+            $ref: '#/components/schemas/EntityTypeRelationship'
+          example:
+          - id: abc123
+            toTypes:
+            - {}
+    ErrorEnvelope:
+      type: object
+      description: Error response envelope returned when a request fails.
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    EntityTypeCollection:
+      type: object
+      description: A paginated collection of entity type definitions.
+      properties:
+        nextPageKey:
+          type: string
+          description: Cursor for the next page of results.
+          nullable: true
+          example: example-value
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of entity types.
+          example: 500
+        types:
+          type: array
+          description: The list of entity types on this page.
+          items:
+            $ref: '#/components/schemas/EntityType'
+          example:
+          - type: STANDARD
+            displayName: Production Service
+            description: Example description.
+            properties:
+            - id: abc123
+              displayName: Production Service
+              type: STANDARD
+            fromRelationships:
+            - id: abc123
+              toTypes:
+              - {}
+            toRelationships:
+            - id: abc123
+              toTypes:
+              - {}
+    ManagementZone:
+      type: object
+      description: A management zone reference.
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the management zone.
+          example: abc123
+        name:
+          type: string
+          description: The display name of the management zone.
+          example: Production Service
   responses:
-    BadRequest:
-      description: Bad request — invalid query parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
     Unauthorized:
       description: Unauthorized — missing or invalid API token
       content:
@@ -699,6 +693,12 @@ components:
             $ref: '#/components/schemas/ErrorEnvelope'
     Forbidden:
       description: Forbidden — the API token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    BadRequest:
+      description: Bad request — invalid query parameters or request body
       content:
         application/json:
           schema:

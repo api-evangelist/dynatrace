@@ -309,6 +309,28 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    Error:
+      type: object
+      description: Details of an API error.
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error.
+          example: 500
+        message:
+          type: string
+          description: A human-readable description of the error.
+          example: Example description.
+        constraintViolations:
+          type: array
+          description: A list of constraint violations for validation errors (HTTP 400).
+          items:
+            $ref: '#/components/schemas/ConstraintViolation'
+          example:
+          - path: example-value
+            message: Example description.
+            parameterLocation: example-value
+            location: example-value
     ConstraintViolation:
       type: object
       description: Details of a single constraint violation in a request.
@@ -329,6 +351,27 @@ components:
           type: string
           description: The location detail for the violation.
           example: example-value
+    LogRecordSearchResult:
+      type: object
+      description: The result of a log search query.
+      properties:
+        nextSliceKey:
+          type: string
+          description: The cursor for the next page of results. Null if all results have been returned.
+          nullable: true
+          example: example-value
+        results:
+          type: array
+          description: The list of log records matching the search query on this page.
+          items:
+            $ref: '#/components/schemas/LogRecord'
+          example:
+          - timestamp: example-value
+            content: example-value
+            severity: HIGH
+            log.source: example-value
+            dt.entity.host: example-value
+            additionalFields: {}
     LogAggregateResult:
       type: object
       description: The result of a log aggregation query.
@@ -341,41 +384,6 @@ components:
           example:
           - groupByFields: {}
             count: 500
-    ErrorEnvelope:
-      type: object
-      description: Error response envelope returned when a request fails.
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-    LogRecord:
-      type: object
-      description: A log record retrieved from the Dynatrace Grail data lakehouse. Contains the original log content plus enriched metadata added by Dynatrace during ingestion and processing.
-      properties:
-        timestamp:
-          type: string
-          description: The timestamp of the log record in ISO 8601 format.
-          example: example-value
-        content:
-          type: string
-          description: The log message content.
-          example: example-value
-        severity:
-          type: string
-          description: The severity level of the log record.
-          example: HIGH
-        log.source:
-          type: string
-          description: The source identifier of the log record.
-          example: example-value
-        dt.entity.host:
-          type: string
-          description: The associated host entity ID.
-          example: example-value
-        additionalFields:
-          type: object
-          description: Additional fields present in the log record beyond the standard set. Content varies based on what was ingested and how OpenPipeline processed the record.
-          additionalProperties: true
-          example: {}
     LogExportResult:
       type: object
       description: The result of a log export operation, containing a page of records.
@@ -412,49 +420,41 @@ components:
           format: int64
           description: The number of log records in this aggregation group.
           example: 500
-    LogRecordSearchResult:
+    LogRecord:
       type: object
-      description: The result of a log search query.
+      description: A log record retrieved from the Dynatrace Grail data lakehouse. Contains the original log content plus enriched metadata added by Dynatrace during ingestion and processing.
       properties:
-        nextSliceKey:
+        timestamp:
           type: string
-          description: The cursor for the next page of results. Null if all results have been returned.
-          nullable: true
+          description: The timestamp of the log record in ISO 8601 format.
           example: example-value
-        results:
-          type: array
-          description: The list of log records matching the search query on this page.
-          items:
-            $ref: '#/components/schemas/LogRecord'
-          example:
-          - timestamp: example-value
-            content: example-value
-            severity: HIGH
-            log.source: example-value
-            dt.entity.host: example-value
-            additionalFields: {}
-    Error:
-      type: object
-      description: Details of an API error.
-      properties:
-        code:
-          type: integer
-          description: The HTTP status code of the error.
-          example: 500
-        message:
+        content:
           type: string
-          description: A human-readable description of the error.
-          example: Example description.
-        constraintViolations:
-          type: array
-          description: A list of constraint violations for validation errors (HTTP 400).
-          items:
-            $ref: '#/components/schemas/ConstraintViolation'
-          example:
-          - path: example-value
-            message: Example description.
-            parameterLocation: example-value
-            location: example-value
+          description: The log message content.
+          example: example-value
+        severity:
+          type: string
+          description: The severity level of the log record.
+          example: HIGH
+        log.source:
+          type: string
+          description: The source identifier of the log record.
+          example: example-value
+        dt.entity.host:
+          type: string
+          description: The associated host entity ID.
+          example: example-value
+        additionalFields:
+          type: object
+          description: Additional fields present in the log record beyond the standard set. Content varies based on what was ingested and how OpenPipeline processed the record.
+          additionalProperties: true
+          example: {}
+    ErrorEnvelope:
+      type: object
+      description: Error response envelope returned when a request fails.
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
     LogIngestRecord:
       type: object
       description: A single log record to ingest into the Dynatrace Grail data lakehouse. The content field is required. Additional fields provide context for routing, filtering, and entity association.
@@ -492,12 +492,6 @@ components:
           description: The Dynatrace host entity ID to associate this log record with, e.g., HOST-1234567890ABCDEF. This enables correlation between logs and monitored infrastructure.
           example: example-value
   responses:
-    BadRequest:
-      description: Bad request — invalid query parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
     Unauthorized:
       description: Unauthorized — missing or invalid API token
       content:
@@ -506,6 +500,12 @@ components:
             $ref: '#/components/schemas/ErrorEnvelope'
     Forbidden:
       description: Forbidden — the API token lacks the required scope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    BadRequest:
+      description: Bad request — invalid query parameters or request body
       content:
         application/json:
           schema:

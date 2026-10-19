@@ -1,12 +1,12 @@
 openapi: 3.2.0
 info:
-  title: Dynatrace Account Management Platform Tokens API
+  title: Dynatrace Account Management Platform tokens API
   description: The enterprise management API for Dynatrace SaaS enables automation of operational tasks related to user access and environment lifecycle management.
   version: '1.0'
   contact: {}
 servers: []
 tags:
-- name: Platform Tokens
+- name: Platform tokens
   description: Manage platform tokens for account users.
 paths:
   /iam/v1/accounts/{account-uuid}/platform-tokens:
@@ -54,7 +54,7 @@ paths:
       - bearer: []
       summary: Returns platform tokens within account
       tags:
-      - Platform Tokens
+      - Platform tokens
       x-token-scopes:
       - platform-token:tokens:manage
     post:
@@ -84,7 +84,7 @@ paths:
       - bearer: []
       summary: Creates platform token for user
       tags:
-      - Platform Tokens
+      - Platform tokens
       x-token-scopes:
       - platform-token:tokens:manage
   /iam/v1/accounts/{account-uuid}/platform-tokens/{platform-token-id}:
@@ -109,7 +109,7 @@ paths:
       - bearer: []
       summary: Deletes platform token
       tags:
-      - Platform Tokens
+      - Platform tokens
       x-token-scopes:
       - platform-token:tokens:manage
   /iam/v1/accounts/{account-uuid}/platform-tokens/{platform-token-id}/expiration-date:
@@ -141,7 +141,7 @@ paths:
       - bearer: []
       summary: Updates platform token expiration data
       tags:
-      - Platform Tokens
+      - Platform tokens
       x-token-scopes:
       - platform-token:tokens:manage
   /iam/v1/accounts/{account-uuid}/platform-tokens/{platform-token-id}/status:
@@ -173,21 +173,24 @@ paths:
       - bearer: []
       summary: Updates platform token status
       tags:
-      - Platform Tokens
+      - Platform tokens
       x-token-scopes:
       - platform-token:tokens:manage
 components:
   schemas:
-    PlatformTokenStatusUpdateDto:
+    PlatformTokenSecret:
       type: object
       properties:
-        status:
+        name:
           type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
+        tokenId:
+          type: string
+        token:
+          type: string
       required:
-      - status
+      - name
+      - tokenId
+      - token
     PlatformTokenPageDto:
       type: object
       properties:
@@ -209,56 +212,27 @@ components:
       - pageNumber
       - total
       - results
-    PlatformTokenSecret:
+    PlatformTokenStatusUpdateDto:
       type: object
       properties:
-        name:
+        status:
           type: string
-        tokenId:
-          type: string
-        token:
-          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
       required:
-      - name
-      - tokenId
-      - token
-    GeneratePlatformTokenForm:
+      - status
+    PlatformTokenMetadataDto:
       type: object
       properties:
-        name:
-          type: string
-        scope:
-          type: array
-          items:
-            type: string
-        resource:
-          type: array
-          items:
-            type: string
-        tags:
-          type: array
-          items:
-            type: string
-        expirationDate:
+        lastUsedAt:
           format: date-time
           type: string
-        userUuid:
+        lastClientIp:
           type: string
       required:
-      - name
-      - scope
-      - resource
-      - tags
-      - expirationDate
-      - userUuid
-    PlatformTokenExpirationDateDto:
-      type: object
-      properties:
-        expirationDate:
-          format: date-time
-          type: string
-      required:
-      - expirationDate
+      - lastUsedAt
+      - lastClientIp
     PlatformTokenDto:
       type: object
       properties:
@@ -300,17 +274,43 @@ components:
       - expirationDate
       - userUuid
       - metadata
-    PlatformTokenMetadataDto:
+    GeneratePlatformTokenForm:
       type: object
       properties:
-        lastUsedAt:
+        name:
+          type: string
+        scope:
+          type: array
+          items:
+            type: string
+        resource:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
+        expirationDate:
           format: date-time
           type: string
-        lastClientIp:
+        userUuid:
           type: string
       required:
-      - lastUsedAt
-      - lastClientIp
+      - name
+      - scope
+      - resource
+      - tags
+      - expirationDate
+      - userUuid
+    PlatformTokenExpirationDateDto:
+      type: object
+      properties:
+        expirationDate:
+          format: date-time
+          type: string
+      required:
+      - expirationDate
   securitySchemes:
     bearer:
       scheme: bearer

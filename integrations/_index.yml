@@ -146,3 +146,184 @@
       latest_authorization: '2020-06-16'
   status: not-a-workflow
   arazzo: null
+- slug: dynatrace-go-module-proxy
+  label: Go module proxy
+  partner_name: Go module proxy
+  category: official SDK (Go)
+  type: register
+  channel: package-registry
+  evidence: https://pkg.go.dev/github.com/Dynatrace/Dynatrace-Operator
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: Go module proxy (public registry JSON)
+    spec_file: null
+    language: Go
+    packages:
+    - name: github.com/Dynatrace/Dynatrace-Operator
+      version: v1.11.0
+      released: '2026-10-01'
+      released_field: Time
+      lapsed: false
+      page: https://pkg.go.dev/github.com/Dynatrace/Dynatrace-Operator
+      repo_leg: github-org:dynatrace
+      publisher_leg: org:dynatrace
+      matched_by: github-org
+    - name: github.com/Dynatrace/dynatrace-configuration-as-code/v2
+      version: v2.30.1
+      released: '2026-10-07'
+      released_field: Time
+      lapsed: false
+      page: https://pkg.go.dev/github.com/Dynatrace/dynatrace-configuration-as-code/v2
+      repo_leg: github-org:dynatrace
+      publisher_leg: org:dynatrace
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
+- slug: dynatrace-maven-central
+  label: Maven Central
+  partner: maven-central
+  partner_name: Maven Central
+  category: official SDK (Java/JVM)
+  type: register
+  channel: package-registry
+  evidence: https://central.sonatype.com/artifact/com.dynatrace.oneagent.sdk.java/oneagent-sdk
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: Maven Central (public registry JSON)
+    spec_file: null
+    language: Java/JVM
+    packages:
+    - name: com.dynatrace.oneagent.sdk.java:oneagent-sdk
+      version: 1.9.0
+      released: '2023-03-27'
+      released_field: lastUpdated
+      lapsed: true
+      page: https://central.sonatype.com/artifact/com.dynatrace.oneagent.sdk.java/oneagent-sdk
+      repo_leg: github-org:dynatrace
+      publisher_leg: groupId:dynatrace.com
+      matched_by: domain+name-among-holders
+    current: false
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
+- slug: dynatrace-npm-registry
+  label: npm registry
+  partner: npm
+  partner_name: npm registry
+  category: official SDK (JavaScript/TypeScript)
+  type: register
+  channel: package-registry
+  evidence: https://www.npmjs.com/package/@dynatrace-sdk/navigation
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: '@dynatrace-sdk/navigation'
+      version: 2.3.1
+      released: '2026-08-13'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@dynatrace-sdk/navigation
+      repo_leg: domain:dynatrace.com
+      publisher_leg: email:dynatrace.com
+      matched_by: domain+name-among-holders
+    - name: '@dynatrace/oneagent-sdk'
+      version: 1.5.0
+      released: '2023-02-23'
+      released_field: modified
+      lapsed: true
+      page: https://www.npmjs.com/package/@dynatrace/oneagent-sdk
+      repo_leg: domain:dynatrace.com
+      publisher_leg: email:dynatrace.com
+      matched_by: domain+name-among-holders
+    - name: '@dynatrace/strato-components-preview'
+      version: 3.4.1
+      released: '2026-06-03'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@dynatrace/strato-components-preview
+      repo_leg: domain:dynatrace.com
+      publisher_leg: email:dynatrace.com
+      matched_by: domain+name-among-holders
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
+- slug: dynatrace-nuget-gallery
+  label: NuGet Gallery
+  partner: nuget
+  partner_name: NuGet Gallery
+  category: official SDK (.NET)
+  type: register
+  channel: package-registry
+  evidence: https://www.nuget.org/packages/Dynatrace.OneAgent.Sdk
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: NuGet Gallery (public registry JSON)
+    spec_file: null
+    language: .NET
+    packages:
+    - name: Dynatrace.OneAgent.Sdk
+      version: 1.8.0
+      released: '2021-12-13'
+      released_field: published
+      lapsed: true
+      page: https://www.nuget.org/packages/Dynatrace.OneAgent.Sdk
+      repo_leg: github-org:dynatrace
+      publisher_leg: org:dynatrace
+      matched_by: github-org
+    current: false
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
+- slug: dynatrace-pypi
+  label: PyPI
+  partner: pypi
+  partner_name: PyPI
+  category: official SDK (Python)
+  type: register
+  channel: package-registry
+  evidence: https://pypi.org/project/oneagent-sdk/
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: PyPI (public registry JSON)
+    spec_file: null
+    language: Python
+    packages:
+    - name: oneagent-sdk
+      version: 1.5.2.20260107.153442
+      released: '2026-01-07'
+      released_field: upload_time
+      lapsed: false
+      page: https://pypi.org/project/oneagent-sdk/
+      repo_leg: github-org:dynatrace
+      publisher_leg: email:dynatrace.com
+      matched_by: domain+name-among-holders
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null

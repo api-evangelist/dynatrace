@@ -374,3 +374,49 @@
     detected: '2026-10-20'
   status: not-a-workflow
   arazzo: null
+- slug: dynatrace-agent-skills-own-github-org
+  label: Agent Skills (own GitHub org)
+  partner_name: Agent Skills (own GitHub org)
+  category: Agent Skills package
+  type: register
+  channel: provider-built
+  evidence: https://github.com/Dynatrace/dynatrace-for-ai
+  source: edge
+  relationship: compatible
+  contract_reference:
+    register: 'provider''s own GitHub org (GitHub REST API: repo + git tree holds SKILL.md)'
+    spec_file: null
+    standard: Agent Skills (agentskills.io)
+    role: agent-skills-repo
+    matched_org: dynatrace
+    matched_by: org-profile-domain:dynatrace.com
+    detected_by: sweep-agent-skills.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
+- slug: dynatrace-skills-sh
+  label: skills.sh
+  partner_name: skills.sh
+  category: Agent Skills register
+  type: register
+  channel: standard-directory
+  evidence: https://www.skills.sh/dynatrace/dynatrace-for-ai
+  source: edge
+  relationship: compatible
+  contract_reference:
+    register: skills.sh (public sitemap / list)
+    spec_file: null
+    standard: Agent Skills (agentskills.io)
+    role: agent-skills-listing
+    matched_org: dynatrace
+    matched_by: org-profile-domain:dynatrace.com
+    sample_skills:
+    - dt-alerting
+    - dt-app-dashboards
+    - dt-app-notebooks
+    - dt-dql-essentials
+    - dt-js-runtime
+    detected_by: sweep-agent-skills.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null

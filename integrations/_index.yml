@@ -280,32 +280,6 @@
       latest_authorization: '2020-06-16'
   status: not-a-workflow
   arazzo: null
-- slug: dynatrace-microsoft-sentinel-own
-  label: Microsoft Sentinel (own)
-  partner: microsoft-sentinel
-  partner_name: Microsoft Sentinel (own)
-  category: Security - Others
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://github.com/Azure/Azure-Sentinel/tree/master/Solutions/Dynatrace
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
-- slug: dynatrace-power-bi-own
-  label: Power BI (own)
-  partner: power-bi
-  partner_name: Power BI (own)
-  category: Other
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://learn.microsoft.com/en-us/power-query/connectors/dynatrace-grail-dql
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
 - slug: dynatrace-cncf-cloud-native-landscape
   label: CNCF (Cloud Native Landscape)
   partner: cncf
@@ -418,5 +392,70 @@
     - dt-js-runtime
     detected_by: sweep-agent-skills.py
     detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
+- slug: dynatrace-microsoft-sentinel-own
+  label: Microsoft Sentinel (own)
+  partner: microsoft-sentinel
+  partner_name: Microsoft Sentinel (own)
+  category: Security - Others
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://github.com/Azure/Azure-Sentinel/tree/master/Solutions/Dynatrace
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: dynatrace-power-bi-own
+  label: Power BI (own)
+  partner: power-bi
+  partner_name: Power BI (own)
+  category: Other
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://learn.microsoft.com/en-us/power-query/connectors/dynatrace-grail-dql
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: dynatrace-docker-hub-docker-verified-publisher
+  label: Docker Hub (docker-verified-publisher)
+  partner: docker-hub
+  partner_name: Docker Hub (docker-verified-publisher)
+  category: Docker Verified Publisher
+  type: marketplace
+  marketplace: docker-verified-publisher
+  channel: partner-built
+  evidence: https://hub.docker.com/u/dynatrace
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: dynatrace-eclipse-foundation-open-vsx
+  label: Eclipse Foundation (open-vsx)
+  partner: eclipse
+  partner_name: Eclipse Foundation (open-vsx)
+  category: IDE / developer extension marketplace listing
+  type: marketplace
+  marketplace: open-vsx
+  channel: partner-built
+  evidence: https://open-vsx.org/namespace/Dynatrace
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: dynatrace-vs-code-marketplace-vs-code-marketplace
+  label: VS Code Marketplace (vs-code-marketplace)
+  partner: vs-code-marketplace
+  partner_name: VS Code Marketplace (vs-code-marketplace)
+  category: IDE / developer extension marketplace listing
+  type: marketplace
+  marketplace: vs-code-marketplace
+  channel: partner-built
+  evidence: https://marketplace.visualstudio.com/publishers/dynatrace
+  source: edge
+  relationship: platform-app
   status: not-a-workflow
   arazzo: null

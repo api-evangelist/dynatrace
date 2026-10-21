@@ -34,6 +34,15 @@ checked:
 - vs-code-marketplace/integrations/vs-code-marketplace-integration-edges.yml
 - opentofu/integrations/opentofu-integration-edges.yml
 - terraform/integrations/terraform-integration-edges.yml
+- atlassian/integrations/atlassian-integration-edges.yml
+- https://directory.github.partners/sitemap.xml
+- https://docs.github.com/en/apps/github-marketplace/github-marketplace-overview/about-marketplace-badges
+- https://docs.github.com/en/code-security/reference/secret-security/supported-secret-scanning-patterns
+- https://docs.github.com/en/code-security/tutorials/secret-scanning-partner-program
+- https://github.com/marketplace?type=actions
+- https://github.com/marketplace?type=apps
+- https://github.com/partners/technology-partners
+- https://partner.github.com/
 marketplace_apps:
 - marketplace: own
   channel: partner-built
@@ -616,6 +625,58 @@ edges:
   category: infrastructure-as-code provider registry listing
   badges:
   - Verified publisher (Terraform partner tier)
+- partner_name: Atlassian (own)
+  partner: atlassian
+  partner_match: mirror
+  mirror_match: domain+name-among-holders
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.atlassian.com/vendors/1214826/dynatrace
+  mirror_of: atlassian/integrations/atlassian-integration-edges.yml
+  apps:
+  - Dynatrace Integration for Opsgenie
+  listing_count: 1
+  detected: '2026-10-21'
+  detected_by: mirror-platform-listings.py
+  category: Workflow
+- partner_name: GitHub secret scanning partner program
+  partner: github
+  partner_match: register-name
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://docs.github.com/en/code-security/reference/secret-security/supported-secret-scanning-patterns#supported-provider-patterns
+  category: GitHub platform partnership (security)
+  contract_reference:
+    register: GitHub secret scanning partner program (docs.github.com supported-secret-scanning-patterns, 'Partner'
+      column = isPublic in the page's own pattern data)
+    standard: GitHub secret scanning partner program
+    spec_file: null
+    role: secret-scanning-partner
+    registered_name: Dynatrace
+    register_id: https://docs.github.com/en/code-security/reference/secret-security/supported-secret-scanning-patterns#supported-provider-patterns
+    matched_domain: null
+    matched_by: register-name
+    register_name_note: register-name 'dynatrace' = dynatrace; wikidata P856 dynatrace.com agrees or unheld
+    token_types:
+    - dynatrace_api_token
+    - dynatrace_internal_token
+    context:
+      push_protection: 2
+      validity_check: 0
+    signal_note: 'participation only: GitHub notifies the provider when its token leaks publicly (the provider runs
+      a verification endpoint for the programme); token types and counts are context, never counted'
+    detected_by: sweep-github-marketplace.py
+    detected: '2026-10-21'
+    identity_source: register-name
+    identity_note: register gave only the name; exact normalised match to the repo's apis.yml name, one repo, Wikidata
+      P856 not contradicting (Kin 2026-10-20 decision 2)
+  detected_by: sweep-github-marketplace.py
+  first_seen: '2026-10-21'
 source:
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/ecosystem/vendors.yaml
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/registry/

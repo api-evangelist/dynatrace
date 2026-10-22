@@ -52,6 +52,7 @@ checked:
 - https://play.google.com/sdks
 - https://search.maven.org/solrsearch/select
 - google-play/integrations/google-play-integration-edges.yml
+- backstage/integrations/backstage-integration-edges.yml
 marketplace_apps:
 - marketplace: own
   channel: partner-built
@@ -756,6 +757,23 @@ edges:
   category: mobile SDK (analytics)
   publisher_verified:
   - Registered in Google Play SDK Console
+- partner_name: Backstage (own)
+  partner: backstage
+  partner_match: mirror
+  mirror_match: domain+name-among-holders
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://github.com/backstage/backstage/tree/d72327203d5d0812bee2eace8688fa5ab22867be/microsite/data/plugins/dynatrace.yaml
+  mirror_of: backstage/integrations/backstage-integration-edges.yml
+  apps:
+  - Dynatrace
+  listing_count: 1
+  detected: '2026-10-22'
+  detected_by: mirror-platform-listings.py
+  category: Monitoring
 source:
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/ecosystem/vendors.yaml
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/registry/

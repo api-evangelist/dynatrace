@@ -574,6 +574,144 @@
     identity_source: register website (CMVP certificate Vendor panel)
   status: not-a-workflow
   arazzo: null
+- slug: dynatrace-jenkins-own
+  label: Jenkins (own)
+  partner: jenkins
+  partner_name: Jenkins (own)
+  category: Jenkins plugin
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://plugins.jenkins.io/dynatrace-dashboard/
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: dynatrace-cd-foundation-continuous-delivery-foundation-landscape
+  label: CD Foundation (Continuous Delivery Foundation landscape)
+  partner: continuous-delivery-foundation
+  partner_name: CD Foundation (Continuous Delivery Foundation landscape)
+  category: Continuous delivery foundation membership / landscape
+  type: register
+  channel: standard-directory
+  evidence: https://landscape.cd.foundation/
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: CD Foundation landscape (landscape.cd.foundation/data/full.json)
+    spec_file: null
+    standard: Continuous Delivery Foundation
+    role: cdf-member (General)
+    registered_name: Dynatrace
+    registered_names:
+    - Dynatrace
+    website: https://www.dynatrace.com/
+    matched_domain: dynatrace.com
+    matched_by: domain+name-among-holders
+    member_tier: General
+    landscape_categories:
+    - Observability and Analysis / Monitoring and Logging
+    cdf_projects: []
+    signal_note: 'participation only: CDF membership or a landscape listing is standard-participant evidence, never
+      depth; tier, categories and entries are context, never counted'
+    detected_by: sweep-jenkins-cd-foundation-plugins.py
+    detected: '2026-10-22'
+  status: not-a-workflow
+  arazzo: null
+- slug: dynatrace-tx-ramp
+  label: TX-RAMP
+  partner_name: TX-RAMP
+  category: Texas state cloud security certification (TX-RAMP)
+  type: contract
+  channel: regulator-register
+  evidence: https://dir.texas.gov/resource-library-item/tx-ramp-certified-cloud-products
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: TX-RAMP Certified Cloud Products (Texas DIR)
+    standard: TX-RAMP
+    spec_file: null
+    role: tx-ramp-certified
+    register_file: https://dir.texas.gov/sites/default/files/2026-10/Copy%20of%20TX-RAMP%20Certified%20Cloud%20Products_1.xlsx
+    registrations:
+    - certification_id: TX1566384
+      product: Dynatrace
+      registered_vendor: Dynatrace
+      certification_level: Level 2
+      cloud_categories:
+      - SaaS
+      certification_path: TX-RAMP Fast Track
+      expires: '2027-11-18'
+      lapsed: false
+      matched_domain: dynatrace.com
+      matched_by: domain+name-among-holders
+    - certification_id: TX985439
+      product: Dynatrace for Government
+      registered_vendor: Dynatrace
+      certification_level: Level 2
+      cloud_categories:
+      - SaaS
+      certification_path: Certification Due to Existing Other RAMP-Certification
+      expires: null
+      lapsed: false
+      matched_domain: dynatrace.com
+      matched_by: domain+name-among-holders
+    identity: wikidata Q25048844 'Dynatrace' P856 https://www.dynatrace.com
+    identity_source: wikidata P856 (labelled provenance step; Kin 2026-10-15 decision 1)
+    signal_note: 'certified_products = one entry per cloud category (SaaS / PaaS / IaaS) the vendor holds a TX-RAMP
+      certification in, never per product; products are context, never counted. certification_level = the highest
+      level in that category; lapsed: true when every product in the category is past its expiry date. partner_tier
+      = the highest CURRENT level'
+    certified_products:
+    - product: SaaS
+      product_type: SaaS
+      standard: TX-RAMP
+      certification_level: Level 2
+      lapsed: false
+    detected_by: sweep-tx-ramp-certified-cloud.py
+    detected: '2026-10-22'
+  status: not-a-workflow
+  arazzo: null
+- slug: dynatrace-pub-dev
+  label: pub.dev
+  partner: pub-dev
+  partner_name: pub.dev
+  category: official SDK (Dart/Flutter)
+  type: register
+  channel: package-registry
+  evidence: https://pub.dev/packages/dynatrace_flutter_plugin
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: pub.dev (public registry JSON)
+    spec_file: null
+    language: Dart/Flutter
+    packages:
+    - name: dynatrace_flutter_plugin
+      version: 3.349.1
+      released: '2026-10-13'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/dynatrace_flutter_plugin
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:dynatrace.com
+      matched_by: domain+name-among-holders
+    - name: dynatrace_flutter_plugin_dio
+      version: 3.349.1
+      released: '2026-10-13'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/dynatrace_flutter_plugin_dio
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:dynatrace.com
+      matched_by: domain+name-among-holders
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  status: not-a-workflow
+  arazzo: null
 - slug: dynatrace-microsoft-sentinel-own
   label: Microsoft Sentinel (own)
   partner: microsoft-sentinel
@@ -717,47 +855,29 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
-- slug: dynatrace-jenkins-own
-  label: Jenkins (own)
-  partner: jenkins
-  partner_name: Jenkins (own)
-  category: Jenkins plugin
+- slug: dynatrace-ansible-ansible-galaxy
+  label: Ansible (ansible-galaxy)
+  partner: ansible
+  partner_name: Ansible (ansible-galaxy)
+  category: configuration-management content listing (Ansible collection)
   type: marketplace
-  marketplace: own
+  marketplace: ansible-galaxy
   channel: partner-built
-  evidence: https://plugins.jenkins.io/dynatrace-dashboard/
+  evidence: https://galaxy.ansible.com/ui/repo/published/dynatrace/oneagent/
   source: edge
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
-- slug: dynatrace-cd-foundation-continuous-delivery-foundation-landscape
-  label: CD Foundation (Continuous Delivery Foundation landscape)
-  partner: continuous-delivery-foundation
-  partner_name: CD Foundation (Continuous Delivery Foundation landscape)
-  category: Continuous delivery foundation membership / landscape
-  type: register
-  channel: standard-directory
-  evidence: https://landscape.cd.foundation/
+- slug: dynatrace-chef-software-chef-supermarket
+  label: Chef Software (chef-supermarket)
+  partner: chef-software
+  partner_name: Chef Software (chef-supermarket)
+  category: configuration-management content listing (Chef cookbook)
+  type: marketplace
+  marketplace: chef-supermarket
+  channel: partner-built
+  evidence: https://supermarket.chef.io/cookbooks/dynatrace
   source: edge
-  relationship: standard-participant
-  contract_reference:
-    register: CD Foundation landscape (landscape.cd.foundation/data/full.json)
-    spec_file: null
-    standard: Continuous Delivery Foundation
-    role: cdf-member (General)
-    registered_name: Dynatrace
-    registered_names:
-    - Dynatrace
-    website: https://www.dynatrace.com/
-    matched_domain: dynatrace.com
-    matched_by: domain+name-among-holders
-    member_tier: General
-    landscape_categories:
-    - Observability and Analysis / Monitoring and Logging
-    cdf_projects: []
-    signal_note: 'participation only: CDF membership or a landscape listing is standard-participant evidence, never
-      depth; tier, categories and entries are context, never counted'
-    detected_by: sweep-jenkins-cd-foundation-plugins.py
-    detected: '2026-10-22'
+  relationship: platform-app
   status: not-a-workflow
   arazzo: null

@@ -7,50 +7,50 @@ artifacts:
     method: generated
     evidence: declared in the artifact
   arazzo/dynatrace-account-access-audit-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/dynatrace-annotate-deployment-event-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/dynatrace-entity-dependency-map-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/dynatrace-entity-type-discovery-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/dynatrace-error-log-investigation-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/dynatrace-export-logs-for-siem-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/dynatrace-ingest-and-search-logs-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/dynatrace-ingest-and-verify-metric-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/dynatrace-metric-threshold-alert-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/dynatrace-onboard-account-user-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/dynatrace-problem-comment-lifecycle-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/dynatrace-problem-comment-thread-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/dynatrace-problem-triage-and-close-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/dynatrace-service-health-snapshot-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   arazzo/dynatrace-service-problem-lookup-workflow.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
   asyncapi/dynatrace-problems-asyncapi.yml:
     method: unknown
     evidence: no authorship recorded
@@ -85,11 +85,11 @@ artifacts:
     method: derived
     evidence: openapi/dynatrace-entities-api
   collections/dynatrace-environments-api.opencollection.json:
-    method: derived
-    evidence: openapi/dynatrace-environments-api
+    method: unknown
+    evidence: no authorship recorded
   collections/dynatrace-environments-api.postman_collection.json:
-    method: derived
-    evidence: openapi/dynatrace-environments-api
+    method: unknown
+    evidence: no authorship recorded
   collections/dynatrace-events-api-v2.opencollection.json:
     method: unknown
     evidence: no authorship recorded
@@ -103,11 +103,11 @@ artifacts:
     method: derived
     evidence: openapi/dynatrace-events-api
   collections/dynatrace-groups-api.opencollection.json:
-    method: derived
-    evidence: openapi/dynatrace-groups-api
+    method: unknown
+    evidence: no authorship recorded
   collections/dynatrace-groups-api.postman_collection.json:
-    method: derived
-    evidence: openapi/dynatrace-groups-api
+    method: unknown
+    evidence: no authorship recorded
   collections/dynatrace-log-monitoring-api-v2.opencollection.json:
     method: unknown
     evidence: no authorship recorded
@@ -133,11 +133,11 @@ artifacts:
     method: derived
     evidence: openapi/dynatrace-metrics-api
   collections/dynatrace-permissions-api.opencollection.json:
-    method: derived
-    evidence: openapi/dynatrace-permissions-api
+    method: unknown
+    evidence: no authorship recorded
   collections/dynatrace-permissions-api.postman_collection.json:
-    method: derived
-    evidence: openapi/dynatrace-permissions-api
+    method: unknown
+    evidence: no authorship recorded
   collections/dynatrace-problems-api-v2.opencollection.json:
     method: unknown
     evidence: no authorship recorded
@@ -151,11 +151,11 @@ artifacts:
     method: derived
     evidence: openapi/dynatrace-problems-api
   collections/dynatrace-users-api.opencollection.json:
-    method: derived
-    evidence: openapi/dynatrace-users-api
+    method: unknown
+    evidence: no authorship recorded
   collections/dynatrace-users-api.postman_collection.json:
-    method: derived
-    evidence: openapi/dynatrace-users-api
+    method: unknown
+    evidence: no authorship recorded
   components/dynatrace-components.yml:
     method: searched
     evidence: declared in the artifact
@@ -555,6 +555,15 @@ artifacts:
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
+  hosts/dynatrace-hosts.yml:
+    method: derived
+    evidence: declared in the artifact
+  integrations/_index.yml:
+    method: generated
+    evidence: carries an API Evangelist house phrase
+  integrations/dynatrace-integration-edges.yml:
+    method: searched
+    evidence: declared in the artifact
   json-ld/dynatrace-account-management-api-context.jsonld:
     method: unknown
     evidence: no authorship recorded
@@ -648,6 +657,9 @@ artifacts:
   json-schema/account-management-api-user-schema.json:
     method: unknown
     evidence: no authorship recorded
+  json-schema/dynatrace-account-limits-page-schema.json:
+    method: unknown
+    evidence: no authorship recorded
   json-schema/dynatrace-account-management-environment-collection-schema.json:
     method: unknown
     evidence: no authorship recorded
@@ -682,6 +694,18 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   json-schema/dynatrace-account-management-user-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-append-level-policy-binding-for-group-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-audits-by-account-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-cluster-list-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-create-or-update-level-policy-request-dto-schema.json:
     method: unknown
     evidence: no authorship recorded
   json-schema/dynatrace-entities-v2-constraint-violation-schema.json:
@@ -720,6 +744,12 @@ artifacts:
   json-schema/dynatrace-entities-v2-management-zone-schema.json:
     method: unknown
     evidence: no authorship recorded
+  json-schema/dynatrace-environment-list-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-environment-resource-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
   json-schema/dynatrace-events-v2-constraint-violation-schema.json:
     method: unknown
     evidence: no authorship recorded
@@ -745,6 +775,45 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   json-schema/dynatrace-events-v2-event-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-external-service-user-with-group-uuid-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-external-service-users-page-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-field-values-request-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-forecast-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-generate-platform-token-form-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-get-group-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-group-list-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-group-user-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-group-user-list-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-insert-group-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-ip-config-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-level-limits-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-level-policy-dto-schema.json:
     method: unknown
     evidence: no authorship recorded
   json-schema/dynatrace-log-monitoring-v2-constraint-violation-schema.json:
@@ -807,6 +876,48 @@ artifacts:
   json-schema/dynatrace-metrics-v2-metric-series-schema.json:
     method: unknown
     evidence: no authorship recorded
+  json-schema/dynatrace-notification-list-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-notification-query-params-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-notification-v2-list-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-paginated-environment-breakdown-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-paginated-field-value-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-permission-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-permissions-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-permissions-group-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-platform-token-expiration-date-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-platform-token-page-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-platform-token-secret-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-platform-token-status-update-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-policy-boundary-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-policy-boundary-overview-schema.json:
+    method: unknown
+    evidence: no authorship recorded
   json-schema/dynatrace-problem-schema.json:
     method: unknown
     evidence: no authorship recorded
@@ -847,6 +958,54 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   json-schema/dynatrace-problems-v2-problem-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-put-group-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-rate-card-summary-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-region-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-rest-wif-service-user-mapping-form-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-rest-wif-service-user-mapping-list-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-rest-wif-service-user-mapping-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-rest-wif-trust-policy-form-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-rest-wif-trust-policy-list-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-rest-wif-trust-policy-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-service-user-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-subscription-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-subscription-environment-cost-list-v3-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-subscription-environment-usage-list-v3-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-time-zone-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-user-email-dto-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/dynatrace-user-list-dto-schema.json:
     method: unknown
     evidence: no authorship recorded
   json-schema/entities-api-v2-constraint-violation-schema.json:
@@ -1374,127 +1533,7 @@ artifacts:
   json-structure/problems-webhook-notification-config-structure.json:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-24T161608.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T125852.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T133943.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T143147.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T154045.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-26T215308.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T094438.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T103455.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T123021.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T132314.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T140727.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-28T221322.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T213958.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T230545.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T203505.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T220315.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-31T223420.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T063623.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T210448.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T222808.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T224043.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T161828.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T174231.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T062714.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T212454.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T224856.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T055819.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T072335.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T144739.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T195450.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T211839.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T011047.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T224210.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T200636.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T213054.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T214843.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T232836.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T204815.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T222408.yml:
+  kin/checks-2026-10-11T110117.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-12T062655.yml:
@@ -1578,9 +1617,27 @@ artifacts:
   kin/score-2026-09-24T161608.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T210408.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T232841.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T000835.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T024842.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-11T110117.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/dynatrace-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
+  llms/dynatrace-llms-provenance.yml:
+    method: searched
+    evidence: 'derive-llms-provenance.py: harvested'
   llms/dynatrace-llms.txt:
     method: searched
     evidence: 'derive-llms-provenance.py: harvested'
@@ -1590,10 +1647,6 @@ artifacts:
   mcp/dynatrace-tool-crosswalk.yml:
     method: derived
     evidence: declared in the artifact
-  openapi/_original/dynatrace-account-management-api-openapi.yml:
-    method: harvested
-    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
-      to the provider's source is unverified
   openapi/_original/dynatrace-entities-api-v2-openapi.yml:
     method: harvested
     evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
@@ -1610,38 +1663,35 @@ artifacts:
     method: harvested
     evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
       to the provider's source is unverified
+  openapi/_original/dynatrace-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://api.dynatrace.com/openapi.json (sha256 d7d0fd9fcaa6, fetched 2026-10-19)
   openapi/_original/dynatrace-problems-api-v2-openapi.yml:
     method: harvested
     evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
       to the provider's source is unverified
   openapi/dynatrace-account-audits-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/dynatrace-account-limits-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/dynatrace-account-settings-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/dynatrace-dynatrace-platform-subscription-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/dynatrace-entities-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/dynatrace-environment-management-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
-  openapi/dynatrace-environments-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/dynatrace-events-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/dynatrace-group-management-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
-  openapi/dynatrace-groups-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/dynatrace-logs-api-openapi.yml:
@@ -1651,63 +1701,126 @@ artifacts:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/dynatrace-notifications-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/dynatrace-permission-management-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
-  openapi/dynatrace-permissions-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/dynatrace-platform-tokens-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/dynatrace-policy-management-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/dynatrace-problems-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/dynatrace-reference-data-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/dynatrace-service-user-management-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/dynatrace-user-management-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
-  openapi/dynatrace-users-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/dynatrace-workload-identity-federation-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  overlays/dynatrace-account-audits-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/dynatrace-account-limits-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/dynatrace-account-settings-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/dynatrace-dynatrace-platform-subscription-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/dynatrace-entities-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/dynatrace-entities-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/dynatrace-environment-management-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/dynatrace-environments-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/dynatrace-environments-overlay.yaml:
     method: generated
     evidence: declared in the artifact
+  overlays/dynatrace-events-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/dynatrace-events-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/dynatrace-group-management-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/dynatrace-groups-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/dynatrace-groups-overlay.yaml:
     method: generated
     evidence: declared in the artifact
+  overlays/dynatrace-logs-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/dynatrace-logs-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/dynatrace-metrics-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/dynatrace-metrics-overlay.yaml:
     method: generated
     evidence: declared in the artifact
+  overlays/dynatrace-notifications-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/dynatrace-permission-management-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/dynatrace-permissions-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/dynatrace-permissions-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/dynatrace-platform-tokens-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/dynatrace-policy-management-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/dynatrace-problems-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/dynatrace-problems-overlay.yaml:
     method: generated
     evidence: declared in the artifact
+  overlays/dynatrace-reference-data-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/dynatrace-service-user-management-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/dynatrace-user-management-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/dynatrace-users-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/dynatrace-users-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/dynatrace-workload-identity-federation-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   packages/dynatrace-packages.yml:
@@ -1737,10 +1850,16 @@ artifacts:
   rate-limits/dynatrace-rate-limits.yml:
     method: searched
     evidence: declared in the artifact
+  regulatory/dynatrace-regulatory-posture.yml:
+    method: unknown
+    evidence: no authorship recorded
   rules/dynatrace-asyncapi-spectral-rules.yml:
     method: generated
     evidence: declared in the artifact
   rules/dynatrace-jsonschema-spectral-rules.yml:
+    method: generated
+    evidence: declared in the artifact
+  rules/dynatrace-rules.yml:
     method: generated
     evidence: declared in the artifact
   rules/dynatrace-spectral-rules.yml:
@@ -1773,9 +1892,15 @@ artifacts:
   skills/dynatrace-triage-problem.md:
     method: generated
     evidence: declared in the artifact
+  vendors/dynatrace-vendors.yml:
+    method: unknown
+    evidence: no authorship recorded
   vocabulary/dynatrace-vocabulary.yaml:
     method: unknown
     evidence: no authorship recorded
+  vocabulary/dynatrace-vocabulary.yml:
+    method: derived
+    evidence: declared in the artifact
   well-known/dynatrace-openid-configuration.json:
     method: unknown
     evidence: no authorship recorded

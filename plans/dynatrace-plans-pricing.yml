@@ -1,0 +1,331 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-28'
+method: searched
+source: https://www.dynatrace.com/pricing/
+sources:
+- https://www.dynatrace.com/pricing/
+provenance:
+  tool: engine/economics/harvest_pricing.py
+  run: 20261028T120612
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: usage-other
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-28'
+  managed_tier: Foundation & Discovery
+published: true
+note: 'Dynatrace Platform Subscription: annual spend commitment drawn down at rate-card prices; unlimited
+  seats, no overage penalties (on-demand billed monthly at same rates).'
+plan_count: 19
+currency: USD
+plans:
+- name: Foundation & Discovery
+  price_text: $7 / mo per host*
+  price: 7
+  currency: USD
+  period: month
+  unit: host
+  included_quota: Basic host health indicators, topology detection, filesystem/OS services monitoring,
+    logs in context
+  overage: Billed at $0.01 per hour per host
+- name: Infrastructure Monitoring
+  price_text: $29 / mo per host*
+  price: 29
+  currency: USD
+  period: month
+  unit: host
+  included_quota: Everything in Foundation & Discovery plus process, disk, memory, network analysis, custom
+    metrics
+  overage: Billed at $0.04 per hour per host
+- name: Full-Stack Monitoring
+  price_text: $58 / mo per 8 GiB host*
+  price: 58
+  currency: USD
+  period: month
+  unit: 8 GiB host
+  included_quota: APM, root cause analysis, code-level profiling, K8s platform monitoring, 10 days trace
+    retention
+  overage: Billed at $0.01 per memory-GiB-hour
+- name: Kubernetes Platform Monitoring
+  price_text: $1.40 / mo per pod*
+  price: 1.4
+  currency: USD
+  period: month
+  unit: pod
+  included_quota: Kubernetes metrics and events; included on Full-Stack hosts
+  overage: Billed at $0.002 per hour per pod
+- name: Code Monitoring
+  price_text: $3.60 / mo per container*
+  price: 3.6
+  currency: USD
+  period: month
+  unit: container
+  included_quota: Live code troubleshooting, non-breaking breakpoints, IDE integration
+  overage: Billed at $0.005 per hour per container
+- name: Log Analytics - Pay-per-Query (Ingest & Process)
+  price_text: $0.20 per GiB
+  price: 0.2
+  currency: USD
+  period: per-use
+  unit: GiB ingested
+  overage: Retain $0.0007 per GiB-day; Query $0.0035 per GiB-scanned
+- name: Log Analytics - Bundled Queries (Retain)
+  price_text: $0.02 per GiB-day
+  price: 0.02
+  currency: USD
+  period: per-use
+  unit: GiB-day
+  included_quota: Minimum 10, up to 35 days retention with queries included
+- name: Metrics Ingest & Process
+  price_text: $0.15 per 100k datapoints
+  price: 0.15
+  currency: USD
+  period: per-use
+  unit: 100k datapoints
+  included_quota: 15 months retention at 1-minute granularity; Query $0 no additional cost
+  overage: Retain $0.0007 per GiB-day
+- name: Traces Ingest & Process
+  price_text: $0.20 per GiB
+  price: 0.2
+  currency: USD
+  period: per-use
+  unit: GiB
+  included_quota: 10 days retention
+  overage: Retain $0.0007 per GiB-day; Query $0.0035 per GiB-scanned
+- name: Events Ingest & Process
+  price_text: $0.20 per GiB
+  price: 0.2
+  currency: USD
+  period: per-use
+  unit: GiB
+  included_quota: Built-in events included
+  overage: Retain $0.0007 per GiB-day; Query $0.0035 per GiB-scanned
+- name: AI Exploration
+  price_text: Included no additional charge
+  period: none
+  included_quota: DQL queries/tool calls, anomaly detection, forecasting, log pattern analysis, non-LLM
+    MCP tools
+- name: Agentic Operations
+  price_text: $0.10 per AI unit
+  price: 0.1
+  currency: USD
+  period: per-use
+  unit: AI unit
+  included_quota: Custom agents, deep reasoning, orchestration; avg 2-30 AI units per task
+- name: Real User Monitoring
+  price_text: $2.25 per 1,000 sessions*
+  price: 2.25
+  currency: USD
+  period: per-use
+  unit: 1,000 sessions
+  included_quota: 35 days of data retention
+  overage: Billed at $0.00225 per session
+- name: RUM with Session Replay
+  price_text: $4.50 per 1,000 sessions with replay capture*
+  price: 4.5
+  currency: USD
+  period: per-use
+  unit: 1,000 sessions with replay
+  included_quota: 35 days of data retention
+  overage: Billed at $0.0045 per session with replay capture
+- name: Browser Monitor
+  price_text: $4.50 per 1,000 synthetic actions*
+  price: 4.5
+  currency: USD
+  period: per-use
+  unit: 1,000 synthetic actions
+  included_quota: 35 days of data retention
+  overage: Billed at $0.0045 per synthetic action
+- name: HTTP Monitor
+  price_text: $1.00 per 1,000 synthetic requests*
+  price: 1.0
+  currency: USD
+  period: per-use
+  unit: 1,000 synthetic requests
+  included_quota: 35 days of data retention
+  overage: Billed at $0.001 per synthetic request
+- name: Runtime Vulnerability Analytics
+  price_text: $13 / mo per 8 GiB host*
+  price: 13
+  currency: USD
+  period: month
+  unit: 8 GiB host
+  overage: Billed at $0.00225 per memory-GiB hour
+- name: Runtime Application Protection
+  price_text: $13 / mo per 8 GiB host*
+  price: 13
+  currency: USD
+  period: month
+  unit: 8 GiB host
+  overage: Billed at $0.00225 per memory-GiB-hour
+- name: Security Posture Management
+  price_text: $5 / mo per host*
+  price: 5
+  currency: USD
+  period: month
+  unit: host
+  overage: Billed at $0.007 per host-hour
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - hybrid
+  - subscription
+  units:
+  - compute
+  - data
+  - request
+  plans:
+  - name: Foundation & Discovery
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - month
+  - name: Infrastructure Monitoring
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - month
+  - name: Full-Stack Monitoring
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - data
+    periods:
+    - month
+  - name: Kubernetes Platform Monitoring
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Code Monitoring
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Log Analytics - Pay-per-Query (Ingest & Process)
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - data
+    periods:
+    - other
+  - name: Log Analytics - Bundled Queries (Retain)
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - data
+    periods:
+    - other
+  - name: Metrics Ingest & Process
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - other
+    periods:
+    - other
+  - name: Traces Ingest & Process
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - data
+    periods:
+    - other
+  - name: Events Ingest & Process
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - data
+    periods:
+    - other
+  - name: AI Exploration
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
+  - name: Agentic Operations
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - other
+  - name: Real User Monitoring
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - other
+    periods:
+    - other
+  - name: RUM with Session Replay
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - other
+    periods:
+    - other
+  - name: Browser Monitor
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - other
+    periods:
+    - other
+  - name: HTTP Monitor
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - request
+    periods:
+    - other
+  - name: Runtime Vulnerability Analytics
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - data
+    periods:
+    - month
+  - name: Runtime Application Protection
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - data
+    periods:
+    - month
+  - name: Security Posture Management
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - month
